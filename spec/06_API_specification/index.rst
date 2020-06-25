@@ -5,6 +5,6 @@ API specification
    :caption: API specification
    :maxdepth: 1
 
-   array_object
-   indexing
-   casting
+   01_dataframe_basics
+   02_column_selection
+   03_filter_rows
