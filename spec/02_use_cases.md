@@ -17,8 +17,9 @@ The next types of use cases can be accomplished by the use of the standard Pytho
 API defined in this document:
 
 - Downstream library receiving a data frame as a parameter
-- Converting a data frame from one implementation to another
-- Other types of uses cases not related to data interchange will be added later
+- Converting a data frame from one implementation to another (try to clarify)
+
+Other types of uses cases not related to data interchange will be added later.
 
 
 ## Concrete use cases
@@ -73,6 +74,40 @@ The API documented here describes what the developer of the plotting library can
 from the object `data`. In which ways can interact with the data frame object to extract
 the desired information.
 
+An example of this are Seaborn plots. For example, the
+[scatterplot](https://seaborn.pydata.org/generated/seaborn.scatterplot.html) accepts a
+parameter `data`, which is expected to be a `DataFrame`.
+
+When providing a pandas `DataFrame`, the next code generates the intended scatter plot:
+
+```python
+import pandas
+import seaborn
+
+pandas_df = pandas.DataFrame({'bill': [15, 32, 28],
+                              'tip': [2, 5, 3]})
+
+seaborn.scatterplot(data=pandas_df, x='bill', y='tip')
+```
+
+But if we instead provide a Vaex data frame, then an exception occurs:
+
+```python
+import vaex
+
+vaex_df = vaex.from_pandas(pandas_df)
+
+seaborn.scatterplot(data=vaex_df, x='bill', y='tip')
+```
+
+This is caused by Seaborn expecting a pandas `DataFrame` object. And while Vaex
+provides an interface very similar to pandas, it does not implement 100% of its
+API, and Seaborn is trying to use parts that differ.
+
+With the definition of the standard API, Seaborn developers should be able to
+expect a generic data frame. And any library implementing the standard data frame
+API could be plotted with the previous example (Vaex, cuDF, Ibis, Dask, Modin, etc.).
+
 
 ### Change object from one implementation to another
 
@@ -89,21 +124,61 @@ implement a `.to_pandas()` method in the Dask data frame. Another option could b
 implement this in pandas, in a `.from_dask()` method.
 
 As the ecosystem grows, this solution implies that every implementation could end up
-having a long list of methods:
+having a long list of functions or methods:
 
-- `.to_pandas()` / `.from_pandas()`
-- `.to_vaex()` / `.from_vaex()`
-- `.to_modin()` / `.from_modin()`
-- `.to_dask()` / `.from_dask()`
+- `to_pandas()` / `from_pandas()`
+- `to_vaex()` / `from_vaex()`
+- `to_modin()` / `from_modin()`
+- `to_dask()` / `from_dask()`
 - ...
 
 With a standard Python data frame API, every library could simply implement a method to
 import a standard data frame. And since data frame libraries are expected to implement
 this API, that would be enough to transform any data frame to one implementation.
 
-So, the list above would be reduced to a single method in each implementation:
+So, the list above would be reduced to a single function or method in each implementation:
 
-- `.from_dataframe()`
+- `from_dataframe()`
 
-Note that the method `.from_dataframe()` is for illustration, and not proposed as part
-of the standard.
+Note that the function `from_dataframe()` is for illustration, and not proposed as part
+of the standard at this point.
+
+Every pair of data frame libraries could benefit from this conversion. But we can go
+deeper with an actual example. The conversion from an xarray `DataArray` to a pandas
+`DataFrame`, and the other way round.
+
+Even if xarray is not a data frame library, but a miltidimensional labeled structure,
+in cases where a 2-D is used, the data can be converted from and to a data frame.
+
+Currently, xarray implements a `.to_pandas()` method to convert a `DataArray` to a
+pandas `DataFrame`:
+
+```python
+import xarray
+
+xarray_data = xarray.DataArray([[15, 2], [32, 5], [28, 3]],
+                               dims=('diners', 'features'),
+                               coords={'features': ['bill', 'tip']})
+
+pandas_df = xarray_data.to_pandas()
+```
+
+To convert the pandas data frame to an xarray `Data Array`, both libraries have
+implementations. Both lines below are equivalent:
+
+```python
+pandas_df.to_xarray()
+xarray.DataArray(pandas_df)
+```
+
+Other data frame implementations may or may not implement a way to convert to xarray.
+And passing a data frame to the `DataArray` constructor may or may not work.
+
+The standard data frame API would allow pandas, xarray and other libraries to
+implement the standard API. They could convert other representations via a single
+`to_dataframe()` function or method. And they could be converted to other
+representations that implement that function automatically.
+
+This would make conversions very simple, not only among data frame libraries, but
+also among other libraries which data can be expressed as tabular data, such as
+xarray, SQLAlchemy and others.
