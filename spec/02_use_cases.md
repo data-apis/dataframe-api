@@ -147,7 +147,7 @@ Every pair of data frame libraries could benefit from this conversion. But we ca
 deeper with an actual example. The conversion from an xarray `DataArray` to a pandas
 `DataFrame`, and the other way round.
 
-Even if xarray is not a data frame library, but a miltidimensional labeled structure,
+Even if xarray is not a data frame library, but a multidimensional labeled structure,
 in cases where a 2-D is used, the data can be converted from and to a data frame.
 
 Currently, xarray implements a `.to_pandas()` method to convert a `DataArray` to a
