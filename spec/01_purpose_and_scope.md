@@ -25,7 +25,7 @@ functionality, today is considered a general-purpose dataframe library. The orig
 to focus on the main `DataFrame` class.
 
 Internally, pandas is implemented on top of NumPy, which is used to store the data
-and to perform many of the operations. Some parts of pandas are writen in Cython.
+and to perform many of the operations. Some parts of pandas are written in Cython.
 
 As of 2020 the pandas website has around one million and a half visitors per month.
 
@@ -206,9 +206,9 @@ applications that use dataframes. Or authors of libraries that provide specializ
 APIs to be built on top of the standard API.
 
 People using dataframes in an interactive way are considered out of scope. These users include data
-analysts, data scientist and other users that are key for dataframes. But this type of user may need
+analysts, data scientists and other users that are key for dataframes. But this type of user may need
 shortcuts, or libraries that take decisions for them to save them time. For example automatic type
-inference, or excesive use of very compact syntax like Python squared brackets / `__getitem__`.
+inference, or excessive use of very compact syntax like Python squared brackets / `__getitem__`.
 Standardizing on such practices can be extremely difficult, and it is out of scope.
 
 With the development of a standard API that targets developers writing reusable code we expected
@@ -238,4 +238,3 @@ sugar required for fast analysis of data.
 
 
 ## References
-
