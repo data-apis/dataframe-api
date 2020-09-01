@@ -10,7 +10,7 @@ column share a common data type. This definition is intentionally left broad.
 
 ## History and dataframe implementations
 
-Data frame libraries in several programming language exist, such as
+Dataframe libraries in several programming language exist, such as
 [R](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame),
 [Scala](https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-scala.html),
 [Julia](https://juliadata.github.io/DataFrames.jl/stable/) and others.
@@ -73,6 +73,10 @@ it exposes (for example, using NumPy data types or `NaN`).
 
 ## Scope
 
+In the first iteration of the API standard, the scope is limited to create a data exchange
+protocol. In future iterations the scope will be broader, including elements to operate with
+the data.
+
 It is in the scope of this document the different elements of the API. This includes signatures
 and semantics. To be more specific:
 
@@ -87,18 +91,25 @@ certain domains.
 
 ### Goals
 
-The goal of the API described in this document is to provide a standard interface that encapsulates
+The goal of the first iteration is to provide a data exchange protocol, so consumers of dataframes
+can interact with a standard interface to access their data.
+
+The goal of the of future iterations will be to provide a standard interface that encapsulates
 implementation details of dataframe libraries. This will allow users and third-party libraries to
-write code that interacts with a standard dataframe, and not with specific implementations.
+write code that interacts and operates with a standard dataframe, and not with specific implementations.
 
 The main goals for the API defined in this document are:
 
-- Provide a common API for dataframes so software can be developed to communicate with it
+- Make conversion of data among different implementations easier
+- Let third party libraries consuming dataframes receive dataframes from any implementations
+
+In the future, besides a data exchange protocol, the standard aims to include common operations
+done with dataframe, with the next goals in mind:
+
+- Provide a common API for dataframes so software using dataframes can work with all
+  implementations
 - Provide a common API for dataframes to build user interfaces on top of it, for example
   libraries for interactive use or specific domains and industries
-- Simplify interactions between the projects of the ecosystem, for example, software that
-  receives data as a dataframe
-- Make conversion of data among different implementations easier
 - Help user transition from one dataframe library to another
 
 See the [use cases](02_use_cases.html) section for details on the exact use cases considered.
@@ -150,7 +161,7 @@ simple and easy to adopt.
 This section provides the list of stakeholders considered for the definition of this API.
 
 
-### Data frame library authors
+### Dataframe library authors
 
 We encourage dataframe libraries in Python to implement the API defined in this document
 in their libraries.
@@ -192,13 +203,13 @@ Authors of libraries that provide functionality used by dataframes.
 
 A non-exhaustive list of upstream categories is next:
 
-- Data formats, protocols and libraries for data analytics (e.g. Apache Arrow)
+- Data formats, protocols and libraries for data analytics (e.g. Apache Arrow, NumPy)
 - Task schedulers (e.g. Dask, Ray, Mars)
 - Big data systems (e.g. Spark, Hive, Impala, Presto)
 - Libraries for database access (e.g. SQLAlchemy)
 
 
-### Data frame power users
+### Dataframe power users
 
 
 This group considers developers of reusable code that use dataframes. For example, developers of
