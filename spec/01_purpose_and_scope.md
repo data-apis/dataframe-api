@@ -94,14 +94,14 @@ certain domains.
 The goal of the first iteration is to provide a data exchange protocol, so consumers of dataframes
 can interact with a standard interface to access their data.
 
-The goal of the of future iterations will be to provide a standard interface that encapsulates
+The goal of future iterations will be to provide a standard interface that encapsulates
 implementation details of dataframe libraries. This will allow users and third-party libraries to
 write code that interacts and operates with a standard dataframe, and not with specific implementations.
 
 The main goals for the API defined in this document are:
 
 - Make conversion of data among different implementations easier
-- Let third party libraries consuming dataframes receive dataframes from any implementations
+- Let third party libraries consume dataframes from any implementations
 
 In the future, besides a data exchange protocol, the standard aims to include common operations
 done with dataframe, with the next goals in mind:
