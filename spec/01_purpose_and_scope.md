@@ -35,15 +35,15 @@ make the transition to their libraries easier. Next, there is a short descriptio
 the main dataframe libraries in Python.
 
 [Dask](https://dask.org/) is a task scheduler built in Python, which implements a
-dataframe interface. Dask dataframe use pandas internally in the workers, and it provides
+dataframe interface. Dask dataframe uses pandas internally in the workers, and it provides
 an API similar to pandas, adapted to its distributed and lazy nature.
 
 [Vaex](https://vaex.io/) is an out-of-core alternative to pandas. Vaex uses hdf5 to
 create memory maps that avoid loading data sets to memory. Some parts of Vaex are
 implemented in C++.
 
-[Modin](https://github.com/modin-project/modin) is another distributed dataframe
-library based originally on [Ray](https://github.com/ray-project/ray). But built in
+[Modin](https://github.com/modin-project/modin) is a distributed dataframe
+library originally built on [Ray](https://github.com/ray-project/ray), but has
 a more modular way, that allows it to also use Dask as a scheduler, or replace the
 pandas-like public API by a SQLite-like one.
 
