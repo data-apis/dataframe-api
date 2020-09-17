@@ -19,7 +19,9 @@ def somefunc(df, ...):
     """`df` can be any dataframe supporting the protocol, rather than (say)
     only a pandas.DataFrame"""
     # could also be `cudf.from_dataframe(df)`, or `vaex.from_dataframe(df)`
-    df = pd.from_dataframe(df)
+    # note: this should throw a TypeError if it cannot be done without a device
+    # transfer (e.g. move data from GPU to CPU) - add `force=True` in that case
+    new_pandas_df = pd.from_dataframe(df)
     # From now on, use Pandas dataframe internally
 ```
 
@@ -98,12 +100,10 @@ this is a consequence, and that that should be acceptable to them.
    may not have data in memory because it uses lazy evaluation).
 7. Must support missing values (`NA`) for all supported dtypes.
 8. Must supports string and categorical dtypes
-   (_TBD: not discussed a lot, is this a hard requirement?_)
 
 We'll also list some things that were discussed but are not requirements:
 
-1. Object dtype does not need to be supported (_TBD: this is what Joris said,
-   but doesn't Pandas use object dtype to represent strings?_).
+1. Object dtype does not need to be supported
 2. Heterogeneous/structured dtypes within a single column does not need to be
    supported.
    _Rationale: not used a lot, additional design complexity not justified._
@@ -117,10 +117,8 @@ What we are aiming for is quite similar to the Arrow C Data Interface (see
 the [rationale for the Arrow C Data Interface](https://arrow.apache.org/docs/format/CDataInterface.html#rationale)),
 except `__dataframe__` is a Python-level rather than C-level interface.
 
-The limitations seem to be:
+The main (only?) limitation seems to be:
 - No device support (@kkraus14 will bring this up on the Arrow dev mailing list)
-- Specific to columnar data (_at least, this is what its docs say_).
-  TODO: are there any concerns for, e.g., Koalas or Ibis.
 
 Note that categoricals are supported, Arrow uses the phrasing
 "dictionary-encoded types" for categorical.
