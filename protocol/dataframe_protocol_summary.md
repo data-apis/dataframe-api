@@ -6,9 +6,12 @@ requirements/principles and functionality it needs to support._
 
 ## Purpose of `__dataframe__`
 
-The purpose of `__dataframe__` is to be a _data interchange_ protocol. I.e., a way to convert one type of dataframe into another type (for example, convert a Koalas dataframe into a Pandas dataframe, or a cuDF dataframe into a Vaex dataframe). 
+The purpose of `__dataframe__` is to be a _data interchange_ protocol. I.e.,
+a way to convert one type of dataframe into another type (for example,
+convert a Koalas dataframe into a Pandas dataframe, or a cuDF dataframe into
+a Vaex dataframe).
 
-Currently (Sep'20) there is no way to do this in an implementation-independent way.
+Currently (Nov'20) there is no way to do this in an implementation-independent way.
 
 The main use case this protocol intends to enable is to make it possible to
 write code that can accept any type of dataframe instead of being tied to a
@@ -87,10 +90,12 @@ this is a consequence, and that that should be acceptable to them.
 
 ## Protocol design requirements
 
-1. Must be a standard API that is unambiguously specified, and not rely on
-   implementation details of any particular dataframe library.
+1. Must be a standard Python-level API that is unambiguously specified, and
+   not rely on implementation details of any particular dataframe library.
 2. Must treat dataframes as a collection of columns (which are 1-D arrays
    with a dtype and missing data support).
+   _Note: this related to the API for `__dataframe__`, and does not imply
+   that the underlying implementation must use columnar storage!_
 3. Must include device support
 4. Must avoid device transfers by default (e.g. copy data from GPU to CPU),
    and provide an explicit way to force such transfers (e.g. a `force=` or
@@ -116,6 +121,9 @@ We'll also list some things that were discussed but are not requirements:
 What we are aiming for is quite similar to the Arrow C Data Interface (see
 the [rationale for the Arrow C Data Interface](https://arrow.apache.org/docs/format/CDataInterface.html#rationale)),
 except `__dataframe__` is a Python-level rather than C-level interface.
+_TODO: one key thing is Arrow C Data interface relies on providing a deletion
+/ finalization method similar to DLPack. The desired semantics here need to
+be ironed out._
 
 The main (only?) limitation seems to be:
 - No device support (@kkraus14 will bring this up on the Arrow dev mailing list)
@@ -140,8 +148,8 @@ cuDF or Vaex).
 It is _not_ analogous to `__array__`, which is NumPy-specific. `__array__` is a
 method attached to array/tensor-like objects, and calling it is requesting
 the object it's attached to to turn itself into a NumPy array. Hence, the
-library that implements `__array__` must depend on NumPy, and call a NumPy
-`ndarray` constructor itself from within `__array__`.
+library that implements `__array__` must depend (optionally at least) on
+NumPy, and call a NumPy `ndarray` constructor itself from within `__array__`.
 
 
 ### What is wrong with `.to_numpy?` and `.to_arrow()`? 
