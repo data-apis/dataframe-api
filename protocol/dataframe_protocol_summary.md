@@ -96,15 +96,19 @@ this is a consequence, and that that should be acceptable to them.
    with a dtype and missing data support).
    _Note: this related to the API for `__dataframe__`, and does not imply
    that the underlying implementation must use columnar storage!_
-3. Must include device support
-4. Must avoid device transfers by default (e.g. copy data from GPU to CPU),
+3. Must allow the consumer to select a specific set of columns for conversion.
+4. Must allow the consumer to access the following "metadata" of the dataframe:
+   number of rows, number of columns, column names, column data types.
+   TBD: column data types wasn't clearly decided on, nor is it present in https://github.com/wesm/dataframe-protocol
+5. Must include device support
+6. Must avoid device transfers by default (e.g. copy data from GPU to CPU),
    and provide an explicit way to force such transfers (e.g. a `force=` or
    `copy=` keyword that the caller can set to `True`).
-5. Must be zero-copy if possible.
-6. Must be able to support "virtual columns" (e.g., a library like Vaex which
+7. Must be zero-copy if possible.
+8. Must be able to support "virtual columns" (e.g., a library like Vaex which
    may not have data in memory because it uses lazy evaluation).
-7. Must support missing values (`NA`) for all supported dtypes.
-8. Must supports string and categorical dtypes
+9. Must support missing values (`NA`) for all supported dtypes.
+10. Must supports string and categorical dtypes
 
 We'll also list some things that were discussed but are not requirements:
 
