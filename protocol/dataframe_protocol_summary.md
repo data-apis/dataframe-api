@@ -113,9 +113,12 @@ this is a consequence, and that that should be acceptable to them.
 We'll also list some things that were discussed but are not requirements:
 
 1. Object dtype does not need to be supported
-2. Heterogeneous/structured dtypes within a single column does not need to be
+2. Nested/structured dtypes within a single column does not need to be
    supported.
-   _Rationale: not used a lot, additional design complexity not justified._
+   _Rationale: not used a lot, additional design complexity not justified.
+   May be added in the future (does have support in the Arrow C Data Interface)._
+3. Extension dtypes do not need to be supported.
+   _Rationale: same as (2)_
 
 
 ## Frequently asked questions
