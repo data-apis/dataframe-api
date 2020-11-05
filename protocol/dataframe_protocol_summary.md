@@ -123,7 +123,7 @@ the [rationale for the Arrow C Data Interface](https://arrow.apache.org/docs/for
 except `__dataframe__` is a Python-level rather than C-level interface.
 _TODO: one key thing is Arrow C Data interface relies on providing a deletion
 / finalization method similar to DLPack. The desired semantics here need to
-be ironed out._
+be ironed out. See Arrow docs on [release callback semantics](https://arrow.apache.org/docs/format/CDataInterface.html#release-callback-semantics-for-consumers)_
 
 The main (only?) limitation seems to be:
 - No device support (@kkraus14 will bring this up on the Arrow dev mailing list)
