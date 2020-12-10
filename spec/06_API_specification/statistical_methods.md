@@ -54,7 +54,7 @@ Calculates the cumulative minimum value.
     -   dataframe containing cumulative minimum values. The returned dataframe must have the same size as `x`.
 
 (method-cumsum)=
-### cummax(x, /, *, skipna=True)
+### cumsum(x, /, *, skipna=True)
 
 Calculates the cumulative sum.
 
