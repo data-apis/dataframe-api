@@ -22,7 +22,7 @@ Calculates the cumulative maximum value.
 
     -   dataframe instance.
 
--   **skipna**: _Optional\[ bool ]_
+-   **skipna**: _bool_
 
     -   Exclude `NA` and `null` values. If an entire column is `NA`, the result must be `NA`. Default: `True`.
 
@@ -43,7 +43,7 @@ Calculates the cumulative minimum value.
 
     -   dataframe instance.
 
--   **skipna**: _Optional\[ bool ]_
+-   **skipna**: _bool_
 
     -   Exclude `NA` and `null` values. If an entire column is `NA`, the result must be `NA`. Default: `True`.
 
@@ -64,7 +64,7 @@ Calculates the cumulative sum.
 
     -   dataframe instance.
 
--   **skipna**: _Optional\[ bool ]_
+-   **skipna**: _bool_
 
     -   Exclude `NA` and `null` values. If an entire column is `NA`, the result must be `NA`. Default: `True`.
 
@@ -85,7 +85,7 @@ Calculates the cumulative product.
 
     -   dataframe instance.
 
--   **skipna**: _Optional\[ bool ]_
+-   **skipna**: _bool_
 
     -   Exclude `NA` and `null` values. If an entire column is `NA`, the result must be `NA`. Default: `True`.
 
