@@ -106,7 +106,7 @@ this is a consequence, and that that should be acceptable to them.
    `copy=` keyword that the caller can set to `True`).
 7. Must be zero-copy if possible.
 8. Must support missing values (`NA`) for all supported dtypes.
-9. Must supports string and categorical dtypes.
+9. Must supports string, categorical and datetime dtypes.
 10. Must allow the consumer to inspect the representation for missing values
     that the producer uses for each column or data type.
     _Rationale: this enables the consumer to control how conversion happens,
@@ -145,6 +145,24 @@ We'll also list some things that were discussed but are not requirements:
    "programming to an interface"; this data interchange protocol is
    fundamentally built around describing data in memory_.
 
+### To be decided
+
+_The connection between dataframe and array interchange protocols_. If we
+treat a dataframe as a set of 1-D arrays, it may be expected that there is a
+connection to be made with the array data interchange method. The array
+interchange is based on DLPack; its major limitation from the point of view
+of dataframes is the lack of support of all required data types (string,
+categorical, datetime) and missing data. A requirement could be added that
+`__dlpack__` should be supported in case the data types in a column are
+supported by DLPack. Missing data via a boolean mask as a separate array
+could also be supported.
+
+_Should there be a standard `from_dataframe` constructor function?_ This
+isn't completely necessary, however it's expected that a full dataframe API
+standard will have such a function. The array API standard also has such a
+function, namely `from_dlpack`. Adding at least a recommendation on syntax
+for this function would make sense, e.g., `from_dataframe(df, stream=None)`.
+
 
 ## Frequently asked questions
 
@@ -153,12 +171,13 @@ We'll also list some things that were discussed but are not requirements:
 What we are aiming for is quite similar to the Arrow C Data Interface (see
 the [rationale for the Arrow C Data Interface](https://arrow.apache.org/docs/format/CDataInterface.html#rationale)),
 except `__dataframe__` is a Python-level rather than C-level interface.
-_TODO: one key thing is Arrow C Data interface relies on providing a deletion
-/ finalization method similar to DLPack. The desired semantics here need to
-be ironed out. See Arrow docs on [release callback semantics](https://arrow.apache.org/docs/format/CDataInterface.html#release-callback-semantics-for-consumers)_
+The data types format specification of that interface is something that could be used unchanged.
 
-The main (only?) limitation seems to be:
-- No device support (@kkraus14 will bring this up on the Arrow dev mailing list)
+The main (only?) limitation seems to be that it does not have device support
+- @kkraus14 will bring this up on the Arrow dev mailing list. Also note that
+that interface only talks about arrays; dataframes, chunking and the metadata
+inspection can all be layered on top in this Python-level protocol, but are
+not discussed in the interface itself.
 
 Note that categoricals are supported, Arrow uses the phrasing
 "dictionary-encoded types" for categorical.
@@ -167,6 +186,12 @@ The Arrow C Data Interface says specifically it was inspired by [Python's
 buffer protocol](https://docs.python.org/3/c-api/buffer.html), which is also
 a C-only and CPU-only interface. See `__array_interface__` below for a
 Python-level equivalent of the buffer protocol.
+
+Note that specifying the precise semantics for implementers (both producing
+and consuming libraries) will be important. The Arrow C Data interface relies
+on providing a deletion / finalization method similar to DLPack. The desired
+semantics here need to be ironed out. See Arrow docs on
+[release callback semantics](https://arrow.apache.org/docs/format/CDataInterface.html#release-callback-semantics-for-consumers)_
 
 
 ### Is `__dataframe__` analogous to `__array__` or `__array_interface__`?
