@@ -92,23 +92,41 @@ this is a consequence, and that that should be acceptable to them.
 
 1. Must be a standard Python-level API that is unambiguously specified, and
    not rely on implementation details of any particular dataframe library.
-2. Must treat dataframes as a collection of columns (which are 1-D arrays
-   with a dtype and missing data support).
-   _Note: this related to the API for `__dataframe__`, and does not imply
+2. Must treat dataframes as a collection of columns (which are conceptually
+   1-D arrays with a dtype and missing data support).
+   _Note: this relates to the API for `__dataframe__`, and does not imply
    that the underlying implementation must use columnar storage!_
 3. Must allow the consumer to select a specific set of columns for conversion.
 4. Must allow the consumer to access the following "metadata" of the dataframe:
    number of rows, number of columns, column names, column data types.
-   TBD: column data types wasn't clearly decided on, nor is it present in https://github.com/wesm/dataframe-protocol
-5. Must include device support
+   _Note: this implies that a data type specification needs to be created._
+5. Must include device support.
 6. Must avoid device transfers by default (e.g. copy data from GPU to CPU),
    and provide an explicit way to force such transfers (e.g. a `force=` or
    `copy=` keyword that the caller can set to `True`).
 7. Must be zero-copy if possible.
-8. Must be able to support "virtual columns" (e.g., a library like Vaex which
-   may not have data in memory because it uses lazy evaluation).
-9. Must support missing values (`NA`) for all supported dtypes.
-10. Must supports string and categorical dtypes
+8. Must support missing values (`NA`) for all supported dtypes.
+9. Must supports string and categorical dtypes.
+10. Must allow the consumer to inspect the representation for missing values
+    that the producer uses for each column or data type.
+    _Rationale: this enables the consumer to control how conversion happens,
+    for example if the producer uses `-128` as a sentinel value in an `int8`
+    column while the consumer uses a separate bit mask, that information
+    allows the consumer to make this mapping._
+11. Must allow the producer to describe its memory layout in sufficient
+    detail. In particular, for missing data and data types that may have
+    multiple in-memory representations (e.g., categorical), those
+    representations must all be describable in order to let the consumer map
+    that to the representation it uses.
+    _Rationale: prescribing a single in-memory representation in this
+    protocol would lead to unnecessary copies being made if that represention
+    isn't the native one a library uses._
+12. Must support chunking, i.e. accessing the data in "batches" of rows.
+    There must be metadata the consumer can access to learn in how many
+    chunks the data is stored. The consumer may also convert the data in
+    more chunks than it is stored in, i.e. it can ask the producer to slice its columns to shorter length. That request may not be such that it would force the producer
+    to concatenate data that is already stored in separate chunks.
+    _Rationale: support for chunking is more efficient for libraries that natively store chunks, and it is needed for dataframes that do not fit in memory (e.g. dataframes stored on disk or lazily evaluated)._
 
 We'll also list some things that were discussed but are not requirements:
 
@@ -119,6 +137,13 @@ We'll also list some things that were discussed but are not requirements:
    May be added in the future (does have support in the Arrow C Data Interface)._
 3. Extension dtypes do not need to be supported.
    _Rationale: same as (2)_
+4. "virtual columns", i.e. columns for which the data is not yet in memory
+   because it uses lazy evaluation, are not supported other than through
+   letting the producer materialize the data in memory when the consumer
+   calls `__dataframe__`.
+   _Rationale: the full dataframe API will support this use case by
+   "programming to an interface"; this data interchange protocol is
+   fundamentally built around describing data in memory_.
 
 
 ## Frequently asked questions
