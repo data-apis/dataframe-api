@@ -100,6 +100,8 @@ this is a consequence, and that that should be acceptable to them.
 4. Must allow the consumer to access the following "metadata" of the dataframe:
    number of rows, number of columns, column names, column data types.
    _Note: this implies that a data type specification needs to be created._
+   _Note: column names are required. If a dataframe doesn't have them, dummy
+   ones like `'0', '1', ...` can be used._
 5. Must include device support.
 6. Must avoid device transfers by default (e.g. copy data from GPU to CPU),
    and provide an explicit way to force such transfers (e.g. a `force=` or
@@ -121,6 +123,8 @@ this is a consequence, and that that should be acceptable to them.
     _Rationale: prescribing a single in-memory representation in this
     protocol would lead to unnecessary copies being made if that represention
     isn't the native one a library uses._
+    _Note: the memory layout is columnnar. Row-major dataframes can use this
+    protocol, but not in a zero-copy fashion (see requirement 2 above)._
 12. Must support chunking, i.e. accessing the data in "batches" of rows.
     There must be metadata the consumer can access to learn in how many
     chunks the data is stored. The consumer may also convert the data in
@@ -148,7 +152,9 @@ We'll also list some things that were discussed but are not requirements:
 ### To be decided
 
 _The connection between dataframe and array interchange protocols_. If we
-treat a dataframe as a set of 1-D arrays, it may be expected that there is a
+treat a dataframe as a set of columns which each are a set of 1-D arrays
+(there may be more than one in the case of using masks for missing data, or
+in the future for nested dtypes), it may be expected that there is a
 connection to be made with the array data interchange method. The array
 interchange is based on DLPack; its major limitation from the point of view
 of dataframes is the lack of support of all required data types (string,
