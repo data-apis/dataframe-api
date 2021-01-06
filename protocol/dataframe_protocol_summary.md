@@ -293,3 +293,9 @@ Here are the four most relevant existing protocols, and what requirements they s
 5. Only NumPy datetime and timedelta, which are limited compared to what the Arrow format offers.
 6. No explicit support, however categoricals can be mapped to either integers or strings.
 7. No explicit support, categoricals can only be mapped to integers.
+
+| *implementation*    | buffer protocol | `__array_interface__` |  DLPack   | Arrow C Data Interface |
+|---------------------|:---------------:|:---------------------:|:---------:|:----------------------:|
+| refcounting         |        Y        |           Y           |           |                        |
+| call deleter        |                 |                       |    Y      |            Y           |
+| supporting C code   |   in CPython    |       in NumPy        | spec-only |         spec-only      |
