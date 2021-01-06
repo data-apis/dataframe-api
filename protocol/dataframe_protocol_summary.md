@@ -88,6 +88,19 @@ this is a consequence, and that that should be acceptable to them.
   "program to an interface" rather than to a specific library like Pandas.
 
 
+## Conceptual model of a dataframe
+
+For a protocol to exchange dataframes between libraries, we need both a model of what we mean by "dataframe" conceptually for the purposes of the protocol, and a model of how the data is represented in memory:
+
+![Image of a dataframe model, containing chunks, columns and 1-D arrays](conceptual_model_df_memory.png)
+
+The smallest building block are **1-D arrays**, which are contiguous in
+memory and contain data with the same dtype. A **column** consists of one or
+more 1-D arrays (if, e.g., missing data is represented with a boolean mask,
+that's a separate array). A **chunk** contains a set of columns of uniform
+length. A **dataframe** contains one or more chunks.
+
+
 ## Protocol design requirements
 
 1. Must be a standard Python-level API that is unambiguously specified, and
@@ -291,7 +304,8 @@ Here are the four most relevant existing protocols, and what requirements they s
 3. `__array_interface__` has a `mask` attribute, which is a separate boolean array also implementing the `__array_interface__` protocol.
 4. Only fixed-length strings as sequence of char or unicode.
 5. Only NumPy datetime and timedelta, which are limited compared to what the Arrow format offers.
-6. No explicit support, however categoricals can be mapped to either integers or strings.
+6. No explicit support, however categoricals can be mapped to either integers
+   or strings. Unclear how to communicate that information from producer to consumer.
 7. No explicit support, categoricals can only be mapped to integers.
 
 | *implementation*    | buffer protocol | `__array_interface__` |  DLPack   | Arrow C Data Interface |
