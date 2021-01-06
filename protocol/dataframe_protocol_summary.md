@@ -255,8 +255,41 @@ computational graph approach like Dask uses, etc.)._
 
 ## Possible direction for implementation
 
+### Rough prototypes
+
 The `cuDFDataFrame`, `cuDFColumn` and `cuDFBuffer` sketched out by @kkraus14
 [here](https://github.com/data-apis/dataframe-api/issues/29#issuecomment-685123386)
 seems to be in the right direction.
 
+[This prototype](https://github.com/wesm/dataframe-protocol/pull/1) by Wes
+McKinney was the first attempt, and has some useful features.
+
 TODO: work this out after making sure we're all on the same page regarding requirements.
+
+
+### Relevant existing protocols
+
+Here are the four most relevant existing protocols, and what requirements they support:
+
+| *supports*          | buffer protocol | `__array_interface__` | DLPack | Arrow C Data Interface |
+|---------------------|:---------------:|:---------------------:|:------:|:----------------------:|
+| Python API          |                 |           Y           |   (1)  |                        |
+| C API               |        Y        |           Y           |    Y   |            Y           |
+| arrays              |        Y        |           Y           |    Y   |            Y           |
+| dataframes          |                 |                       |        |                        |
+| chunking            |                 |                       |        |                        |
+| devices             |                 |                       |    Y   |                        |
+| bool/int/uint/float |        Y        |           Y           |    Y   |            Y           |
+| missing data        |       (2)       |          (3)          |   (4)  |            Y           |
+| string dtype        |       (4)       |          (4)          |        |            Y           |
+| datetime dtypes     |                 |          (5)          |        |            Y           |
+| categoricals        |       (6)       |          (6)          |   (7)  |           (6)          |
+
+1. The Python API is only an interface to call the C API under the hood, it
+   doesn't contain a description of how the data is laid out in memory.
+2. Can be done only via separate masks of boolean arrays.
+3. `__array_interface__` has a `mask` attribute, which is a separate boolean array also implementing the `__array_interface__` protocol.
+4. Only fixed-length strings as sequence of char or unicode.
+5. Only NumPy datetime and timedelta, which are limited compared to what the Arrow format offers.
+6. No explicit support, however categoricals can be mapped to either integers or strings.
+7. No explicit support, categoricals can only be mapped to integers.
