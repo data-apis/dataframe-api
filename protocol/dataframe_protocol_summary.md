@@ -181,6 +181,7 @@ isn't completely necessary, however it's expected that a full dataframe API
 standard will have such a function. The array API standard also has such a
 function, namely `from_dlpack`. Adding at least a recommendation on syntax
 for this function would make sense, e.g., `from_dataframe(df, stream=None)`.
+Discussion at https://github.com/data-apis/dataframe-api/issues/29#issuecomment-685903651 is relevant.
 
 
 ## Frequently asked questions
