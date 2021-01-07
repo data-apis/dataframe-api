@@ -12,16 +12,12 @@ A conforming implementation of the dataframe API standard must provide and suppo
 <!-- NOTE: please keep the methods in alphabetical order -->
 
 (method-cummax)=
-### cummax(x, /, *, skipna=True)
+### cummax(/, *, skipna=True)
 
 Calculates the cumulative maximum value.
 
 #### Parameters
 
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
-
 -   **skipna**: _bool_
 
     -   Exclude `NA` and `null` values. If an entire column is `NA`, the result must be `NA`. Default: `True`.
@@ -30,19 +26,15 @@ Calculates the cumulative maximum value.
 
 -   **out**: _&lt;dataframe&gt;_
 
-    -   dataframe containing cumulative maximum values. The returned dataframe must have the same size as `x`.
+    -   dataframe containing cumulative maximum values. The returned dataframe must have the same size as the original dataframe instance.
 
 (method-cummin)=
-### cummin(x, /, *, skipna=True)
+### cummin(/, *, skipna=True)
 
 Calculates the cumulative minimum value.
 
 #### Parameters
 
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
-
 -   **skipna**: _bool_
 
     -   Exclude `NA` and `null` values. If an entire column is `NA`, the result must be `NA`. Default: `True`.
@@ -51,19 +43,15 @@ Calculates the cumulative minimum value.
 
 -   **out**: _&lt;dataframe&gt;_
 
-    -   dataframe containing cumulative minimum values. The returned dataframe must have the same size as `x`.
+    -   dataframe containing cumulative minimum values. The returned dataframe must have the same size as the original dataframe instance.
 
 (method-cumsum)=
-### cumsum(x, /, *, skipna=True)
+### cumsum(/, *, skipna=True)
 
 Calculates the cumulative sum.
 
 #### Parameters
 
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
-
 -   **skipna**: _bool_
 
     -   Exclude `NA` and `null` values. If an entire column is `NA`, the result must be `NA`. Default: `True`.
@@ -72,19 +60,15 @@ Calculates the cumulative sum.
 
 -   **out**: _&lt;dataframe&gt;_
 
-    -   dataframe containing cumulative sums. The returned dataframe must have the same size as `x`.
+    -   dataframe containing cumulative sums. The returned dataframe must have the same size as the original dataframe instance.
 
 (method-cumprod)=
-### cumprod(x, /, *, skipna=True)
+### cumprod(/, *, skipna=True)
 
 Calculates the cumulative product.
 
 #### Parameters
 
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
-
 -   **skipna**: _bool_
 
     -   Exclude `NA` and `null` values. If an entire column is `NA`, the result must be `NA`. Default: `True`.
@@ -93,18 +77,14 @@ Calculates the cumulative product.
 
 -   **out**: _&lt;dataframe&gt;_
 
-    -   dataframe containing cumulative products. The returned dataframe must have the same size as `x`.
+    -   dataframe containing cumulative products. The returned dataframe must have the same size as the original dataframe instance.
 
 (method-max)=
-### max(x, /, *, axis=None)
+### max(/, *, axis=None)
 
 Calculates the maximum value.
 
 #### Parameters
-
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
 
 -   **axis**: _Optional\[ int ]_
 
@@ -117,15 +97,11 @@ Calculates the maximum value.
     -   dataframe containing the maximum values.
 
 (method-mean)=
-### mean(x, /, *, axis=None)
+### mean(/, *, axis=None)
 
 Calculates the arithmetic mean.
 
 #### Parameters
-
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
 
 -   **axis**: _Optional\[ int ]_
 
@@ -138,15 +114,11 @@ Calculates the arithmetic mean.
     -   dataframe containing the arithmetic means.
 
 (method-min)=
-### min(x, /, *, axis=None)
+### min(/, *, axis=None)
 
 Calculates the minimum value.
 
 #### Parameters
-
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
 
 -   **axis**: _Optional\[ int ]_
 
@@ -159,15 +131,11 @@ Calculates the minimum value.
     -   dataframe containing the minimum values.
 
 (method-nlargest)=
-### nlargest(x, n, columns, /)
+### nlargest(n, columns, /)
 
 Returns the first `n` rows having the largest values in `columns` and sorted in descending order.
 
 #### Parameters
-
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
 
 -   **n**: _int_
 
@@ -184,15 +152,11 @@ Returns the first `n` rows having the largest values in `columns` and sorted in 
     -   dataframe containing the first `n` rows.
 
 (method-nsmallest)=
-### nsmallest(x, n, columns, /)
+### nsmallest(n, columns, /)
 
 Returns the first `n` rows having the smallest values in `columns` and sorted in ascending order.
 
 #### Parameters
-
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
 
 -   **n**: _int_
 
@@ -209,15 +173,11 @@ Returns the first `n` rows having the smallest values in `columns` and sorted in
     -   dataframe containing the first `n` rows.
 
 (method-prod)=
-### prod(x, /, *, axis=None)
+### prod(/, *, axis=None)
 
 Calculates the product.
 
 #### Parameters
-
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
 
 -   **axis**: _Optional\[ int ]_
 
@@ -230,15 +190,11 @@ Calculates the product.
     -   dataframe containing the products.
 
 (method-std)=
-### std(x, /, *, axis=None, correction=1.0)
+### std(/, *, axis=None, correction=1.0)
 
 Calculates the standard deviation.
 
 #### Parameters
-
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
 
 -   **axis**: _Optional\[ int ]_
 
@@ -255,15 +211,11 @@ Calculates the standard deviation.
     -   dataframe containing the standard deviations.
 
 (method-sum)=
-### sum(x, /, *, axis=None)
+### sum(/, *, axis=None)
 
 Calculates the sum.
 
 #### Parameters
-
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
 
 -   **axis**: _Optional\[ int ]_
 
@@ -276,15 +228,11 @@ Calculates the sum.
     -   dataframe containing the sums.
 
 (method-var)=
-### var(x, /, *, axis=None, correction=1.0)
+### var(/, *, axis=None, correction=1.0)
 
 Calculates the variance.
 
 #### Parameters
-
--   **x**: _&lt;dataframe&gt;_
-
-    -   dataframe instance.
 
 -   **axis**: _Optional\[ int ]_
 
