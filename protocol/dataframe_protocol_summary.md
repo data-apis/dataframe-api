@@ -113,8 +113,8 @@ length. A **dataframe** contains one or more chunks.
 4. Must allow the consumer to access the following "metadata" of the dataframe:
    number of rows, number of columns, column names, column data types.
    _Note: this implies that a data type specification needs to be created._
-   _Note: column names are required. If a dataframe doesn't have them, dummy
-   ones like `'0', '1', ...` can be used._
+   _Note: column names are required; they must be strings and unique. If a
+   dataframe doesn't have them, dummy ones like `'0', '1', ...` can be used._
 5. Must include device support.
 6. Must avoid device transfers by default (e.g. copy data from GPU to CPU),
    and provide an explicit way to force such transfers (e.g. a `force=` or
@@ -151,9 +151,14 @@ We'll also list some things that were discussed but are not requirements:
 2. Nested/structured dtypes within a single column does not need to be
    supported.
    _Rationale: not used a lot, additional design complexity not justified.
-   May be added in the future (does have support in the Arrow C Data Interface)._
-3. Extension dtypes do not need to be supported.
-   _Rationale: same as (2)_
+   May be added in the future (does have support in the Arrow C Data
+   Interface). Also note that Arrow and NumPy structured dtypes have
+   different memory layouts, e.g. a `(float, int)` dtype would be stored as
+   two separate child arrays in Arrow and as a single `f0, i0, f1, i1, ...`
+   interleaved array in NumPy._
+3. Extension dtypes, i.e. a way to extend the set of dtypes that is
+   explicitly support, are out of scope.
+   _Rationale: complex to support, not used enough to justify that complexity._
 4. "virtual columns", i.e. columns for which the data is not yet in memory
    because it uses lazy evaluation, are not supported other than through
    letting the producer materialize the data in memory when the consumer
@@ -211,7 +216,7 @@ Note that specifying the precise semantics for implementers (both producing
 and consuming libraries) will be important. The Arrow C Data interface relies
 on providing a deletion / finalization method similar to DLPack. The desired
 semantics here need to be ironed out. See Arrow docs on
-[release callback semantics](https://arrow.apache.org/docs/format/CDataInterface.html#release-callback-semantics-for-consumers)_
+[release callback semantics](https://arrow.apache.org/docs/format/CDataInterface.html#release-callback-semantics-for-consumers).
 
 
 ### Is `__dataframe__` analogous to `__array__` or `__array_interface__`?
@@ -314,3 +319,23 @@ Here are the four most relevant existing protocols, and what requirements they s
 | refcounting         |        Y        |           Y           |           |                        |
 | call deleter        |                 |                       |    Y      |            Y           |
 | supporting C code   |   in CPython    |       in NumPy        | spec-only |         spec-only      |
+
+It is worth noting that for all four protocols, both dataframes and chunking
+can be easily layered on top. However only arrays, which are the only parts
+that have a specific memory layout, are explicitly specified in all those
+protocols. For Arrow this would be a little easier than for other protocols
+given the inclusion of "children" and "dictionary-encoded types", and indeed
+PyArrow already does provide such functionality.
+
+
+## References
+
+[Python buffer protocol][https://docs.python.org/3/c-api/buffer.html]
+
+[`__array_interface__` protocol][https://numpy.org/devdocs/reference/arrays.interface.html]
+
+[Arrow C Data Interface][https://arrow.apache.org/docs/format/CDataInterface.html]
+
+[DLPack][https://github.com/dmlc/dlpack]
+
+[Array data interchange in API standard][https://data-apis.github.io/array-api/latest/design_topics/data_interchange.html]
