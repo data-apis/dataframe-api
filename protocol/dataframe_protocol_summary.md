@@ -327,6 +327,22 @@ protocols. For Arrow this would be a little easier than for other protocols
 given the inclusion of "children" and "dictionary-encoded types", and indeed
 PyArrow already does provide such functionality.
 
+#### Data type descriptions
+
+There are multiple options for how to specify the dtype. The buffer protocol,
+NumPy and Arrow use format strings, DLPack uses enums. Furthermore dtype
+literals can be used for a Python API; this is what the array API standard
+does. Here are some examples:
+
+| *dtype*             | buffer protocol | `__array_interface__` |  DLPack   | Arrow C Data Interface |
+|---------------------|:---------------:|:---------------------:|:---------:|:----------------------:|
+| int8                |     `'=b'`      |         `'i1'`        | `(0, 8)`  |          `'c'`         |
+| int32               |     `=i'`       |         `'i4'`        | `(0, 32)` |          `'i'`         |
+| float64             |     `'=d'`      |         `'<f8'`       | `(2, 64)` |          `'g'`         |
+| utf-8 string        | `'u'` or `'w'`  |          `'U'`        |   n.a.    |          `'u'`         |
+
+The `=`, `<`, `>` are denoting endianness; Arrow only supports native endianness.
+
 
 ## References
 
