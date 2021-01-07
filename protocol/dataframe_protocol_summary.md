@@ -302,7 +302,7 @@ Here are the four most relevant existing protocols, and what requirements they s
 | missing data        |       (2)       |          (3)          |   (4)  |            Y           |
 | string dtype        |       (4)       |          (4)          |        |            Y           |
 | datetime dtypes     |                 |          (5)          |        |            Y           |
-| categoricals        |       (6)       |          (6)          |   (7)  |           (6)          |
+| categoricals        |       (6)       |          (6)          |   (7)  |            Y           |
 
 1. The Python API is only an interface to call the C API under the hood, it
    doesn't contain a description of how the data is laid out in memory.
@@ -330,12 +330,8 @@ PyArrow already does provide such functionality.
 
 ## References
 
-[Python buffer protocol][https://docs.python.org/3/c-api/buffer.html]
-
-[`__array_interface__` protocol][https://numpy.org/devdocs/reference/arrays.interface.html]
-
-[Arrow C Data Interface][https://arrow.apache.org/docs/format/CDataInterface.html]
-
-[DLPack][https://github.com/dmlc/dlpack]
-
-[Array data interchange in API standard][https://data-apis.github.io/array-api/latest/design_topics/data_interchange.html]
+- [Python buffer protocol](https://docs.python.org/3/c-api/buffer.html)
+- [`__array_interface__` protocol](https://numpy.org/devdocs/reference/arrays.interface.html)
+- [Arrow C Data Interface](https://arrow.apache.org/docs/format/CDataInterface.html)
+- [DLPack](https://github.com/dmlc/dlpack)
+- [Array data interchange in API standard](https://data-apis.github.io/array-api/latest/design_topics/data_interchange.html)
