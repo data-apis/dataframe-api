@@ -125,7 +125,10 @@ length. A **dataframe** contains one or more chunks.
 8. Must support missing values (`NA`) for all supported dtypes.
 9. Must supports string, categorical and datetime dtypes.
 10. Must allow the consumer to inspect the representation for missing values
-    that the producer uses for each column or data type.
+    that the producer uses for each column or data type. Sentinel values,
+    bit masks, and boolean masks must be supported.
+    Must also be able to define whether the semantic meaning of `NaN` and
+    `NaT` is "not-a-number/datetime" or "missing".
     _Rationale: this enables the consumer to control how conversion happens,
     for example if the producer uses `-128` as a sentinel value in an `int8`
     column while the consumer uses a separate bit mask, that information
@@ -317,7 +320,9 @@ Here are the four most relevant existing protocols, and what requirements they s
 2. Can be done only via separate masks of boolean arrays.
 3. `__array_interface__` has a `mask` attribute, which is a separate boolean array also implementing the `__array_interface__` protocol.
 4. Only fixed-length strings as sequence of char or unicode.
-5. Only NumPy datetime and timedelta, which are limited compared to what the Arrow format offers.
+5. Only NumPy datetime and timedelta, not timezones. For the purpose of data
+   interchange, timezones could be represented separately in metadata if
+   desired.
 6. No explicit support, however categoricals can be mapped to either integers
    or strings. Unclear how to communicate that information from producer to consumer.
 7. No explicit support, categoricals can only be mapped to integers.
