@@ -90,7 +90,9 @@ this is a consequence, and that that should be acceptable to them.
 
 ## Conceptual model of a dataframe
 
-For a protocol to exchange dataframes between libraries, we need both a model of what we mean by "dataframe" conceptually for the purposes of the protocol, and a model of how the data is represented in memory:
+For a protocol to exchange dataframes between libraries, we need both a model
+of what we mean by "dataframe" conceptually for the purposes of the protocol,
+and a model of how the data is represented in memory:
 
 ![Image of a dataframe model, containing chunks, columns and 1-D arrays](conceptual_model_df_memory.png)
 
@@ -141,9 +143,13 @@ length. A **dataframe** contains one or more chunks.
 12. Must support chunking, i.e. accessing the data in "batches" of rows.
     There must be metadata the consumer can access to learn in how many
     chunks the data is stored. The consumer may also convert the data in
-    more chunks than it is stored in, i.e. it can ask the producer to slice its columns to shorter length. That request may not be such that it would force the producer
-    to concatenate data that is already stored in separate chunks.
-    _Rationale: support for chunking is more efficient for libraries that natively store chunks, and it is needed for dataframes that do not fit in memory (e.g. dataframes stored on disk or lazily evaluated)._
+    more chunks than it is stored in, i.e. it can ask the producer to slice
+    its columns to shorter length. That request may not be such that it would
+    force the producer to concatenate data that is already stored in separate
+    chunks.
+    _Rationale: support for chunking is more efficient for libraries that
+    natively store chunks, and it is needed for dataframes that do not fit in
+    memory (e.g. dataframes stored on disk or lazily evaluated)._
 
 We'll also list some things that were discussed but are not requirements:
 
@@ -186,7 +192,8 @@ isn't completely necessary, however it's expected that a full dataframe API
 standard will have such a function. The array API standard also has such a
 function, namely `from_dlpack`. Adding at least a recommendation on syntax
 for this function would make sense, e.g., `from_dataframe(df, stream=None)`.
-Discussion at https://github.com/data-apis/dataframe-api/issues/29#issuecomment-685903651 is relevant.
+Discussion at https://github.com/data-apis/dataframe-api/issues/29#issuecomment-685903651
+is relevant.
 
 
 ## Frequently asked questions
@@ -196,7 +203,8 @@ Discussion at https://github.com/data-apis/dataframe-api/issues/29#issuecomment-
 What we are aiming for is quite similar to the Arrow C Data Interface (see
 the [rationale for the Arrow C Data Interface](https://arrow.apache.org/docs/format/CDataInterface.html#rationale)),
 except `__dataframe__` is a Python-level rather than C-level interface.
-The data types format specification of that interface is something that could be used unchanged.
+The data types format specification of that interface is something that could
+be used unchanged.
 
 The main (only?) limitation seems to be that it does not have device support
 - @kkraus14 will bring this up on the Arrow dev mailing list. Also note that
