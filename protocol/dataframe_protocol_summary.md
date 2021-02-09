@@ -107,8 +107,8 @@ length. A **dataframe** contains one or more chunks.
 
 1. Must be a standard Python-level API that is unambiguously specified, and
    not rely on implementation details of any particular dataframe library.
-2. Must treat dataframes as a collection of columns (which are conceptually
-   1-D arrays with a dtype and missing data support).
+2. Must treat dataframes as an ordered collection of columns (which are
+   conceptually 1-D arrays with a dtype and missing data support).
    _Note: this relates to the API for `__dataframe__`, and does not imply
    that the underlying implementation must use columnar storage!_
 3. Must allow the consumer to select a specific set of columns for conversion.
