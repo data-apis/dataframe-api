@@ -117,9 +117,6 @@ class Column:
           doesn't need its own version or ``__column__`` protocol.
 
     """
-    @property
-    def name(self) -> str:
-        pass
 
     @property
     def size(self) -> Optional[int]:
@@ -247,7 +244,7 @@ class Column:
         """
         pass
 
-    def get_buffer(self) -> Buffer:
+    def get_data_buffer(self) -> Buffer:
         """
         Return the buffer containing the data.
         """
