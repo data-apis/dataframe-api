@@ -67,12 +67,6 @@ class Buffer:
         """
         raise NotImplementedError("__dlpack__")
 
-    def __array_interface__(self):
-        """
-        TBD: implement or not? Will work for all dtypes except bit masks.
-        """
-        raise NotImplementedError("__array_interface__")
-
 
 class Column:
     """
