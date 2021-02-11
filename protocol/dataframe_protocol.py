@@ -206,10 +206,11 @@ class Column:
 
         Kind:
 
-            - 0 : NaN/NaT
-            - 1 : sentinel value
-            - 2 : bit mask
-            - 3 : byte mask
+            - 0 : non-nullable
+            - 1 : NaN/NaT
+            - 2 : sentinel value
+            - 3 : bit mask
+            - 4 : byte mask
 
         Value : if kind is "sentinel value", the actual value. None otherwise.
         """
