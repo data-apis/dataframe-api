@@ -5,6 +5,32 @@ data frame object.
 
 For guiding requirements, see https://github.com/data-apis/dataframe-api/pull/35
 
+
+Concepts in this design
+-----------------------
+
+1. A `Buffer` class. A *buffer* is a contiguous block of memory - this is the
+  only thing that actually maps to a 1-D array in a sense that it could be
+  converted to NumPy, CuPy, et al.
+2. A `Column` class. A *column* has a name and a single dtype. It can consist
+   of multiple *chunks*. A single chunk of a column (which may be the whole
+   column if ``num_chunks == 1``) is modeled as again a `Column` instance, and
+   contains 1 data *buffer* and (optionally) one *mask* for missing data.
+3. A `DataFrame` class. A *data frame* is an ordered collection of *columns*.
+   It has a single device, and all its rows are the same length. It can consist
+   of multiple *chunks*. A single chunk of a data frame is modeled as
+   again a `DataFrame` instance.
+4. A *mask* concept. A *mask* of a single-chunk column is a *buffer*.
+5. A *chunk* concept. A *chunk* is a sub-dividing element that can be applied
+   to a *data frame* or a *column*.
+
+Note that the only way to access these objects is through a call to
+``__dataframe__`` on a data frame object. This is NOT meant as public API;
+only think of instances of the different classes here to describe the API of
+what is returned by a call to ``__dataframe__``. They are the concepts needed
+to capture the memory layout and data access of a data frame.
+
+
 Design decisions
 ----------------
 
@@ -31,12 +57,27 @@ Optional row names are not a good idea, because people will assume they're prese
 (see cuDF experience, forced to add because pandas has them).
 Requiring row names seems worse than leaving them out.
 
+Note that row labels could be added in the future - right now there's no clear
+requirements for more complex row labels that cannot be represented by a single
+column. That do exist, for example Modin has has table and tree-based row
+labels.
+
 """
 
 
 class Buffer:
     """
     Data in the buffer is guaranteed to be contiguous in memory.
+
+    Note that there is no dtype attribute present, a buffer can be thought of
+    as simply a block of memory. However, if the column that the buffer is
+    attached to has a dtype that's supported by DLPack and ``__dlpack__`` is
+    implemented, then that dtype information will be contained in the return
+    value from ``__dlpack__``.
+
+    This distinction is useful to support both data exchange via DLPack on a
+    buffer and (b) dtypes like variable-length strings which do not have a
+    fixed number of bytes per element.
     """
 
     @property
@@ -66,6 +107,25 @@ class Buffer:
         it's not completely trivial to implement for a Python-only library.
         """
         raise NotImplementedError("__dlpack__")
+
+    def __dlpack_device__(self) -> Tuple[enum.IntEnum, int]:
+        """
+        Device type and device ID for where the data in the buffer resides.
+
+        Uses device type codes matching DLPack. Enum members are::
+
+            - CPU = 1
+            - CUDA = 2
+            - CPU_PINNED = 3
+            - OPENCL = 4
+            - VULKAN = 7
+            - METAL = 8
+            - VPI = 9
+            - ROCM = 10
+
+        Note: must be implemented even if ``__dlpack__`` is not.
+        """
+        pass
 
 
 class Column:
@@ -279,6 +339,11 @@ class DataFrame:
     def __dataframe__(self, nan_as_null : bool = False) -> dict:
         """
         Produces a dictionary object following the dataframe protocol spec
+
+        ``nan_as_null`` is a keyword intended for the consumer to tell the
+        producer to overwrite null values in the data with ``NaN`` (or ``NaT``).
+        It is intended for cases where the consumer does not support the bit
+        mask or byte mask that is the producer's native representation.
         """
         self._nan_as_null = nan_as_null
         return {
@@ -354,20 +419,3 @@ class DataFrame:
         """
         pass
 
-    @property
-    def device(self) -> int:
-        """
-        Device type the dataframe resides on.
-
-        Uses device type codes matching DLPack:
-
-            - 1 : CPU
-            - 2 : CUDA
-            - 3 : CPU pinned
-            - 4 : OpenCL
-            - 7 : Vulkan
-            - 8 : Metal
-            - 9 : Verilog
-            - 10 : ROCm
-        """
-        pass
