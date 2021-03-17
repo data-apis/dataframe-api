@@ -26,6 +26,7 @@ from typing import Any, Optional, Tuple, Dict, Iterable, Sequence
 import pandas as pd
 import numpy as np
 import pandas._testing as tm
+import pytest
 
 
 # A typing protocol could be added later to let Mypy validate code using
@@ -137,7 +138,10 @@ class _PandasBuffer:
         Handle only regular columns (= numpy arrays) for now.
         """
         if not x.strides == (x.dtype.itemsize,):
-            # Array is not contiguous - is this possible?
+            # Array is not contiguous - this is possible to get in Pandas,
+            # there was some discussion on whether to support it. Som extra
+            # complexity for libraries that don't support it (e.g. Arrow),
+            # but would help with numpy-based libraries like Pandas.
             raise RuntimeError("Design needs fixing - non-contiguous buffer")
 
         # Store the numpy array in which the data resides as a private
@@ -444,7 +448,18 @@ def test_mixed_intfloat():
     tm.assert_frame_equal(df, df2)
 
 
+def test_noncontiguous_columns():
+    # Currently raises: TBD whether it should work or not, see code comment
+    # where the RuntimeError is raised.
+    arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    df = pd.DataFrame(arr)
+    assert df[0].to_numpy().strides == (24,)
+    pytest.raises(RuntimeError, from_dataframe, df)
+    #df2 = from_dataframe(df)
+
+
 if __name__ == '__main__':
     test_float_only()
     test_mixed_intfloat()
+    test_noncontiguous_columns()
 
