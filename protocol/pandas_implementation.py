@@ -135,20 +135,24 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
         raise NotImplementedError('Non-dictionary categoricals not supported yet')
 
     # FIXME: this is cheating, can't use `_col` (just testing now)
-    categories = col._col.values.categories.values
-    codes = col._col.values.codes
+    #    categories = col._col.values.categories.values
+    #    codes = col._col.values.codes
+    categories = np.asarray(list(mapping.values()))
+    codes = col.get_data_buffer()  # this is broken; don't have dtype info for buffer
     values = categories[codes]
-
-    # Deal with null values
-    null_kind = col.describe_null[0]
-    if null_kind == 2:  # sentinel value
-        sentinel = col.describe_null[1]
 
     # Seems like Pandas can only construct with non-null values, so need to
     # null out the nulls later
     cat = pd.Categorical(values, categories=categories, ordered=ordered)
     series = pd.Series(cat)
-    series[codes == sentinel] = np.nan
+    null_kind = col.describe_null[0]
+    if null_kind == 2:  # sentinel value
+        sentinel = col.describe_null[1]
+        series[codes == sentinel] = np.nan
+    else:
+        raise NotImplementedError("Only categorical columns with sentinel "
+                                  "value supported at the moment")
+
     return series
 
 
@@ -430,7 +434,16 @@ class _PandasColumn:
         """
         Return the buffer containing the data.
         """
-        return _PandasBuffer(self._col.to_numpy())
+        _k = _DtypeKind
+        if self.dtype[0] in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL):
+            buffer = _PandasBuffer(self._col.to_numpy())
+        elif self.dtype[0] == _k.CATEGORICAL:
+            # FIXME: losing the dtype info here - see `convert_categorical_column`
+            buffer = _PandasBuffer(self._col.values.codes)
+        else:
+            raise NotImplementedError(f"Data type {self._col.dtype} not handled yet")
+
+        return buffer
 
     def get_mask(self) -> _PandasBuffer:
         """
