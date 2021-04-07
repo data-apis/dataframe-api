@@ -84,7 +84,7 @@ def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
     if col.offset != 0:
         raise NotImplementedError("column.offset > 0 not handled yet")
 
-    if col.describe_null not in (0, 1):
+    if col.describe_null[0] not in (0, 1):
         raise NotImplementedError("Null values represented as masks or "
                                   "sentinel values not handled yet")
 
@@ -230,19 +230,19 @@ class _PandasColumn:
         return 0
 
     @property
-    def dtype(self) -> Tuple[int, int, str, str]:
+    def dtype(self) -> Tuple[enum.IntEnum, int, str, str]:
         """
         Dtype description as a tuple ``(kind, bit-width, format string, endianness)``
 
         Kind :
 
-            - 0 : signed integer
-            - 1 : unsigned integer
-            - 2 : IEEE floating point
-            - 20 : boolean
-            - 21 : string (UTF-8)
-            - 22 : datetime
-            - 23 : categorical
+            - INT = 0
+            - UINT = 1
+            - FLOAT = 2
+            - BOOL = 20
+            - STRING = 21   # UTF-8
+            - DATETIME = 22
+            - CATEGORICAL = 23
 
         Bit-width : the number of bits as an integer
         Format string : data type description format string in Apache Arrow C
@@ -273,15 +273,25 @@ class _PandasColumn:
         # Note: 'c' (complex) not handled yet (not in array spec v1).
         #       'b', 'B' (bytes), 'S', 'a', (old-style string) 'V' (void) not handled
         #       datetime and timedelta both map to datetime (is timedelta handled?)
-        _np_kinds = {'i': 0, 'u': 1, 'f': 2, 'b': 20, 'O': 21, 'U': 21,
-                     'M': 22, 'm': 22}
+        _k = _DtypeKind
+        _np_kinds = {'i': _k.INT, 'u': _k.UINT, 'f': _k.FLOAT, 'b': _k.BOOL,
+                     'U': _k.STRING,
+                     'M': _k.DATETIME, 'm': _k.DATETIME}
         kind = _np_kinds.get(dtype.kind, None)
         if kind is None:
-            raise NotImplementedError("Data type {} not handled".format(dtype))
+            # Not a NumPy dtype. Check if it's a categorical maybe
+            if isinstance(dtype, pd.CategoricalDtype):
+                kind = 23
+            else:
+                raise ValueError(f"Data type {dtype} not supported by exchange"
+                                 "protocol")
+
+        if kind not in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL, _k.CATEGORICAL):
+            raise NotImplementedError(f"Data type {dtype} not handled yet")
 
         bitwidth = dtype.itemsize * 8
         format_str = dtype.str
-        endianness = dtype.byteorder
+        endianness = dtype.byteorder if not kind == _k.CATEGORICAL else '='
         return (kind, bitwidth, format_str, endianness)
 
 
@@ -324,19 +334,26 @@ class _PandasColumn:
 
         Value : if kind is "sentinel value", the actual value. None otherwise.
         """
+        _k = _DtypeKind
         kind = self.dtype[0]
-        if kind == 2:
+        value = None
+        if kind == _k.FLOAT:
             null = 1  # np.nan
-        elif kind == 22:
+        elif kind == _k.DATETIME:
             null = 1  # np.datetime64('NaT')
-        elif kind in (0, 1, 20):
+        elif kind in (_k.INT, _k.UINT, _k.BOOL):
             # TODO: check if extension dtypes are used once support for them is
             #       implemented in this procotol code
             null = 0  # integer and boolean dtypes are non-nullable
+        elif kind == _k.CATEGORICAL:
+            # Null values for categoricals are stored as `-1` sentinel values
+            # in the category date (e.g., `col.values.codes` is int8 np.ndarray)
+            null = 2
+            value = -1
         else:
-            raise NotImplementedError('TODO')
+            raise NotImplementedError(f'Data type {self.dtype} not yet supported')
 
-        return null
+        return null, value
 
     @property
     def null_count(self) -> int:
@@ -469,8 +486,16 @@ def test_noncontiguous_columns():
     #df2 = from_dataframe(df)
 
 
+def test_categorical_dtype():
+    df = pd.DataFrame({"A": [1, 2, 3, 1]})
+    df["B"] = df["A"].astype("category")
+    df.at[1, 'B'] = np.nan  # Set one item to null
+    df2 = from_dataframe(df)
+
+
 if __name__ == '__main__':
     test_float_only()
     test_mixed_intfloat()
     test_noncontiguous_columns()
+    test_categorical_dtype()
 
