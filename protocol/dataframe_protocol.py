@@ -12,14 +12,14 @@ Concepts in this design
 1. A `Buffer` class. A *buffer* is a contiguous block of memory - this is the
   only thing that actually maps to a 1-D array in a sense that it could be
   converted to NumPy, CuPy, et al.
-2. A `Column` class. A *column* has a name and a single dtype. It can consist
+2. A `Column` class. A *column* has a single dtype. It can consist
    of multiple *chunks*. A single chunk of a column (which may be the whole
    column if ``num_chunks == 1``) is modeled as again a `Column` instance, and
    contains 1 data *buffer* and (optionally) one *mask* for missing data.
-3. A `DataFrame` class. A *data frame* is an ordered collection of *columns*.
-   It has a single device, and all its rows are the same length. It can consist
-   of multiple *chunks*. A single chunk of a data frame is modeled as
-   again a `DataFrame` instance.
+3. A `DataFrame` class. A *data frame* is an ordered collection of *columns*,
+   which are identified with names that are unique strings.  All the data
+   frame's rows are the same length. It can consist of multiple *chunks*. A
+   single chunk of a data frame is modeled as again a `DataFrame` instance.
 4. A *mask* concept. A *mask* of a single-chunk column is a *buffer*.
 5. A *chunk* concept. A *chunk* is a sub-dividing element that can be applied
    to a *data frame* or a *column*.
@@ -59,7 +59,7 @@ Requiring row names seems worse than leaving them out.
 
 Note that row labels could be added in the future - right now there's no clear
 requirements for more complex row labels that cannot be represented by a single
-column. That do exist, for example Modin has has table and tree-based row
+column. These do exist, for example Modin has has table and tree-based row
 labels.
 
 """
@@ -194,19 +194,19 @@ class Column:
         pass
 
     @property
-    def dtype(self) -> Tuple[int, int, str, str]:
+    def dtype(self) -> Tuple[enum.IntEnum, int, str, str]:
         """
         Dtype description as a tuple ``(kind, bit-width, format string, endianness)``
 
         Kind :
 
-            - 0 : signed integer
-            - 1 : unsigned integer
-            - 2 : IEEE floating point
-            - 20 : boolean
-            - 21 : string (UTF-8)
-            - 22 : datetime
-            - 23 : categorical
+            - INT = 0
+            - UINT = 1
+            - FLOAT = 2
+            - BOOL = 20
+            - STRING = 21   # UTF-8
+            - DATETIME = 22
+            - CATEGORICAL = 23
 
         Bit-width : the number of bits as an integer
         Format string : data type description format string in Apache Arrow C

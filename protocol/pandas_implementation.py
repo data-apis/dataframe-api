@@ -68,6 +68,16 @@ def _from_dataframe(df : DataFrameObject) -> pd.DataFrame:
     return pd.DataFrame(columns)
 
 
+class _DtypeKind(enum.IntEnum):
+    INT = 0
+    UINT = 1
+    FLOAT = 2
+    BOOL = 20
+    STRING = 21   # UTF-8
+    DATETIME = 22
+    CATEGORICAL = 23
+
+
 def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
     """
     """
@@ -82,7 +92,8 @@ def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
     _dtype = col.dtype
     kind = _dtype[0]
     bitwidth = _dtype[1]
-    if _dtype[0] not in (0, 1, 2, 20):
+    _k = _DtypeKind
+    if _dtype[0] not in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL):
         raise RuntimeError("Not a boolean, integer or floating-point dtype")
 
     _ints = {8: np.int8, 16: np.int16, 32: np.int32, 64: np.int64}
