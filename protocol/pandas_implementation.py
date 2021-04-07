@@ -62,8 +62,16 @@ def _from_dataframe(df : DataFrameObject) -> pd.DataFrame:
     # We need a dict of columns here, with each column being a numpy array (at
     # least for now, deal with non-numpy dtypes later).
     columns = dict()
+    _k = _DtypeKind
     for name in df.column_names():
-        columns[name] = convert_column_to_ndarray(df.get_column_by_name(name))
+        col = df.get_column_by_name(name)
+        if col.dtype[0] in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL):
+            # Simple numerical or bool dtype, turn into numpy array
+            columns[name] = convert_column_to_ndarray(col)
+        elif col.dtype[0] == _k.CATEGORICAL:
+            columns[name] = convert_categorical_column(col)
+        else:
+            raise NotImplementedError(f"Data type {col.dtype[0]} not handled yet")
 
     return pd.DataFrame(columns)
 
@@ -80,6 +88,7 @@ class _DtypeKind(enum.IntEnum):
 
 def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
     """
+    Convert an int, uint, float or bool column to a numpy array
     """
     if col.offset != 0:
         raise NotImplementedError("column.offset > 0 not handled yet")
@@ -115,6 +124,32 @@ def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
                               shape=(_buffer.bufsize // (bitwidth//8),))
 
     return x
+
+
+def convert_categorical_column(col : ColumnObject) -> pd.Series:
+    """
+    Convert a categorical column to a Series instance
+    """
+    ordered, is_dict, mapping = col.describe_categorical
+    if not is_dict:
+        raise NotImplementedError('Non-dictionary categoricals not supported yet')
+
+    # FIXME: this is cheating, can't use `_col` (just testing now)
+    categories = col._col.values.categories.values
+    codes = col._col.values.codes
+    values = categories[codes]
+
+    # Deal with null values
+    null_kind = col.describe_null[0]
+    if null_kind == 2:  # sentinel value
+        sentinel = col.describe_null[1]
+
+    # Seems like Pandas can only construct with non-null values, so need to
+    # null out the nulls later
+    cat = pd.Categorical(values, categories=categories, ordered=ordered)
+    series = pd.Series(cat)
+    series[codes == sentinel] = np.nan
+    return series
 
 
 def __dataframe__(cls, nan_as_null : bool = False) -> dict:
@@ -324,13 +359,14 @@ class _PandasColumn:
                             "categorical dtype!")
 
         ordered = self._col.dtype.ordered
-        is_dictionary = False
-        # NOTE: this shows the children approach is better, transforming this
-        # to a "mapping" dict would be inefficient
+        is_dictionary = True
+        # NOTE: this shows the children approach is better, transforming
+        # `categories` to a "mapping" dict is inefficient
         codes = self._col.values.codes  # ndarray, length `self.size`
         # categories.values is ndarray of length n_categories
-        categories = self._col.values.categories
-        return ordered, is_dictionary, None
+        categories = self._col.values.categories.values
+        mapping = {ix: val for ix, val in enumerate(categories)}
+        return ordered, is_dictionary, mapping
 
     @property
     def describe_null(self) -> Tuple[int, Any]:
@@ -402,7 +438,7 @@ class _PandasColumn:
 
         Raises RuntimeError if null representation is not a bit or byte mask.
         """
-        null = self.describe_null()
+        null, value = self.describe_null
         if null == 0:
             msg = "This column is non-nullable so does not have a mask"
         elif null == 1:
@@ -501,7 +537,7 @@ def test_noncontiguous_columns():
 
 
 def test_categorical_dtype():
-    df = pd.DataFrame({"A": [1, 2, 3, 1]})
+    df = pd.DataFrame({"A": [1, 2, 5, 1]})
     df["B"] = df["A"].astype("category")
     df.at[1, 'B'] = np.nan  # Set one item to null
 
@@ -511,15 +547,15 @@ def test_categorical_dtype():
     assert col.null_count == 1
     assert col.describe_null == (2, -1)  # sentinel value -1
     assert col.num_chunks() == 1
-    assert col.describe_categorical == (False, False, None)
+    assert col.describe_categorical == (False, True, {0: 1, 1: 2, 2: 5})
 
     df2 = from_dataframe(df)
     tm.assert_frame_equal(df, df2)
 
 
 if __name__ == '__main__':
+    test_categorical_dtype()
     test_float_only()
     test_mixed_intfloat()
     test_noncontiguous_columns()
-    test_categorical_dtype()
 
