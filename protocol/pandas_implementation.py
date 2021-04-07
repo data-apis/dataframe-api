@@ -97,8 +97,12 @@ def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
         raise NotImplementedError("Null values represented as masks or "
                                   "sentinel values not handled yet")
 
+    _buffer, _dtype = col.get_data_buffer()
+    return buffer_to_ndarray(_buffer, _dtype)
+
+
+def buffer_to_ndarray(_buffer, _dtype) -> np.ndarray:
     # Handle the dtype
-    _dtype = col.dtype
     kind = _dtype[0]
     bitwidth = _dtype[1]
     _k = _DtypeKind
@@ -113,7 +117,6 @@ def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
 
     # No DLPack yet, so need to construct a new ndarray from the data pointer
     # and size in the buffer plus the dtype on the column
-    _buffer = col.get_data_buffer()
     ctypes_type = np.ctypeslib.as_ctypes_type(column_dtype)
     data_pointer = ctypes.cast(_buffer.ptr, ctypes.POINTER(ctypes_type))
 
@@ -134,11 +137,12 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
     if not is_dict:
         raise NotImplementedError('Non-dictionary categoricals not supported yet')
 
-    # FIXME: this is cheating, can't use `_col` (just testing now)
+    # If you want to cheat for testing (can't use `_col` in real-world code):
     #    categories = col._col.values.categories.values
     #    codes = col._col.values.codes
     categories = np.asarray(list(mapping.values()))
-    codes = col.get_data_buffer()  # this is broken; don't have dtype info for buffer
+    codes_buffer, codes_dtype = col.get_data_buffer()
+    codes = buffer_to_ndarray(codes_buffer, codes_dtype)
     values = categories[codes]
 
     # Seems like Pandas can only construct with non-null values, so need to
@@ -314,6 +318,12 @@ class _PandasColumn:
               and nested (list, struct, map, union) dtypes.
         """
         dtype = self._col.dtype
+        return self._dtype_from_pandasdtype(dtype)
+
+    def _dtype_from_pandasdtype(self, dtype) -> Tuple[enum.IntEnum, int, str, str]:
+        """
+        See `self.dtype` for details
+        """
         # Note: 'c' (complex) not handled yet (not in array spec v1).
         #       'b', 'B' (bytes), 'S', 'a', (old-style string) 'V' (void) not handled
         #       datetime and timedelta both map to datetime (is timedelta handled?)
@@ -430,20 +440,22 @@ class _PandasColumn:
         """
         return (self,)
 
-    def get_data_buffer(self) -> _PandasBuffer:
+    def get_data_buffer(self) -> Tuple[_PandasBuffer, Any]:  # Any is for self.dtype tuple
         """
         Return the buffer containing the data.
         """
         _k = _DtypeKind
         if self.dtype[0] in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL):
             buffer = _PandasBuffer(self._col.to_numpy())
+            dtype = self.dtype
         elif self.dtype[0] == _k.CATEGORICAL:
-            # FIXME: losing the dtype info here - see `convert_categorical_column`
-            buffer = _PandasBuffer(self._col.values.codes)
+            codes = self._col.values.codes
+            buffer = _PandasBuffer(codes)
+            dtype = self._dtype_from_pandasdtype(codes.dtype)
         else:
             raise NotImplementedError(f"Data type {self._col.dtype} not handled yet")
 
-        return buffer
+        return buffer, dtype
 
     def get_mask(self) -> _PandasBuffer:
         """

@@ -313,7 +313,6 @@ class Column:
         """
         pass
 
-#    # NOTE: not needed unless one considers nested dtypes
 #    def get_children(self) -> Iterable[Column]:
 #        """
 #        Children columns underneath the column, each object in this iterator
