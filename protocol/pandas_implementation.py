@@ -188,6 +188,11 @@ class _PandasBuffer:
 
         return (Device.CPU, None)
 
+    def __repr__(self) -> str:
+        return 'PandasBuffer(' + str({'bufsize': self.bufsize,
+                                      'ptr': self.ptr,
+                                      'device': self.__dlpack_device__()[0].name}
+                                      ) + ')'
 
 class _PandasColumn:
     """
@@ -313,10 +318,19 @@ class _PandasColumn:
                                 categorical values to other objects exists
             - "mapping" : dict, Python-level only (e.g. ``{int: str}``).
                           None if not a dictionary-style categorical.
-
-        TBD: are there any other in-memory representations that are needed?
         """
-        raise NotImplementedError("TODO")
+        if not self.dtype[0] == _DtypeKind.CATEGORICAL:
+            raise TypeError("`describe_categorical only works on a column with "
+                            "categorical dtype!")
+
+        ordered = self._col.dtype.ordered
+        is_dictionary = False
+        # NOTE: this shows the children approach is better, transforming this
+        # to a "mapping" dict would be inefficient
+        codes = self._col.values.codes  # ndarray, length `self.size`
+        # categories.values is ndarray of length n_categories
+        categories = self._col.values.categories
+        return ordered, is_dictionary, None
 
     @property
     def describe_null(self) -> Tuple[int, Any]:
@@ -490,7 +504,17 @@ def test_categorical_dtype():
     df = pd.DataFrame({"A": [1, 2, 3, 1]})
     df["B"] = df["A"].astype("category")
     df.at[1, 'B'] = np.nan  # Set one item to null
+
+    # Some detailed testing for correctness of dtype and null handling:
+    col = df.__dataframe__().get_column_by_name('B')
+    assert col.dtype[0] == _DtypeKind.CATEGORICAL
+    assert col.null_count == 1
+    assert col.describe_null == (2, -1)  # sentinel value -1
+    assert col.num_chunks() == 1
+    assert col.describe_categorical == (False, False, None)
+
     df2 = from_dataframe(df)
+    tm.assert_frame_equal(df, df2)
 
 
 if __name__ == '__main__':
