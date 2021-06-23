@@ -83,14 +83,14 @@ class Buffer:
     @property
     def bufsize(self) -> int:
         """
-        Buffer size in bytes
+        Buffer size in bytes.
         """
         pass
 
     @property
     def ptr(self) -> int:
         """
-        Pointer to start of the buffer as an integer
+        Pointer to start of the buffer as an integer.
         """
         pass
 
@@ -186,7 +186,7 @@ class Column:
     @property
     def offset(self) -> int:
         """
-        Offset of first element
+        Offset of first element.
 
         May be > 0 if using chunks; for example for a column with N chunks of
         equal size M (only the last chunk may be shorter),
@@ -197,7 +197,7 @@ class Column:
     @property
     def dtype(self) -> Tuple[enum.IntEnum, int, str, str]:
         """
-        Dtype description as a tuple ``(kind, bit-width, format string, endianness)``
+        Dtype description as a tuple ``(kind, bit-width, format string, endianness)``.
 
         Kind :
 
@@ -324,7 +324,7 @@ class Column:
 #    def get_children(self) -> Iterable[Column]:
 #        """
 #        Children columns underneath the column, each object in this iterator
-#        must adhere to the column specification
+#        must adhere to the column specification.
 #        """
 #        pass
 
@@ -345,7 +345,7 @@ class DataFrame:
     """
     def __dataframe__(self, nan_as_null : bool = False) -> dict:
         """
-        Produces a dictionary object following the dataframe protocol spec
+        Produces a dictionary object following the dataframe protocol specification.
 
         ``nan_as_null`` is a keyword intended for the consumer to tell the
         producer to overwrite null values in the data with ``NaN`` (or ``NaT``).
@@ -360,7 +360,7 @@ class DataFrame:
 
     def num_columns(self) -> int:
         """
-        Return the number of columns in the DataFrame
+        Return the number of columns in the DataFrame.
         """
         pass
 
@@ -369,13 +369,13 @@ class DataFrame:
         #       why include it if it may be None - what do we expect consumers
         #       to do here?
         """
-        Return the number of rows in the DataFrame, if available
+        Return the number of rows in the DataFrame, if available.
         """
         pass
 
     def num_chunks(self) -> int:
         """
-        Return the number of chunks the DataFrame consists of
+        Return the number of chunks the DataFrame consists of.
         """
         pass
 
@@ -405,7 +405,7 @@ class DataFrame:
 
     def select_columns(self, indices: Sequence[int]) -> DataFrame:
         """
-        Create a new DataFrame by selecting a subset of columns by index
+        Create a new DataFrame by selecting a subset of columns by index.
         """
         pass
 
