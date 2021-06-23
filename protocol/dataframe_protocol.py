@@ -133,9 +133,10 @@ class Column:
     A column object, with only the methods and properties required by the
     interchange protocol defined.
 
-    A column can contain one or more chunks. Each chunk can contain either one
-    or two buffers - one data buffer and (depending on null representation) it
-    may have a mask buffer.
+    A column can contain one or more chunks. Each chunk can contain up to three
+    buffers - a data buffer, a mask buffer (depending on null representation),
+    and an offsets buffer (if variable-size binary; e.g., variable-length
+    strings).
 
     TBD: Arrow has a separate "null" dtype, and has no separate mask concept.
          Instead, it seems to use "children" for both columns with a bit mask,
@@ -310,6 +311,13 @@ class Column:
         Return the buffer containing the mask values indicating missing data.
 
         Raises RuntimeError if null representation is not a bit or byte mask.
+        """
+        pass
+
+    def get_offsets(self) -> Buffer:
+        """
+        Return the buffer containing the offset values for variable-size binary
+        data (e.g., variable-length strings).
         """
         pass
 
