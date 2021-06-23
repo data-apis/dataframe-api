@@ -360,7 +360,7 @@ class DataFrame:
     @property
     def metadata(self) -> Dict[str, Any]:
         """
-        Store the metadata specific to the DataFrame
+        Store the metadata specific to the DataFrame.
         """
         pass
 
@@ -431,4 +431,3 @@ class DataFrame:
         before yielding it.
         """
         pass
-
