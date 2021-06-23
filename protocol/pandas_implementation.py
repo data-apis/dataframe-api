@@ -426,6 +426,13 @@ class _PandasColumn:
         """
         return self._col.isna().sum()
 
+    @property
+    def metadata(self) -> Dict[str, Any]:
+        """
+        Store specific metadata of the column.
+        """
+        return {"num_chunks": self.num_chunks()}
+
     def num_chunks(self) -> int:
         """
         Return the number of chunks the column consists of.
@@ -494,6 +501,11 @@ class _PandasDataFrame:
         # This currently has no effect; once support for nullable extension
         # dtypes is added, this value should be propagated to columns.
         self._nan_as_null = nan_as_null
+
+    @property
+    def metadata(self):
+        return {"num_chunks": self.num_chunks(),
+                "num_columns": self.num_columns()}
 
     def num_columns(self) -> int:
         return len(self._df.columns)
@@ -578,9 +590,28 @@ def test_categorical_dtype():
     tm.assert_frame_equal(df, df2)
 
 
+def test_metadata():
+    df = pd.DataFrame(data=dict(a=[1, 2, 3], b=[4, 5, 6], c=[7, 8, 9]))
+
+    # Check the metadata from the dataframe
+    df_metadata = df.__dataframe__().metadata
+    excpected = {"num_chunks": 1, "num_columns": 3}
+    for key in df_metadata:
+        assert df_metadata[key] == excpected[key]
+
+    # Check the metadata from the column
+    col_metadata = df.__dataframe__().get_column(0).metadata
+    expected = {"num_chunks": 1}
+    for key in col_metadata:
+        assert col_metadata[key] == excpected[key]
+
+    df2 = from_dataframe(df)
+    tm.assert_frame_equal(df, df2)
+
+
 if __name__ == '__main__':
     test_categorical_dtype()
     test_float_only()
     test_mixed_intfloat()
     test_noncontiguous_columns()
-
+    test_metadata()

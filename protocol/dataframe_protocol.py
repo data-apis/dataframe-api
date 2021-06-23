@@ -285,6 +285,13 @@ class Column:
         """
         pass
 
+    @property
+    def metadata(self) -> Dict[str, Any]:
+        """
+        Store the metadata specific to the column.
+        """
+        pass
+
     def num_chunks(self) -> int:
         """
         Return the number of chunks the column consists of.
@@ -349,6 +356,13 @@ class DataFrame:
             "dataframe": self,  # DataFrame object adhering to the protocol
             "version": 0        # Version number of the protocol
         }
+
+    @property
+    def metadata(self) -> Dict[str, Any]:
+        """
+        Store the metadata specific to the DataFrame
+        """
+        pass
 
     def num_columns(self) -> int:
         """
