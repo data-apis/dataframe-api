@@ -35,7 +35,8 @@ DataFrameObject = Any
 ColumnObject = Any
 
 
-def from_dataframe(df : DataFrameObject) -> pd.DataFrame:
+def from_dataframe(df : DataFrameObject,
+                   allow_zero_copy : bool = False) -> pd.DataFrame:
     """
     Construct a pandas DataFrame from ``df`` if it supports ``__dataframe__``
     """
@@ -46,7 +47,7 @@ def from_dataframe(df : DataFrameObject) -> pd.DataFrame:
     if not hasattr(df, '__dataframe__'):
         raise ValueError("`df` does not support __dataframe__")
 
-    return _from_dataframe(df.__dataframe__())
+    return _from_dataframe(df.__dataframe__(allow_zero_copy=allow_zero_copy))
 
 
 def _from_dataframe(df : DataFrameObject) -> pd.DataFrame:
@@ -160,7 +161,8 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
     return series
 
 
-def __dataframe__(cls, nan_as_null : bool = False) -> dict:
+def __dataframe__(cls, nan_as_null : bool = False,
+                  allow_zero_copy : bool = False) -> dict:
     """
     The public method to attach to pd.DataFrame
 
@@ -171,8 +173,14 @@ def __dataframe__(cls, nan_as_null : bool = False) -> dict:
     producer to overwrite null values in the data with ``NaN`` (or ``NaT``).
     This currently has no effect; once support for nullable extension
     dtypes is added, this value should be propagated to columns.
+
+    ``allow_zero_copy`` is a keyword that defines if the given implementation
+    is going to support striding buffers. It is optional, and the libraries
+    do not need to implement it. Currently, if the flag is set to ``True`` it
+    will raise a ``RuntimeError``.
     """
-    return _PandasDataFrame(cls, nan_as_null=nan_as_null)
+    return _PandasDataFrame(
+        cls, nan_as_null=nan_as_null, allow_zero_copy=allow_zero_copy)
 
 
 # Monkeypatch the Pandas DataFrame class to support the interchange protocol
@@ -187,16 +195,16 @@ class _PandasBuffer:
     Data in the buffer is guaranteed to be contiguous in memory.
     """
 
-    def __init__(self, x : np.ndarray) -> None:
+    def __init__(self, x : np.ndarray, allow_zero_copy : bool = False) -> None:
         """
         Handle only regular columns (= numpy arrays) for now.
         """
-        if not x.strides == (x.dtype.itemsize,):
-            # Array is not contiguous - this is possible to get in Pandas,
-            # there was some discussion on whether to support it. Som extra
-            # complexity for libraries that don't support it (e.g. Arrow),
-            # but would help with numpy-based libraries like Pandas.
-            raise RuntimeError("Design needs fixing - non-contiguous buffer")
+        if allow_zero_copy:
+            # Array is not contiguous and strided buffers do not need to be
+            # supported. It brings some extra complexity for libraries that
+            # don't support it (e.g. Arrow).
+            raise RuntimeError(
+                "Exports cannot be zero-copy in the case of a non-contiguous buffer")
 
         # Store the numpy array in which the data resides as a private
         # attribute, so we can use it to retrieve the public attributes
@@ -251,7 +259,8 @@ class _PandasColumn:
 
     """
 
-    def __init__(self, column : pd.Series) -> None:
+    def __init__(self, column : pd.Series,
+                 allow_zero_copy : bool = False) -> None:
         """
         Note: doesn't deal with extension arrays yet, just assume a regular
         Series/ndarray for now.
@@ -262,6 +271,7 @@ class _PandasColumn:
 
         # Store the column as a private attribute
         self._col = column
+        self._allow_zero_copy = allow_zero_copy
 
     @property
     def size(self) -> int:
@@ -446,11 +456,13 @@ class _PandasColumn:
         """
         _k = _DtypeKind
         if self.dtype[0] in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL):
-            buffer = _PandasBuffer(self._col.to_numpy())
+            buffer = _PandasBuffer(
+                self._col.to_numpy(), allow_zero_copy=self._allow_zero_copy)
             dtype = self.dtype
         elif self.dtype[0] == _k.CATEGORICAL:
             codes = self._col.values.codes
-            buffer = _PandasBuffer(codes)
+            buffer = _PandasBuffer(
+                codes, allow_zero_copy=self._allow_zero_copy)
             dtype = self._dtype_from_pandasdtype(codes.dtype)
         else:
             raise NotImplementedError(f"Data type {self._col.dtype} not handled yet")
@@ -483,7 +495,8 @@ class _PandasDataFrame:
     ``pd.DataFrame.__dataframe__`` as objects with the methods and
     attributes defined on this class.
     """
-    def __init__(self, df : pd.DataFrame, nan_as_null : bool = False) -> None:
+    def __init__(self, df : pd.DataFrame, nan_as_null : bool = False,
+                 allow_zero_copy : bool = False) -> None:
         """
         Constructor - an instance of this (private) class is returned from
         `pd.DataFrame.__dataframe__`.
@@ -494,6 +507,7 @@ class _PandasDataFrame:
         # This currently has no effect; once support for nullable extension
         # dtypes is added, this value should be propagated to columns.
         self._nan_as_null = nan_as_null
+        self._allow_zero_copy = allow_zero_copy
 
     def num_columns(self) -> int:
         return len(self._df.columns)
@@ -508,13 +522,16 @@ class _PandasDataFrame:
         return self._df.columns.tolist()
 
     def get_column(self, i: int) -> _PandasColumn:
-        return _PandasColumn(self._df.iloc[:, i])
+        return _PandasColumn(
+            self._df.iloc[:, i], allow_zero_copy=self._allow_zero_copy)
 
     def get_column_by_name(self, name: str) -> _PandasColumn:
-        return _PandasColumn(self._df[name])
+        return _PandasColumn(
+            self._df[name], allow_zero_copy=self._allow_zero_copy)
 
     def get_columns(self) -> Iterable[_PandasColumn]:
-        return [_PandasColumn(self._df[name]) for name in self._df.columns]
+        return [_PandasColumn(self._df[name], allow_zero_copy=self._allow_zero_copy)
+                for name in self._df.columns]
 
     def select_columns(self, indices: Sequence[int]) -> '_PandasDataFrame':
         if not isinstance(indices, collections.Sequence):
@@ -552,13 +569,12 @@ def test_mixed_intfloat():
 
 
 def test_noncontiguous_columns():
-    # Currently raises: TBD whether it should work or not, see code comment
-    # where the RuntimeError is raised.
+    # Currently raises if the flag of allow zero copy is True.
     arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
     df = pd.DataFrame(arr)
     assert df[0].to_numpy().strides == (24,)
-    pytest.raises(RuntimeError, from_dataframe, df)
-    #df2 = from_dataframe(df)
+    with pytest.raises(RuntimeError):
+        df2 = from_dataframe(df, allow_zero_copy=True)
 
 
 def test_categorical_dtype():

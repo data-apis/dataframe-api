@@ -335,7 +335,8 @@ class DataFrame:
     ``__dataframe__`` method of a public data frame class in a library adhering
     to the dataframe interchange protocol specification.
     """
-    def __dataframe__(self, nan_as_null : bool = False) -> dict:
+    def __dataframe__(self, nan_as_null : bool = False,
+                      allow_zero_copy : bool = True) -> dict:
         """
         Produces a dictionary object following the dataframe protocol spec
 
@@ -343,8 +344,13 @@ class DataFrame:
         producer to overwrite null values in the data with ``NaN`` (or ``NaT``).
         It is intended for cases where the consumer does not support the bit
         mask or byte mask that is the producer's native representation.
+
+        ``allow_zero_copy`` is a keyword that defines if the given implementation
+        is going to support striding buffers. It is optional, and the libraries
+        do not need to implement it.
         """
         self._nan_as_null = nan_as_null
+        self._allow_zero_zopy = allow_zero_copy
         return {
             "dataframe": self,  # DataFrame object adhering to the protocol
             "version": 0        # Version number of the protocol
