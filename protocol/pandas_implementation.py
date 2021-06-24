@@ -432,7 +432,7 @@ class _PandasColumn:
         elif kind == _k.STRING:
             null = 1  # np.nan (object dtype)
         else:
-            raise NotImplementedError(f'Data type {self.dtype} not yet supported')
+            raise NotImplementedError(f"Data type {self.dtype} not yet supported")
 
         return null, value
 
@@ -479,7 +479,7 @@ class _PandasColumn:
             buffer = _PandasBuffer(np.frombuffer(b, dtype="uint8"))
 
             # Define the dtype for the returned buffer
-            dtype = (_k.STRING, 8, "=U1", "=")
+            dtype = (_k.STRING, 8, "=U1", "=")  # note: currently only support native endianness
         else:
             raise NotImplementedError(f"Data type {self._col.dtype} not handled yet")
 
@@ -498,7 +498,7 @@ class _PandasColumn:
         elif null == 1:
             msg = "This column uses NaN as null so does not have a separate mask"
         else:
-            raise NotImplementedError('See self.describe_null')
+            raise NotImplementedError("See self.describe_null")
 
         raise RuntimeError(msg)
 
@@ -521,8 +521,15 @@ class _PandasColumn:
                 ptr += len(b)
                 offsets.append(ptr)
 
-            buffer = np.asarray(offsets, dtype='int64')
-            dtype = (_k.INT, buffer.itemsize*8, buffer.str, buffer.byteorder)
+            # Convert the list of offsets to a NumPy array of signed 64-bit integers (note: Arrow allows the offsets array to be either `int32` or `int64`; here, we default to the latter)
+            buf = np.asarray(offsets, dtype="int64")
+
+            # Convert the offsets to a Pandas "buffer" using the NumPy array as the backing store
+            buffer = _PandasBuffer(buf)
+
+            # Assemble the buffer dtype info
+            bdtype = buf.dtype;
+            dtype = (_k.INT, bdtype.itemsize*8, bdtype.str, "=")  # note: currently only support native endianness
         else:
             raise RuntimeError("This column has a fixed-length dtype so does not have an offsets buffer")
 
