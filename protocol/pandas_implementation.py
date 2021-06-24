@@ -661,9 +661,26 @@ def test_categorical_dtype():
     tm.assert_frame_equal(df, df2)
 
 
+def test_string_dtype():
+    df = pdf.DataFrame({"A": ["a", "b", "cdef", "g"]})
+    df["B"] = df["A"].astype("object")
+    df.at[1, "B"] = np.nan  # Set one item to null
+
+    # Test for correctness and null handling:
+    col = df.__dataframe__().get_column_by_name("B")
+    assert col.dtype[0] == _DtypeKind.STRING
+    assert col.null_count == 1
+    assert col.describe_null == (1, None)
+    assert col.num_chunks() == 1
+
+    df2 = from_dataframe(df)
+    tm.assert_frame_equal(df, df2)
+
+
 if __name__ == '__main__':
     test_categorical_dtype()
     test_float_only()
     test_mixed_intfloat()
     test_noncontiguous_columns()
+    test_string_dtype()
 
