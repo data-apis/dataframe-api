@@ -23,8 +23,6 @@ import collections
 import ctypes
 from typing import Any, Optional, Tuple, Dict, Iterable, Sequence
 
-from io import StringIO
-
 import pandas as pd
 import numpy as np
 import pandas._testing as tm
@@ -168,10 +166,32 @@ def convert_string_column(col : ColumnObject) -> pd.Series:
     """
     Convert a string column to a Series instance.
     """
+    # Retrieve the data buffer containing the UTF-8 code units
     buffer, bdtype = col.get_data_buffer()
+
+    # Retrieve the offsets buffer containing the index offsets demarcating the beginning and end of each string
     offsets, odtype = col.get_offsets()
 
-    # TODO: implementation
+    # Convert the buffers to NumPy arrays
+    dt = (_DtypeKind.UINT, 8, None, None)  # note: in order to go from STRING to an equivalent ndarray, we need to claim that the buffer is uint8 (i.e., a byte array)
+    dbuf = buffer_to_ndarray(buffer, dt)
+
+    obuf = buffer_to_ndarray(offset, odtype)  # note: we assume that the offsets buffer has an intelligible dtype
+
+    # Assemble the strings from the code units
+    str_list = []
+    for i in obuf.size-1:
+        # Extract a range of code units
+        b = bytes(dbuf[obuf[i]:obuf[i+1]])
+
+        # Create the string
+        s = b.decode(encoding="utf-8")
+
+        # Add to our list of strings:
+        str_list.append(s)
+
+    # Convert the string list to a NumPy array
+    return np.asarray(str_list, dtype="object")
 
 
 def __dataframe__(cls, nan_as_null : bool = False) -> dict:
@@ -430,6 +450,7 @@ class _PandasColumn:
             null = 2
             value = -1
         elif kind == _k.STRING:
+            # For Pandas string extension dtype, this may change!
             null = 1  # np.nan (object dtype)
         else:
             raise NotImplementedError(f"Data type {self.dtype} not yet supported")
