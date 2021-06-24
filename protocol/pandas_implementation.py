@@ -471,8 +471,7 @@ class _PandasColumn:
             dtype = self._dtype_from_pandasdtype(codes.dtype)
         elif self.dtype[0] == _k.STRING:
             buffer = _PandasBuffer(self._col.to_numpy())
-            bdtype = buffer.dtype;  # should be object dtype
-            dtype = (_k.STRING, bdtype.itemsize*8, '|U', bdtype.byteorder)
+            dtype = (_k.STRING, 8, '|U', '=')
         else:
             raise NotImplementedError(f"Data type {self._col.dtype} not handled yet")
 
@@ -505,8 +504,17 @@ class _PandasColumn:
         """
         _k = _DtypeKind
         if self.dtype[0] == _k.STRING:
-            # TODO: implementation => we need to manually create the offsets array
+            # For each string, we need to manually determine the next offset
+            values = self._col.to_numpy()
+            ptr = 0
+            offsets = [ptr]
+            for v in values:
+                b = v.encode(encoding="utf-8")
+                ptr += len(b)
+                offsets.append(ptr)
 
+            buffer = np.asarray(offsets, dtype='int64')
+            dtype = (_k.INT, buffer.itemsize*8, buffer.str, buffer.byteorder)
         else:
             raise RuntimeError("This column has a fixed-length dtype so does not have an offsets buffer")
 
