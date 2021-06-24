@@ -577,6 +577,7 @@ class _PandasColumn:
             ptr = 0
             offsets = [ptr]
             for v in values:
+                # For missing values (in this case, `np.nan` values), we don't increment the pointer)
                 if type(v) == str:
                     b = v.encode(encoding="utf-8")
                     ptr += len(b)
