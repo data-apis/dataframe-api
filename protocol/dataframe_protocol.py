@@ -300,24 +300,25 @@ class Column:
         """
         pass
 
-    def get_data_buffer(self) -> Buffer:
+    def get_data_buffer(self) -> Tuple[Buffer, Any]:
         """
-        Return the buffer containing the data.
+        Return the buffer containing the data and the buffer's associated dtype.
         """
         pass
 
-    def get_mask(self) -> Buffer:
+    def get_mask(self) -> Tuple[Buffer, Any]:
         """
-        Return the buffer containing the mask values indicating missing data.
+        Return the buffer containing the mask values indicating missing data and
+        the buffer's associated dtype.
 
         Raises RuntimeError if null representation is not a bit or byte mask.
         """
         pass
 
-    def get_offsets(self) -> Buffer:
+    def get_offsets(self) -> Tuple[Buffer, Any]:
         """
         Return the buffer containing the offset values for variable-size binary
-        data (e.g., variable-length strings).
+        data (e.g., variable-length strings) and the buffer's associated dtype.
         """
         pass
 
