@@ -162,9 +162,9 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
     return series
 
 
-def convert_string_column(col : ColumnObject) -> pd.Series:
+def convert_string_column(col : ColumnObject) -> np.ndarray:
     """
-    Convert a string column to a Series instance.
+    Convert a string column to a NumPy array.
     """
     # Retrieve the data buffer containing the UTF-8 code units
     dbuffer, bdtype = col.get_data_buffer()
