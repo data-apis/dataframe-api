@@ -470,8 +470,16 @@ class _PandasColumn:
             buffer = _PandasBuffer(codes)
             dtype = self._dtype_from_pandasdtype(codes.dtype)
         elif self.dtype[0] == _k.STRING:
-            buffer = _PandasBuffer(self._col.to_numpy())
-            dtype = (_k.STRING, 8, '|U', '=')
+            # Marshal the strings from a NumPy object array into a byte array
+            b = bytearray()
+            for v in self._col:
+                b.extend(v.encode(encoding="utf-8"))
+
+            # Convert the byte array to a Pandas "buffer" using a NumPy array as the backing store
+            buffer = _PandasBuffer(np.frombuffer(b, dtype="uint8"))
+
+            # Define the dtype for the returned buffer
+            dtype = (_k.STRING, 8, "=U1", "=")
         else:
             raise NotImplementedError(f"Data type {self._col.dtype} not handled yet")
 
