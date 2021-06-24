@@ -25,7 +25,7 @@ from typing import Any, Optional, Tuple, Dict, Iterable, Sequence
 
 import pandas as pd
 import numpy as np
-import pandas._testing as tm
+import pandas.testing as tm
 import pytest
 
 
@@ -167,22 +167,34 @@ def convert_string_column(col : ColumnObject) -> pd.Series:
     Convert a string column to a Series instance.
     """
     # Retrieve the data buffer containing the UTF-8 code units
-    buffer, bdtype = col.get_data_buffer()
+    dbuffer, bdtype = col.get_data_buffer()
 
     # Retrieve the offsets buffer containing the index offsets demarcating the beginning and end of each string
-    offsets, odtype = col.get_offsets()
+    obuffer, odtype = col.get_offsets()
+
+    # Retrieve the mask buffer indicating the presence of missing values:
+    mbuffer, mdtype = col.get_mask()
 
     # Convert the buffers to NumPy arrays
-    dt = (_DtypeKind.UINT, 8, None, None)  # note: in order to go from STRING to an equivalent ndarray, we need to claim that the buffer is uint8 (i.e., a byte array)
-    dbuf = buffer_to_ndarray(buffer, dt)
+    dt = (_DtypeKind.UINT, 8, None, None)  # note: in order to go from STRING to an equivalent ndarray, we claim that the buffer is uint8 (i.e., a byte array)
+    dbuf = buffer_to_ndarray(dbuffer, dt)
 
-    obuf = buffer_to_ndarray(offset, odtype)  # note: we assume that the offsets buffer has an intelligible dtype
+    obuf = buffer_to_ndarray(obuffer, odtype)
+    mbuf = buffer_to_ndarray(mbuffer, mdtype)
 
     # Assemble the strings from the code units
     str_list = []
-    for i in obuf.size-1:
+    for i in range(obuf.size-1):
+        # Check for missing values
+        if mbuf[i] == 0:  # FIXME: we need to account for a mask buffer which is a bit array
+            str_list.append(np.nan)
+            continue
+
         # Extract a range of code units
-        b = bytes(dbuf[obuf[i]:obuf[i+1]])
+        units = dbuf[obuf[i]:obuf[i+1]];
+
+        # Convert the list of code units to bytes: 
+        b = bytes(units)
 
         # Create the string
         s = b.decode(encoding="utf-8")
@@ -198,7 +210,7 @@ def __dataframe__(cls, nan_as_null : bool = False) -> dict:
     """
     The public method to attach to pd.DataFrame.
 
-    We'll attach it via monkeypatching here for demo purposes. If Pandas adopt
+    We'll attach it via monkey-patching here for demo purposes. If Pandas adopts
     the protocol, this will be a regular method on pandas.DataFrame.
 
     ``nan_as_null`` is a keyword intended for the consumer to tell the
@@ -353,6 +365,11 @@ class _PandasColumn:
               and nested (list, struct, map, union) dtypes.
         """
         dtype = self._col.dtype
+
+        # For now, assume that, if the column dtype is 'O' (i.e., `object`), then we have an array of strings
+        if not isinstance(dtype, pd.CategoricalDtype) and dtype.kind == 'O':
+            return (_DtypeKind.STRING, 8, '=U1', '=')
+
         return self._dtype_from_pandasdtype(dtype)
 
     def _dtype_from_pandasdtype(self, dtype) -> Tuple[enum.IntEnum, int, str, str]:
@@ -450,8 +467,8 @@ class _PandasColumn:
             null = 2
             value = -1
         elif kind == _k.STRING:
-            # For Pandas string extension dtype, this may change!
-            null = 1  # np.nan (object dtype)
+            # For Pandas string extension dtype, use of `np.nan` for missing values may change!
+            null = 1  # np.nan
         else:
             raise NotImplementedError(f"Data type {self.dtype} not yet supported")
 
@@ -492,9 +509,11 @@ class _PandasColumn:
             dtype = self._dtype_from_pandasdtype(codes.dtype)
         elif self.dtype[0] == _k.STRING:
             # Marshal the strings from a NumPy object array into a byte array
+            buf = self._col.to_numpy()
             b = bytearray()
-            for v in self._col:
-                b.extend(v.encode(encoding="utf-8"))
+            for i in range(buf.size):
+                if type(buf[i]) == str:
+                    b.extend(buf[i].encode(encoding="utf-8"))
 
             # Convert the byte array to a Pandas "buffer" using a NumPy array as the backing store
             buffer = _PandasBuffer(np.frombuffer(b, dtype="uint8"))
@@ -513,6 +532,26 @@ class _PandasColumn:
 
         Raises RuntimeError if null representation is not a bit or byte mask.
         """
+        _k = _DtypeKind
+        if self.dtype[0] == _k.STRING:
+            # For now, have the mask array be comprised of bytes, rather than a bit array
+            buf = self._col.to_numpy()
+            mask = []
+            for i in range(buf.size):
+                v = 0;
+                if type(buf[i]) == str:
+                    v += 1;  # follows Arrow where a valid value is 1 and null is 0
+
+                mask.append(v)
+
+            # Convert the mask array to a Pandas "buffer" using a NumPy array as the backing store
+            buffer = _PandasBuffer(np.asarray(mask, dtype="uint8"))
+
+            # Define the dtype of the returned buffer
+            dtype = (_k.UINT, 8, "=B", "=")
+
+            return buffer, dtype
+
         null, value = self.describe_null
         if null == 0:
             msg = "This column is non-nullable so does not have a mask"
@@ -538,8 +577,10 @@ class _PandasColumn:
             ptr = 0
             offsets = [ptr]
             for v in values:
-                b = v.encode(encoding="utf-8")
-                ptr += len(b)
+                if type(v) == str:
+                    b = v.encode(encoding="utf-8")
+                    ptr += len(b)
+
                 offsets.append(ptr)
 
             # Convert the list of offsets to a NumPy array of signed 64-bit integers (note: Arrow allows the offsets array to be either `int32` or `int64`; here, we default to the latter)
@@ -662,7 +703,7 @@ def test_categorical_dtype():
 
 
 def test_string_dtype():
-    df = pdf.DataFrame({"A": ["a", "b", "cdef", "g"]})
+    df = pd.DataFrame({"A": ["a", "b", "cdef", "", "g"]})
     df["B"] = df["A"].astype("object")
     df.at[1, "B"] = np.nan  # Set one item to null
 
