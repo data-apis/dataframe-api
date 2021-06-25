@@ -1,8 +1,9 @@
-# `__dataframe__` protocol - summary
+# The `__dataframe__` protocol
 
-_We've had a lot of discussion in a couple of GitHub issues and in meetings.
-This description attempts to summarize that, and extract the essential design
-requirements/principles and functionality it needs to support._
+This document aims to describe the scope of the dataframe interchange protocol,
+as well as its essential design requirements/principles and the functionality
+it needs to support.
+
 
 ## Purpose of `__dataframe__`
 
@@ -11,7 +12,8 @@ a way to convert one type of dataframe into another type (for example,
 convert a Koalas dataframe into a Pandas dataframe, or a cuDF dataframe into
 a Vaex dataframe).
 
-Currently (Nov'20) there is no way to do this in an implementation-independent way.
+Currently (June 2020) there is no way to do this in an
+implementation-independent way.
 
 The main use case this protocol intends to enable is to make it possible to
 write code that can accept any type of dataframe instead of being tied to a
@@ -30,7 +32,7 @@ def somefunc(df, ...):
 
 ### Non-goals
 
-Providing a _complete standardized dataframe API_ is not a goal of the
+Providing a _complete, standardized dataframe API_ is not a goal of the
 `__dataframe__` protocol. Instead, this is a goal of the full dataframe API
 standard, which the Consortium for Python Data API Standards aims to provide
 in the future. When that full API standard is implemented by dataframe
@@ -40,8 +42,8 @@ libraries, the example above can change to:
 def get_df_module(df):
     """Utility function to support programming against a dataframe API"""
     if hasattr(df, '__dataframe_namespace__'):
-       # Retrieve the namespace 
-       pdx = df.__dataframe_namespace__()  
+       # Retrieve the namespace
+       pdx = df.__dataframe_namespace__()
     else:
         # Here we can raise an exception if we only want to support compliant dataframes,
         # or convert to our default choice of dataframe if we want to accept (e.g.) dicts
@@ -56,6 +58,7 @@ def somefunc(df, ...):
     pdx, df = get_df_module(df)
     # From now on, use `df` methods and `pdx` functions/objects
 ```
+
 
 ### Constraints
 
@@ -94,13 +97,14 @@ For a protocol to exchange dataframes between libraries, we need both a model
 of what we mean by "dataframe" conceptually for the purposes of the protocol,
 and a model of how the data is represented in memory:
 
-![Image of a dataframe model, containing chunks, columns and 1-D arrays](conceptual_model_df_memory.png)
+![Conceptual model of a dataframe, containing chunks, columns and 1-D arrays](images/dataframe_conceptual_model.png)
 
-The smallest building block are **1-D arrays**, which are contiguous in
-memory and contain data with the same dtype. A **column** consists of one or
-more 1-D arrays (if, e.g., missing data is represented with a boolean mask,
-that's a separate array). A **chunk** contains a set of columns of uniform
-length. A **dataframe** contains one or more chunks.
+The smallest building blocks are **1-D arrays** (or "buffers"), which are
+contiguous in memory and contain data with the same dtype. A **column**
+consists of one or more 1-D arrays (if, e.g., missing data is represented with
+a boolean mask, that's a separate array). A **dataframe** contains one or more columns.
+A column or a dataframe can be "chunked"; a **chunk** is a subset of a column
+or dataframe that contains a set of (neighboring) rows.
 
 
 ## Protocol design requirements
@@ -121,7 +125,7 @@ length. A **dataframe** contains one or more chunks.
 6. Must avoid device transfers by default (e.g. copy data from GPU to CPU),
    and provide an explicit way to force such transfers (e.g. a `force=` or
    `copy=` keyword that the caller can set to `True`).
-7. Must be zero-copy if possible.
+7. Must be zero-copy wherever possible.
 8. Must support missing values (`NA`) for all supported dtypes.
 9. Must supports string, categorical and datetime dtypes.
 10. Must allow the consumer to inspect the representation for missing values
@@ -141,7 +145,7 @@ length. A **dataframe** contains one or more chunks.
     _Rationale: prescribing a single in-memory representation in this
     protocol would lead to unnecessary copies being made if that represention
     isn't the native one a library uses._
-    _Note: the memory layout is columnnar. Row-major dataframes can use this
+    _Note: the memory layout is columnar. Row-major dataframes can use this
     protocol, but not in a zero-copy fashion (see requirement 2 above)._
 12. Must support chunking, i.e. accessing the data in "batches" of rows.
     There must be metadata the consumer can access to learn in how many
@@ -176,6 +180,7 @@ We'll also list some things that were discussed but are not requirements:
    "programming to an interface"; this data interchange protocol is
    fundamentally built around describing data in memory_.
 
+
 ### To be decided
 
 _The connection between dataframe and array interchange protocols_. If we
@@ -194,7 +199,7 @@ _Should there be a standard `from_dataframe` constructor function?_ This
 isn't completely necessary, however it's expected that a full dataframe API
 standard will have such a function. The array API standard also has such a
 function, namely `from_dlpack`. Adding at least a recommendation on syntax
-for this function would make sense, e.g., `from_dataframe(df, stream=None)`.
+for this function makes sense, e.g., simply `from_dataframe(df)`.
 Discussion at https://github.com/data-apis/dataframe-api/issues/29#issuecomment-685903651
 is relevant.
 
@@ -209,14 +214,16 @@ except `__dataframe__` is a Python-level rather than C-level interface.
 The data types format specification of that interface is something that could
 be used unchanged.
 
-The main (only?) limitation seems to be that it does not have device support
-- @kkraus14 will bring this up on the Arrow dev mailing list. Also note that
-that interface only talks about arrays; dataframes, chunking and the metadata
-inspection can all be layered on top in this Python-level protocol, but are
-not discussed in the interface itself.
+The main limitation is to be that it does not have device support
+-- `@kkraus14` will bring this up on the Arrow dev mailing list. Another
+identified issue is that the "deleter" on the Arrow C struct is present at the
+column level, and there are use cases for having it at the buffer level
+(mixed-device dataframes, more granular control over memory).
 
 Note that categoricals are supported, Arrow uses the phrasing
-"dictionary-encoded types" for categorical.
+"dictionary-encoded types" for categorical. Also, what it calls "array" means
+"column" in the terminology of this document (and every Python dataframe
+library).
 
 The Arrow C Data Interface says specifically it was inspired by [Python's
 buffer protocol](https://docs.python.org/3/c-api/buffer.html), which is also
@@ -245,7 +252,7 @@ library that implements `__array__` must depend (optionally at least) on
 NumPy, and call a NumPy `ndarray` constructor itself from within `__array__`.
 
 
-### What is wrong with `.to_numpy?` and `.to_arrow()`? 
+### What is wrong with `.to_numpy?` and `.to_arrow()`?
 
 Such methods ask the object it is attached to to turn itself into a NumPy or
 Arrow array. Which means each library must have at least an optional
@@ -261,7 +268,7 @@ constructor it needs. For example, `x = np.asarray(df['colname'])` (where
 
 ### Does an interface describing memory work for virtual columns?
 
-Vaex is an example of a library that can have "virtual columns" (see @maartenbreddels
+Vaex is an example of a library that can have "virtual columns" (see `@maartenbreddels`
 [comment here](https://github.com/data-apis/dataframe-api/issues/29#issuecomment-686373569)).
 If the protocol includes a description of data layout in memory, does that
 work for such a virtual column?
@@ -285,16 +292,14 @@ computational graph approach like Dask uses, etc.)._
 
 ## Possible direction for implementation
 
-### Rough prototypes
+### Rough initial prototypes (historical)
 
 The `cuDFDataFrame`, `cuDFColumn` and `cuDFBuffer` sketched out by @kkraus14
 [here](https://github.com/data-apis/dataframe-api/issues/29#issuecomment-685123386)
-seems to be in the right direction.
+looked like it was in the right direction.
 
 [This prototype](https://github.com/wesm/dataframe-protocol/pull/1) by Wes
 McKinney was the first attempt, and has some useful features.
-
-TODO: work this out after making sure we're all on the same page regarding requirements.
 
 
 ### Relevant existing protocols
