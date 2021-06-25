@@ -36,7 +36,7 @@ ColumnObject = Any
 
 
 def from_dataframe(df : DataFrameObject,
-                   allow_copy : bool = False) -> pd.DataFrame:
+                   allow_copy : bool = True) -> pd.DataFrame:
     """
     Construct a pandas DataFrame from ``df`` if it supports ``__dataframe__``
     """
@@ -162,7 +162,7 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
 
 
 def __dataframe__(cls, nan_as_null : bool = False,
-                  allow_copy : bool = False) -> dict:
+                  allow_copy : bool = True) -> dict:
     """
     The public method to attach to pd.DataFrame
 
@@ -195,11 +195,11 @@ class _PandasBuffer:
     Data in the buffer is guaranteed to be contiguous in memory.
     """
 
-    def __init__(self, x : np.ndarray, allow_copy : bool = False) -> None:
+    def __init__(self, x : np.ndarray, allow_copy : bool = True) -> None:
         """
         Handle only regular columns (= numpy arrays) for now.
         """
-        if allow_copy:
+        if not allow_copy:
             # Array is not contiguous and strided buffers do not need to be
             # supported. It brings some extra complexity for libraries that
             # don't support it (e.g. Arrow).
@@ -260,7 +260,7 @@ class _PandasColumn:
     """
 
     def __init__(self, column : pd.Series,
-                 allow_copy : bool = False) -> None:
+                 allow_copy : bool = True) -> None:
         """
         Note: doesn't deal with extension arrays yet, just assume a regular
         Series/ndarray for now.
@@ -496,7 +496,7 @@ class _PandasDataFrame:
     attributes defined on this class.
     """
     def __init__(self, df : pd.DataFrame, nan_as_null : bool = False,
-                 allow_copy : bool = False) -> None:
+                 allow_copy : bool = True) -> None:
         """
         Constructor - an instance of this (private) class is returned from
         `pd.DataFrame.__dataframe__`.
@@ -574,7 +574,7 @@ def test_noncontiguous_columns():
     df = pd.DataFrame(arr)
     assert df[0].to_numpy().strides == (24,)
     with pytest.raises(RuntimeError):
-        df2 = from_dataframe(df, allow_copy=True)
+        df2 = from_dataframe(df, allow_copy=False)
 
 
 def test_categorical_dtype():

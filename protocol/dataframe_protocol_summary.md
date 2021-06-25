@@ -40,8 +40,8 @@ libraries, the example above can change to:
 def get_df_module(df):
     """Utility function to support programming against a dataframe API"""
     if hasattr(df, '__dataframe_namespace__'):
-       # Retrieve the namespace 
-       pdx = df.__dataframe_namespace__()  
+       # Retrieve the namespace
+       pdx = df.__dataframe_namespace__()
     else:
         # Here we can raise an exception if we only want to support compliant dataframes,
         # or convert to our default choice of dataframe if we want to accept (e.g.) dicts
@@ -168,13 +168,12 @@ We'll also list some things that were discussed but are not requirements:
 3. Extension dtypes, i.e. a way to extend the set of dtypes that is
    explicitly support, are out of scope.
    _Rationale: complex to support, not used enough to justify that complexity._
-4. "virtual columns", i.e. columns for which the data is not yet in memory
-   because it uses lazy evaluation, are not supported other than through
-   letting the producer materialize the data in memory when the consumer
-   calls `__dataframe__`.
-   _Rationale: the full dataframe API will support this use case by
-   "programming to an interface"; this data interchange protocol is
-   fundamentally built around describing data in memory_.
+4. Support for strided storage in buffers.
+   _Rationale: this is supported by a subset of dataframes only, mainly those
+   that use NumPy arrays. In many real-world use cases, strided arrays will
+   force a copy at some point, so requiring contiguous memory layout (and hence
+   an extra copy at the moment `__dataframe__` is used) is considered a good
+   trade-off for reduced implementation complexity._
 
 ### To be decided
 
@@ -245,7 +244,7 @@ library that implements `__array__` must depend (optionally at least) on
 NumPy, and call a NumPy `ndarray` constructor itself from within `__array__`.
 
 
-### What is wrong with `.to_numpy?` and `.to_arrow()`? 
+### What is wrong with `.to_numpy?` and `.to_arrow()`?
 
 Such methods ask the object it is attached to to turn itself into a NumPy or
 Arrow array. Which means each library must have at least an optional
