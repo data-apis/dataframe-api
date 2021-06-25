@@ -437,4 +437,3 @@ class DataFrame:
         before yielding it.
         """
         pass
-
