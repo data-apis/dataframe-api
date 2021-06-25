@@ -172,7 +172,13 @@ We'll also list some things that were discussed but are not requirements:
 3. Extension dtypes, i.e. a way to extend the set of dtypes that is
    explicitly support, are out of scope.
    _Rationale: complex to support, not used enough to justify that complexity._
-4. "virtual columns", i.e. columns for which the data is not yet in memory
+4. Support for strided storage in buffers.
+   _Rationale: this is supported by a subset of dataframes only, mainly those
+   that use NumPy arrays. In many real-world use cases, strided arrays will
+   force a copy at some point, so requiring contiguous memory layout (and hence
+   an extra copy at the moment `__dataframe__` is used) is considered a good
+   trade-off for reduced implementation complexity._
+5. "virtual columns", i.e. columns for which the data is not yet in memory
    because it uses lazy evaluation, are not supported other than through
    letting the producer materialize the data in memory when the consumer
    calls `__dataframe__`.
