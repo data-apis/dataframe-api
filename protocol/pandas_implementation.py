@@ -596,7 +596,7 @@ def test_metadata():
     df_metadata = df.__dataframe__().metadata
     expected = {"pandas.index": df.index}
     for key in df_metadata:
-        assert df_metadata[key] == expected[key]
+        assert all(df_metadata[key] == expected[key])
 
     # Check the metadata from the column
     col_metadata = df.__dataframe__().get_column(0).metadata
