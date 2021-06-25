@@ -504,7 +504,7 @@ class _PandasDataFrame:
 
     @property
     def metadata(self):
-        return {"pandas.indexcol": self._df.index.name}
+        return {"pandas.index": self._df.index}
 
     def num_columns(self) -> int:
         return len(self._df.columns)
@@ -590,12 +590,11 @@ def test_categorical_dtype():
 
 
 def test_metadata():
-    d = {'A': [1, 2, 3, 4],'B': [1, 2, 3, 4]}
-    df = pd.DataFrame(d).set_index('A')
+    df = pd.DataFrame({'A': [1, 2, 3, 4],'B': [1, 2, 3, 4]})
 
     # Check the metadata from the dataframe
     df_metadata = df.__dataframe__().metadata
-    expected = {"pandas.indexcol": 'A'}
+    expected = {"pandas.index": df.index}
     for key in df_metadata:
         assert df_metadata[key] == expected[key]
 
