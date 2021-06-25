@@ -431,7 +431,7 @@ class _PandasColumn:
         """
         Store specific metadata of the column.
         """
-        return {"num_chunks": self.num_chunks()}
+        return {}
 
     def num_chunks(self) -> int:
         """
@@ -504,8 +504,7 @@ class _PandasDataFrame:
 
     @property
     def metadata(self):
-        return {"num_chunks": self.num_chunks(),
-                "num_columns": self.num_columns()}
+        return {"pandas.indexcol": self._df.index.name}
 
     def num_columns(self) -> int:
         return len(self._df.columns)
@@ -591,19 +590,20 @@ def test_categorical_dtype():
 
 
 def test_metadata():
-    df = pd.DataFrame(data=dict(a=[1, 2, 3], b=[4, 5, 6], c=[7, 8, 9]))
+    d = {'A': [1, 2, 3, 4],'B': [1, 2, 3, 4]}
+    df = pd.DataFrame(d).set_index('A')
 
     # Check the metadata from the dataframe
     df_metadata = df.__dataframe__().metadata
-    excpected = {"num_chunks": 1, "num_columns": 3}
+    expected = {"pandas.indexcol": 'A'}
     for key in df_metadata:
-        assert df_metadata[key] == excpected[key]
+        assert df_metadata[key] == expected[key]
 
     # Check the metadata from the column
     col_metadata = df.__dataframe__().get_column(0).metadata
-    expected = {"num_chunks": 1}
+    expected = {}
     for key in col_metadata:
-        assert col_metadata[key] == excpected[key]
+        assert col_metadata[key] == expected[key]
 
     df2 = from_dataframe(df)
     tm.assert_frame_equal(df, df2)
