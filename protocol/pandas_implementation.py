@@ -193,13 +193,13 @@ def convert_string_column(col : ColumnObject) -> np.ndarray:
         # Extract a range of code units
         units = dbuf[obuf[i]:obuf[i+1]];
 
-        # Convert the list of code units to bytes: 
+        # Convert the list of code units to bytes
         b = bytes(units)
 
         # Create the string
         s = b.decode(encoding="utf-8")
 
-        # Add to our list of strings:
+        # Add to our list of strings
         str_list.append(s)
 
     # Convert the string list to a NumPy array
