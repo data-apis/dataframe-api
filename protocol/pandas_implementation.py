@@ -511,6 +511,8 @@ class _PandasColumn:
             # Marshal the strings from a NumPy object array into a byte array
             buf = self._col.to_numpy()
             b = bytearray()
+
+            # TODO: this for-loop is slow; can be implemented in Cython/C/C++ later
             for i in range(buf.size):
                 if type(buf[i]) == str:
                     b.extend(buf[i].encode(encoding="utf-8"))
