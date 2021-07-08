@@ -467,8 +467,7 @@ class _PandasColumn:
             null = 2
             value = -1
         elif kind == _k.STRING:
-            # For Pandas string extension dtype, use of `np.nan` for missing values may change!
-            null = 1  # np.nan
+            null = 4
         else:
             raise NotImplementedError(f"Data type {self.dtype} not yet supported")
 
@@ -714,7 +713,7 @@ def test_string_dtype():
     col = df.__dataframe__().get_column_by_name("B")
     assert col.dtype[0] == _DtypeKind.STRING
     assert col.null_count == 1
-    assert col.describe_null == (1, None)
+    assert col.describe_null == (4, None)
     assert col.num_chunks() == 1
 
     df2 = from_dataframe(df)
