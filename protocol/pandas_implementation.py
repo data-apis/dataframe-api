@@ -170,10 +170,10 @@ def convert_string_column(col : ColumnObject) -> np.ndarray:
     dbuffer, bdtype = col.get_data_buffer()
 
     # Retrieve the offsets buffer containing the index offsets demarcating the beginning and end of each string
-    obuffer, odtype = col.get_offsets()
+    obuffer, odtype = col.get_offsets_buffer()
 
     # Retrieve the mask buffer indicating the presence of missing values:
-    mbuffer, mdtype = col.get_mask()
+    mbuffer, mdtype = col.get_validity_buffer()
 
     # Convert the buffers to NumPy arrays
     dt = (_DtypeKind.UINT, 8, None, None)  # note: in order to go from STRING to an equivalent ndarray, we claim that the buffer is uint8 (i.e., a byte array)
@@ -527,7 +527,7 @@ class _PandasColumn:
 
         return buffer, dtype
 
-    def get_mask(self) -> Tuple[_PandasBuffer, Any]:
+    def get_validity_buffer(self) -> Tuple[_PandasBuffer, Any]:
         """
         Return the buffer containing the mask values indicating missing data and
         the buffer's associated dtype.
@@ -564,7 +564,7 @@ class _PandasColumn:
 
         raise RuntimeError(msg)
 
-    def get_offsets(self) -> Tuple[_PandasBuffer, Any]:
+    def get_offsets_buffer(self) -> Tuple[_PandasBuffer, Any]:
         """
         Return the buffer containing the offset values for variable-size binary
         data (e.g., variable-length strings) and the buffer's associated dtype.
