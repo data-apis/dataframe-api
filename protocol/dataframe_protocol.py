@@ -306,7 +306,7 @@ class Column:
         """
         pass
 
-    def get_mask(self) -> Tuple[Buffer, Any]:
+    def get_validity_buffer(self) -> Tuple[Buffer, Any]:
         """
         Return the buffer containing the mask values indicating missing data and
         the buffer's associated dtype.
@@ -315,7 +315,7 @@ class Column:
         """
         pass
 
-    def get_offsets(self) -> Tuple[Buffer, Any]:
+    def get_offsets_buffer(self) -> Tuple[Buffer, Any]:
         """
         Return the buffer containing the offset values for variable-size binary
         data (e.g., variable-length strings) and the buffer's associated dtype.
