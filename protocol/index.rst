@@ -10,4 +10,5 @@ Contents
 
    purpose_and_scope
    design_requirements
+   API
 

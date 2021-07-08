@@ -1,4 +1,4 @@
-# The `__dataframe__` protocol
+# Design concepts and requirements
 
 This document aims to describe the design requirements and principles of the
 dataframe interchange protcol, and the functionality it needs to support.
@@ -19,6 +19,8 @@ a boolean mask, that's a separate array). A **dataframe** contains one or more c
 A column or a dataframe can be "chunked"; a **chunk** is a subset of a column
 or dataframe that contains a set of (neighboring) rows.
 
+
+(design-requirements)=
 
 ## Protocol design requirements
 
