@@ -220,7 +220,7 @@ except `__dataframe__` is a Python-level rather than C-level interface.
 The data types format specification of that interface is something that could
 be used unchanged.
 
-The main limitation is to be that it does not have device support
+The main limitation is that it does not have device support
 -- `@kkraus14` will bring this up on the Arrow dev mailing list. Another
 identified issue is that the "deleter" on the Arrow C struct is present at the
 column level, and there are use cases for having it at the buffer level
