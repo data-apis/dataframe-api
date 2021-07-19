@@ -166,7 +166,7 @@ def convert_string_column(col : ColumnObject) -> np.ndarray:
     """
     Convert a string column to a NumPy array.
     """
-    # Retrieve the data buffers:
+    # Retrieve the data buffers
     buffers = col.get_buffers()
 
     # Retrieve the data buffer containing the UTF-8 code units
@@ -175,10 +175,10 @@ def convert_string_column(col : ColumnObject) -> np.ndarray:
     # Retrieve the offsets buffer containing the index offsets demarcating the beginning and end of each string
     obuffer, odtype = buffers["offsets"]
 
-    # Retrieve the mask buffer indicating the presence of missing values:
+    # Retrieve the mask buffer indicating the presence of missing values
     mbuffer, mdtype = buffers["validity"]
 
-    # Retrieve the missing value encoding:
+    # Retrieve the missing value encoding
     null_value = col.describe_null[1]
 
     # Convert the buffers to NumPy arrays
