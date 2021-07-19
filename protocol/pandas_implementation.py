@@ -99,7 +99,7 @@ def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
         raise NotImplementedError("Null values represented as masks or "
                                   "sentinel values not handled yet")
 
-    _buffer, _dtype = col.get_data_buffer()
+    _buffer, _dtype = col.get_buffers()["data"]
     return buffer_to_ndarray(_buffer, _dtype)
 
 
@@ -143,7 +143,7 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
     #    categories = col._col.values.categories.values
     #    codes = col._col.values.codes
     categories = np.asarray(list(mapping.values()))
-    codes_buffer, codes_dtype = col.get_data_buffer()
+    codes_buffer, codes_dtype = col.get_buffers()["data"]
     codes = buffer_to_ndarray(codes_buffer, codes_dtype)
     values = categories[codes]
 
@@ -166,14 +166,17 @@ def convert_string_column(col : ColumnObject) -> np.ndarray:
     """
     Convert a string column to a NumPy array.
     """
+    # Retrieve the data buffers:
+    buffers = col.get_buffers()
+
     # Retrieve the data buffer containing the UTF-8 code units
-    dbuffer, bdtype = col.get_data_buffer()
+    dbuffer, bdtype = buffers["data"]
 
     # Retrieve the offsets buffer containing the index offsets demarcating the beginning and end of each string
-    obuffer, odtype = col.get_offsets_buffer()
+    obuffer, odtype = buffers["offsets"]
 
     # Retrieve the mask buffer indicating the presence of missing values:
-    mbuffer, mdtype = col.get_validity_buffer()
+    mbuffer, mdtype = buffers["validity"]
 
     # Retrieve the missing value encoding:
     null_value = col.describe_null[1]
@@ -500,7 +503,42 @@ class _PandasColumn:
         """
         return (self,)
 
-    def get_data_buffer(self) -> Tuple[_PandasBuffer, Any]:  # Any is for self.dtype tuple
+    def get_buffers(self) -> Dict[str, Any]:
+        """
+        Return a dictionary containing the underlying buffers.
+
+        The returned dictionary has the following contents:
+
+            - "data": a two-element tuple whose first element is a tuple
+                      containing the buffer containing the data and whose second
+                      element is the data buffer's associated dtype.
+            - "validity": a two-element tuple whose first element is a tuple
+                          containing the buffer containing mask values
+                          indicating missing data and whose second element is
+                          the mask value buffer's associated dtype. None if the
+                          null representation is not a bit or byte mask.
+            - "offsets": a two-element tuple whose first element is a tuple
+                         containing the buffer containing the offset values for
+                         variable-size binary data (e.g., variable-length
+                         strings) and whose second element is the offsets
+                         buffer's associated dtype. None if the data buffer does
+                         not have an associated offsets buffer.
+        """
+        buffers = {}
+        buffers["data"] = self._get_data_buffer()
+        try:
+            buffers["validity"] = self._get_validity_buffer()
+        except:
+            buffers["validity"] = None
+
+        try:
+            buffers["offsets"] = self._get_offsets_buffer()
+        except:
+            buffers["offsets"] = None
+
+        return buffers
+
+    def _get_data_buffer(self) -> Tuple[_PandasBuffer, Any]:  # Any is for self.dtype tuple
         """
         Return the buffer containing the data and the buffer's associated dtype.
         """
@@ -532,7 +570,7 @@ class _PandasColumn:
 
         return buffer, dtype
 
-    def get_validity_buffer(self) -> Tuple[_PandasBuffer, Any]:
+    def _get_validity_buffer(self) -> Tuple[_PandasBuffer, Any]:
         """
         Return the buffer containing the mask values indicating missing data and
         the buffer's associated dtype.
@@ -578,7 +616,7 @@ class _PandasColumn:
 
         raise RuntimeError(msg)
 
-    def get_offsets_buffer(self) -> Tuple[_PandasBuffer, Any]:
+    def _get_offsets_buffer(self) -> Tuple[_PandasBuffer, Any]:
         """
         Return the buffer containing the offset values for variable-size binary
         data (e.g., variable-length strings) and the buffer's associated dtype.
