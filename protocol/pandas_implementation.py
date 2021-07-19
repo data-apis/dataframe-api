@@ -175,6 +175,9 @@ def convert_string_column(col : ColumnObject) -> np.ndarray:
     # Retrieve the mask buffer indicating the presence of missing values:
     mbuffer, mdtype = col.get_validity_buffer()
 
+    # Retrieve the missing value encoding:
+    null_value = col.describe_null[1]
+
     # Convert the buffers to NumPy arrays
     dt = (_DtypeKind.UINT, 8, None, None)  # note: in order to go from STRING to an equivalent ndarray, we claim that the buffer is uint8 (i.e., a byte array)
     dbuf = buffer_to_ndarray(dbuffer, dt)
@@ -186,7 +189,7 @@ def convert_string_column(col : ColumnObject) -> np.ndarray:
     str_list = []
     for i in range(obuf.size-1):
         # Check for missing values
-        if mbuf[i] == 0:  # FIXME: we need to account for a mask buffer which is a bit array
+        if mbuf[i] == null_value:  # FIXME: we need to account for a mask buffer which is a bit array
             str_list.append(np.nan)
             continue
 
@@ -470,7 +473,7 @@ class _PandasColumn:
             value = -1
         elif kind == _k.STRING:
             null = 4
-            value = 0
+            value = 0  # follow Arrow in using 1 as valid value and 0 for missing/null value
         else:
             raise NotImplementedError(f"Data type {self.dtype} not yet supported")
 
@@ -536,15 +539,25 @@ class _PandasColumn:
 
         Raises RuntimeError if null representation is not a bit or byte mask.
         """
+        null, invalid = self.describe_null
+
         _k = _DtypeKind
         if self.dtype[0] == _k.STRING:
             # For now, have the mask array be comprised of bytes, rather than a bit array
             buf = self._col.to_numpy()
             mask = []
+
+            # Determine the encoding for valid values
+            if invalid == 0:
+                valid = 1
+            else:
+                valid = 0
+
             for i in range(buf.size):
-                v = 0;
                 if type(buf[i]) == str:
-                    v += 1;  # follows Arrow where a valid value is 1 and null is 0
+                    v = valid;
+                else:
+                    v = invalid;
 
                 mask.append(v)
 
@@ -556,7 +569,6 @@ class _PandasColumn:
 
             return buffer, dtype
 
-        null, value = self.describe_null
         if null == 0:
             msg = "This column is non-nullable so does not have a mask"
         elif null == 1:
