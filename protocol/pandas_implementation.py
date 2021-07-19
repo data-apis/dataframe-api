@@ -371,7 +371,7 @@ class _PandasColumn:
 
         # For now, assume that, if the column dtype is 'O' (i.e., `object`), then we have an array of strings
         if not isinstance(dtype, pd.CategoricalDtype) and dtype.kind == 'O':
-            return (_DtypeKind.STRING, 8, '=U1', '=')
+            return (_DtypeKind.STRING, 8, 'u', '=')
 
         return self._dtype_from_pandasdtype(dtype)
 
@@ -383,9 +383,9 @@ class _PandasColumn:
         #       'b', 'B' (bytes), 'S', 'a', (old-style string) 'V' (void) not handled
         #       datetime and timedelta both map to datetime (is timedelta handled?)
         _k = _DtypeKind
-        _np_kinds = {'i': _k.INT, 'u': _k.UINT, 'f': _k.FLOAT, 'b': _k.BOOL,
-                     'U': _k.STRING,
-                     'M': _k.DATETIME, 'm': _k.DATETIME}
+        _np_kinds = {"i": _k.INT, "u": _k.UINT, "f": _k.FLOAT, "b": _k.BOOL,
+                     "U": _k.STRING,
+                     "M": _k.DATETIME, "m": _k.DATETIME}
         kind = _np_kinds.get(dtype.kind, None)
         if kind is None:
             # Not a NumPy dtype. Check if it's a categorical maybe
@@ -526,7 +526,7 @@ class _PandasColumn:
             buffer = _PandasBuffer(np.frombuffer(b, dtype="uint8"))
 
             # Define the dtype for the returned buffer
-            dtype = (_k.STRING, 8, "=U1", "=")  # note: currently only support native endianness
+            dtype = (_k.STRING, 8, "u", "=")  # note: currently only support native endianness
         else:
             raise NotImplementedError(f"Data type {self._col.dtype} not handled yet")
 
@@ -565,7 +565,7 @@ class _PandasColumn:
             buffer = _PandasBuffer(np.asarray(mask, dtype="uint8"))
 
             # Define the dtype of the returned buffer
-            dtype = (_k.UINT, 8, "=B", "=")
+            dtype = (_k.UINT, 8, "C", "=")
 
             return buffer, dtype
 
@@ -607,8 +607,7 @@ class _PandasColumn:
             buffer = _PandasBuffer(buf)
 
             # Assemble the buffer dtype info
-            bdtype = buf.dtype;
-            dtype = (_k.INT, bdtype.itemsize*8, bdtype.str, "=")  # note: currently only support native endianness
+            dtype = (_k.INT, 64, 'l', "=")  # note: currently only support native endianness
         else:
             raise RuntimeError("This column has a fixed-length dtype so does not have an offsets buffer")
 
