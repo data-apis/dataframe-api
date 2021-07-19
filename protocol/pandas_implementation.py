@@ -452,7 +452,7 @@ class _PandasColumn:
             - 4 : byte mask
 
         Value : if kind is "sentinel value", the actual value.  If kind is a bit
-        mask or byte mask, the value (0 or 1) indicating a missing value. None
+        mask or a byte mask, the value (0 or 1) indicating a missing value. None
         otherwise.
         """
         _k = _DtypeKind
