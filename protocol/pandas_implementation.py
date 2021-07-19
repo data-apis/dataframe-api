@@ -448,7 +448,9 @@ class _PandasColumn:
             - 3 : bit mask
             - 4 : byte mask
 
-        Value : if kind is "sentinel value", the actual value. None otherwise.
+        Value : if kind is "sentinel value", the actual value.  If kind is a bit
+        mask or byte mask, the value (0 or 1) indicating a missing value. None
+        otherwise.
         """
         _k = _DtypeKind
         kind = self.dtype[0]
@@ -468,6 +470,7 @@ class _PandasColumn:
             value = -1
         elif kind == _k.STRING:
             null = 4
+            value = 0
         else:
             raise NotImplementedError(f"Data type {self.dtype} not yet supported")
 

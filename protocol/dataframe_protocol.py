@@ -273,7 +273,9 @@ class Column:
             - 3 : bit mask
             - 4 : byte mask
 
-        Value : if kind is "sentinel value", the actual value. None otherwise.
+        Value : if kind is "sentinel value", the actual value. If kind is a bit
+        mask or byte mask, the value (0 or 1) indicating a missing value. None
+        otherwise.
         """
         pass
 
