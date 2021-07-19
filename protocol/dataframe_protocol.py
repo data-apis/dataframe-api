@@ -325,31 +325,6 @@ class Column:
         """
         pass
 
-    def get_data_buffer(self) -> Tuple[Buffer, Any]:
-        """
-        Return the buffer containing the data and the buffer's associated dtype.
-        """
-        pass
-
-    def get_validity_buffer(self) -> Tuple[Buffer, Any]:
-        """
-        Return the buffer containing the mask values indicating missing data and
-        the buffer's associated dtype.
-
-        Raises RuntimeError if null representation is not a bit or byte mask.
-        """
-        pass
-
-    def get_offsets_buffer(self) -> Tuple[Buffer, Any]:
-        """
-        Return the buffer containing the offset values for variable-size binary
-        data (e.g., variable-length strings) and the buffer's associated dtype.
-
-        Raises RuntimeError if the data buffer does not have an associated
-        offsets buffer.
-        """
-        pass
-
 #    def get_children(self) -> Iterable[Column]:
 #        """
 #        Children columns underneath the column, each object in this iterator
