@@ -304,7 +304,7 @@ class Column:
 
     def get_buffers(self) -> dict[Tuple[Buffer, Any], Optional[Tuple[Buffer, Any]], Optional[Tuple[Buffer, Any]]]:
         """
-        Return the underlying buffers.
+        Return a dictionary containing the underlying buffers.
 
         The returned dictionary has the following contents:
 
