@@ -716,7 +716,7 @@ def test_string_dtype():
     col = df.__dataframe__().get_column_by_name("B")
     assert col.dtype[0] == _DtypeKind.STRING
     assert col.null_count == 1
-    assert col.describe_null == (4, None)
+    assert col.describe_null == (4, 0)
     assert col.num_chunks() == 1
 
     df2 = from_dataframe(df)
