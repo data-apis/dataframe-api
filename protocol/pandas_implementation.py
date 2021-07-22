@@ -179,7 +179,7 @@ def convert_string_column(col : ColumnObject) -> np.ndarray:
     mbuffer, mdtype = buffers["validity"]
 
     # Retrieve the missing value encoding
-    null_value = col.describe_null[1]
+    null_kind, null_value = col.describe_null
 
     # Convert the buffers to NumPy arrays
     dt = (_DtypeKind.UINT, 8, None, None)  # note: in order to go from STRING to an equivalent ndarray, we claim that the buffer is uint8 (i.e., a byte array)
@@ -192,7 +192,16 @@ def convert_string_column(col : ColumnObject) -> np.ndarray:
     str_list = []
     for i in range(obuf.size-1):
         # Check for missing values
-        if mbuf[i] == null_value:  # FIXME: we need to account for a mask buffer which is a bit array
+        if null_kind == 3:  # bit mask
+            v = mbuf[i/8]
+            if null_value == 1:
+                v = ~v
+            
+            if v & (1<<(i%8)):
+                str_list.append(np.nan)
+                continue
+
+        elif null_kind == 4 and mbuf[i] == null_value:  # byte mask
             str_list.append(np.nan)
             continue
 
