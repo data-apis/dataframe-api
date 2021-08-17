@@ -538,9 +538,18 @@ class _PandasDataFrame:
 # Roundtrip testing
 # -----------------
 
+def test__dataframe__(df:pd.DataFrame, dfo: DataFrameObject):
+    assert dfo.num_columns() == len(df.columns)
+    assert dfo.num_rows() == len(df)
+    assert dfo.num_chunks() == 1
+    assert dfo.column_names() == list(df.columns)
+    
+
+
 def test_float_only():
     df = pd.DataFrame(data=dict(a=[1.5, 2.5, 3.5], b=[9.2, 10.5, 11.8]))
     df2 = from_dataframe(df)
+    test__dataframe__(df, df.__dataframe__())
     tm.assert_frame_equal(df, df2)
 
 
@@ -548,6 +557,7 @@ def test_mixed_intfloat():
     df = pd.DataFrame(data=dict(a=[1, 2, 3], b=[3, 4, 5],
                                 c=[1.5, 2.5, 3.5], d=[9, 10, 11]))
     df2 = from_dataframe(df)
+    test__dataframe__(df, df.__dataframe__())
     tm.assert_frame_equal(df, df2)
 
 
@@ -575,6 +585,7 @@ def test_categorical_dtype():
     assert col.describe_categorical == (False, True, {0: 1, 1: 2, 2: 5})
 
     df2 = from_dataframe(df)
+    test__dataframe__(df, df.__dataframe__())
     tm.assert_frame_equal(df, df2)
 
 
