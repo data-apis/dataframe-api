@@ -538,13 +538,18 @@ class _PandasDataFrame:
 # Roundtrip testing
 # -----------------
 
+def test_column(pdcol:pd.Series, col: _PandasColumn):
+    assert pdcol.size == col.size
+    assert col.offset == 0
+    assert pdcol.isnull().sum() == col.null_count 
+
 def test__dataframe__(df:pd.DataFrame, dfo: DataFrameObject):
     assert dfo.num_columns() == len(df.columns)
     assert dfo.num_rows() == len(df)
     assert dfo.num_chunks() == 1
     assert dfo.column_names() == list(df.columns)
-    
-
+    for col in df.columns:
+        test_column(df[col], dfo.get_column_by_name(col))
 
 def test_float_only():
     df = pd.DataFrame(data=dict(a=[1.5, 2.5, 3.5], b=[9.2, 10.5, 11.8]))
