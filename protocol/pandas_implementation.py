@@ -64,21 +64,24 @@ def _from_dataframe(df : DataFrameObject) -> pd.DataFrame:
     # least for now, deal with non-numpy dtypes later).
     columns = dict()
     _k = _DtypeKind
+    _buffers = []  # hold on to buffers, keeps memory alive
     for name in df.column_names():
         col = df.get_column_by_name(name)
         if col.dtype[0] in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL):
             # Simple numerical or bool dtype, turn into numpy array
-            # FIXME: .copy() not desired - see NOTE in buffer_to_ndarray for
-            # why it's needed (memory not owned)
-            columns[name] = convert_column_to_ndarray(col).copy()
+            columns[name], _buf = convert_column_to_ndarray(col)
         elif col.dtype[0] == _k.CATEGORICAL:
-            columns[name] = convert_categorical_column(col)
+            columns[name], _buf = convert_categorical_column(col)
         elif col.dtype[0] == _k.STRING:
-            columns[name] = convert_string_column(col)
+            columns[name], _buf = convert_string_column(col)
         else:
             raise NotImplementedError(f"Data type {col.dtype[0]} not handled yet")
 
-    return pd.DataFrame(columns)
+        _buffers.append(_buf)
+
+    df_new = pd.DataFrame(columns)
+    df_new._buffers = _buffers
+    return df_new
 
 
 class _DtypeKind(enum.IntEnum):
@@ -103,7 +106,7 @@ def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
                                   "sentinel values not handled yet")
 
     _buffer, _dtype = col.get_buffers()["data"]
-    return buffer_to_ndarray(_buffer, _dtype)
+    return buffer_to_ndarray(_buffer, _dtype), _buffer
 
 
 def buffer_to_ndarray(_buffer, _dtype) -> np.ndarray:
@@ -162,7 +165,7 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
         raise NotImplementedError("Only categorical columns with sentinel "
                                   "value supported at the moment")
 
-    return series
+    return series, codes_buffer
 
 
 def convert_string_column(col : ColumnObject) -> np.ndarray:
@@ -221,7 +224,7 @@ def convert_string_column(col : ColumnObject) -> np.ndarray:
         str_list.append(s)
 
     # Convert the string list to a NumPy array
-    return np.asarray(str_list, dtype="object")
+    return np.asarray(str_list, dtype="object"), buffers
 
 
 def __dataframe__(cls, nan_as_null : bool = False,
@@ -250,6 +253,7 @@ def __dataframe__(cls, nan_as_null : bool = False,
 
 # Monkeypatch the Pandas DataFrame class to support the interchange protocol
 pd.DataFrame.__dataframe__ = __dataframe__
+pd.DataFrame._buffers = []
 
 
 # Implementation of interchange protocol
