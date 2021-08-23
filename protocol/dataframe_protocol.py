@@ -288,6 +288,13 @@ class Column:
         """
         pass
 
+    @property
+    def metadata(self) -> Dict[str, Any]:
+        """
+        The metadata for the column. See `DataFrame.metadata` for more details.
+        """
+        pass
+
     def num_chunks(self) -> int:
         """
         Return the number of chunks the column consists of.
@@ -362,6 +369,19 @@ class DataFrame:
             "version": 0        # Version number of the protocol
         }
 
+    @property
+    def metadata(self) -> Dict[str, Any]:
+        """
+        The metadata for the data frame, as a dictionary with string keys. The
+        contents of `metadata` may be anything, they are meant for a library
+        to store information that it needs to, e.g., roundtrip losslessly or
+        for two implementations to share data that is not (yet) part of the
+        interchange protocol specification. For avoiding collisions with other
+        entries, please add name the keys with the name of the library
+        followed by a period and the desired name, e.g, ``pandas.indexcol``.
+        """
+        pass
+
     def num_columns(self) -> int:
         """
         Return the number of columns in the DataFrame.
@@ -429,4 +449,3 @@ class DataFrame:
         before yielding it.
         """
         pass
-

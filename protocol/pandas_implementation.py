@@ -196,7 +196,7 @@ def convert_string_column(col : ColumnObject) -> np.ndarray:
             v = mbuf[i/8]
             if null_value == 1:
                 v = ~v
-            
+
             if v & (1<<(i%8)):
                 str_list.append(np.nan)
                 continue
@@ -498,6 +498,13 @@ class _PandasColumn:
         """
         return self._col.isna().sum()
 
+    @property
+    def metadata(self) -> Dict[str, Any]:
+        """
+        Store specific metadata of the column.
+        """
+        return {}
+
     def num_chunks(self) -> int:
         """
         Return the number of chunks the column consists of.
@@ -682,6 +689,12 @@ class _PandasDataFrame:
         # dtypes is added, this value should be propagated to columns.
         self._nan_as_null = nan_as_null
 
+    @property
+    def metadata(self):
+        # `index` isn't a regular column, and the protocol doesn't support row
+        # labels - so we export it as Pandas-specific metadata here.
+        return {"pandas.index": self._df.index}
+
     def num_columns(self) -> int:
         return len(self._df.columns)
 
@@ -777,6 +790,21 @@ def test_string_dtype():
     assert col.describe_null == (4, 0)
     assert col.num_chunks() == 1
 
+def test_metadata():
+    df = pd.DataFrame({'A': [1, 2, 3, 4],'B': [1, 2, 3, 4]})
+
+    # Check the metadata from the dataframe
+    df_metadata = df.__dataframe__().metadata
+    expected = {"pandas.index": df.index}
+    for key in df_metadata:
+        assert all(df_metadata[key] == expected[key])
+
+    # Check the metadata from the column
+    col_metadata = df.__dataframe__().get_column(0).metadata
+    expected = {}
+    for key in col_metadata:
+        assert col_metadata[key] == expected[key]
+
     df2 = from_dataframe(df)
     tm.assert_frame_equal(df, df2)
 
@@ -787,4 +815,4 @@ if __name__ == '__main__':
     test_mixed_intfloat()
     test_noncontiguous_columns()
     test_string_dtype()
-
+    test_metadata()
