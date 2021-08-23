@@ -68,7 +68,9 @@ def _from_dataframe(df : DataFrameObject) -> pd.DataFrame:
         col = df.get_column_by_name(name)
         if col.dtype[0] in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL):
             # Simple numerical or bool dtype, turn into numpy array
-            columns[name] = convert_column_to_ndarray(col)
+            # FIXME: .copy() not desired - see NOTE in buffer_to_ndarray for
+            # why it's needed (memory not owned)
+            columns[name] = convert_column_to_ndarray(col).copy()
         elif col.dtype[0] == _k.CATEGORICAL:
             columns[name] = convert_categorical_column(col)
         elif col.dtype[0] == _k.STRING:
