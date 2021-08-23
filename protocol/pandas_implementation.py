@@ -235,10 +235,12 @@ def __dataframe__(cls, nan_as_null : bool = False,
     This currently has no effect; once support for nullable extension
     dtypes is added, this value should be propagated to columns.
 
-    ``allow_copy`` is a keyword that defines if the given implementation
-    is going to support striding buffers. It is optional, and the libraries
-    do not need to implement it. Currently, if the flag is set to ``True`` it
-    will raise a ``RuntimeError``.
+    ``allow_copy`` is a keyword that defines whether or not the library is
+    allowed to make a copy of the data. This can for example happen if a
+    library supports strided buffers (those would need a copy, because this
+    protocol specifies contiguous buffers).
+    Currently, if the flag is set to ``False`` and a copy is needed, a
+    ``RuntimeError`` will be raised.
     """
     return _PandasDataFrame(
         cls, nan_as_null=nan_as_null, allow_copy=allow_copy)
@@ -260,12 +262,14 @@ class _PandasBuffer:
         """
         Handle only regular columns (= numpy arrays) for now.
         """
-        if not allow_copy:
-            # Array is not contiguous and strided buffers do not need to be
-            # supported. It brings some extra complexity for libraries that
-            # don't support it (e.g. Arrow).
-            raise RuntimeError(
-                "Exports cannot be zero-copy in the case of a non-contiguous buffer")
+        if not x.strides == (x.dtype.itemsize,):
+            # The protocol does not support strided buffers, so a copy is
+            # necessary. If that's not allowed, we need to raise an exception.
+            if allow_copy:
+                x = x.copy()
+            else:
+                raise RuntimeError("Exports cannot be zero-copy in the case "
+                                   "of a non-contiguous buffer")
 
         # Store the numpy array in which the data resides as a private
         # attribute, so we can use it to retrieve the public attributes
@@ -756,12 +760,14 @@ def test_mixed_intfloat():
 
 
 def test_noncontiguous_columns():
-    # Currently raises if the flag of allow zero copy is True.
     arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-    df = pd.DataFrame(arr)
-    assert df[0].to_numpy().strides == (24,)
+    df = pd.DataFrame(arr, columns=['a', 'b', 'c'])
+    assert df['a'].to_numpy().strides == (24,)
+    df2 = from_dataframe(df)  # uses default of allow_copy=True
+    tm.assert_frame_equal(df, df2)
+
     with pytest.raises(RuntimeError):
-        df2 = from_dataframe(df, allow_copy=False)
+        from_dataframe(df, allow_copy=False)
 
 
 def test_categorical_dtype():
