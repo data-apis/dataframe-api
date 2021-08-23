@@ -358,9 +358,9 @@ class DataFrame:
         mask or byte mask that is the producer's native representation.
 
         ``allow_copy`` is a keyword that defines whether or not the library is
-        allowed to make a copy of the data. This can for example happen if a
-        library supports strided buffers (those would need a copy, because this
-        protocol specifies contiguous buffers).
+        allowed to make a copy of the data. For example, copying data would be
+        necessary if a library supports strided buffers, given that this protocol
+        specifies contiguous buffers.
         """
         self._nan_as_null = nan_as_null
         self._allow_zero_zopy = allow_copy

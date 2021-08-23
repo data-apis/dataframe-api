@@ -241,9 +241,9 @@ def __dataframe__(cls, nan_as_null : bool = False,
     dtypes is added, this value should be propagated to columns.
 
     ``allow_copy`` is a keyword that defines whether or not the library is
-    allowed to make a copy of the data. This can for example happen if a
-    library supports strided buffers (those would need a copy, because this
-    protocol specifies contiguous buffers).
+    allowed to make a copy of the data. For example, copying data would be
+    necessary if a library supports strided buffers, given that this protocol
+    specifies contiguous buffers.
     Currently, if the flag is set to ``False`` and a copy is needed, a
     ``RuntimeError`` will be raised.
     """
