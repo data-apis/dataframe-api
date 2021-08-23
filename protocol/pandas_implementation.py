@@ -25,7 +25,7 @@ from typing import Any, Optional, Tuple, Dict, Iterable, Sequence
 
 import pandas as pd
 import numpy as np
-import pandas._testing as tm
+import pandas.testing as tm
 import pytest
 
 
@@ -70,6 +70,8 @@ def _from_dataframe(df : DataFrameObject) -> pd.DataFrame:
             columns[name] = convert_column_to_ndarray(col)
         elif col.dtype[0] == _k.CATEGORICAL:
             columns[name] = convert_categorical_column(col)
+        elif col.dtype[0] == _k.STRING:
+            columns[name] = convert_string_column(col)
         else:
             raise NotImplementedError(f"Data type {col.dtype[0]} not handled yet")
 
@@ -88,7 +90,7 @@ class _DtypeKind(enum.IntEnum):
 
 def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
     """
-    Convert an int, uint, float or bool column to a numpy array
+    Convert an int, uint, float or bool column to a numpy array.
     """
     if col.offset != 0:
         raise NotImplementedError("column.offset > 0 not handled yet")
@@ -97,7 +99,7 @@ def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
         raise NotImplementedError("Null values represented as masks or "
                                   "sentinel values not handled yet")
 
-    _buffer, _dtype = col.get_data_buffer()
+    _buffer, _dtype = col.get_buffers()["data"]
     return buffer_to_ndarray(_buffer, _dtype)
 
 
@@ -131,7 +133,7 @@ def buffer_to_ndarray(_buffer, _dtype) -> np.ndarray:
 
 def convert_categorical_column(col : ColumnObject) -> pd.Series:
     """
-    Convert a categorical column to a Series instance
+    Convert a categorical column to a Series instance.
     """
     ordered, is_dict, mapping = col.describe_categorical
     if not is_dict:
@@ -141,7 +143,7 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
     #    categories = col._col.values.categories.values
     #    codes = col._col.values.codes
     categories = np.asarray(list(mapping.values()))
-    codes_buffer, codes_dtype = col.get_data_buffer()
+    codes_buffer, codes_dtype = col.get_buffers()["data"]
     codes = buffer_to_ndarray(codes_buffer, codes_dtype)
     values = categories[codes]
 
@@ -160,11 +162,70 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
     return series
 
 
+def convert_string_column(col : ColumnObject) -> np.ndarray:
+    """
+    Convert a string column to a NumPy array.
+    """
+    # Retrieve the data buffers
+    buffers = col.get_buffers()
+
+    # Retrieve the data buffer containing the UTF-8 code units
+    dbuffer, bdtype = buffers["data"]
+
+    # Retrieve the offsets buffer containing the index offsets demarcating the beginning and end of each string
+    obuffer, odtype = buffers["offsets"]
+
+    # Retrieve the mask buffer indicating the presence of missing values
+    mbuffer, mdtype = buffers["validity"]
+
+    # Retrieve the missing value encoding
+    null_kind, null_value = col.describe_null
+
+    # Convert the buffers to NumPy arrays
+    dt = (_DtypeKind.UINT, 8, None, None)  # note: in order to go from STRING to an equivalent ndarray, we claim that the buffer is uint8 (i.e., a byte array)
+    dbuf = buffer_to_ndarray(dbuffer, dt)
+
+    obuf = buffer_to_ndarray(obuffer, odtype)
+    mbuf = buffer_to_ndarray(mbuffer, mdtype)
+
+    # Assemble the strings from the code units
+    str_list = []
+    for i in range(obuf.size-1):
+        # Check for missing values
+        if null_kind == 3:  # bit mask
+            v = mbuf[i/8]
+            if null_value == 1:
+                v = ~v
+            
+            if v & (1<<(i%8)):
+                str_list.append(np.nan)
+                continue
+
+        elif null_kind == 4 and mbuf[i] == null_value:  # byte mask
+            str_list.append(np.nan)
+            continue
+
+        # Extract a range of code units
+        units = dbuf[obuf[i]:obuf[i+1]];
+
+        # Convert the list of code units to bytes
+        b = bytes(units)
+
+        # Create the string
+        s = b.decode(encoding="utf-8")
+
+        # Add to our list of strings
+        str_list.append(s)
+
+    # Convert the string list to a NumPy array
+    return np.asarray(str_list, dtype="object")
+
+
 def __dataframe__(cls, nan_as_null : bool = False) -> dict:
     """
-    The public method to attach to pd.DataFrame
+    The public method to attach to pd.DataFrame.
 
-    We'll attach it via monkeypatching here for demo purposes. If Pandas adopt
+    We'll attach it via monkey-patching here for demo purposes. If Pandas adopts
     the protocol, this will be a regular method on pandas.DataFrame.
 
     ``nan_as_null`` is a keyword intended for the consumer to tell the
@@ -205,20 +266,20 @@ class _PandasBuffer:
     @property
     def bufsize(self) -> int:
         """
-        Buffer size in bytes
+        Buffer size in bytes.
         """
         return self._x.size * self._x.dtype.itemsize
 
     @property
     def ptr(self) -> int:
         """
-        Pointer to start of the buffer as an integer
+        Pointer to start of the buffer as an integer.
         """
         return self._x.__array_interface__['data'][0]
 
     def __dlpack__(self):
         """
-        DLPack not implemented in NumPy yet, so leave it out here
+        DLPack not implemented in NumPy yet, so leave it out here.
         """
         raise NotImplementedError("__dlpack__")
 
@@ -242,9 +303,10 @@ class _PandasColumn:
     A column object, with only the methods and properties required by the
     interchange protocol defined.
 
-    A column can contain one or more chunks. Each chunk can contain either one
-    or two buffers - one data buffer and (depending on null representation) it
-    may have a mask buffer.
+    A column can contain one or more chunks. Each chunk can contain up to three
+    buffers - a data buffer, a mask buffer (depending on null representation),
+    and an offsets buffer (if variable-size binary; e.g., variable-length
+    strings).
 
     Note: this Column object can only be produced by ``__dataframe__``, so
           doesn't need its own version or ``__column__`` protocol.
@@ -318,19 +380,24 @@ class _PandasColumn:
               and nested (list, struct, map, union) dtypes.
         """
         dtype = self._col.dtype
+
+        # For now, assume that, if the column dtype is 'O' (i.e., `object`), then we have an array of strings
+        if not isinstance(dtype, pd.CategoricalDtype) and dtype.kind == 'O':
+            return (_DtypeKind.STRING, 8, 'u', '=')
+
         return self._dtype_from_pandasdtype(dtype)
 
     def _dtype_from_pandasdtype(self, dtype) -> Tuple[enum.IntEnum, int, str, str]:
         """
-        See `self.dtype` for details
+        See `self.dtype` for details.
         """
         # Note: 'c' (complex) not handled yet (not in array spec v1).
         #       'b', 'B' (bytes), 'S', 'a', (old-style string) 'V' (void) not handled
         #       datetime and timedelta both map to datetime (is timedelta handled?)
         _k = _DtypeKind
-        _np_kinds = {'i': _k.INT, 'u': _k.UINT, 'f': _k.FLOAT, 'b': _k.BOOL,
-                     'U': _k.STRING,
-                     'M': _k.DATETIME, 'm': _k.DATETIME}
+        _np_kinds = {"i": _k.INT, "u": _k.UINT, "f": _k.FLOAT, "b": _k.BOOL,
+                     "U": _k.STRING,
+                     "M": _k.DATETIME, "m": _k.DATETIME}
         kind = _np_kinds.get(dtype.kind, None)
         if kind is None:
             # Not a NumPy dtype. Check if it's a categorical maybe
@@ -340,7 +407,7 @@ class _PandasColumn:
                 raise ValueError(f"Data type {dtype} not supported by exchange"
                                  "protocol")
 
-        if kind not in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL, _k.CATEGORICAL):
+        if kind not in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL, _k.CATEGORICAL, _k.STRING):
             raise NotImplementedError(f"Data type {dtype} not handled yet")
 
         bitwidth = dtype.itemsize * 8
@@ -396,7 +463,9 @@ class _PandasColumn:
             - 3 : bit mask
             - 4 : byte mask
 
-        Value : if kind is "sentinel value", the actual value. None otherwise.
+        Value : if kind is "sentinel value", the actual value.  If kind is a bit
+        mask or a byte mask, the value (0 or 1) indicating a missing value. None
+        otherwise.
         """
         _k = _DtypeKind
         kind = self.dtype[0]
@@ -407,15 +476,18 @@ class _PandasColumn:
             null = 1  # np.datetime64('NaT')
         elif kind in (_k.INT, _k.UINT, _k.BOOL):
             # TODO: check if extension dtypes are used once support for them is
-            #       implemented in this procotol code
+            #       implemented in this protocol code
             null = 0  # integer and boolean dtypes are non-nullable
         elif kind == _k.CATEGORICAL:
             # Null values for categoricals are stored as `-1` sentinel values
             # in the category date (e.g., `col.values.codes` is int8 np.ndarray)
             null = 2
             value = -1
+        elif kind == _k.STRING:
+            null = 4
+            value = 0  # follow Arrow in using 1 as valid value and 0 for missing/null value
         else:
-            raise NotImplementedError(f'Data type {self.dtype} not yet supported')
+            raise NotImplementedError(f"Data type {self.dtype} not yet supported")
 
         return null, value
 
@@ -440,9 +512,44 @@ class _PandasColumn:
         """
         return (self,)
 
-    def get_data_buffer(self) -> Tuple[_PandasBuffer, Any]:  # Any is for self.dtype tuple
+    def get_buffers(self) -> Dict[str, Any]:
         """
-        Return the buffer containing the data.
+        Return a dictionary containing the underlying buffers.
+
+        The returned dictionary has the following contents:
+
+            - "data": a two-element tuple whose first element is a buffer
+                      containing the data and whose second element is the data
+                      buffer's associated dtype.
+            - "validity": a two-element tuple whose first element is a buffer
+                          containing mask values indicating missing data and
+                          whose second element is the mask value buffer's
+                          associated dtype. None if the null representation is
+                          not a bit or byte mask.
+            - "offsets": a two-element tuple whose first element is a buffer
+                         containing the offset values for variable-size binary
+                         data (e.g., variable-length strings) and whose second
+                         element is the offsets buffer's associated dtype. None
+                         if the data buffer does not have an associated offsets
+                         buffer.
+        """
+        buffers = {}
+        buffers["data"] = self._get_data_buffer()
+        try:
+            buffers["validity"] = self._get_validity_buffer()
+        except:
+            buffers["validity"] = None
+
+        try:
+            buffers["offsets"] = self._get_offsets_buffer()
+        except:
+            buffers["offsets"] = None
+
+        return buffers
+
+    def _get_data_buffer(self) -> Tuple[_PandasBuffer, Any]:  # Any is for self.dtype tuple
+        """
+        Return the buffer containing the data and the buffer's associated dtype.
         """
         _k = _DtypeKind
         if self.dtype[0] in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL):
@@ -452,26 +559,106 @@ class _PandasColumn:
             codes = self._col.values.codes
             buffer = _PandasBuffer(codes)
             dtype = self._dtype_from_pandasdtype(codes.dtype)
+        elif self.dtype[0] == _k.STRING:
+            # Marshal the strings from a NumPy object array into a byte array
+            buf = self._col.to_numpy()
+            b = bytearray()
+
+            # TODO: this for-loop is slow; can be implemented in Cython/C/C++ later
+            for i in range(buf.size):
+                if type(buf[i]) == str:
+                    b.extend(buf[i].encode(encoding="utf-8"))
+
+            # Convert the byte array to a Pandas "buffer" using a NumPy array as the backing store
+            buffer = _PandasBuffer(np.frombuffer(b, dtype="uint8"))
+
+            # Define the dtype for the returned buffer
+            dtype = (_k.STRING, 8, "u", "=")  # note: currently only support native endianness
         else:
             raise NotImplementedError(f"Data type {self._col.dtype} not handled yet")
 
         return buffer, dtype
 
-    def get_mask(self) -> _PandasBuffer:
+    def _get_validity_buffer(self) -> Tuple[_PandasBuffer, Any]:
         """
-        Return the buffer containing the mask values indicating missing data.
+        Return the buffer containing the mask values indicating missing data and
+        the buffer's associated dtype.
 
         Raises RuntimeError if null representation is not a bit or byte mask.
         """
-        null, value = self.describe_null
+        null, invalid = self.describe_null
+
+        _k = _DtypeKind
+        if self.dtype[0] == _k.STRING:
+            # For now, have the mask array be comprised of bytes, rather than a bit array
+            buf = self._col.to_numpy()
+            mask = []
+
+            # Determine the encoding for valid values
+            if invalid == 0:
+                valid = 1
+            else:
+                valid = 0
+
+            for i in range(buf.size):
+                if type(buf[i]) == str:
+                    v = valid;
+                else:
+                    v = invalid;
+
+                mask.append(v)
+
+            # Convert the mask array to a Pandas "buffer" using a NumPy array as the backing store
+            buffer = _PandasBuffer(np.asarray(mask, dtype="uint8"))
+
+            # Define the dtype of the returned buffer
+            dtype = (_k.UINT, 8, "C", "=")
+
+            return buffer, dtype
+
         if null == 0:
             msg = "This column is non-nullable so does not have a mask"
         elif null == 1:
             msg = "This column uses NaN as null so does not have a separate mask"
         else:
-            raise NotImplementedError('See self.describe_null')
+            raise NotImplementedError("See self.describe_null")
 
         raise RuntimeError(msg)
+
+    def _get_offsets_buffer(self) -> Tuple[_PandasBuffer, Any]:
+        """
+        Return the buffer containing the offset values for variable-size binary
+        data (e.g., variable-length strings) and the buffer's associated dtype.
+
+        Raises RuntimeError if the data buffer does not have an associated
+        offsets buffer.
+        """
+        _k = _DtypeKind
+        if self.dtype[0] == _k.STRING:
+            # For each string, we need to manually determine the next offset
+            values = self._col.to_numpy()
+            ptr = 0
+            offsets = [ptr]
+            for v in values:
+                # For missing values (in this case, `np.nan` values), we don't increment the pointer)
+                if type(v) == str:
+                    b = v.encode(encoding="utf-8")
+                    ptr += len(b)
+
+                offsets.append(ptr)
+
+            # Convert the list of offsets to a NumPy array of signed 64-bit integers (note: Arrow allows the offsets array to be either `int32` or `int64`; here, we default to the latter)
+            buf = np.asarray(offsets, dtype="int64")
+
+            # Convert the offsets to a Pandas "buffer" using the NumPy array as the backing store
+            buffer = _PandasBuffer(buf)
+
+            # Assemble the buffer dtype info
+            dtype = (_k.INT, 64, 'l', "=")  # note: currently only support native endianness
+        else:
+            raise RuntimeError("This column has a fixed-length dtype so does not have an offsets buffer")
+
+        return buffer, dtype
 
 
 class _PandasDataFrame:
@@ -578,9 +765,26 @@ def test_categorical_dtype():
     tm.assert_frame_equal(df, df2)
 
 
+def test_string_dtype():
+    df = pd.DataFrame({"A": ["a", "b", "cdef", "", "g"]})
+    df["B"] = df["A"].astype("object")
+    df.at[1, "B"] = np.nan  # Set one item to null
+
+    # Test for correctness and null handling:
+    col = df.__dataframe__().get_column_by_name("B")
+    assert col.dtype[0] == _DtypeKind.STRING
+    assert col.null_count == 1
+    assert col.describe_null == (4, 0)
+    assert col.num_chunks() == 1
+
+    df2 = from_dataframe(df)
+    tm.assert_frame_equal(df, df2)
+
+
 if __name__ == '__main__':
     test_categorical_dtype()
     test_float_only()
     test_mixed_intfloat()
     test_noncontiguous_columns()
+    test_string_dtype()
 
