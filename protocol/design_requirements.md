@@ -212,6 +212,11 @@ they are the ones that need such a particular format. So, it can call the
 constructor it needs. For example, `x = np.asarray(df['colname'])` (where
 `df` supports `__dataframe__`).
 
+A related question is: can `__array__` and/or `__arrow_array__` be used at the
+column level? This is more reasonable, but probably does lead to more
+complexity for very limited gains - for an issue with discussion on that, see
+[dataframe-api/issues/48](https://github.com/data-apis/dataframe-api/issues/48).
+
 
 ### Does an interface describing memory work for virtual columns?
 
