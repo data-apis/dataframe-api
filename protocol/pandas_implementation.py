@@ -538,12 +538,29 @@ class _PandasDataFrame:
 # Roundtrip testing
 # -----------------
 
+def assert_buffer_equal(buffer_dtype: Tuple[_PandasBuffer, Any], pdcol:pd.Series):
+    buf, dtype = buffer_dtype
+    pytest.raises(NotImplementedError, buf.__dlpack__)
+    assert buf.__dlpack_device__() == (1, None)
+    # It seems that `bitwidth` is handled differently for `int` and `category`
+    # assert dtype[1] == pdcol.dtype.itemsize * 8, f"{dtype[1]} is not {pdcol.dtype.itemsize}"
+    # print(pdcol)
+    # if isinstance(pdcol, pd.CategoricalDtype):
+    #     col = pdcol.values.codes
+    # else:
+    #     col = pdcol
+
+    # assert dtype[1] == col.dtype.itemsize * 8, f"{dtype[1]} is not {col.dtype.itemsize * 8}"
+    # assert dtype[2] == col.dtype.str, f"{dtype[2]} is not {col.dtype.str}"
+
+
 def assert_column_equal(col: _PandasColumn, pdcol:pd.Series):
     assert col.size == pdcol.size 
     assert col.offset == 0
     assert col.null_count == pdcol.isnull().sum() 
     assert col.num_chunks() == 1
     pytest.raises(RuntimeError, col.get_mask)
+    assert_buffer_equal(col.get_data_buffer(), pdcol)
 
 def assert_dataframe_equal(dfo: DataFrameObject, df:pd.DataFrame):
     assert dfo.num_columns() == len(df.columns)
