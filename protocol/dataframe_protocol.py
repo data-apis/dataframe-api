@@ -83,14 +83,14 @@ class Buffer:
     @property
     def bufsize(self) -> int:
         """
-        Buffer size in bytes
+        Buffer size in bytes.
         """
         pass
 
     @property
     def ptr(self) -> int:
         """
-        Pointer to start of the buffer as an integer
+        Pointer to start of the buffer as an integer.
         """
         pass
 
@@ -133,9 +133,10 @@ class Column:
     A column object, with only the methods and properties required by the
     interchange protocol defined.
 
-    A column can contain one or more chunks. Each chunk can contain either one
-    or two buffers - one data buffer and (depending on null representation) it
-    may have a mask buffer.
+    A column can contain one or more chunks. Each chunk can contain up to three
+    buffers - a data buffer, a mask buffer (depending on null representation),
+    and an offsets buffer (if variable-size binary; e.g., variable-length
+    strings).
 
     TBD: Arrow has a separate "null" dtype, and has no separate mask concept.
          Instead, it seems to use "children" for both columns with a bit mask,
@@ -185,7 +186,7 @@ class Column:
     @property
     def offset(self) -> int:
         """
-        Offset of first element
+        Offset of first element.
 
         May be > 0 if using chunks; for example for a column with N chunks of
         equal size M (only the last chunk may be shorter),
@@ -196,7 +197,7 @@ class Column:
     @property
     def dtype(self) -> Tuple[enum.IntEnum, int, str, str]:
         """
-        Dtype description as a tuple ``(kind, bit-width, format string, endianness)``
+        Dtype description as a tuple ``(kind, bit-width, format string, endianness)``.
 
         Kind :
 
@@ -272,7 +273,9 @@ class Column:
             - 3 : bit mask
             - 4 : byte mask
 
-        Value : if kind is "sentinel value", the actual value. None otherwise.
+        Value : if kind is "sentinel value", the actual value. If kind is a bit
+        mask or a byte mask, the value (0 or 1) indicating a missing value. None
+        otherwise.
         """
         pass
 
@@ -282,6 +285,13 @@ class Column:
         Number of null elements, if known.
 
         Note: Arrow uses -1 to indicate "unknown", but None seems cleaner.
+        """
+        pass
+
+    @property
+    def metadata(self) -> Dict[str, Any]:
+        """
+        The metadata for the column. See `DataFrame.metadata` for more details.
         """
         pass
 
@@ -299,24 +309,33 @@ class Column:
         """
         pass
 
-    def get_data_buffer(self) -> Buffer:
+    def get_buffers(self) -> dict[Tuple[Buffer, Any], Optional[Tuple[Buffer, Any]], Optional[Tuple[Buffer, Any]]]:
         """
-        Return the buffer containing the data.
-        """
-        pass
+        Return a dictionary containing the underlying buffers.
 
-    def get_mask(self) -> Buffer:
-        """
-        Return the buffer containing the mask values indicating missing data.
+        The returned dictionary has the following contents:
 
-        Raises RuntimeError if null representation is not a bit or byte mask.
+            - "data": a two-element tuple whose first element is a buffer
+                      containing the data and whose second element is the data
+                      buffer's associated dtype.
+            - "validity": a two-element tuple whose first element is a buffer
+                          containing mask values indicating missing data and
+                          whose second element is the mask value buffer's
+                          associated dtype. None if the null representation is
+                          not a bit or byte mask.
+            - "offsets": a two-element tuple whose first element is a buffer
+                         containing the offset values for variable-size binary
+                         data (e.g., variable-length strings) and whose second
+                         element is the offsets buffer's associated dtype. None
+                         if the data buffer does not have an associated offsets
+                         buffer.
         """
         pass
 
 #    def get_children(self) -> Iterable[Column]:
 #        """
 #        Children columns underneath the column, each object in this iterator
-#        must adhere to the column specification
+#        must adhere to the column specification.
 #        """
 #        pass
 
@@ -335,24 +354,44 @@ class DataFrame:
     ``__dataframe__`` method of a public data frame class in a library adhering
     to the dataframe interchange protocol specification.
     """
-    def __dataframe__(self, nan_as_null : bool = False) -> dict:
+    def __dataframe__(self, nan_as_null : bool = False,
+                      allow_copy : bool = True) -> dict:
         """
-        Produces a dictionary object following the dataframe protocol spec
+        Produces a dictionary object following the dataframe protocol specification.
 
         ``nan_as_null`` is a keyword intended for the consumer to tell the
         producer to overwrite null values in the data with ``NaN`` (or ``NaT``).
         It is intended for cases where the consumer does not support the bit
         mask or byte mask that is the producer's native representation.
+
+        ``allow_copy`` is a keyword that defines whether or not the library is
+        allowed to make a copy of the data. For example, copying data would be
+        necessary if a library supports strided buffers, given that this protocol
+        specifies contiguous buffers.
         """
         self._nan_as_null = nan_as_null
+        self._allow_zero_zopy = allow_copy
         return {
             "dataframe": self,  # DataFrame object adhering to the protocol
             "version": 0        # Version number of the protocol
         }
 
+    @property
+    def metadata(self) -> Dict[str, Any]:
+        """
+        The metadata for the data frame, as a dictionary with string keys. The
+        contents of `metadata` may be anything, they are meant for a library
+        to store information that it needs to, e.g., roundtrip losslessly or
+        for two implementations to share data that is not (yet) part of the
+        interchange protocol specification. For avoiding collisions with other
+        entries, please add name the keys with the name of the library
+        followed by a period and the desired name, e.g, ``pandas.indexcol``.
+        """
+        pass
+
     def num_columns(self) -> int:
         """
-        Return the number of columns in the DataFrame
+        Return the number of columns in the DataFrame.
         """
         pass
 
@@ -361,13 +400,13 @@ class DataFrame:
         #       why include it if it may be None - what do we expect consumers
         #       to do here?
         """
-        Return the number of rows in the DataFrame, if available
+        Return the number of rows in the DataFrame, if available.
         """
         pass
 
     def num_chunks(self) -> int:
         """
-        Return the number of chunks the DataFrame consists of
+        Return the number of chunks the DataFrame consists of.
         """
         pass
 
@@ -397,7 +436,7 @@ class DataFrame:
 
     def select_columns(self, indices: Sequence[int]) -> DataFrame:
         """
-        Create a new DataFrame by selecting a subset of columns by index
+        Create a new DataFrame by selecting a subset of columns by index.
         """
         pass
 
@@ -417,4 +456,3 @@ class DataFrame:
         before yielding it.
         """
         pass
-
