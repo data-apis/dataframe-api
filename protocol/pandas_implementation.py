@@ -786,8 +786,9 @@ def assert_column_equal(col: _PandasColumn, pdcol:pd.Series):
     assert col.offset == 0
     assert col.null_count == pdcol.isnull().sum() 
     assert col.num_chunks() == 1
-    pytest.raises(RuntimeError, col.get_mask)
-    assert_buffer_equal(col.get_data_buffer(), pdcol)
+    if col.dtype[0] != _DtypeKind.STRING:
+        pytest.raises(RuntimeError, col._get_validity_buffer)
+    assert_buffer_equal(col._get_data_buffer(), pdcol)
 
 def assert_dataframe_equal(dfo: DataFrameObject, df:pd.DataFrame):
     assert dfo.num_columns() == len(df.columns)
@@ -817,6 +818,7 @@ def test_noncontiguous_columns():
     df = pd.DataFrame(arr, columns=['a', 'b', 'c'])
     assert df['a'].to_numpy().strides == (24,)
     df2 = from_dataframe(df)  # uses default of allow_copy=True
+    assert_dataframe_equal(df.__dataframe__(), df)
     tm.assert_frame_equal(df, df2)
 
     with pytest.raises(RuntimeError):
@@ -853,6 +855,8 @@ def test_string_dtype():
     assert col.describe_null == (4, 0)
     assert col.num_chunks() == 1
 
+    assert_dataframe_equal(df.__dataframe__(), df)
+
 def test_metadata():
     df = pd.DataFrame({'A': [1, 2, 3, 4],'B': [1, 2, 3, 4]})
 
@@ -869,6 +873,7 @@ def test_metadata():
         assert col_metadata[key] == expected[key]
 
     df2 = from_dataframe(df)
+    assert_dataframe_equal(df.__dataframe__(), df)
     tm.assert_frame_equal(df, df2)
 
 
