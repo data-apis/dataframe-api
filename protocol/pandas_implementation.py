@@ -66,6 +66,10 @@ def _from_dataframe(df : DataFrameObject) -> pd.DataFrame:
     _k = _DtypeKind
     _buffers = []  # hold on to buffers, keeps memory alive
     for name in df.column_names():
+        if not isinstance(name, str):
+            raise ValueError(f"Column {name} is not a string")
+        if name in columns:
+            raise ValueError(f"Column {name} is not unique")
         col = df.get_column_by_name(name)
         if col.dtype[0] in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL):
             # Simple numerical or bool dtype, turn into numpy array
