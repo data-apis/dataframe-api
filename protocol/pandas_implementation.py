@@ -441,7 +441,7 @@ class _PandasColumn:
 
     def _format_str(self, format_str) -> str:
         """
-        Mapping of NumPy formt strings to
+        Mapping of NumPy format strings to
         Apache Arrow C Data Interface format strings.
         'O' categorical mapped as 'U': large utf-8 string for now
         """
