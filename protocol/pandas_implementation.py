@@ -435,10 +435,32 @@ class _PandasColumn:
             raise NotImplementedError(f"Data type {dtype} not handled yet")
 
         bitwidth = dtype.itemsize * 8
-        format_str = dtype.str
+        format_str = self._format_str(dtype.str)
         endianness = dtype.byteorder if not kind == _k.CATEGORICAL else '='
         return (kind, bitwidth, format_str, endianness)
 
+    def _format_str(self, format_str) -> str:
+        """
+        Mapping of NumPy formt strings to
+        Apache Arrow C Data Interface format strings.
+        'O' categorical mapped as 'U': large utf-8 string for now
+        """
+        _ints = {8: 'c', 16: 's', 32: 'i', 64: 'l'}
+        _uints = {8: 'C', 16: 'S', 32: 'I', 64: 'L'}
+        _floats = {16: 'e', 32: 'f', 64: 'g'}
+        _np_dtypes = {'i': _ints, 'u': _uints, 'f': _floats, 'b': {8: 'b'}, 'O': {64: 'U'}} 
+        
+        dt = np.dtype(format_str)
+        if dt.byteorder == '>':
+            raise ValueError(f"Big-endian not supported by exchange"
+                                 "protocol")
+            
+        arrow_format_str = _np_dtypes.get(dt.kind, {}).get(dt.itemsize*8)
+        
+        if arrow_format_str is None:
+            raise NotImplementedError(f"Format string {format_str} not handled yet")
+            
+        return arrow_format_str
 
     @property
     def describe_categorical(self) -> Dict[str, Any]:
