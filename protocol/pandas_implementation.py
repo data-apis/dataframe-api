@@ -902,6 +902,12 @@ def test_metadata():
     assert_dataframe_equal(df.__dataframe__(), df)
     tm.assert_frame_equal(df, df2)
 
+def test_fromat_str():
+    df = pd.DataFrame(data=dict(a=[1, 2, 3], B=[3, 4, 5],
+                                c=[1.5, 2.5, 3.5], D=["a", "b", "cdef"]))
+    df["B"] = df["B"].astype("category")
+    df["D"] = df["D"].astype("object")
+    df2 = from_dataframe(df)
 
 if __name__ == '__main__':
     test_categorical_dtype()
