@@ -907,7 +907,11 @@ def test_fromat_str():
                                 c=[1.5, 2.5, 3.5], D=["a", "b", "cdef"]))
     df["B"] = df["B"].astype("category")
     df["D"] = df["D"].astype("object")
-    df2 = from_dataframe(df)
+    
+    format_strings = {'a': 'l', 'B': 'U', 'c': 'g', 'D': 'u'}
+    for col in df.columns.tolist():
+        column = _PandasColumn(df[col])
+        assert column.dtype[2] == format_strings[col]
 
 if __name__ == '__main__':
     test_categorical_dtype()
