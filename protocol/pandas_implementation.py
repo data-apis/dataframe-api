@@ -145,14 +145,15 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
     """
     Convert a categorical column to a Series instance.
     """
-    ordered, is_dict, mapping = col.describe_categorical
+    ordered, is_dict = col.describe_categorical
     if not is_dict:
         raise NotImplementedError('Non-dictionary categoricals not supported yet')
 
     # If you want to cheat for testing (can't use `_col` in real-world code):
     #    categories = col._col.values.categories.values
     #    codes = col._col.values.codes
-    categories = np.asarray(list(mapping.values()))
+    categories_column, = col.get_children()  # need to keep a reference to the child
+    categories = convert_column_to_ndarray(categories_column)[0]
     codes_buffer, codes_dtype = col.get_buffers()["data"]
     codes = buffer_to_ndarray(codes_buffer, codes_dtype)
     values = categories[codes]
@@ -446,7 +447,8 @@ class _PandasColumn:
         If the dtype is categorical, there are two options:
 
         - There are only values in the data buffer.
-        - There is a separate dictionary-style encoding for categorical values.
+        - The data buffer stores encoded values, while the (single)
+          child column stores the categorical values themselves.
 
         Raises RuntimeError if the dtype is not categorical
 
@@ -454,10 +456,8 @@ class _PandasColumn:
 
             - "is_ordered" : bool, whether the ordering of dictionary indices is
                              semantically meaningful.
-            - "is_dictionary" : bool, whether a dictionary-style mapping of
-                                categorical values to other objects exists
-            - "mapping" : dict, Python-level only (e.g. ``{int: str}``).
-                          None if not a dictionary-style categorical.
+            - "is_dictionary" : bool, whether the data is integer encoded
+
         """
         if not self.dtype[0] == _DtypeKind.CATEGORICAL:
             raise TypeError("`describe_categorical only works on a column with "
@@ -470,8 +470,7 @@ class _PandasColumn:
         codes = self._col.values.codes  # ndarray, length `self.size`
         # categories.values is ndarray of length n_categories
         categories = self._col.values.categories.values
-        mapping = {ix: val for ix, val in enumerate(categories)}
-        return ordered, is_dictionary, mapping
+        return ordered, is_dictionary
 
     @property
     def describe_null(self) -> Tuple[int, Any]:
@@ -693,6 +692,14 @@ class _PandasColumn:
 
         return buffer, dtype
 
+    def get_children(self):
+        if self.dtype[0] == _DtypeKind.CATEGORICAL:
+            if self.describe_categorical[1]:
+                # return the categories as a child Column
+                return (_PandasColumn(self._col.dtype.categories.to_series()),)
+        else:
+            return tuple()
+            
 
 class _PandasDataFrame:
     """
@@ -840,7 +847,7 @@ def test_categorical_dtype():
     assert col.null_count == 1
     assert col.describe_null == (2, -1)  # sentinel value -1
     assert col.num_chunks() == 1
-    assert col.describe_categorical == (False, True, {0: 1, 1: 2, 2: 5})
+    assert col.describe_categorical == (False, True)
 
     df2 = from_dataframe(df)
     assert_dataframe_equal(df.__dataframe__(), df)

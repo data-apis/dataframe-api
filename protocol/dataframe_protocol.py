@@ -175,7 +175,8 @@ class Column:
         If the dtype is categorical, there are two options:
 
         - There are only values in the data buffer.
-        - There is a separate dictionary-style encoding for categorical values.
+        - The data buffer stores encoded values, while the (single)
+          child column stores the categorical values themselves.
 
         Raises RuntimeError if the dtype is not categorical
 
@@ -183,10 +184,7 @@ class Column:
 
             - "is_ordered" : bool, whether the ordering of dictionary indices is
                              semantically meaningful.
-            - "is_dictionary" : bool, whether a dictionary-style mapping of
-                                categorical values to other objects exists
-            - "mapping" : dict, Python-level only (e.g. ``{int: str}``).
-                          None if not a dictionary-style categorical.
+            - "is_dictionary" : bool, whether the data is integer encoded
 
         TBD: are there any other in-memory representations that are needed?
         """
@@ -265,12 +263,12 @@ class Column:
         """
         pass
 
-#    def get_children(self) -> Iterable[Column]:
-#        """
-#        Children columns underneath the column, each object in this iterator
-#        must adhere to the column specification.
-#        """
-#        pass
+   def get_children(self) -> Iterable[Column]:
+       """
+       Children columns underneath the column, each object in this iterator
+       must adhere to the column specification.
+       """
+       pass
 
 
 class DataFrame:
