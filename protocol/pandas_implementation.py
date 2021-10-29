@@ -97,6 +97,16 @@ class _DtypeKind(enum.IntEnum):
     DATETIME = 22
     CATEGORICAL = 23
 
+class _Device(enum.IntEnum):
+    CPU = 1
+    CUDA = 2
+    CPU_PINNED = 3
+    OPENCL = 4
+    VULKAN = 7
+    METAL = 8
+    VPI = 9
+    ROCM = 10
+
 _INTS = {8: np.int8, 16: np.int16, 32: np.int32, 64: np.int64}
 _UNITS = {8: np.uint8, 16: np.uint16, 32: np.uint32, 64: np.uint64}
 _FLOATS = {32: np.float32, 64: np.float64}
@@ -311,10 +321,7 @@ class _PandasBuffer:
         """
         Device type and device ID for where the data in the buffer resides.
         """
-        class Device(enum.IntEnum):
-            CPU = 1
-
-        return (Device.CPU, None)
+        return (_Device.CPU, None)
 
     def __repr__(self) -> str:
         return 'PandasBuffer(' + str({'bufsize': self.bufsize,
