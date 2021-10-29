@@ -122,9 +122,12 @@ def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
     if col.describe_null[0] not in (0, 1):
         raise NotImplementedError("Null values represented as masks or "
                                   "sentinel values not handled yet")
-
-    _buffer, _dtype = col.get_buffers()["data"]
-    return buffer_to_ndarray(_buffer, _dtype), _buffer
+    buffers = col.get_buffers()
+    _buffer, _dtype = buffers["data"]
+    # there is a strange side effect (failing unit test) when replacing below
+    # `buffers` by `col.get_buffers()`. It is like the buffer has changed between
+    # the `buffer_to_ndarray` call and `col.get_buffers()`
+    return buffer_to_ndarray(_buffer, _dtype), buffers
 
 
 def buffer_to_ndarray(_buffer, _dtype) -> np.ndarray:
@@ -165,7 +168,8 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
     #    categories = col._col.values.categories.values
     #    codes = col._col.values.codes
     categories = np.asarray(list(mapping.values()))
-    codes_buffer, codes_dtype = col.get_buffers()["data"]
+    buffers = col.get_buffers()
+    codes_buffer, codes_dtype = buffers["data"]
     codes = buffer_to_ndarray(codes_buffer, codes_dtype)
     values = categories[codes]
 
@@ -181,7 +185,7 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
         raise NotImplementedError("Only categorical columns with sentinel "
                                   "value supported at the moment")
 
-    return series, codes_buffer
+    return series, buffers
 
 
 def convert_string_column(col : ColumnObject) -> np.ndarray:
