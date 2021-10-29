@@ -97,6 +97,10 @@ class _DtypeKind(enum.IntEnum):
     DATETIME = 22
     CATEGORICAL = 23
 
+_INTS = {8: np.int8, 16: np.int16, 32: np.int32, 64: np.int64}
+_UNITS = {8: np.uint8, 16: np.uint16, 32: np.uint32, 64: np.uint64}
+_FLOATS = {32: np.float32, 64: np.float64}
+_NP_DTYPES = {0: _INTS, 1: _UNITS, 2: _FLOATS, 20: {8: bool}}
 
 def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
     """
@@ -114,18 +118,8 @@ def convert_column_to_ndarray(col : ColumnObject) -> np.ndarray:
 
 
 def buffer_to_ndarray(_buffer, _dtype) -> np.ndarray:
-    # Handle the dtype
-    kind = _dtype[0]
     bitwidth = _dtype[1]
-    _k = _DtypeKind
-    if _dtype[0] not in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL):
-        raise RuntimeError("Not a boolean, integer or floating-point dtype")
-
-    _ints = {8: np.int8, 16: np.int16, 32: np.int32, 64: np.int64}
-    _uints = {8: np.uint8, 16: np.uint16, 32: np.uint32, 64: np.uint64}
-    _floats = {32: np.float32, 64: np.float64}
-    _np_dtypes = {0: _ints, 1: _uints, 2: _floats, 20: {8: bool}}
-    column_dtype = _np_dtypes[kind][bitwidth]
+    column_dtype = protocol_dtype_to_np_dtype(_dtype)
 
     # No DLPack yet, so need to construct a new ndarray from the data pointer
     # and size in the buffer plus the dtype on the column
@@ -140,6 +134,14 @@ def buffer_to_ndarray(_buffer, _dtype) -> np.ndarray:
 
     return x
 
+def protocol_dtype_to_np_dtype(_dtype):
+    kind = _dtype[0]
+    bitwidth = _dtype[1]
+    _k = _DtypeKind
+    if _dtype[0] not in (_k.INT, _k.UINT, _k.FLOAT, _k.BOOL):
+        raise RuntimeError("Not a boolean, integer or floating-point dtype")
+   
+    return _NP_DTYPES[kind][bitwidth]
 
 def convert_categorical_column(col : ColumnObject) -> pd.Series:
     """
