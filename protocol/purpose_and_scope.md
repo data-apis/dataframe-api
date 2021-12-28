@@ -275,7 +275,7 @@ prominent ones include:
 
 - [scikit-learn](https://scikit-learn.org/)
 - [Matplotlib](https://matplotlib.org/)
-- [Seaborn](https://networkx.github.io/)
+- [Seaborn](https://seaborn.pydata.org/)
 - [pyjanitor](https://pyjanitor.readthedocs.io/)
 
 Compilers, runtimes, and dispatching layers for which this API standard may be
