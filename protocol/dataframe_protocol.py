@@ -1,3 +1,32 @@
+from typing import Tuple, Optional, Dict, Any, Iterable, Sequence
+import enum
+
+class DlpackDeviceType(enum.IntEnum):
+    CPU = 1
+    CUDA = 2
+    CPU_PINNED = 3
+    OPENCL = 4
+    VULKAN = 7
+    METAL = 8
+    VPI = 9
+    ROCM = 10
+
+class DtypeKind(enum.IntEnum):
+    INT = 0
+    UINT = 1
+    FLOAT = 2
+    BOOL = 20
+    STRING = 21   # UTF-8
+    DATETIME = 22
+    CATEGORICAL = 23
+
+class ColumnNullType:
+    NON_NULLABLE = 0
+    USE_NAN = 1
+    USE_SENTINEL = 2
+    USE_BITMASK = 3
+    USE_BYTEMASK = 4
+
 class Buffer:
     """
     Data in the buffer is guaranteed to be contiguous in memory.
@@ -41,20 +70,11 @@ class Buffer:
         """
         raise NotImplementedError("__dlpack__")
 
-    def __dlpack_device__(self) -> Tuple[enum.IntEnum, int]:
+    def __dlpack_device__(self) -> Tuple[DlpackDeviceType, int]:
         """
         Device type and device ID for where the data in the buffer resides.
 
-        Uses device type codes matching DLPack. Enum members are::
-
-            - CPU = 1
-            - CUDA = 2
-            - CPU_PINNED = 3
-            - OPENCL = 4
-            - VULKAN = 7
-            - METAL = 8
-            - VPI = 9
-            - ROCM = 10
+        Uses device type codes matching DLPack.
 
         Note: must be implemented even if ``__dlpack__`` is not.
         """
@@ -128,19 +148,9 @@ class Column:
         pass
 
     @property
-    def dtype(self) -> Tuple[enum.IntEnum, int, str, str]:
+    def dtype(self) -> Tuple[DtypeKind, int, str, str]:
         """
         Dtype description as a tuple ``(kind, bit-width, format string, endianness)``.
-
-        Kind :
-
-            - INT = 0
-            - UINT = 1
-            - FLOAT = 2
-            - BOOL = 20
-            - STRING = 21   # UTF-8
-            - DATETIME = 22
-            - CATEGORICAL = 23
 
         Bit-width : the number of bits as an integer
         Format string : data type description format string in Apache Arrow C
@@ -194,18 +204,10 @@ class Column:
         pass
 
     @property
-    def describe_null(self) -> Tuple[int, Any]:
+    def describe_null(self) -> Tuple[ColumnNullType, Any]:
         """
         Return the missing value (or "null") representation the column dtype
         uses, as a tuple ``(kind, value)``.
-
-        Kind:
-
-            - 0 : non-nullable
-            - 1 : NaN/NaT
-            - 2 : sentinel value
-            - 3 : bit mask
-            - 4 : byte mask
 
         Value : if kind is "sentinel value", the actual value. If kind is a bit
         mask or a byte mask, the value (0 or 1) indicating a missing value. None
@@ -235,7 +237,7 @@ class Column:
         """
         pass
 
-    def get_chunks(self, n_chunks : Optional[int] = None) -> Iterable[Column]:
+    def get_chunks(self, n_chunks : Optional[int] = None) -> Iterable["Column"]:
         """
         Return an iterator yielding the chunks.
 
@@ -243,7 +245,7 @@ class Column:
         """
         pass
 
-    def get_buffers(self) -> dict[Tuple[Buffer, Any], Optional[Tuple[Buffer, Any]], Optional[Tuple[Buffer, Any]]]:
+    def get_buffers(self) -> Dict[Tuple[Buffer, Any], Optional[Tuple[Buffer, Any]], Optional[Tuple[Buffer, Any]]]:
         """
         Return a dictionary containing the underlying buffers.
 
@@ -368,19 +370,19 @@ class DataFrame:
         """
         pass
 
-    def select_columns(self, indices: Sequence[int]) -> DataFrame:
+    def select_columns(self, indices: Sequence[int]) -> "DataFrame":
         """
         Create a new DataFrame by selecting a subset of columns by index.
         """
         pass
 
-    def select_columns_by_name(self, names: Sequence[str]) -> DataFrame:
+    def select_columns_by_name(self, names: Sequence[str]) -> "DataFrame":
         """
         Create a new DataFrame by selecting a subset of columns by name.
         """
         pass
 
-    def get_chunks(self, n_chunks : Optional[int] = None) -> Iterable[DataFrame]:
+    def get_chunks(self, n_chunks : Optional[int] = None) -> Iterable["DataFrame"]:
         """
         Return an iterator yielding the chunks.
 
