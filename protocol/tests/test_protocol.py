@@ -36,7 +36,7 @@ def test_float_int(df_from_dict):
         }
     )
     dfX = df.__dataframe__()
-    columns = {"a": 0, "b": 0, "c": 2, "d": 0, "e": 20, "f": 21}
+    columns = [INT, INT, FLOAT, INT, BOOL, STRING]
 
     for column, kind in columns.items():
         colX = dfX.get_column_by_name(column)
@@ -45,8 +45,6 @@ def test_float_int(df_from_dict):
         assert colX.offset == 0
 
         assert colX.dtype[0] == kind
-
-    assert dfX.get_column_by_name("c").dtype[1] == 64
 
 
 def test_na_float(df_from_dict):
@@ -85,10 +83,10 @@ def test_dataframe(df_from_dict):
     assert dfX.num_columns() == 3
     assert dfX.num_rows() == 3
     assert dfX.num_chunks() == 1
-    assert dfX.column_names() == ["x", "y", "z"]
+    assert list(dfX.column_names()) == ["x", "y", "z"]
     assert (
-        dfX.select_columns((0, 2)).column_names()
-        == dfX.select_columns_by_name(("x", "z")).column_names()
+            list(dfX.select_columns((0, 2)).column_names())
+            == list(dfX.select_columns_by_name(("x", "z")).column_names())
     )
 
 
@@ -116,8 +114,8 @@ def test_get_columns(df_from_dict):
     for colX in dfX.get_columns():
         assert colX.size == 2
         assert colX.num_chunks() == 1
-    assert dfX.get_column(0).dtype[0] == 0
-    assert dfX.get_column(1).dtype[0] == 2
+    assert dfX.get_column(0).dtype[0] == INT
+    assert dfX.get_column(1).dtype[0] == FLOAT
 
 
 def test_buffer(df_from_dict):
