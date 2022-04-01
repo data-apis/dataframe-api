@@ -1,6 +1,17 @@
-from typing import Tuple, Optional, Dict, Any, Iterable, Sequence, TypedDict
+from abc import (
+    ABC,
+    abstractmethod,
+)
 import enum
-from abc import ABC, abstractmethod
+from typing import (
+    Any,
+    Dict,
+    Iterable,
+    Optional,
+    Sequence,
+    Tuple,
+    TypedDict,
+)
 
 
 class DlpackDeviceType(enum.IntEnum):
@@ -87,6 +98,16 @@ class ColumnBuffers(TypedDict):
     # second element is the offsets buffer's associated dtype.
     # None if the data buffer does not have an associated offsets buffer
     offsets: Optional[Tuple["Buffer", Any]]
+
+
+class CategoricalDescription(TypedDict):
+    # whether the ordering of dictionary indices is semantically meaningful
+    is_ordered: bool
+    # whether a dictionary-style mapping of categorical values to other objects exists
+    is_dictionary: bool
+    # Python-level only (e.g. ``{int: str}``).
+    # None if not a dictionary-style categorical.
+    categories: Optional[Column]
 
 
 class Buffer(ABC):
@@ -191,7 +212,7 @@ class Column(ABC):
 
     @property
     @abstractmethod
-    def size(self) -> Optional[int]:
+    def size(self) -> int:
         """
         Size of the column, in elements.
 
@@ -246,7 +267,7 @@ class Column(ABC):
 
     @property
     @abstractmethod
-    def describe_categorical(self) -> dict[bool, bool, Optional[Column]]:
+    def describe_categorical(self) -> CategoricalDescription:
         """
         If the dtype is categorical, there are two options:
         - There are only values in the data buffer.
@@ -254,7 +275,7 @@ class Column(ABC):
 
         Raises TypeError if the dtype is not categorical
 
-        Returns the description on how to interpret the data buffer:
+        Returns the dictionary with description on how to interpret the data buffer:
             - "is_ordered" : bool, whether the ordering of dictionary indices is
                              semantically meaningful.
             - "is_dictionary" : bool, whether a mapping of
@@ -363,6 +384,24 @@ class DataFrame(ABC):
     """
 
     version = 0  # version of the protocol
+
+    @abstractmethod
+    def __dataframe__(
+        self, nan_as_null: bool = False, allow_copy: bool = True
+    ) -> "DataFrame":
+        """
+        Construct a new exchange object, potentially changing the parameters.
+
+        ``nan_as_null`` is a keyword intended for the consumer to tell the
+        producer to overwrite null values in the data with ``NaN`` (or ``NaT``).
+        It is intended for cases where the consumer does not support the bit
+        mask or byte mask that is the producer's native representation.
+        ``allow_copy`` is a keyword that defines whether or not the library is
+        allowed to make a copy of the data. For example, copying data would be
+        necessary if a library supports strided buffers, given that this protocol
+        specifies contiguous buffers.
+        """
+        pass
 
     @property
     @abstractmethod
