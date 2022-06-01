@@ -170,13 +170,12 @@ class Column:
         pass
 
     @property
-    def describe_categorical(self) -> dict[bool, bool, Optional[dict]]:
+    def describe_categorical(self) -> dict[bool, bool, Optional[Column]]:
         """
         If the dtype is categorical, there are two options:
 
         - There are only values in the data buffer.
-        - The data buffer stores encoded values, while the (single)
-          child column stores the categorical values themselves.
+        - There is a separate non-categortical Column encoding categorical values.
 
         Raises RuntimeError if the dtype is not categorical
 
@@ -184,7 +183,10 @@ class Column:
 
             - "is_ordered" : bool, whether the ordering of dictionary indices is
                              semantically meaningful.
-            - "is_dictionary" : bool, whether the data is integer encoded
+            - "is_dictionary" : bool, whether a mapping of
+                                categorical values to other objects exists
+            - "mapping" : Column representing the mapping of indices to category values.
+                          None if not a dictionary-style categorical.
 
         TBD: are there any other in-memory representations that are needed?
         """
@@ -263,12 +265,12 @@ class Column:
         """
         pass
 
-   def get_children(self) -> Iterable[Column]:
-       """
-       Children columns underneath the column, each object in this iterator
-       must adhere to the column specification.
-       """
-       pass
+#    def get_children(self) -> Iterable[Column]:
+#        """
+#        Children columns underneath the column, each object in this iterator
+#        must adhere to the column specification.
+#        """
+#        pass
 
 
 class DataFrame:

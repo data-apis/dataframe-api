@@ -145,15 +145,14 @@ def convert_categorical_column(col : ColumnObject) -> pd.Series:
     """
     Convert a categorical column to a Series instance.
     """
-    ordered, is_dict = col.describe_categorical
+    ordered, is_dict, mapping = col.describe_categorical
     if not is_dict:
         raise NotImplementedError('Non-dictionary categoricals not supported yet')
 
     # If you want to cheat for testing (can't use `_col` in real-world code):
     #    categories = col._col.values.categories.values
     #    codes = col._col.values.codes
-    categories_column, = col.get_children()  # need to keep a reference to the child
-    categories = convert_column_to_ndarray(categories_column)[0]
+    categories = convert_column_to_ndarray(mapping)
     codes_buffer, codes_dtype = col.get_buffers()["data"]
     codes = buffer_to_ndarray(codes_buffer, codes_dtype)
     values = categories[codes]
@@ -457,7 +456,8 @@ class _PandasColumn:
             - "is_ordered" : bool, whether the ordering of dictionary indices is
                              semantically meaningful.
             - "is_dictionary" : bool, whether the data is integer encoded
-
+            - "mapping" : Column representing the mapping of indices to category values.
+                          None if not a dictionary-style categorical.
         """
         if not self.dtype[0] == _DtypeKind.CATEGORICAL:
             raise TypeError("`describe_categorical only works on a column with "
@@ -465,12 +465,10 @@ class _PandasColumn:
 
         ordered = self._col.dtype.ordered
         is_dictionary = True
-        # NOTE: this shows the children approach is better, transforming
-        # `categories` to a "mapping" dict is inefficient
-        codes = self._col.values.codes  # ndarray, length `self.size`
-        # categories.values is ndarray of length n_categories
-        categories = self._col.values.categories.values
-        return ordered, is_dictionary
+        categories = _PandasColumn(self._col.dtype.categories.to_series())
+        return {"is_ordered": ordered,
+                "is_dictionary": is_dictionary,
+                "mapping": categories}
 
     @property
     def describe_null(self) -> Tuple[int, Any]:
@@ -692,14 +690,6 @@ class _PandasColumn:
 
         return buffer, dtype
 
-    def get_children(self):
-        if self.dtype[0] == _DtypeKind.CATEGORICAL:
-            if self.describe_categorical[1]:
-                # return the categories as a child Column
-                return (_PandasColumn(self._col.dtype.categories.to_series()),)
-        else:
-            return tuple()
-            
 
 class _PandasDataFrame:
     """
@@ -847,7 +837,8 @@ def test_categorical_dtype():
     assert col.null_count == 1
     assert col.describe_null == (2, -1)  # sentinel value -1
     assert col.num_chunks() == 1
-    assert col.describe_categorical == (False, True)
+    assert col.describe_categorical["is_ordered"] == False
+    assert col.describe_categorical["is_dictionary"] == True
 
     df2 = from_dataframe(df)
     assert_dataframe_equal(df.__dataframe__(), df)
