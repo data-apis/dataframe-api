@@ -52,7 +52,7 @@ or dataframe that contains a set of (neighboring) rows.
 
 8. Must support missing values (`NA`) for all supported dtypes.
 
-9. Must supports string, categorical and datetime dtypes.
+9. Must support string, categorical and datetime dtypes.
 
 10. Must allow the consumer to inspect the representation for missing values
     that the producer uses for each column or data type. Sentinel values,
