@@ -118,7 +118,7 @@ We'll also list some things that were discussed but are not requirements:
    interleaved array in NumPy._
 
 3. Extension dtypes, i.e. a way to extend the set of dtypes that is
-   explicitly support, are out of scope.
+   explicitly supported, are out of scope.
 
    _Rationale: complex to support, not used enough to justify that complexity._
 
