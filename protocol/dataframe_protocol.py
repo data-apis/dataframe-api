@@ -175,7 +175,7 @@ class Column:
         If the dtype is categorical, there are two options:
 
         - There are only values in the data buffer.
-        - There is a separate non-categortical Column encoding categorical values.
+        - There is a separate non-categorical Column encoding categorical values.
 
         Raises RuntimeError if the dtype is not categorical
 
