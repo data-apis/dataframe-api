@@ -185,8 +185,9 @@ class Column:
                              semantically meaningful.
             - "is_dictionary" : bool, whether a mapping of
                                 categorical values to other objects exists
-            - "mapping" : Column representing the mapping of indices to category values.
-                          None if not a dictionary-style categorical.
+            - "categories" : Column representing the (implicit) mapping of indices to
+                             category values (e.g. an array of cat1, cat2, ...).
+                             None if not a dictionary-style categorical.
 
         TBD: are there any other in-memory representations that are needed?
         """
