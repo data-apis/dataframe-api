@@ -67,9 +67,9 @@ class ColumnNullType(enum.IntEnum):
     NON_NULLABLE : int
         Non-nullable column.
     USE_NAN : int
-        Use explicit float NaN/NaT value.
+        Use explicit float NaN value.
     USE_SENTINEL : int
-        Sentinel value besides NaN/NaT.
+        Sentinel value besides NaN.
     USE_BITMASK : int
         The bit is set/unset representing a null on a certain position.
     USE_BYTEMASK : int
@@ -393,7 +393,7 @@ class DataFrame(ABC):
         Construct a new exchange object, potentially changing the parameters.
 
         ``nan_as_null`` is a keyword intended for the consumer to tell the
-        producer to overwrite null values in the data with ``NaN`` (or ``NaT``).
+        producer to overwrite null values in the data with ``NaN``.
         It is intended for cases where the consumer does not support the bit
         mask or byte mask that is the producer's native representation.
         ``allow_copy`` is a keyword that defines whether or not the library is
