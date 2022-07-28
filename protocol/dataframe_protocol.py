@@ -170,12 +170,12 @@ class Column:
         pass
 
     @property
-    def describe_categorical(self) -> dict[bool, bool, Optional[dict]]:
+    def describe_categorical(self) -> dict[bool, bool, Optional[Column]]:
         """
         If the dtype is categorical, there are two options:
 
         - There are only values in the data buffer.
-        - There is a separate dictionary-style encoding for categorical values.
+        - There is a separate non-categorical Column encoding categorical values.
 
         Raises RuntimeError if the dtype is not categorical
 
@@ -183,10 +183,11 @@ class Column:
 
             - "is_ordered" : bool, whether the ordering of dictionary indices is
                              semantically meaningful.
-            - "is_dictionary" : bool, whether a dictionary-style mapping of
+            - "is_dictionary" : bool, whether a mapping of
                                 categorical values to other objects exists
-            - "mapping" : dict, Python-level only (e.g. ``{int: str}``).
-                          None if not a dictionary-style categorical.
+            - "categories" : Column representing the (implicit) mapping of indices to
+                             category values (e.g. an array of cat1, cat2, ...).
+                             None if not a dictionary-style categorical.
 
         TBD: are there any other in-memory representations that are needed?
         """
