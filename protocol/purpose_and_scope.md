@@ -79,7 +79,7 @@ Dataframe libraries in several programming language exist, such as
 [Julia](https://juliadata.github.io/DataFrames.jl/stable/) and others.
 
 In Python, the most popular dataframe library is [pandas](https://pandas.pydata.org/).
-pandas was initially developed at a hedge fund, with a focus on
+Pandas was initially developed at a hedge fund, with a focus on
 [panel data](https://en.wikipedia.org/wiki/Panel_data) and financial time series.
 It was open sourced in 2009, and since then it has been growing in popularity, including
 many other domains outside time series and financial data. While still rich in time series
@@ -275,7 +275,7 @@ prominent ones include:
 
 - [scikit-learn](https://scikit-learn.org/)
 - [Matplotlib](https://matplotlib.org/)
-- [Seaborn](https://networkx.github.io/)
+- [Seaborn](https://seaborn.pydata.org/)
 - [pyjanitor](https://pyjanitor.readthedocs.io/)
 
 Compilers, runtimes, and dispatching layers for which this API standard may be

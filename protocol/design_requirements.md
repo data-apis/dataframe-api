@@ -52,7 +52,7 @@ or dataframe that contains a set of (neighboring) rows.
 
 8. Must support missing values (`NA`) for all supported dtypes.
 
-9. Must supports string, categorical and datetime dtypes.
+9. Must support string, categorical and datetime dtypes.
 
 10. Must allow the consumer to inspect the representation for missing values
     that the producer uses for each column or data type. Sentinel values,
@@ -118,7 +118,7 @@ We'll also list some things that were discussed but are not requirements:
    interleaved array in NumPy._
 
 3. Extension dtypes, i.e. a way to extend the set of dtypes that is
-   explicitly support, are out of scope.
+   explicitly supported, are out of scope.
 
    _Rationale: complex to support, not used enough to justify that complexity._
 
