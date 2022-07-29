@@ -210,7 +210,6 @@ class Column(ABC):
           doesn't need its own version or ``__column__`` protocol.
     """
 
-    @property
     @abstractmethod
     def size(self) -> int:
         """
@@ -218,6 +217,9 @@ class Column(ABC):
 
         Corresponds to DataFrame.num_rows() if column is a single chunk;
         equal to size of this current chunk otherwise.
+
+        Is a method rather than a property because it may cause a (potentially
+        expensive) computation for some dataframe implementations.
         """
         pass
 
