@@ -494,5 +494,8 @@ class DataFrame(ABC):
         producer. If given, ``n_chunks`` must be a multiple of
         ``self.num_chunks()``, meaning the producer must subdivide each chunk
         before yielding it.
+
+        Note that the producer must ensure that all columns are chunked the
+        same way.
         """
         pass
