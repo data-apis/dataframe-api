@@ -89,7 +89,7 @@ class ColumnNullType(enum.IntEnum):
 class ColumnBuffers(TypedDict):
     # first element is a buffer containing the column data;
     # second element is the data buffer's associated dtype
-    data: Tuple["Buffer", Any]
+    data: Tuple["Buffer", Dtype]
 
     # first element is a buffer containing mask values indicating missing data;
     # second element is the mask value buffer's associated dtype.
@@ -100,7 +100,7 @@ class ColumnBuffers(TypedDict):
     # variable-size binary data (e.g., variable-length strings);
     # second element is the offsets buffer's associated dtype.
     # None if the data buffer does not have an associated offsets buffer
-    offsets: Optional[Tuple["Buffer", Any]]
+    offsets: Optional[Tuple["Buffer", Dtype]]
 
 
 class CategoricalDescription(TypedDict):
