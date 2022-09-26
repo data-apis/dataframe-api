@@ -58,7 +58,7 @@ class DtypeKind(enum.IntEnum):
     CATEGORICAL = 23
 
 
-Dtype = Tuple[DtypeKind, int, str, str]
+Dtype = Tuple[DtypeKind, int, str, str]  # see Column.dtype
 
 
 class ColumnNullType(enum.IntEnum):
