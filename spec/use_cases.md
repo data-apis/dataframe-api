@@ -4,11 +4,11 @@
 
 This section discusses the use cases considered for the standard dataframe API.
 
-The goals and scope of this API are defined in the [goals](01_purpose_and_scope.html#Goals),
-and [scope](01_purpose_and_scope.html#Scope) sections.
+The goals and scope of this API are defined in the [goals](purpose_and_scope.md#Goals),
+and [scope](purpose_and_scope.md#Scope) sections.
 
 The target audience and stakeholders are presented in the
-[stakeholders](01_purpose_and_scope.html#Stakeholders) section.
+[stakeholders](purpose_and_scope.md#Stakeholders) section.
 
 
 ## Types of use cases

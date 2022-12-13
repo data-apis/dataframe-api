@@ -112,7 +112,7 @@ done with dataframe, with the next goals in mind:
   libraries for interactive use or specific domains and industries
 - Help user transition from one dataframe library to another
 
-See the [use cases](02_use_cases.html) section for details on the exact use cases considered.
+See the [use cases](use_cases.md) section for details on the exact use cases considered.
 
 
 ### Out-of-scope

@@ -10,21 +10,19 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
-
+import os
+import sys
 import sphinx_material
-from recommonmark.transform import AutoStructify
+sys.path.insert(0, os.path.abspath('./API_specification'))
 
 # -- Project information -----------------------------------------------------
 
 project = 'Python dataframe API standard'
-copyright = '2020, Consortium for Python Data API Standards'
+copyright = '2022, Consortium for Python Data API Standards'
 author = 'Consortium for Python Data API Standards'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1-dev'
+release = '2022.12-DRAFT'
 
 
 # -- General configuration ---------------------------------------------------
@@ -33,13 +31,68 @@ release = '0.1-dev'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'recommonmark',
+    'myst_parser',
     'sphinx.ext.extlinks',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx_markdown_tables',
     'sphinx_copybutton',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.autodoc',
+    'sphinx_math_dollar',
+    'sphinx.ext.mathjax'
 ]
+
+autosummary_generate = True
+autodoc_typehints = 'signature'
+add_module_names = False
+napoleon_custom_sections = [('Returns', 'params_style')]
+default_role = 'code'
+
+# Mathjax configuration:
+mathjax3_config = {
+  "tex": {
+    "inlineMath": [['\\(', '\\)']],
+    "displayMath": [["\\[", "\\]"]],
+  }
+}
+
+# nitpicky = True makes Sphinx warn whenever a cross-reference target can't be
+# found.
+nitpicky = True
+# autodoc wants to make cross-references for every type hint. But a lot of
+# them don't actually refer to anything that we have a document for.
+nitpick_ignore = [
+    ('py:class', 'array'),
+    ('py:class', 'dataframe'),
+    ('py:class', 'device'),
+    ('py:class', 'dtype'),
+    ('py:class', 'NestedSequence'),
+    ('py:class', 'collections.abc.Sequence'),
+    ('py:class', 'PyCapsule'),
+    ('py:class', 'enum.Enum'),
+    ('py:class', 'ellipsis'),
+]
+# NOTE: this alias handling isn't used yet - added in anticipation of future
+#       need based on array API aliases.
+# In dataframe_object.py we have to use aliased names for some types because they
+# would otherwise refer back to method objects of array
+autodoc_type_aliases = {
+    'dataframe': 'dataframe',
+    'Device': 'device',
+    'Dtype': 'dtype',
+}
+
+# Make autosummary show the signatures of functions in the tables using actual
+# Python syntax. There's currently no supported way to do this, so we have to
+# just patch out the function that processes the signatures. See
+# https://github.com/sphinx-doc/sphinx/issues/10053.
+import sphinx.ext.autosummary as autosummary_mod
+if hasattr(autosummary_mod, '_module'):
+    # It's a sphinx deprecated module wrapper object
+    autosummary_mod = autosummary_mod._module
+autosummary_mod.mangle_signature = lambda sig, max_chars=30: sig
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -49,6 +102,9 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+# MyST options
+myst_heading_anchors = 3
+myst_enable_extensions = ["colon_fence"]
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -63,7 +119,7 @@ html_theme = 'sphinx_material'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+#html_static_path = ['_static']
 
 
 # -- Material theme options (see theme.conf for more information) ------------
@@ -75,7 +131,7 @@ html_sidebars = {
 html_theme_options = {
 
     # Set the name of the project to appear in the navigation.
-    'nav_title': 'Python dataframe API standard',
+    'nav_title': f'Python dataframe API standard {release}',
 
     # Set you GA account ID to enable tracking
     #'google_analytics_account': 'UA-XXXXX',
@@ -86,15 +142,15 @@ html_theme_options = {
 
     # Set the color and the accent color (see
     # https://material.io/design/color/the-color-system.html)
-    'color_primary': 'deep-purple',
-    'color_accent': 'cyan',
+    'color_primary': 'indigo',
+    'color_accent': 'green',
 
     # Set the repo location to get a badge with stats
     #'repo_url': 'https://github.com/project/project/',
     #'repo_name': 'Project',
 
     "html_minify": False,
-    "html_prettify": True,
+    "html_prettify": False,
     "css_minify": True,
     "logo_icon": "&#xe869",
     "repo_type": "github",
@@ -110,20 +166,20 @@ html_theme_options = {
     'globaltoc_includehidden': True,
 
     "nav_links": [
-        {"href": "index", "internal": True, "title": "Array API standard"},
+        {"href": "index", "internal": True, "title": "Dataframe API standard"},
         {
-            "href": "https://link-to-consortium-website",
+            "href": "https://data-apis.org",
             "internal": False,
             "title": "Consortium for Python Data API Standards",
         },
     ],
     "heroes": {
-        "index": "A common API for array and tensor Python libraries",
+        "index": "A common API for dataframe Python libraries",
         #"customization": "Configuration options to personalize your site.",
     },
 
-    #"version_dropdown": True,
-    #"version_json": "_static/versions.json",
+    "version_dropdown": True,
+    "version_json": "../versions.json",
     "table_classes": ["plain"],
 }
 
@@ -141,20 +197,16 @@ extlinks = {
     ),
     "durole": ("http://docutils.sourceforge.net/docs/ref/rst/" "roles.html#%s", ""),
     "dudir": ("http://docutils.sourceforge.net/docs/ref/rst/" "directives.html#%s", ""),
+    "pypa": ("https://packaging.python.org/%s", ""),
 }
 
 
-# Enable eval_rst in markdown
+def process_signature(app, what, name, obj, options, signature, return_annotation):
+    if signature:
+        signature = signature.replace("dataframe_api._types.", "")
+    if return_annotation:
+        return_annotation = return_annotation.replace("dataframe_api._types.", "")
+    return signature, return_annotation
+
 def setup(app):
-    app.add_config_value(
-        "recommonmark_config",
-        {"enable_math": True, "enable_inline_math": True, "enable_eval_rst": True},
-        True,
-    )
-    app.add_transform(AutoStructify)
-    app.add_object_type(
-        "confval",
-        "confval",
-        objname="configuration value",
-        indextemplate="pair: %s; configuration value",
-    )
+    app.connect("autodoc-process-signature", process_signature)
