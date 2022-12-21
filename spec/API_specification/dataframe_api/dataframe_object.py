@@ -359,6 +359,5 @@ class DataFrame:
         Returns
         -------
         DataFrame
-        DataFrame
         """
         ...
