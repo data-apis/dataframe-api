@@ -8,13 +8,13 @@ if TYPE_CHECKING:
 
 class DataFrame:
 
-    def get_column_by_name(self, key: str) -> Column:
+    def get_column_by_name(self, name: str) -> Column:
         """
         Select a column by name.
 
         Parameters
         ----------
-        key : str
+        name : str
 
         Returns
         -------
@@ -27,13 +27,13 @@ class DataFrame:
         """
         ...
 
-    def get_columns_by_name(self, keys: Sequence[str]) -> DataFrame:
+    def get_columns_by_name(self, names: Sequence[str]) -> "DataFrame":
         """
         Select multiple columns by name.
 
         Parameters
         ----------
-        keys : Sequence[str]
+        names : Sequence[str]
 
         Returns
         -------
@@ -46,7 +46,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Sequence[int]) -> DataFrame:
+    def get_rows(self, indices: Sequence[int]) -> "DataFrame":
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -62,13 +62,14 @@ class DataFrame:
         Notes
         -----
         Some discussion participants prefer a stricter type Column[int] for
-        indices.
+        indices in order to make it easier to implement in a performant manner
+        on GPUs.
         """
         ...
 
     def slice_rows(
         self, start: int | None, stop: int | None, step: int | None
-    ) -> DataFrame:
+    ) -> "DataFrame":
         """
         Select a subset of rows corresponding to a slice.
 
@@ -84,7 +85,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows_by_mask(self, mask: Column[bool]) -> DataFrame:
+    def get_rows_by_mask(self, mask: Column[bool]) -> "DataFrame":
         """
         Select a subset of rows corresponding to a mask.
 
@@ -103,10 +104,21 @@ class DataFrame:
         """
         ...
 
-    def insert(self, loc: int, label: str, value: Column) -> DataFrame:
+    def insert(self, loc: int, label: str, value: Column) -> "DataFrame":
+        """
+        Insert column into DataFrame at specified location.
+
+        Parameters
+        ----------
+        loc : int
+            Insertion index. Must verify 0 <= loc <= len(columns).
+        label : str
+            Label of the inserted column.
+        value : Column
+        """
         ...
 
-    def drop_column(self, label: str) -> DataFrame:
+    def drop_column(self, label: str) -> "DataFrame":
         """
         Drop the specified column.
 
@@ -125,7 +137,7 @@ class DataFrame:
         """
         ...
 
-    def set_column(self, label: str, value: Column) -> DataFrame:
+    def set_column(self, label: str, value: Column) -> "DataFrame":
         """
         Add or replace a column.
 
@@ -140,13 +152,14 @@ class DataFrame:
         """
         ...
 
-    def __eq__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __eq__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -154,13 +167,14 @@ class DataFrame:
         """
         ...
 
-    def __ne__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __ne__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -168,13 +182,14 @@ class DataFrame:
         """
         ...
 
-    def __ge__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __ge__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -182,13 +197,14 @@ class DataFrame:
         """
         ...
 
-    def __gt__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __gt__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -196,13 +212,14 @@ class DataFrame:
         """
         ...
 
-    def __le__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __le__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -210,13 +227,14 @@ class DataFrame:
         """
         ...
 
-    def __lt__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __lt__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -224,13 +242,14 @@ class DataFrame:
         """
         ...
 
-    def __add__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __add__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -238,13 +257,14 @@ class DataFrame:
         """
         ...
 
-    def __sub__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __sub__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -252,13 +272,14 @@ class DataFrame:
         """
         ...
 
-    def __mul__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __mul__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -266,13 +287,14 @@ class DataFrame:
         """
         ...
 
-    def __truediv__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __truediv__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -280,13 +302,14 @@ class DataFrame:
         """
         ...
 
-    def __floordiv__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __floordiv__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -294,13 +317,14 @@ class DataFrame:
         """
         ...
 
-    def __pow__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __pow__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -308,13 +332,14 @@ class DataFrame:
         """
         ...
 
-    def __mod__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __mod__(self, other: DataFrame | "Scalar") -> "DataFrame":
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
@@ -322,13 +347,14 @@ class DataFrame:
         """
         ...
 
-    def __divmod__(self, other: DataFrame | "Scalar") -> tuple[DataFrame, DataFrame]:
+    def __divmod__(self, other: DataFrame | "Scalar") -> tuple["DataFrame", "DataFrame"]:
         """
         Parameters
         ----------
         other : DataFrame or Scalar
             If DataFrame, must have same length and matching columns.
-            "Scalar" here is defined implicitly by the contained dtypes.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
 
         Returns
         -------
