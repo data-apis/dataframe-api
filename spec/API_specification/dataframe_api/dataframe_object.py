@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 class DataFrame:
 
-    def get_column_by_name(self, name: str) -> Column:
+    def get_column_by_name(self, name: str, /) -> Column:
         """
         Select a column by name.
 
@@ -27,7 +27,7 @@ class DataFrame:
         """
         ...
 
-    def get_columns_by_name(self, names: Sequence[str]) -> "DataFrame":
+    def get_columns_by_name(self, names: Sequence[str], /) -> "DataFrame":
         """
         Select multiple columns by name.
 
