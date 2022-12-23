@@ -428,3 +428,40 @@ class DataFrame:
         Reduction returns a 1-row DataFrame.
         """
         ...
+
+    def isnull(self) -> DataFrame:
+        """
+        Check for 'missing' or 'null' entries.
+
+        Returns
+        -------
+        DataFrame
+
+        See also
+        --------
+        isnan
+
+        Notes
+        -----
+        Does *not* include NaN-like entries.
+        """
+        ...
+
+    def isnan(self) -> DataFrame:
+        """
+        Check for nan-like entries.
+
+        Returns
+        -------
+        DataFrame
+
+        See also
+        --------
+        isnull
+
+        Notes
+        -----
+        Includes anything with NaN-like semantics, e.g. np.datetime64("NaT").
+        Does *not* include 'missing' or 'null' entries.
+        """
+        ...
