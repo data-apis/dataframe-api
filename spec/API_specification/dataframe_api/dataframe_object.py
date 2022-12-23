@@ -368,3 +368,63 @@ class DataFrame:
         DataFrame
         """
         ...
+
+    def any(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def all(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def min(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def max(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def sum(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def prod(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def median(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def mean(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def std(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def var(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
