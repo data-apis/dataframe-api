@@ -4,9 +4,15 @@ from typing import Sequence, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .column_object import Column
+    from .groupby_object import GroupBy
 
 
 class DataFrame:
+    def groupby(self, keys: list[str], /) -> GroupBy:
+        """
+        Group the DataFrame by the given columns.
+        """
+        ...
 
     def get_column_by_name(self, name: str, /) -> Column:
         """
@@ -358,6 +364,7 @@ class DataFrame:
 
         Returns
         -------
+        DataFrame
         DataFrame
         """
         ...
