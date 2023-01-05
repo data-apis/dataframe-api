@@ -4,9 +4,15 @@ from typing import Sequence, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .column_object import Column
+    from .groupby_object import GroupBy
 
 
 class DataFrame:
+    def groupby(self, keys: list[str], /) -> GroupBy:
+        """
+        Group the DataFrame by the given columns.
+        """
+        ...
 
     def get_column_by_name(self, name: str, /) -> Column:
         """
@@ -359,5 +365,103 @@ class DataFrame:
         Returns
         -------
         DataFrame
+        DataFrame
+        """
+        ...
+
+    def any(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def all(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def min(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def max(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def sum(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def prod(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def median(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def mean(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def std(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def var(self, skipna: bool = True) -> DataFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+        """
+        ...
+
+    def isnull(self) -> DataFrame:
+        """
+        Check for 'missing' or 'null' entries.
+
+        Returns
+        -------
+        DataFrame
+
+        See also
+        --------
+        isnan
+
+        Notes
+        -----
+        Does *not* include NaN-like entries.
+        """
+        ...
+
+    def isnan(self) -> DataFrame:
+        """
+        Check for nan-like entries.
+
+        Returns
+        -------
+        DataFrame
+
+        See also
+        --------
+        isnull
+
+        Notes
+        -----
+        Includes anything with NaN-like semantics, e.g. np.datetime64("NaT").
+        Does *not* include 'missing' or 'null' entries.
         """
         ...
