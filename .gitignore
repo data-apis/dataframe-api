@@ -1,0 +1,9 @@
+spec/_build/
+protocol/_build/
+build/
+doctrees/
+.vscode/
+node_modules/
+__pycache__/
+*.pyc
+spec/**/generated
