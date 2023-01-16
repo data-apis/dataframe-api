@@ -39,11 +39,15 @@ jobs:
           git checkout gh-pages
 
       - name: 'Copy build artifact'
-        run: rm -rf ./draft && cp -R ./build/draft ./draft
+        run: |
+          rm -rf ./draft && cp -R ./build/draft ./draft
 
       - name: 'Commit changes'
-        run: git add . && git commit -m "Deploy: ${{ github.sha }}"
+        continue-on-error: true  # needed when diff is empty
+        run: |
+          git add . && git commit -m "Deploy: ${{ github.sha }}"
 
       - name: 'Push changes'
         if: success()
-        run: git push origin gh-pages
+        run: |
+          git push origin gh-pages
