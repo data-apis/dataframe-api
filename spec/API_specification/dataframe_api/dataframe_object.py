@@ -4,12 +4,10 @@ from typing import Sequence, Union, TYPE_CHECKING
 from .column_object import Column
 from .groupby_object import GroupBy
 
+from ._types import Scalar
+
 
 __all__ = ["DataFrame"]
-
-
-class Scalar:
-    "A class to represent Python scalars"
 
 
 class DataFrame:
