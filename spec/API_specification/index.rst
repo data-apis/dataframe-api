@@ -5,6 +5,8 @@ API specification
 
 .. toctree::
    :caption: API specification
-   :maxdepth: 1
+   :maxdepth: 3
 
    dataframe_object
+   column_object
+   groupby_object
