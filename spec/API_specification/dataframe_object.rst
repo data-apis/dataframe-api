@@ -1,4 +1,4 @@
-.. _array-object:
+.. _dataframe-object:
 
 Dataframe object
 ================
@@ -21,16 +21,6 @@ Arithmetic Operators
 
 A conforming implementation of the array API standard must provide and support
 an array object supporting the following Python arithmetic operators.
-
--   ``+x``: :meth:`.DataFrame.__pos__`
-
-    -   `operator.pos(x) <https://docs.python.org/3/library/operator.html#operator.pos>`_
-    -   `operator.__pos__(x) <https://docs.python.org/3/library/operator.html#operator.__pos__>`_
-
--   `-x`: :meth:`.DataFrame.__neg__`
-
-    -   `operator.neg(x) <https://docs.python.org/3/library/operator.html#operator.neg>`_
-    -   `operator.__neg__(x) <https://docs.python.org/3/library/operator.html#operator.__neg__>`_
 
 -   `x1 + x2`: :meth:`.DataFrame.__add__`
 
@@ -136,11 +126,15 @@ Arithmetic Operators
 
 Attributes
 ----------
+
+TODO
+
 ..
   NOTE: please keep the attributes in alphabetical order
 
 
-.. autosummary::
+..
+ autosummary::
    :toctree: generated
    :template: property.rst
 
@@ -158,26 +152,16 @@ Methods
    :toctree: generated
    :template: property.rst
 
-   DataFrame.__abs__
    DataFrame.__add__
-   DataFrame.__dataframe_namespace__
-   DataFrame.__complex__
    DataFrame.__eq__
-   DataFrame.__float__
    DataFrame.__floordiv__
    DataFrame.__ge__
-   DataFrame.__getitem__
    DataFrame.__gt__
-   DataFrame.__int__
    DataFrame.__le__
    DataFrame.__lt__
+   DataFrame.__ne__
    DataFrame.__mod__
    DataFrame.__mul__
-   DataFrame.__ne__
-   DataFrame.__neg__
-   DataFrame.__or__
-   DataFrame.__pos__
    DataFrame.__pow__
-   DataFrame.__setitem__
    DataFrame.__sub__
    DataFrame.__truediv__

@@ -7,6 +7,7 @@ from .groupby_object import GroupBy
 
 __all__ = ["DataFrame"]
 
+
 class Scalar:
     "A class to represent Python scalars"
 
