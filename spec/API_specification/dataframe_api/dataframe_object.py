@@ -1,9 +1,14 @@
-__all__ = ["DataFrame"]
-
+from __future__ import annotations
 from typing import Sequence, Union, TYPE_CHECKING
 
 from .column_object import Column
 from .groupby_object import GroupBy
+
+
+__all__ = ["DataFrame"]
+
+class Scalar:
+    "A class to represent Python scalars"
 
 
 class DataFrame:
@@ -32,7 +37,7 @@ class DataFrame:
         """
         ...
 
-    def get_columns_by_name(self, names: Sequence[str], /) -> "DataFrame":
+    def get_columns_by_name(self, names: Sequence[str], /) -> DataFrame:
         """
         Select multiple columns by name.
 
@@ -51,7 +56,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Sequence[int]) -> "DataFrame":
+    def get_rows(self, indices: Sequence[int]) -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -74,7 +79,7 @@ class DataFrame:
 
     def slice_rows(
         self, start: int | None, stop: int | None, step: int | None
-    ) -> "DataFrame":
+    ) -> DataFrame:
         """
         Select a subset of rows corresponding to a slice.
 
@@ -90,7 +95,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows_by_mask(self, mask: "Column[bool]") -> "DataFrame":
+    def get_rows_by_mask(self, mask: "Column[bool]") -> DataFrame:
         """
         Select a subset of rows corresponding to a mask.
 
@@ -109,7 +114,7 @@ class DataFrame:
         """
         ...
 
-    def insert(self, loc: int, label: str, value: Column) -> "DataFrame":
+    def insert(self, loc: int, label: str, value: Column) -> DataFrame:
         """
         Insert column into DataFrame at specified location.
 
@@ -123,7 +128,7 @@ class DataFrame:
         """
         ...
 
-    def drop_column(self, label: str) -> "DataFrame":
+    def drop_column(self, label: str) -> DataFrame:
         """
         Drop the specified column.
 
@@ -142,7 +147,7 @@ class DataFrame:
         """
         ...
 
-    def set_column(self, label: str, value: Column) -> "DataFrame":
+    def set_column(self, label: str, value: Column) -> DataFrame:
         """
         Add or replace a column.
 
@@ -157,7 +162,7 @@ class DataFrame:
         """
         ...
 
-    def __eq__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __eq__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -172,7 +177,7 @@ class DataFrame:
         """
         ...
 
-    def __ne__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __ne__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -187,7 +192,7 @@ class DataFrame:
         """
         ...
 
-    def __ge__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __ge__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -202,7 +207,7 @@ class DataFrame:
         """
         ...
 
-    def __gt__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __gt__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -217,7 +222,7 @@ class DataFrame:
         """
         ...
 
-    def __le__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __le__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -232,7 +237,7 @@ class DataFrame:
         """
         ...
 
-    def __lt__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __lt__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -247,7 +252,7 @@ class DataFrame:
         """
         ...
 
-    def __add__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __add__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -262,7 +267,7 @@ class DataFrame:
         """
         ...
 
-    def __sub__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __sub__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -277,7 +282,7 @@ class DataFrame:
         """
         ...
 
-    def __mul__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __mul__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -292,7 +297,7 @@ class DataFrame:
         """
         ...
 
-    def __truediv__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __truediv__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -307,7 +312,7 @@ class DataFrame:
         """
         ...
 
-    def __floordiv__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __floordiv__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -322,7 +327,7 @@ class DataFrame:
         """
         ...
 
-    def __pow__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __pow__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -337,7 +342,7 @@ class DataFrame:
         """
         ...
 
-    def __mod__(self, other: Union["DataFrame", "Scalar"]) -> "DataFrame":
+    def __mod__(self, other: DataFrame | "Scalar") -> DataFrame:
         """
         Parameters
         ----------
@@ -352,7 +357,7 @@ class DataFrame:
         """
         ...
 
-    def __divmod__(self, other: Union["DataFrame", "Scalar"]) -> tuple["DataFrame", "DataFrame"]:
+    def __divmod__(self, other: DataFrame | "Scalar") -> tuple[DataFrame, DataFrame]:
         """
         Parameters
         ----------
@@ -368,67 +373,67 @@ class DataFrame:
         """
         ...
 
-    def any(self, skipna: bool = True) -> "DataFrame":
+    def any(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def all(self, skipna: bool = True) -> "DataFrame":
+    def all(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def min(self, skipna: bool = True) -> "DataFrame":
+    def min(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def max(self, skipna: bool = True) -> "DataFrame":
+    def max(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def sum(self, skipna: bool = True) -> "DataFrame":
+    def sum(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def prod(self, skipna: bool = True) -> "DataFrame":
+    def prod(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def median(self, skipna: bool = True) -> "DataFrame":
+    def median(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def mean(self, skipna: bool = True) -> "DataFrame":
+    def mean(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def std(self, skipna: bool = True) -> "DataFrame":
+    def std(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def var(self, skipna: bool = True) -> "DataFrame":
+    def var(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def isnull(self) -> "DataFrame":
+    def isnull(self) -> DataFrame:
         """
         Check for 'missing' or 'null' entries.
 
@@ -446,7 +451,7 @@ class DataFrame:
         """
         ...
 
-    def isnan(self) -> "DataFrame":
+    def isnan(self) -> DataFrame:
         """
         Check for nan-like entries.
 
