@@ -1,0 +1,43 @@
+name: Deploy protocol docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    name: 'Publish'
+    runs-on: ubuntu-latest
+    # Avoid running this workflow for forks:
+    if: "github.repository == 'data-apis/dataframe-api'"
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v3
+
+      - name: 'Install Python'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 'Install dependencies'
+        run: pip install -r ./requirements.txt
+
+      - name: 'Build documentation'
+        run: |
+          # Turn warnings into errors and ensure .doctrees is not deployed:
+          mkdir site
+          sphinx-build -b html -WT --keep-going protocol/ site/latest -d doctrees
+          touch site/.nojekyll
+
+
+      - name: 'Deploy'
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          personal_token: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
+          external_repository: data-apis/dataframe-protocol
+          publish_branch: main
+          publish_dir: ./site
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
