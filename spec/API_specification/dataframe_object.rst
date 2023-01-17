@@ -59,6 +59,11 @@ an array object supporting the following Python arithmetic operators.
 
 Arithmetic operators should be defined for a dataframe having real-valued data types.
 
+.. note::
+
+   TODO: figure out whether we want to add ``__neg__`` and ``__pos__``, those
+   are the two missing arithmetic operators.
+
 
 Comparison Operators
 ~~~~~~~~~~~~~~~~~~~~
