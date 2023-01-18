@@ -1,10 +1,10 @@
 from __future__ import annotations
 from typing import Sequence, Union, TYPE_CHECKING
 
-from .column_object import Column
-from .groupby_object import GroupBy
-
-from ._types import Scalar
+if TYPE_CHECKING:
+    from .column_object import Column
+    from .groupby_object import GroupBy
+    from ._types import Scalar
 
 
 __all__ = ["DataFrame"]
@@ -161,7 +161,7 @@ class DataFrame:
         """
         ...
 
-    def __eq__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __eq__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Compare for equality.
 
@@ -178,7 +178,7 @@ class DataFrame:
         """
         ...
 
-    def __ne__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __ne__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Compare for non-equality.
 
@@ -195,7 +195,7 @@ class DataFrame:
         """
         ...
 
-    def __ge__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __ge__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -212,7 +212,7 @@ class DataFrame:
         """
         ...
 
-    def __gt__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __gt__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Compare for "greater than" `other`.
 
@@ -229,7 +229,7 @@ class DataFrame:
         """
         ...
 
-    def __le__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __le__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Compare for "less than or equal to" `other`.
 
@@ -246,7 +246,7 @@ class DataFrame:
         """
         ...
 
-    def __lt__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __lt__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Compare for "less than" `other`.
 
@@ -263,7 +263,7 @@ class DataFrame:
         """
         ...
 
-    def __add__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __add__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Add `other` dataframe or scalar to this dataframe.
 
@@ -280,7 +280,7 @@ class DataFrame:
         """
         ...
 
-    def __sub__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __sub__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Subtract `other` dataframe or scalar from this dataframe.
 
@@ -297,7 +297,7 @@ class DataFrame:
         """
         ...
 
-    def __mul__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __mul__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Multiply  `other` dataframe or scalar with this dataframe.
 
@@ -314,7 +314,7 @@ class DataFrame:
         """
         ...
 
-    def __truediv__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __truediv__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Divide  this dataframe by `other` dataframe or scalar. True division, returns floats.
 
@@ -331,7 +331,7 @@ class DataFrame:
         """
         ...
 
-    def __floordiv__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __floordiv__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Floor-divide (returns integers) this dataframe by `other` dataframe or scalar.
 
@@ -348,7 +348,7 @@ class DataFrame:
         """
         ...
 
-    def __pow__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __pow__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Raise this dataframe to the power of `other`.
 
@@ -365,7 +365,7 @@ class DataFrame:
         """
         ...
 
-    def __mod__(self, other: DataFrame | "Scalar") -> DataFrame:
+    def __mod__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Return modulus of this dataframe by `other` (`%` operator).
 
@@ -382,7 +382,7 @@ class DataFrame:
         """
         ...
 
-    def __divmod__(self, other: DataFrame | "Scalar") -> tuple[DataFrame, DataFrame]:
+    def __divmod__(self, other: DataFrame | Scalar) -> tuple[DataFrame, DataFrame]:
         """
         Return quotient and remainder of integer division. See `divmod` builtin function.
 
