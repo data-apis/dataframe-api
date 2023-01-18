@@ -19,7 +19,7 @@ import sphinx_material
 # -- Project information -----------------------------------------------------
 
 project = 'Python dataframe interchange protocol'
-copyright = '2021, Consortium for Python Data API Standards'
+copyright = '2021-2023, Consortium for Python Data API Standards'
 author = 'Consortium for Python Data API Standards'
 
 # The full version, including alpha/beta/rc tags
