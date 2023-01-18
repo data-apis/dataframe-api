@@ -1,2 +1,4 @@
 *.swp
 _build
+__pycache__
+spec/API_specification/generated/

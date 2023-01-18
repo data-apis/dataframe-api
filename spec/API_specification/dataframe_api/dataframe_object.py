@@ -1,10 +1,13 @@
-__all__ = ["DataFrame"]
-
-from typing import Sequence, TYPE_CHECKING
+from __future__ import annotations
+from typing import Sequence, Union, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
+    from ._types import Scalar
+
+
+__all__ = ["DataFrame"]
 
 
 class DataFrame:
@@ -33,7 +36,7 @@ class DataFrame:
         """
         ...
 
-    def get_columns_by_name(self, names: Sequence[str], /) -> "DataFrame":
+    def get_columns_by_name(self, names: Sequence[str], /) -> DataFrame:
         """
         Select multiple columns by name.
 
@@ -52,7 +55,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Sequence[int]) -> "DataFrame":
+    def get_rows(self, indices: Sequence[int]) -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -75,7 +78,7 @@ class DataFrame:
 
     def slice_rows(
         self, start: int | None, stop: int | None, step: int | None
-    ) -> "DataFrame":
+    ) -> DataFrame:
         """
         Select a subset of rows corresponding to a slice.
 
@@ -91,7 +94,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows_by_mask(self, mask: Column[bool]) -> "DataFrame":
+    def get_rows_by_mask(self, mask: "Column[bool]") -> DataFrame:
         """
         Select a subset of rows corresponding to a mask.
 
@@ -110,7 +113,7 @@ class DataFrame:
         """
         ...
 
-    def insert(self, loc: int, label: str, value: Column) -> "DataFrame":
+    def insert(self, loc: int, label: str, value: Column) -> DataFrame:
         """
         Insert column into DataFrame at specified location.
 
@@ -124,7 +127,7 @@ class DataFrame:
         """
         ...
 
-    def drop_column(self, label: str) -> "DataFrame":
+    def drop_column(self, label: str) -> DataFrame:
         """
         Drop the specified column.
 
@@ -143,7 +146,7 @@ class DataFrame:
         """
         ...
 
-    def set_column(self, label: str, value: Column) -> "DataFrame":
+    def set_column(self, label: str, value: Column) -> DataFrame:
         """
         Add or replace a column.
 
@@ -158,8 +161,10 @@ class DataFrame:
         """
         ...
 
-    def __eq__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __eq__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Compare for equality.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -173,8 +178,10 @@ class DataFrame:
         """
         ...
 
-    def __ne__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __ne__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Compare for non-equality.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -188,8 +195,10 @@ class DataFrame:
         """
         ...
 
-    def __ge__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __ge__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Compare for "greater than or equal to" `other`.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -203,8 +212,10 @@ class DataFrame:
         """
         ...
 
-    def __gt__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __gt__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Compare for "greater than" `other`.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -218,8 +229,10 @@ class DataFrame:
         """
         ...
 
-    def __le__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __le__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Compare for "less than or equal to" `other`.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -233,8 +246,10 @@ class DataFrame:
         """
         ...
 
-    def __lt__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __lt__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Compare for "less than" `other`.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -248,8 +263,10 @@ class DataFrame:
         """
         ...
 
-    def __add__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __add__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Add `other` dataframe or scalar to this dataframe.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -263,8 +280,10 @@ class DataFrame:
         """
         ...
 
-    def __sub__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __sub__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Subtract `other` dataframe or scalar from this dataframe.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -278,8 +297,10 @@ class DataFrame:
         """
         ...
 
-    def __mul__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __mul__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Multiply  `other` dataframe or scalar with this dataframe.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -293,8 +314,10 @@ class DataFrame:
         """
         ...
 
-    def __truediv__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __truediv__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Divide  this dataframe by `other` dataframe or scalar. True division, returns floats.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -308,8 +331,10 @@ class DataFrame:
         """
         ...
 
-    def __floordiv__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __floordiv__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Floor-divide (returns integers) this dataframe by `other` dataframe or scalar.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -323,8 +348,10 @@ class DataFrame:
         """
         ...
 
-    def __pow__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __pow__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Raise this dataframe to the power of `other`.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -338,8 +365,10 @@ class DataFrame:
         """
         ...
 
-    def __mod__(self, other: DataFrame | "Scalar") -> "DataFrame":
+    def __mod__(self, other: DataFrame | Scalar) -> DataFrame:
         """
+        Return modulus of this dataframe by `other` (`%` operator).
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -353,8 +382,10 @@ class DataFrame:
         """
         ...
 
-    def __divmod__(self, other: DataFrame | "Scalar") -> tuple["DataFrame", "DataFrame"]:
+    def __divmod__(self, other: DataFrame | Scalar) -> tuple[DataFrame, DataFrame]:
         """
+        Return quotient and remainder of integer division. See `divmod` builtin function.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -364,8 +395,7 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
-        DataFrame
+        A tuple of two DataFrame's
         """
         ...
 

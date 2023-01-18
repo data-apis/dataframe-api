@@ -65,7 +65,7 @@ nitpicky = True
 # them don't actually refer to anything that we have a document for.
 nitpick_ignore = [
     ('py:class', 'array'),
-    ('py:class', 'dataframe'),
+    ('py:class', 'DataFrame'),
     ('py:class', 'device'),
     ('py:class', 'dtype'),
     ('py:class', 'NestedSequence'),
@@ -73,11 +73,12 @@ nitpick_ignore = [
     ('py:class', 'PyCapsule'),
     ('py:class', 'enum.Enum'),
     ('py:class', 'ellipsis'),
+    ('py:class', 'Scalar'),
 ]
 # NOTE: this alias handling isn't used yet - added in anticipation of future
-#       need based on array API aliases.
+#       need based on dataframe API aliases.
 # In dataframe_object.py we have to use aliased names for some types because they
-# would otherwise refer back to method objects of array
+# would otherwise refer back to method objects of `dataframe`
 autodoc_type_aliases = {
     'dataframe': 'dataframe',
     'Device': 'device',
