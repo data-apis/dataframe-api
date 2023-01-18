@@ -1,0 +1,6 @@
+﻿.. currentmodule:: dataframe_api
+
+__floordiv__
+============
+
+.. automethod:: DataFrame.__floordiv__

@@ -1,0 +1,6 @@
+﻿.. currentmodule:: dataframe_api
+
+__truediv__
+===========
+
+.. automethod:: DataFrame.__truediv__

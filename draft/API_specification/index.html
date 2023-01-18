@@ -61,7 +61,7 @@
     <script src="../_static/copybutton.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Dataframe basics" href="dataframe_basics.html" />
+    <link rel="next" title="Dataframe object" href="dataframe_object.html" />
     <link rel="prev" title="Future API standard evolution" href="../future_API_evolution.html" />
   
     <link rel="apple-touch-icon" href="../_static/images/apple-icon-152x152.png"/>
@@ -246,21 +246,21 @@
     <li class="md-nav__item">
     
     
-      <a href="dataframe_basics.html" class="md-nav__link">Dataframe basics</a>
+      <a href="dataframe_object.html" class="md-nav__link">Dataframe object</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="column_selection.html" class="md-nav__link">Column selection</a>
+      <a href="column_object.html" class="md-nav__link">Column object</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="filter_rows.html" class="md-nav__link">Filter rows</a>
+      <a href="groupby_object.html" class="md-nav__link">Groupby object</a>
       
     
     </li></ul>
@@ -319,9 +319,53 @@
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">API specification</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="dataframe_basics.html">Dataframe basics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="column_selection.html">Column selection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="filter_rows.html">Filter rows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataframe_object.html">Dataframe object</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dataframe_object.html#operators">Operators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#arithmetic-operators">Arithmetic Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#comparison-operators">Comparison Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#in-place-operators">In-place Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#reflected-operators">Reflected Operators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dataframe_object.html#attributes">Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataframe_object.html#methods">Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__add__.html">__add__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__eq__.html">__eq__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__floordiv__.html">__floordiv__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__ge__.html">__ge__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__gt__.html">__gt__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__le__.html">__le__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__lt__.html">__lt__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__ne__.html">__ne__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__mod__.html">__mod__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__mul__.html">__mul__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__pow__.html">__pow__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__sub__.html">__sub__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__truediv__.html">__truediv__</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="column_object.html">Column object</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="column_object.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="groupby_object.html">Groupby object</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="groupby_object.html#methods">Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.all.html">all</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.any.html">any</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.max.html">max</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.min.html">min</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.mean.html">mean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.median.html">median</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.prod.html">prod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.std.html">std</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.sum.html">sum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.var.html">var</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -350,12 +394,12 @@
             </a>
           
           
-            <a href="dataframe_basics.html" title="Dataframe basics"
+            <a href="dataframe_object.html" title="Dataframe object"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> Dataframe basics </span>
+                class="md-footer-nav__direction"> Next </span> Dataframe object </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>

@@ -36,35 +36,35 @@
     </style>
   
 
-  <link rel="stylesheet" href="_static/stylesheets/application.css"/>
-  <link rel="stylesheet" href="_static/stylesheets/application-palette.css"/>
-  <link rel="stylesheet" href="_static/stylesheets/application-fixes.css"/>
+  <link rel="stylesheet" href="../_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="../_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="../_static/stylesheets/application-fixes.css"/>
   
-  <link rel="stylesheet" href="_static/fonts/material-icons.css"/>
+  <link rel="stylesheet" href="../_static/fonts/material-icons.css"/>
   
   <meta name="theme-color" content="#2196f3">
-  <script src="_static/javascripts/modernizr.js"></script>
+  <script src="../_static/javascripts/modernizr.js"></script>
   
   
-    <link rel="apple-touch-icon" href="_static/images/apple-icon-152x152.png"/>
+    <link rel="apple-touch-icon" href="../_static/images/apple-icon-152x152.png"/>
   
   
-    <title>Data on existing API design &amp; usage &#8212; Python dataframe API standard 2022.12-DRAFT documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/material.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Verification - test suite" href="verification_test_suite.html" />
-    <link rel="prev" title="var" href="API_specification/generated/dataframe_api.GroupBy.var.html" />
+    <title>Column object &#8212; Python dataframe API standard 2022.12-DRAFT documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/material.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Groupby object" href="groupby_object.html" />
+    <link rel="prev" title="__truediv__" href="generated/dataframe_api.DataFrame.__truediv__.html" />
   
-    <link rel="apple-touch-icon" href="_static/images/apple-icon-152x152.png"/>
+    <link rel="apple-touch-icon" href="../_static/images/apple-icon-152x152.png"/>
   
    
 
@@ -83,12 +83,12 @@
   <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
   <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
   <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
-  <a href="#usage_data" tabindex="1" class="md-skip"> Skip to content </a>
+  <a href="#API_specification/column_object" tabindex="1" class="md-skip"> Skip to content </a>
   <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="index.html" title="Python dataframe API standard 2022.12-DRAFT documentation"
+        <a href="../index.html" title="Python dataframe API standard 2022.12-DRAFT documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe869</i>
@@ -101,7 +101,7 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           <span class="md-header-nav__topic">Python dataframe API standard 2022.12-DRAFT</span>
-          <span class="md-header-nav__topic"> Data on existing API design &amp; usage </span>
+          <span class="md-header-nav__topic"> Column object </span>
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
@@ -110,7 +110,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="search.html" method="GET" name="search">
+    <form class="md-search__form" action="../search.html" method="GET" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -136,10 +136,10 @@
       
       
   
-  <script src="_static/javascripts/version_dropdown.js"></script>
+  <script src="../_static/javascripts/version_dropdown.js"></script>
   <script>
-    var json_loc = "../versions.json",
-        target_loc = "../",
+    var json_loc = "../../versions.json",
+        target_loc = "../../",
         text = "Versions";
     $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
   </script>
@@ -158,9 +158,10 @@
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
             
-            <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">Dataframe API standard</a></li>
+            <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Dataframe API standard</a></li>
             
             <li class="md-tabs__item"><a href="https://data-apis.org" class="md-tabs__link">Consortium for Python Data API Standards</a></li>
+          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">API specification</a></li>
       </ul>
     </div>
   </nav>
@@ -172,12 +173,12 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="index.html" title="Python dataframe API standard 2022.12-DRAFT documentation" class="md-nav__button md-logo">
+    <a href="../index.html" title="Python dataframe API standard 2022.12-DRAFT documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe869</i>
       
     </a>
-    <a href="index.html"
+    <a href="../index.html"
        title="Python dataframe API standard 2022.12-DRAFT documentation">Python dataframe API standard 2022.12-DRAFT</a>
   </label>
   
@@ -192,21 +193,21 @@
     <li class="md-nav__item">
     
     
-      <a href="purpose_and_scope.html" class="md-nav__link">Purpose and scope</a>
+      <a href="../purpose_and_scope.html" class="md-nav__link">Purpose and scope</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="use_cases.html" class="md-nav__link">Use cases</a>
+      <a href="../use_cases.html" class="md-nav__link">Use cases</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="assumptions.html" class="md-nav__link">Assumptions</a>
+      <a href="../assumptions.html" class="md-nav__link">Assumptions</a>
       
     
     </li>
@@ -218,22 +219,59 @@
     <li class="md-nav__item">
     
     
-      <a href="design_topics/index.html" class="md-nav__link">Design topics & constraints</a>
+      <a href="../design_topics/index.html" class="md-nav__link">Design topics & constraints</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="future_API_evolution.html" class="md-nav__link">Future API standard evolution</a>
+      <a href="../future_API_evolution.html" class="md-nav__link">Future API standard evolution</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="API_specification/index.html" class="md-nav__link">API specification</a>
+      <a href="index.html" class="md-nav__link">API specification</a>
+      <ul class="md-nav__list"> 
+    <li class="md-nav__item">
+    
+    
+      <a href="dataframe_object.html" class="md-nav__link">Dataframe object</a>
       
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    <label class="md-nav__link md-nav__link--active" for="__toc"> Column object </label>
+    
+      <a href="#" class="md-nav__link md-nav__link--active">Column object</a>
+      
+        
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">Contents</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#api-specification-column-object--page-root" class="md-nav__link">Column object</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#methods" class="md-nav__link">Methods</a>
+        </li></ul>
+            </nav>
+        </li>
+  </ul>
+</nav>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="groupby_object.html" class="md-nav__link">Groupby object</a>
+      
+    
+    </li></ul>
     
     </li>
     <li class="md-nav__item">
@@ -244,71 +282,21 @@
     <li class="md-nav__item">
     
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    <label class="md-nav__link md-nav__link--active" for="__toc"> Data on existing API design & usage </label>
-    
-      <a href="#" class="md-nav__link md-nav__link--active">Data on existing API design & usage</a>
-      
-        
-<nav class="md-nav md-nav--secondary">
-    <label class="md-nav__title" for="__toc">Contents</label>
-  <ul class="md-nav__list" data-md-scrollfix="">
-        <li class="md-nav__item"><a href="#usage-data--page-root" class="md-nav__link">Data on existing API design & usage</a><nav class="md-nav">
-              <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#summary" class="md-nav__link">Summary</a>
-        </li>
-        <li class="md-nav__item"><a href="#methods" class="md-nav__link">Methods</a>
-        </li>
-        <li class="md-nav__item"><a href="#tooling" class="md-nav__link">Tooling</a>
-        </li>
-        <li class="md-nav__item"><a href="#detailed-results-and-raw-data" class="md-nav__link">Detailed results and raw data</a>
-        </li></ul>
-            </nav>
-        </li>
-  </ul>
-</nav>
-      <ul class="md-nav__list"> 
-    <li class="md-nav__item">
-    
-    
-      <a href="#summary" class="md-nav__link">Summary</a>
+      <a href="../usage_data.html" class="md-nav__link">Data on existing API design & usage</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="#methods" class="md-nav__link">Methods</a>
+      <a href="../verification_test_suite.html" class="md-nav__link">Verification - test suite</a>
       
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="#tooling" class="md-nav__link">Tooling</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="#detailed-results-and-raw-data" class="md-nav__link">Detailed results and raw data</a>
-      
-    
-    </li></ul>
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="verification_test_suite.html" class="md-nav__link">Verification - test suite</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="benchmark_suite.html" class="md-nav__link">Benchmark suite</a>
+      <a href="../benchmark_suite.html" class="md-nav__link">Benchmark suite</a>
       
     
     </li>
@@ -326,15 +314,9 @@
 <nav class="md-nav md-nav--secondary">
     <label class="md-nav__title" for="__toc">Contents</label>
   <ul class="md-nav__list" data-md-scrollfix="">
-        <li class="md-nav__item"><a href="#usage-data--page-root" class="md-nav__link">Data on existing API design & usage</a><nav class="md-nav">
+        <li class="md-nav__item"><a href="#api-specification-column-object--page-root" class="md-nav__link">Column object</a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#summary" class="md-nav__link">Summary</a>
-        </li>
         <li class="md-nav__item"><a href="#methods" class="md-nav__link">Methods</a>
-        </li>
-        <li class="md-nav__item"><a href="#tooling" class="md-nav__link">Tooling</a>
-        </li>
-        <li class="md-nav__item"><a href="#detailed-results-and-raw-data" class="md-nav__link">Detailed results and raw data</a>
         </li></ul>
             </nav>
         </li>
@@ -347,19 +329,14 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  <section id="data-on-existing-api-design-usage">
-<h1 id="usage-data--page-root">Data on existing API design &amp; usage<a class="headerlink" href="#usage-data--page-root" title="Permalink to this headline">¶</a></h1>
-<section id="summary">
-<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
-</section>
+  <section id="column-object">
+<span id="id1"></span><h1 id="api-specification-column-object--page-root">Column object<a class="headerlink" href="#api-specification-column-object--page-root" title="Permalink to this headline">¶</a></h1>
+<p>A conforming implementation of the dataframe API standard must provide and
+support a column object having the following attributes and methods.</p>
+<hr class="docutils"/>
 <section id="methods">
 <h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="tooling">
-<h2 id="tooling">Tooling<a class="headerlink" href="#tooling" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="detailed-results-and-raw-data">
-<h2 id="detailed-results-and-raw-data">Detailed results and raw data<a class="headerlink" href="#detailed-results-and-raw-data" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
 </section>
 </section>
 
@@ -373,7 +350,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
           
-            <a href="API_specification/generated/dataframe_api.GroupBy.var.html" title="var"
+            <a href="generated/dataframe_api.DataFrame.__truediv__.html" title="__truediv__"
                class="md-flex md-footer-nav__link md-footer-nav__link--prev"
                rel="prev">
               <div class="md-flex__cell md-flex__cell--shrink">
@@ -382,17 +359,17 @@
               <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
                 <span class="md-flex__ellipsis">
                   <span
-                      class="md-footer-nav__direction"> Previous </span> var </span>
+                      class="md-footer-nav__direction"> Previous </span> __truediv__ </span>
               </div>
             </a>
           
           
-            <a href="verification_test_suite.html" title="Verification - test suite"
+            <a href="groupby_object.html" title="Groupby object"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> Verification - test suite </span>
+                class="md-footer-nav__direction"> Next </span> Groupby object </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
@@ -418,7 +395,7 @@
       </div>
     </div>
   </footer>
-  <script src="_static/javascripts/application.js"></script>
+  <script src="../_static/javascripts/application.js"></script>
   <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
   </body>
 </html>

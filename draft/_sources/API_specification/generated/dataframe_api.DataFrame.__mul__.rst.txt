@@ -1,0 +1,6 @@
+﻿.. currentmodule:: dataframe_api
+
+__mul__
+=======
+
+.. automethod:: DataFrame.__mul__
