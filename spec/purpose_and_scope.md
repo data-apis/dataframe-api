@@ -62,6 +62,11 @@ It uses SQLAlchemy and a custom SQL compiler to translate its pandas-like API to
 SQL statements, executed by the backends. It supports conventional DBMS, as well
 as big data systems such as Apache Impala or BigQuery.
 
+[Polars](https://www.pola.rs/) is a lightning fast DataFrame library/in-memory query
+engine. It has a different API to pandas, which allows it to be extremely expressive
+and powerful. It performed exceptionally well in the
+[H20 benchmark](https://h2oai.github.io/db-benchmark/).
+
 Given the growing Python dataframe ecosystem, and its complexity, this document provides
 a standard Python dataframe API. Until recently, pandas has been a de-facto standard for
 Python dataframes. But currently there are a growing number of not only dataframe libraries,
@@ -179,6 +184,7 @@ The list of known Python dataframe libraries at the time of writing this documen
 - [Mars](https://docs.pymars.org/en/latest/)
 - [Modin](https://github.com/modin-project/modin)
 - [pandas](https://pandas.pydata.org/)
+- [polars](https://www.pola.rs/)
 - [PySpark](https://spark.apache.org/docs/latest/api/python/index.html)
 - [StaticFrame](https://static-frame.readthedocs.io/en/latest/)
 - [Turi Create](https://github.com/apple/turicreate)

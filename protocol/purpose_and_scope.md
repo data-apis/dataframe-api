@@ -126,6 +126,11 @@ It uses SQLAlchemy and a custom SQL compiler to translate its pandas-like API to
 SQL statements, executed by the backends. It supports conventional DBMS, as well
 as big data systems such as Apache Impala or BigQuery.
 
+[Polars](https://www.pola.rs/) is a lightning fast DataFrame library/in-memory query
+engine. It has a different API to pandas, which allows it to be extremely expressive
+and powerful. It performed exceptionally well in the
+[H20 benchmark](https://h2oai.github.io/db-benchmark/).
+
 #### History of this dataframe protocol
 
 While there is no dataframe protocol like the one described in this document in
