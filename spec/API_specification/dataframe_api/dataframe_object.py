@@ -11,9 +11,28 @@ __all__ = ["DataFrame"]
 
 
 class DataFrame:
-    def groupby(self, keys: list[str], /) -> GroupBy:
+    def groupby(self, keys: Sequence[str], /) -> GroupBy:
         """
         Group the DataFrame by the given columns.
+
+        Parameters
+        ----------
+        keys : Sequence[str]
+
+        Returns
+        -------
+        GroupBy
+
+        Raises
+        ------
+        KeyError
+            If any of the requested keys are not present.
+
+        Notes
+        -----
+        Downstream operations from this function, like aggregations, return
+        results for which row order is not guaranteed and is implementation
+        defined.
         """
         ...
 
