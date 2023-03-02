@@ -30,8 +30,9 @@ class DataFrame:
 
         Notes
         -----
-        The order of the keys and the order of rows within each group is not
-        guaranteed and is implementation defined.
+        Downstream operations from this function, like aggregations, return
+        results for which row order is not guaranteed and is implementation
+        defined.
         """
         ...
 
