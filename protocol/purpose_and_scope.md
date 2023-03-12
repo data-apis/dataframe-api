@@ -126,6 +126,9 @@ It uses SQLAlchemy and a custom SQL compiler to translate its pandas-like API to
 SQL statements, executed by the backends. It supports conventional DBMS, as well
 as big data systems such as Apache Impala or BigQuery.
 
+[Polars](https://www.pola.rs/) is a DataFrame library written in Rust, with
+Python bindings available. Their API is intentionally different to the pandas one.
+
 #### History of this dataframe protocol
 
 While there is no dataframe protocol like the one described in this document in
