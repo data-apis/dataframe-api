@@ -180,6 +180,31 @@ class DataFrame:
         """
         ...
 
+    def rename_columns(self, mapping: dict[str, str]) -> DataFrame:
+        """
+        Rename columns.
+
+        Parameters
+        ----------
+        mapping : dict[str, str]
+            Keys are old column names, values are new column names.
+
+        Returns
+        -------
+        DataFrame
+        """
+        ...
+
+    def get_column_names(self) -> list[str]:
+        """
+        Get column names.
+
+        Returns
+        -------
+        list[str]
+        """
+        ...
+
     def __eq__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Compare for equality.
