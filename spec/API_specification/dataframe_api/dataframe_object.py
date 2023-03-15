@@ -195,13 +195,13 @@ class DataFrame:
         """
         ...
 
-    def get_column_names(self) -> list[str]:
+    def get_column_names(self) -> tuple[str, ...]:
         """
         Get column names.
 
         Returns
         -------
-        list[str]
+        tuple[str, ...]
         """
         ...
 
