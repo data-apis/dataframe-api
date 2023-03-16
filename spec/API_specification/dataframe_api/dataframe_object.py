@@ -195,7 +195,7 @@ class DataFrame:
         """
         ...
 
-    def get_column_names(self) -> tuple[str, ...]:
+    def get_column_names(self) -> Sequence[str]:
         """
         Get column names.
 
