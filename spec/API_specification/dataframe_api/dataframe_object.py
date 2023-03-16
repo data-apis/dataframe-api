@@ -201,7 +201,7 @@ class DataFrame:
 
         Returns
         -------
-        tuple[str, ...]
+        Sequence[str]
         """
         ...
 
