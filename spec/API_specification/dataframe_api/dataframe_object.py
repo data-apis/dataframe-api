@@ -186,7 +186,7 @@ class DataFrame:
 
         Parameters
         ----------
-        mapping : dict[str, str]
+        mapping : Mapping[str, str]
             Keys are old column names, values are new column names.
 
         Returns
