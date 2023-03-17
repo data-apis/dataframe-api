@@ -180,7 +180,7 @@ class DataFrame:
         """
         ...
 
-    def rename_columns(self, mapping: dict[str, str]) -> DataFrame:
+    def rename_columns(self, mapping: Mapping[str, str]) -> DataFrame:
         """
         Rename columns.
 
