@@ -478,7 +478,7 @@ class DataFrame:
         """
         ...
 
-    def isnull(self) -> DataFrame:
+    def is_null(self) -> DataFrame:
         """
         Check for 'missing' or 'null' entries.
 
@@ -496,7 +496,7 @@ class DataFrame:
         """
         ...
 
-    def isnan(self) -> DataFrame:
+    def is_nan(self) -> DataFrame:
         """
         Check for nan-like entries.
 
