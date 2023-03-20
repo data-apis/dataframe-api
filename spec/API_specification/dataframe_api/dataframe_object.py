@@ -418,6 +418,12 @@ class DataFrame:
         """
         ...
 
+    def __invert__(self) -> DataFrame:
+        """
+        Invert truthiness of (boolean) elements.
+        """
+        ...
+
     def any(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
