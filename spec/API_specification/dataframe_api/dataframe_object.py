@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Sequence, Union, TYPE_CHECKING
+from typing import Sequence, Union, TYPE_CHECKING, NoReturn
 
 if TYPE_CHECKING:
     from .column_object import Column
@@ -417,6 +417,18 @@ class DataFrame:
         A tuple of two DataFrame's
         """
         ...
+
+    def __iter__(self) -> NoReturn:
+        """
+        Iterate over elements.
+
+        This is intentionally "poisoned" to discourage inefficient code patterns.
+
+        Raises
+        ------
+        NotImplementedError
+        """
+        raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
     def any(self, skipna: bool = True) -> DataFrame:
         """
