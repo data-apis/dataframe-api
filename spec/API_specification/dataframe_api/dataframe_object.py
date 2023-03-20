@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Sequence, Union, TYPE_CHECKING
+from typing import Sequence, Union, TYPE_CHECKING, Self, Mapping
 
 if TYPE_CHECKING:
     from .column_object import Column
@@ -11,6 +11,21 @@ __all__ = ["DataFrame"]
 
 
 class DataFrame:
+    @classmethod
+    def from_dict(cls, data: Mapping[str, Column]) -> Self:
+        """
+        Construct DataFrame from map of column names to Columns.
+
+        Parameters
+        ----------
+        data : Mapping[str, Column]
+
+        Returns
+        -------
+        DataFrame
+        """
+        ...
+
     def groupby(self, keys: Sequence[str], /) -> GroupBy:
         """
         Group the DataFrame by the given columns.
