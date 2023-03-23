@@ -539,3 +539,47 @@ class DataFrame:
         Does *not* include 'missing' or 'null' entries.
         """
         ...
+
+    def pivot(self, values: Sequence[str], keys: Sequence[str], labels: Sequence[str]) -> DataFrame:
+        """
+        Reshape data into columns (from rows).
+
+        Does not support aggregation: each row must have a unique value for
+        (`keys`, `labels`). If that's not the case, then the caller is
+        responsible for de-duplicating based on (`keys`, `labels`) beforehand.
+
+        The result will have one column for each element of `keys`, as well as one
+        column for each unique combination of each element of `values`, each element
+        of `labels`, and each value in each element of `labels`.
+        As no MultiIndex is available, multiple levels will have their names
+        separated by underscores.
+
+        There are four cases to consider:
+        - single `values`, single `labels`:
+          columns will be of the form `{label_value}`;
+        - multiple `values`, single `labels`:
+          columns will be of the form `{value_name}_{label_value}`;
+        - single `values`, multiple `labels`:
+          columns will be of the format `{label_name}_{label_value}`;
+        - multiple `values`, multiple `labels`:
+          columns will be of the format `{value_name}_{label_name}_{label_value}`.
+
+        Parameters
+        ----------
+        values : Sequence[str]
+            Names of column(s) to use to populate values.
+        keys : Sequence[str]
+            Names of column(s) to group by.
+        labels : str
+            Names of column(s) to use as new labels.
+
+        Returns
+        -------
+        DataFrame
+
+        Raises
+        ------
+        ValueError
+            If each row does not have a unique combination of (`keys`, `labels`).
+        """
+        ...
