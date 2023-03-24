@@ -551,18 +551,11 @@ class DataFrame:
         The result will have one column for each element of `keys`, as well as one
         column for each unique combination of each element of `values`, each element
         of `labels`, and each value in each element of `labels`.
-        As no MultiIndex is available, multiple levels will have their names
-        separated by underscores.
 
-        There are four cases to consider:
-        - single `values`, single `labels`:
-          columns will be of the form `{label_value}`;
-        - multiple `values`, single `labels`:
-          columns will be of the form `{value_name}_{label_value}`;
-        - single `values`, multiple `labels`:
-          columns will be of the format `{label_name}_{label_value}`;
-        - multiple `values`, multiple `labels`:
-          columns will be of the format `{value_name}_{label_name}_{label_value}`.
+        Columns will be of the form `f"{value_name}_{label_name}_{label_value}"`.
+        It will then be up to the caller to post-process column names according
+        to their needs. None of `value_name`, `label_name`, nor `label_value`
+        would be permitted to contain underscores.
 
         Parameters
         ----------
@@ -581,5 +574,8 @@ class DataFrame:
         ------
         ValueError
             If each row does not have a unique combination of (`keys`, `labels`).
+        ValueError
+            If each column in the result (apart from the `keys` ones) does not have
+            exactly two underscores.
         """
         ...
