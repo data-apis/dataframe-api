@@ -549,13 +549,27 @@ class DataFrame:
         responsible for de-duplicating based on (`keys`, `labels`) beforehand.
 
         The result will have one column for each element of `keys`, as well as one
-        column for each unique combination of each element of `values`, each element
-        of `labels`, and each value in each element of `labels`.
+        column for each unique combination of each element of `values`, and each unique
+        combination of `labels`.
+        As no MultiIndex is available, multiple levels will have their names
+        separated by underscores.
 
-        Columns will be of the form `f"{value_name}_{label_name}_{label_value}"`.
-        It will then be up to the caller to post-process column names according
-        to their needs. None of `value_name`, `label_name`, nor `label_value`
-        would be permitted to contain underscores.
+        Say we pass:
+
+        - `m` column names to `values`;
+        - `n` column names to `labels`;
+        - `l` column names to `keys`.
+
+        Then the result's column names will be:
+
+        - `{index_0}`
+        - `{index_1}`
+        - ...
+        - `{index_l}`
+        - `{value_0}_{label_0}_{label_1}..._{label_n}`
+        - `{value_1}_{label_0}_{label_1}..._{label_n}`
+        - ...
+        - `{value_m}_{label_0}_{label_1}..._{label_n}`
 
         Parameters
         ----------
@@ -565,6 +579,15 @@ class DataFrame:
             Names of column(s) to group by.
         labels : str
             Names of column(s) to use as new labels.
+        
+        Notes
+        -----
+        Each of `values`, `keys`, and `labels`, much contain unique column names.
+        For example,
+
+            df.pivot(values=['a', 'a', 'b'], keys=['c'], labels=['d'])
+        
+        would not be allowed and would raise a ``ValueError``.
 
         Returns
         -------
@@ -575,7 +598,7 @@ class DataFrame:
         ValueError
             If each row does not have a unique combination of (`keys`, `labels`).
         ValueError
-            If each column in the result (apart from the `keys` ones) does not have
-            exactly two underscores.
+            If any of `values`, `keys`, or `labels` receives the same column name
+            twice.
         """
         ...
