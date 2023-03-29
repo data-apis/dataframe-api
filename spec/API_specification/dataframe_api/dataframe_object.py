@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Sequence, Union, TYPE_CHECKING, Self, Mapping
+from typing import Sequence, Union, TYPE_CHECKING, NoReturn, Self, Mapping
 
 if TYPE_CHECKING:
     from .column_object import Column
@@ -19,10 +19,21 @@ class DataFrame:
         Parameters
         ----------
         data : Mapping[str, Column]
+            Column must be of the corresponding type of the DataFrame.
+            For example, it is only supported to build a ``LibraryXDataFrame`` using
+            ``LibraryXColumn`` instances.
 
         Returns
         -------
         DataFrame
+        """
+
+    @property
+    def dataframe(self) -> object:
+        """
+        Return underlying (not-necessarily-Standard-compliant) DataFrame.
+
+        If a library only implements the Standard, then this can return `self`.
         """
         ...
 
@@ -192,6 +203,31 @@ class DataFrame:
         Returns
         -------
         DataFrame
+        """
+        ...
+
+    def rename_columns(self, mapping: Mapping[str, str]) -> DataFrame:
+        """
+        Rename columns.
+
+        Parameters
+        ----------
+        mapping : Mapping[str, str]
+            Keys are old column names, values are new column names.
+
+        Returns
+        -------
+        DataFrame
+        """
+        ...
+
+    def get_column_names(self) -> Sequence[str]:
+        """
+        Get column names.
+
+        Returns
+        -------
+        Sequence[str]
         """
         ...
 
@@ -432,6 +468,18 @@ class DataFrame:
         A tuple of two DataFrame's
         """
         ...
+
+    def __iter__(self) -> NoReturn:
+        """
+        Iterate over elements.
+
+        This is intentionally "poisoned" to discourage inefficient code patterns.
+
+        Raises
+        ------
+        NotImplementedError
+        """
+        raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
     def any(self, skipna: bool = True) -> DataFrame:
         """
