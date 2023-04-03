@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Sequence, Union, TYPE_CHECKING
+from typing import Sequence, Union, TYPE_CHECKING, NoReturn
 
 if TYPE_CHECKING:
     from .column_object import Column
@@ -11,6 +11,15 @@ __all__ = ["DataFrame"]
 
 
 class DataFrame:
+    @property
+    def dataframe(self) -> object:
+        """
+        Return underlying (not-necessarily-Standard-compliant) DataFrame.
+
+        If a library only implements the Standard, then this can return `self`.
+        """
+        ...
+
     def groupby(self, keys: Sequence[str], /) -> GroupBy:
         """
         Group the DataFrame by the given columns.
@@ -177,6 +186,31 @@ class DataFrame:
         Returns
         -------
         DataFrame
+        """
+        ...
+
+    def rename_columns(self, mapping: Mapping[str, str]) -> DataFrame:
+        """
+        Rename columns.
+
+        Parameters
+        ----------
+        mapping : Mapping[str, str]
+            Keys are old column names, values are new column names.
+
+        Returns
+        -------
+        DataFrame
+        """
+        ...
+
+    def get_column_names(self) -> Sequence[str]:
+        """
+        Get column names.
+
+        Returns
+        -------
+        Sequence[str]
         """
         ...
 
@@ -428,6 +462,18 @@ class DataFrame:
             If any of the DataFrame's columns is not boolean.
         """
         ...
+
+    def __iter__(self) -> NoReturn:
+        """
+        Iterate over elements.
+
+        This is intentionally "poisoned" to discourage inefficient code patterns.
+
+        Raises
+        ------
+        NotImplementedError
+        """
+        raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
     def any(self, skipna: bool = True) -> DataFrame:
         """
