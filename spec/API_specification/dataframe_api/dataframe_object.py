@@ -475,6 +475,34 @@ class DataFrame:
         Reduction returns a 1-row DataFrame.
         """
         ...
+    
+    def any_rowwise(self, skipna: bool = True) -> Column:
+        """
+        Reduction returns a Column.
+
+        Differs from ``DataFrame.any`` and that the reduction happens
+        for each row, rather than for each column.
+
+        Raises
+        ------
+        ValueError
+            If any of the DataFrame's columns is not boolean.
+        """
+        ...
+
+    def all_rowwise(self, skipna: bool = True) -> Column:
+        """
+        Reduction returns a Column.
+
+        Differs from ``DataFrame.all`` and that the reduction happens
+        for each row, rather than for each column.
+
+        Raises
+        ------
+        ValueError
+            If any of the DataFrame's columns is not boolean.
+        """
+        ...
 
     def min(self, skipna: bool = True) -> DataFrame:
         """
