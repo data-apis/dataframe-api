@@ -214,6 +214,21 @@ class DataFrame:
         """
         ...
 
+    def sort(self, keys: Sequence[str]) -> DataFrame:
+        """
+        Sort rows according to given columns.
+
+        Parameters
+        ----------
+        keys : Sequence[str]
+            Names of columns to sort by.
+
+        Returns
+        -------
+        DataFrame
+        """
+        ...
+
     def __eq__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Compare for equality.
