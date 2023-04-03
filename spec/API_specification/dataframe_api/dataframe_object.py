@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Sequence, Union, TYPE_CHECKING, NoReturn, Self, Mapping
+from typing import Sequence, Union, TYPE_CHECKING, NoReturn, Mapping
 
 if TYPE_CHECKING:
     from .column_object import Column
@@ -12,7 +12,7 @@ __all__ = ["DataFrame"]
 
 class DataFrame:
     @classmethod
-    def from_dict(cls, data: Mapping[str, Column]) -> Self:
+    def from_dict(cls, data: Mapping[str, Column]) -> DataFrame:
         """
         Construct DataFrame from map of column names to Columns.
 
