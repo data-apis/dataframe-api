@@ -218,7 +218,7 @@ class DataFrame:
         self,
         keys: Sequence[str],
         *,
-        ascending: Mapping[str, bool] | None = None,
+        ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
     ) -> DataFrame:
         """
@@ -228,14 +228,24 @@ class DataFrame:
         ----------
         keys : Sequence[str]
             Names of columns to sort by.
-        ascending : Mapping[str, bool]
-            Direction with which to sort each column. If
-            not specified, then each column will be specified
-            in ascending order.
+        ascending : Sequence[bool] or bool
+            If `True`, sort by all keys in ascending order.
+            If `False`, sort by all keys in descending order.
+            If a sequence, it must be the same length as `keys`,
+            and determines the direction with which to use each
+            key to sort by.
+        nulls_position : {'first', 'last'}
+            Whether null values should be placed at the beginning
+            or at the end of the result.
 
         Returns
         -------
         DataFrame
+    
+        Raises
+        ------
+        ValueError
+            If `keys` and `ascending` are sequences of different lengths.
         """
         ...
 
