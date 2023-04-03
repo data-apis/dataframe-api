@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Sequence, Union, TYPE_CHECKING, NoReturn
+from typing import Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoReturn
 
 if TYPE_CHECKING:
     from .column_object import Column
@@ -214,7 +214,13 @@ class DataFrame:
         """
         ...
 
-    def sort(self, keys: Sequence[str]) -> DataFrame:
+    def sort(
+        self,
+        keys: Sequence[str],
+        *,
+        ascending: Mapping[str, bool] | None = None,
+        nulls_position: Literal['first', 'last'] = 'last',
+    ) -> DataFrame:
         """
         Sort rows according to given columns.
 
@@ -222,6 +228,10 @@ class DataFrame:
         ----------
         keys : Sequence[str]
             Names of columns to sort by.
+        ascending : Mapping[str, bool]
+            Direction with which to sort each column. If
+            not specified, then each column will be specified
+            in ascending order.
 
         Returns
         -------
