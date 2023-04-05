@@ -20,7 +20,6 @@ class DataFrame:
         """
         ...
     
-    @property
     def shape(self) -> tuple[int, int]:
         """
         Return number of rows and number of columns.
