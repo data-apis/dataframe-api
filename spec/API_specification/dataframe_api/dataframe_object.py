@@ -237,6 +237,8 @@ class DataFrame:
         nulls_position : {'first', 'last'}
             Whether null values should be placed at the beginning
             or at the end of the result.
+            Note that the position of NaNs is unspecified and may
+            vary based on the implementation.
 
         Returns
         -------
