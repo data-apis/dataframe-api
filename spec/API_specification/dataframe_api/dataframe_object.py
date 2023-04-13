@@ -19,6 +19,11 @@ class DataFrame:
         If a library only implements the Standard, then this can return `self`.
         """
         ...
+    
+    def shape(self) -> tuple[int, int]:
+        """
+        Return number of rows and number of columns.
+        """
 
     def groupby(self, keys: Sequence[str], /) -> GroupBy:
         """
