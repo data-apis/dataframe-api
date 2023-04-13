@@ -34,3 +34,6 @@ class GroupBy:
 
     def var(self, skipna: bool = True) -> "DataFrame":
         ...
+
+    def size(self) -> "DataFrame":
+        ...
