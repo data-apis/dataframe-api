@@ -457,6 +457,17 @@ class DataFrame:
         """
         ...
 
+    def __invert__(self) -> DataFrame:
+        """
+        Invert truthiness of (boolean) elements.
+
+        Raises
+        ------
+        ValueError
+            If any of the DataFrame's columns is not boolean.
+        """
+        ...
+
     def __iter__(self) -> NoReturn:
         """
         Iterate over elements.
@@ -472,12 +483,22 @@ class DataFrame:
     def any(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
+
+        Raises
+        ------
+        ValueError
+            If any of the DataFrame's columns is not boolean.
         """
         ...
 
     def all(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
+
+        Raises
+        ------
+        ValueError
+            If any of the DataFrame's columns is not boolean.
         """
         ...
 
