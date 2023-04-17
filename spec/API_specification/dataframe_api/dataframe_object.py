@@ -214,7 +214,7 @@ class DataFrame:
         """
         ...
 
-    def sort(
+    def sorted_indices(
         self,
         keys: Sequence[str],
         *,
@@ -222,7 +222,11 @@ class DataFrame:
         nulls_position: Literal['first', 'last'] = 'last',
     ) -> DataFrame:
         """
-        Sort rows according to given columns.
+        Return row numbers which would sort according to given columns.
+
+        If you need to sort the DataFrame, you can simply do::
+
+            df.get_rows(df.sorted_indices())
 
         Parameters
         ----------
