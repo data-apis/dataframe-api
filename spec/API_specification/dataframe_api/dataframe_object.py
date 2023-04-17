@@ -214,6 +214,22 @@ class DataFrame:
         """
         ...
 
+    def concat(self, other: Sequence[DataFrame]) -> DataFrame:
+        """
+        Concatenate current and other DataFrames vertically.
+
+        To concatenate horizontally, please use ``insert``.
+
+        Parameters
+        ----------
+        other : Sequence[DataFrame]
+            DataFrames to concatenate with.
+
+        Returns
+        -------
+        DataFrame
+        """
+
     def __eq__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Compare for equality.
