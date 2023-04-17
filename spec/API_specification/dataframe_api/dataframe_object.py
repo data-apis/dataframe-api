@@ -224,6 +224,7 @@ class DataFrame:
         ----------
         other : Sequence[DataFrame]
             DataFrames to concatenate with.
+            Column names, ordering, and dtypes must match.
 
         Returns
         -------
