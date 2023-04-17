@@ -220,7 +220,7 @@ class DataFrame:
         *,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> DataFrame:
+    ) -> Sequence[int]:
         """
         Return row numbers which would sort according to given columns.
 
@@ -246,7 +246,7 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        Sequence[int]
     
         Raises
         ------
