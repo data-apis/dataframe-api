@@ -160,6 +160,7 @@ class DataFrame:
         Drop the specified column.
 
         Parameters
+        
         ----------
         label : str
 
