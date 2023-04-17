@@ -174,21 +174,6 @@ class DataFrame:
         """
         ...
 
-    def set_column(self, label: str, value: Column) -> DataFrame:
-        """
-        Add or replace a column.
-
-        Parameters
-        ----------
-        label : str
-        value : Column
-
-        Returns
-        -------
-        DataFrame
-        """
-        ...
-
     def rename_columns(self, mapping: Mapping[str, str]) -> DataFrame:
         """
         Rename columns.
