@@ -226,7 +226,7 @@ class DataFrame:
 
         If you need to sort the DataFrame, you can simply do::
 
-            df.get_rows(df.sorted_indices())
+            df.get_rows(df.sorted_indices(keys))
 
         Parameters
         ----------
