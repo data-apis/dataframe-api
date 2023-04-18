@@ -6,7 +6,7 @@ class Column:
         Return the number of rows.
         """
     
-    def __getitem__(self, row) -> object:
+    def __getitem__(self, row: int) -> object:
         """
         Get the element at row index `row`.
         """
