@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from .column_object import Column
     from .dataframe_object import DataFrame
 
 
@@ -35,5 +36,5 @@ class GroupBy:
     def var(self, skipna: bool = True) -> "DataFrame":
         ...
 
-    def size(self) -> "DataFrame":
+    def size(self) -> "Column":
         ...
