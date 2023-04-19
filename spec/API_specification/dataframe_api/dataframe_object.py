@@ -19,6 +19,11 @@ class DataFrame:
         If a library only implements the Standard, then this can return `self`.
         """
         ...
+    
+    def shape(self) -> tuple[int, int]:
+        """
+        Return number of rows and number of columns.
+        """
 
     def groupby(self, keys: Sequence[str], /) -> GroupBy:
         """
@@ -171,21 +176,6 @@ class DataFrame:
         ------
         KeyError
             If the label is not present.
-        """
-        ...
-
-    def set_column(self, label: str, value: Column) -> DataFrame:
-        """
-        Add or replace a column.
-
-        Parameters
-        ----------
-        label : str
-        value : Column
-
-        Returns
-        -------
-        DataFrame
         """
         ...
 
@@ -452,6 +442,17 @@ class DataFrame:
         """
         ...
 
+    def __invert__(self) -> DataFrame:
+        """
+        Invert truthiness of (boolean) elements.
+
+        Raises
+        ------
+        ValueError
+            If any of the DataFrame's columns is not boolean.
+        """
+        ...
+
     def __iter__(self) -> NoReturn:
         """
         Iterate over elements.
@@ -467,12 +468,50 @@ class DataFrame:
     def any(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
+
+        Raises
+        ------
+        ValueError
+            If any of the DataFrame's columns is not boolean.
         """
         ...
 
     def all(self, skipna: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
+
+        Raises
+        ------
+        ValueError
+            If any of the DataFrame's columns is not boolean.
+        """
+        ...
+    
+    def any_rowwise(self, skipna: bool = True) -> Column:
+        """
+        Reduction returns a Column.
+
+        Differs from ``DataFrame.any`` and that the reduction happens
+        for each row, rather than for each column.
+
+        Raises
+        ------
+        ValueError
+            If any of the DataFrame's columns is not boolean.
+        """
+        ...
+
+    def all_rowwise(self, skipna: bool = True) -> Column:
+        """
+        Reduction returns a Column.
+
+        Differs from ``DataFrame.all`` and that the reduction happens
+        for each row, rather than for each column.
+
+        Raises
+        ------
+        ValueError
+            If any of the DataFrame's columns is not boolean.
         """
         ...
 
