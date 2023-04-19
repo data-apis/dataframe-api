@@ -94,7 +94,7 @@ class DataFrame:
 
         Parameters
         ----------
-        indices : Column
+        indices : Column[int]
             Positions of rows to select.
 
         Returns
