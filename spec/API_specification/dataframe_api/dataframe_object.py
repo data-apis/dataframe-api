@@ -88,7 +88,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Column[int]) -> DataFrame:
+    def get_rows(self, indices: "Column[int]") -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
