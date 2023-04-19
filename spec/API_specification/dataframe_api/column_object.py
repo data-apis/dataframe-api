@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import NoReturn
 
 class Column:
@@ -8,7 +10,7 @@ class Column:
     
     def __getitem__(self, row: int) -> object:
         """
-        Get the element at row index `row`.
+        Get the element at row index `key`.
         """
 
     def __iter__(self) -> NoReturn:
@@ -22,3 +24,18 @@ class Column:
         NotImplementedError
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
+
+    def get_rows(self, indices: Column[int]) -> Column:
+        """
+        Select a subset of rows, similar to `ndarray.take`.
+
+        Parameters
+        ----------
+        indices : Column[int]
+            Positions of rows to select.
+
+        Returns
+        -------
+        Column
+        """
+        ...
