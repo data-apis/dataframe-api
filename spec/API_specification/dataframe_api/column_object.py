@@ -1,4 +1,6 @@
-from typing import NoReturn
+from __future__ import annotations
+
+from typing import NoReturn, overload, Sequence
 
 class Column:
     def __len__(self) -> int:
@@ -6,9 +8,17 @@ class Column:
         Return the number of rows.
         """
     
-    def __getitem__(self, row: int) -> object:
+    @overload
+    def __getitem__(self, key: int) -> object:
+        ...
+
+    @overload
+    def __getitem__(self, key: Sequence[int]) -> Column:
+        ...
+
+    def __getitem__(self, key: int | Sequence[int]) -> object | Column:
         """
-        Get the element at row index `row`.
+        Get the element at row index `key`.
         """
 
     def __iter__(self) -> NoReturn:
