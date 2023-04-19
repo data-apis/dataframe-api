@@ -88,24 +88,18 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Sequence[int]) -> DataFrame:
+    def get_rows(self, indices: Column[int]) -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
         Parameters
         ----------
-        indices : Sequence[int]
+        indices : Column
             Positions of rows to select.
 
         Returns
         -------
         DataFrame
-
-        Notes
-        -----
-        Some discussion participants prefer a stricter type Column[int] for
-        indices in order to make it easier to implement in a performant manner
-        on GPUs.
         """
         ...
 
