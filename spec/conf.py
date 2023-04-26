@@ -18,11 +18,11 @@ sys.path.insert(0, os.path.abspath('./API_specification'))
 # -- Project information -----------------------------------------------------
 
 project = 'Python dataframe API standard'
-copyright = '2022, Consortium for Python Data API Standards'
+copyright = '2021-, Consortium for Python Data API Standards'
 author = 'Consortium for Python Data API Standards'
 
 # The full version, including alpha/beta/rc tags
-release = '2022.12-DRAFT'
+release = '2023.04-DRAFT'
 
 
 # -- General configuration ---------------------------------------------------
