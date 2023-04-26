@@ -9,7 +9,7 @@ __all__ = ['GroupBy']
 
 class GroupBy:
     """
-    GroupBy class.
+    GroupBy object.
 
     Note that this class is not meant to be constructed by users.
     It is returned from `DataFrame.groupby`.
