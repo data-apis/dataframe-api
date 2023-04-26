@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Sequence, Union, TYPE_CHECKING, NoReturn
+from typing import Sequence, Union, TYPE_CHECKING, NoReturn, Mapping
 
 if TYPE_CHECKING:
     from .column_object import Column
@@ -34,6 +34,24 @@ class DataFrame:
     **Methods and Attributes**
 
     """
+
+    @classmethod
+    def from_dict(cls, data: Mapping[str, Column]) -> DataFrame:
+        """
+        Construct DataFrame from map of column names to Columns.
+
+        Parameters
+        ----------
+        data : Mapping[str, Column]
+            Column must be of the corresponding type of the DataFrame.
+            For example, it is only supported to build a ``LibraryXDataFrame`` using
+            ``LibraryXColumn`` instances.
+
+        Returns
+        -------
+        DataFrame
+        """
+
     @property
     def dataframe(self) -> object:
         """
@@ -111,24 +129,18 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Sequence[int]) -> DataFrame:
+    def get_rows(self, indices: "Column[int]") -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
         Parameters
         ----------
-        indices : Sequence[int]
+        indices : Column[int]
             Positions of rows to select.
 
         Returns
         -------
         DataFrame
-
-        Notes
-        -----
-        Some discussion participants prefer a stricter type Column[int] for
-        indices in order to make it easier to implement in a performant manner
-        on GPUs.
         """
         ...
 
