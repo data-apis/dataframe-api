@@ -4,7 +4,19 @@ if TYPE_CHECKING:
     from .dataframe_object import DataFrame
 
 
+__all__ = ['GroupBy']
+
+
 class GroupBy:
+    """
+    GroupBy class.
+
+    Note that this class is not meant to be constructed by users.
+    It is returned from `DataFrame.groupby`.
+
+    **Methods**
+
+    """
     def any(self, skip_nulls: bool = True) -> "DataFrame":
         ...
 

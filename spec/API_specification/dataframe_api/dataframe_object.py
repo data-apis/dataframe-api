@@ -11,6 +11,16 @@ __all__ = ["DataFrame"]
 
 
 class DataFrame:
+    """
+    A DataFrame.
+
+    Notes
+    -----
+    Note that this DataFrame class is not meant to be instantiated directly by
+    users of the library implementing the dataframe API standard. Rather, use
+    constructor functions or an already-created dataframe object retrieved via
+    
+    """
     @property
     def dataframe(self) -> object:
         """

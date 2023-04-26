@@ -46,7 +46,15 @@ extensions = [
 
 autosummary_generate = True
 autodoc_typehints = 'signature'
+autodoc_default_options = {
+#    'attributes':       True,
+    'members':          True,
+    'special-members':  True,
+    'undoc-members':    True,
+    'exclude-members': '__annotations__, __dict__',
+}
 add_module_names = False
+napoleon_numpy_docstring = True
 napoleon_custom_sections = [('Returns', 'params_style')]
 default_role = 'code'
 

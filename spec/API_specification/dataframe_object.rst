@@ -149,24 +149,5 @@ TODO
 
 Methods
 -------
-..
-  NOTE: please keep the methods in alphabetical order
 
-
-.. autosummary::
-   :toctree: generated
-   :template: property.rst
-
-   DataFrame.__add__
-   DataFrame.__eq__
-   DataFrame.__floordiv__
-   DataFrame.__ge__
-   DataFrame.__gt__
-   DataFrame.__le__
-   DataFrame.__lt__
-   DataFrame.__ne__
-   DataFrame.__mod__
-   DataFrame.__mul__
-   DataFrame.__pow__
-   DataFrame.__sub__
-   DataFrame.__truediv__
+.. autoclass:: DataFrame
