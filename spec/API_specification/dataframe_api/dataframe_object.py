@@ -226,6 +226,11 @@ class DataFrame:
             DataFrames to concatenate with.
             Column names, ordering, and dtypes must match.
 
+        Notes
+        -----
+        The order in which the input DataFrames appear in
+        the output is not guaranteed and may vary across implementations.
+
         Returns
         -------
         DataFrame
