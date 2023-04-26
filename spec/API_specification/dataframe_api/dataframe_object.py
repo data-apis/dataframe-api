@@ -12,14 +12,25 @@ __all__ = ["DataFrame"]
 
 class DataFrame:
     """
-    A DataFrame.
+    DataFrame object
 
-    Notes
-    -----
-    Note that this DataFrame class is not meant to be instantiated directly by
+    Note that this DataFrame object is not meant to be instantiated directly by
     users of the library implementing the dataframe API standard. Rather, use
     constructor functions or an already-created dataframe object retrieved via
     
+    **Python operator support**
+
+    All arithmetic operators defined by the Python language, except for
+    ``__matmul__``, ``__neg__`` and ``__pos__``, must be supported for
+    numerical data types.
+
+    All comparison operators defined by the Python language must be supported
+    by the dataframe object for all data types for which those comparisons are
+    supported by the builtin scalar types corresponding to a data type.
+
+    In-place operators must not be supported. All operations on the dataframe
+    object are out-of-place.
+
     """
     @property
     def dataframe(self) -> object:
