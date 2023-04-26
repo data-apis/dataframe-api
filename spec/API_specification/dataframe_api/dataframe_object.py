@@ -14,7 +14,7 @@ class DataFrame:
     """
     DataFrame object
 
-    Note that this DataFrame object is not meant to be instantiated directly by
+    Note that this dataframe object is not meant to be instantiated directly by
     users of the library implementing the dataframe API standard. Rather, use
     constructor functions or an already-created dataframe object retrieved via
     
@@ -30,6 +30,8 @@ class DataFrame:
 
     In-place operators must not be supported. All operations on the dataframe
     object are out-of-place.
+
+    **Methods and Attributes**
 
     """
     @property
