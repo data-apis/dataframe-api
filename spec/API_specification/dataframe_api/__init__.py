@@ -14,8 +14,9 @@ from ._types import DType
 
 __dataframe_api_version__: str = "YYYY.MM"
 """
-String representing the version of the DataFrame API specification to which the
-conforming implementation adheres.
+String representing the version of the DataFrame API specification to which
+the conforming implementation adheres. Set to a concrete value for a stable
+implementation of the dataframe API standard.
 """
 
 def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
@@ -73,3 +74,36 @@ def dataframe_from_dict(data: Mapping[str, Column]) -> DataFrame:
     DataFrame
     """
     ...
+
+class null:
+    """
+    A `null` singleton object to represent missing data.
+
+    ``null`` may be used when constructing a `Column` from a Python sequence.
+    It supports ``is``, and does not support ``==`` and ``bool``.
+
+    Methods
+    -------
+    __bool__
+    __eq__
+
+    """
+    def __eq__(self):
+        """
+        Raises
+        ------
+        RuntimeError
+            A missing value must not be compared for equality. Use ``is`` to check
+            if an object *is* this ``null`` object, and `DataFrame.isnull` or
+            `Column.isnull` to check for presence of missing values.
+        """
+        ...
+
+    def __bool__(self):
+        """
+        Raises
+        ------
+        TypeError
+            Truthiness of a missing value is ambiguous
+        """
+        ...
