@@ -1,5 +1,7 @@
 from __future__ import annotations
-from typing import Sequence, Union, TYPE_CHECKING, NoReturn, Mapping
+
+from typing import Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoReturn
+
 
 if TYPE_CHECKING:
     from .column_object import Column
@@ -11,6 +13,30 @@ __all__ = ["DataFrame"]
 
 
 class DataFrame:
+    """
+    DataFrame object
+
+    Note that this dataframe object is not meant to be instantiated directly by
+    users of the library implementing the dataframe API standard. Rather, use
+    constructor functions or an already-created dataframe object retrieved via
+    
+    **Python operator support**
+
+    All arithmetic operators defined by the Python language, except for
+    ``__matmul__``, ``__neg__`` and ``__pos__``, must be supported for
+    numerical data types.
+
+    All comparison operators defined by the Python language must be supported
+    by the dataframe object for all data types for which those comparisons are
+    supported by the builtin scalar types corresponding to a data type.
+
+    In-place operators must not be supported. All operations on the dataframe
+    object are out-of-place.
+
+    **Methods and Attributes**
+
+    """
+
     @classmethod
     def from_dict(cls, data: Mapping[str, Column]) -> DataFrame:
         """
@@ -212,6 +238,47 @@ class DataFrame:
         Returns
         -------
         Sequence[str]
+        """
+        ...
+
+    def sorted_indices(
+        self,
+        keys: Sequence[str],
+        *,
+        ascending: Sequence[bool] | bool = True,
+        nulls_position: Literal['first', 'last'] = 'last',
+    ) -> Column[int]:
+        """
+        Return row numbers which would sort according to given columns.
+
+        If you need to sort the DataFrame, you can simply do::
+
+            df.get_rows(df.sorted_indices(keys))
+
+        Parameters
+        ----------
+        keys : Sequence[str]
+            Names of columns to sort by.
+        ascending : Sequence[bool] or bool
+            If `True`, sort by all keys in ascending order.
+            If `False`, sort by all keys in descending order.
+            If a sequence, it must be the same length as `keys`,
+            and determines the direction with which to use each
+            key to sort by.
+        nulls_position : {'first', 'last'}
+            Whether null values should be placed at the beginning
+            or at the end of the result.
+            Note that the position of NaNs is unspecified and may
+            vary based on the implementation.
+
+        Returns
+        -------
+        Column[int]
+    
+        Raises
+        ------
+        ValueError
+            If `keys` and `ascending` are sequences of different lengths.
         """
         ...
 
@@ -589,12 +656,14 @@ class DataFrame:
         Notes
         -----
         Does *not* include NaN-like entries.
+        May optionally include 'NaT' values (if present in an implementation),
+        but note that the Standard makes no guarantees about them.
         """
         ...
 
     def isnan(self) -> DataFrame:
         """
-        Check for nan-like entries.
+        Check for nan entries.
 
         Returns
         -------
@@ -606,7 +675,8 @@ class DataFrame:
 
         Notes
         -----
-        Includes anything with NaN-like semantics, e.g. np.datetime64("NaT").
+        This only checks for 'NaN'.
         Does *not* include 'missing' or 'null' entries.
+        In particular, does not check for `np.timedelta64('NaT')`.
         """
         ...
