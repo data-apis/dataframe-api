@@ -1,6 +1,14 @@
 Python dataframe API standard
 =============================
 
+.. note::
+
+   This API standard is still a work in progress, and approaching "minimum
+   viable product" status, where it's becoming possible to write library code
+   against it that is dataframe-agnostic. Design discussions are
+   happening in `this repository <https://github.com/data-apis/dataframe-api>`__.
+   Participation there is very much welcome.
+
 Contents
 --------
 
@@ -21,9 +29,8 @@ Contents
    API_specification/index
 
 .. toctree::
-   :caption: Methodology and Usage
+   :caption: Methodology and Tooling
    :maxdepth: 1
 
-   usage_data
+   api_design_methodology
    verification_test_suite
-   benchmark_suite
