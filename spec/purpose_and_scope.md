@@ -239,17 +239,123 @@ sugar required for fast analysis of data.
 
 ## How to read this document
 
+The API specification itself can be found under {ref}`api-specification`.
+
+For guidance on how to read and understand the type annotations included in
+this specification, consult the Python
+[documentation](https://docs.python.org/3/library/typing.html).
 
 
-
+(how-to-adopt-this-api)=
 ## How to adopt this API
 
+Most (all) existing dataframe libraries will find something in this API standard
+that is incompatible with a current implementation, and that they cannot
+change due to backwards compatibility concerns. Therefore we expect that each
+of those libraries will want to offer a standard-compliant API in a _new
+namespace_. The question then becomes: how does a user access this namespace?
+
+The simplest method is: document the import to use to directly access the
+namespace (e.g. `import package_name.dataframe_api`). This has two issues
+though:
+
+1. Dataframe-consuming libraries that want to support multiple dataframe
+   libraries then have to explicitly import each library.
+2. It is difficult to _version_ the dataframe API standard implementation (see
+   {ref}`api-versioning`).
+
+To address both issues, a uniform way must be provided by a conforming
+implementation to access the API namespace, namely a [method on the dataframe
+object](DataFrame.__dataframe_namespace__):
+
+```
+xp = x.__dataframe_namespace__()
+```
+
+The method must take one keyword, `api_version=None`, to make it possible to
+request a specific API version:
+
+```
+xp = x.__dataframe_namespace__(api_version='2023.04')
+```
+
+The `xp` namespace must contain all functionality specified in
+{ref}`api-specification`. The namespace may contain other functionality; however,
+including additional functionality is not recommended as doing so may hinder
+portability and inter-operation of dataframe libraries within user code.
+
+### Checking a dataframe object for Compliance
+
+Dataframe-consuming libraries are likely to want a mechanism for determining
+whether a provided dataframe is specification compliant. The recommended
+approach to check for compliance is by checking whether a dataframe object has
+an `__dataframe_namespace__` attribute, as this is the one distinguishing
+feature of a dataframe-compliant object.
+
+Checking for an `__dataframe_namespace__` attribute can be implemented as a
+small utility function similar to the following.
+
+```python
+def is_dataframe_api_obj(x):
+    return hasattr(x, '__dataframe_namespace__')
+```
 
 
+### Discoverability of conforming implementations
 
-## Definitions
+It may be useful to have a way to discover all packages in a Python
+environment which provide a conforming dataframe API implementation, and the
+namespace that that implementation resides in.
+To assist dataframe-consuming libraries which need to create dataframes originating
+from multiple conforming dataframe implementations, or developers who want to perform
+for example cross-library testing, libraries may provide an
+{pypa}`entry point <specifications/entry-points/>` in order to make a dataframe API
+namespace discoverable.
+
+:::{admonition} Optional feature
+Given that entry points typically require build system & package installer
+specific implementation, this standard chooses to recommend rather than
+mandate providing an entry point.
+:::
+
+The following code is an example for how one can discover installed
+conforming libraries:
+
+```python
+from importlib.metadata import entry_points
+
+try:
+    eps = entry_points()['dataframe_api']
+    ep = next(ep for ep in eps if ep.name == 'package_name')
+except TypeError:
+    # The dict interface for entry_points() is deprecated in py3.10,
+    # supplanted by a new select interface.
+    ep = entry_points(group='dataframe_api', name='package_name')
+
+xp = ep.load()
+```
+
+An entry point must have the following properties:
+
+-   **group**: equal to `dataframe_api`.
+-   **name**: equal to the package name.
+-   **object reference**: equal to the dataframe API namespace import path.
 
 
+* * *
 
+## Conformance
 
-## References
+A conforming implementation of the dataframe API standard must provide and
+support all the functions, arguments, data types, syntax, and semantics
+described in this specification.
+
+A conforming implementation of the dataframe API standard may provide
+additional values, objects, properties, data types, and functions beyond those
+described in this specification.
+
+Libraries which aim to provide a conforming implementation but haven't yet
+completed such an implementation may, and are encouraged to, provide details on
+the level of (non-)conformance. For details on how to do this, see
+[Verification - measuring conformance](verification_test_suite.md).
+
