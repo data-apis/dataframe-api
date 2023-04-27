@@ -4,20 +4,9 @@ Column object
 =============
 
 A conforming implementation of the dataframe API standard must provide and
-support a column object having the following attributes and methods.
+support a column object having the following methods, attributes, and
+behavior.
 
--------------------------------------------------
+.. currentmodule:: dataframe_api
 
-Methods
--------
-TODO
-
-..
-  NOTE: please keep the methods in alphabetical order
-
-    .. currentmodule:: dataframe_api
-
-    .. autosummary::
-       :toctree: generated
-   :template: property.rst
-
+.. autoclass:: Column
