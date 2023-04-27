@@ -36,6 +36,32 @@ class DataFrame:
     **Methods and Attributes**
 
     """
+    def __dataframe_namespace__(
+        self: DataFrame, /, *, api_version: Optional[str] = None
+    ) -> Any:
+        """
+        Returns an object that has all the dataframe API functions on it.
+
+        Parameters
+        ----------
+        api_version: Optional[str]
+            String representing the version of the dataframe API specification
+            to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
+            If it is ``None``, it should return the namespace corresponding to
+            latest version of the dataframe API specification.  If the given
+            version is invalid or not implemented for the given module, an
+            error should be raised. Default: ``None``.
+
+        Returns
+        -------
+        namespace: Any
+            An object representing the dataframe API namespace. It should have
+            every top-level function defined in the specification as an
+            attribute. It may contain other public names as well, but it is
+            recommended to only include those names that are part of the
+            specification.
+
+        """
 
     @classmethod
     def from_dict(cls, data: Mapping[str, Column]) -> DataFrame:
