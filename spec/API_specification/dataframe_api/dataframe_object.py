@@ -1,5 +1,7 @@
 from __future__ import annotations
-from typing import Sequence, Union, TYPE_CHECKING, NoReturn, Mapping
+
+from typing import Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoReturn
+
 
 if TYPE_CHECKING:
     from .column_object import Column
@@ -236,6 +238,47 @@ class DataFrame:
         Returns
         -------
         Sequence[str]
+        """
+        ...
+
+    def sorted_indices(
+        self,
+        keys: Sequence[str],
+        *,
+        ascending: Sequence[bool] | bool = True,
+        nulls_position: Literal['first', 'last'] = 'last',
+    ) -> Column[int]:
+        """
+        Return row numbers which would sort according to given columns.
+
+        If you need to sort the DataFrame, you can simply do::
+
+            df.get_rows(df.sorted_indices(keys))
+
+        Parameters
+        ----------
+        keys : Sequence[str]
+            Names of columns to sort by.
+        ascending : Sequence[bool] or bool
+            If `True`, sort by all keys in ascending order.
+            If `False`, sort by all keys in descending order.
+            If a sequence, it must be the same length as `keys`,
+            and determines the direction with which to use each
+            key to sort by.
+        nulls_position : {'first', 'last'}
+            Whether null values should be placed at the beginning
+            or at the end of the result.
+            Note that the position of NaNs is unspecified and may
+            vary based on the implementation.
+
+        Returns
+        -------
+        Column[int]
+    
+        Raises
+        ------
+        ValueError
+            If `keys` and `ascending` are sequences of different lengths.
         """
         ...
 
