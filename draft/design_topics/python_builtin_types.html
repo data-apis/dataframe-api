@@ -49,7 +49,7 @@
     <link rel="apple-touch-icon" href="../_static/images/apple-icon-152x152.png"/>
   
   
-    <title>Design topics &amp; constraints &#8212; Python dataframe API standard 2022.12-DRAFT documentation</title>
+    <title>Python builtin types and duck typing &#8212; Python dataframe API standard 2022.12-DRAFT documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/material.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
@@ -61,8 +61,8 @@
     <script src="../_static/copybutton.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Backwards compatibility" href="backwards_compatibility.html" />
-    <link rel="prev" title="Assumptions" href="../assumptions.html" />
+    <link rel="next" title="Future API standard evolution" href="../future_API_evolution.html" />
+    <link rel="prev" title="Data interchange mechanisms" href="data_interchange.html" />
   
     <link rel="apple-touch-icon" href="../_static/images/apple-icon-152x152.png"/>
   
@@ -83,7 +83,7 @@
   <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
   <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
   <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
-  <a href="#design_topics/index" tabindex="1" class="md-skip"> Skip to content </a>
+  <a href="#design_topics/python_builtin_types" tabindex="1" class="md-skip"> Skip to content </a>
   <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
@@ -101,7 +101,7 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           <span class="md-header-nav__topic">Python dataframe API standard 2022.12-DRAFT</span>
-          <span class="md-header-nav__topic"> Design topics &amp; constraints </span>
+          <span class="md-header-nav__topic"> Python builtin types and duck typing </span>
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
@@ -161,6 +161,7 @@
             <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Dataframe API standard</a></li>
             
             <li class="md-tabs__item"><a href="https://data-apis.org" class="md-tabs__link">Consortium for Python Data API Standards</a></li>
+          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">Design topics &amp; constraints</a></li>
       </ul>
     </div>
   </nav>
@@ -218,16 +219,7 @@
     <li class="md-nav__item">
     
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    <label class="md-nav__link md-nav__link--active" for="__toc"> Design topics & constraints </label>
-    
-      <a href="#" class="md-nav__link md-nav__link--active">Design topics & constraints</a>
-      
-        
-<nav class="md-nav md-nav--secondary">
-  <ul class="md-nav__list" data-md-scrollfix="">
-  </ul>
-</nav>
+      <a href="index.html" class="md-nav__link">Design topics & constraints</a>
       <ul class="md-nav__list"> 
     <li class="md-nav__item">
     
@@ -246,7 +238,16 @@
     <li class="md-nav__item">
     
     
-      <a href="python_builtin_types.html" class="md-nav__link">Python builtin types and duck typing</a>
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    <label class="md-nav__link md-nav__link--active" for="__toc"> Python builtin types and duck typing </label>
+    
+      <a href="#" class="md-nav__link md-nav__link--active">Python builtin types and duck typing</a>
+      
+        
+<nav class="md-nav md-nav--secondary">
+  <ul class="md-nav__list" data-md-scrollfix="">
+  </ul>
+</nav>
       
     
     </li></ul>
@@ -314,16 +315,43 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  <section id="design-topics-constraints">
-<h1 id="design-topics-index--page-root">Design topics &amp; constraints<a class="headerlink" href="#design-topics-index--page-root" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Design topics &amp; constraints</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="backwards_compatibility.html">Backwards compatibility</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_interchange.html">Data interchange mechanisms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python_builtin_types.html">Python builtin types and duck typing</a></li>
-</ul>
+  <section id="python-builtin-types-and-duck-typing">
+<h1 id="design-topics-python-builtin-types--page-root">Python builtin types and duck typing<a class="headerlink" href="#design-topics-python-builtin-types--page-root" title="Permalink to this headline">¶</a></h1>
+<p>Use of Python’s builtin types - <code class="docutils literal notranslate"><span class="pre">bool</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">dict</span></code>, <code class="docutils literal notranslate"><span class="pre">list</span></code>,
+<code class="docutils literal notranslate"><span class="pre">tuple</span></code>, <code class="docutils literal notranslate"><span class="pre">datetime.datetime</span></code>, etc. - is often natural and convenient. However,
+it is also potentially problematic when trying to write performant dataframe
+library code or supporting devices other than CPU.</p>
+<p>This standard specifies the use of Python types in quite a few places, and uses
+them as type annotations. As a concrete example, consider the <code class="docutils literal notranslate"><span class="pre">mean</span></code> method and
+the <code class="docutils literal notranslate"><span class="pre">float</span></code> it is documented to return, in combination with the <code class="docutils literal notranslate"><span class="pre">__gt__</span></code> method
+(i.e., the <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> operator) on the dataframe:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DataFrame</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">DataFrame</span> <span class="o">|</span> <span class="n">Scalar</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span><span class="p">:</span>
+        <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">get_column_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Column</span><span class="p">:</span>
+        <span class="o">...</span>
+
+<span class="k">class</span> <span class="nc">Column</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_nulls</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="o">...</span>
+
+<span class="n">larger</span> <span class="o">=</span> <span class="n">df2</span> <span class="o">&gt;</span> <span class="n">df1</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
 </div>
+<p>For a GPU dataframe library, it is desirable for all data to reside on the GPU,
+and not incur a performance penalty from synchronizing instances of Python
+builtin types to CPU. In the above example, the <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> call returns a
+<code class="docutils literal notranslate"><span class="pre">float</span></code>. It is likely beneficial though to implement this as a library-specific
+scalar object which duck types with <code class="docutils literal notranslate"><span class="pre">float</span></code>. This means that it should (a) have
+the same semantics as a builtin <code class="docutils literal notranslate"><span class="pre">float</span></code> when used within a library, and (b)
+support usage as a <code class="docutils literal notranslate"><span class="pre">float</span></code> outside of the library (i.e., implement
+<code class="docutils literal notranslate"><span class="pre">__float__</span></code>). Duck typing is usually not perfect, for example <code class="docutils literal notranslate"><span class="pre">isinstance</span></code>
+usage on the float-like duck type will behave differently. Such explicit “type
+of object” checks don’t have to be supported.</p>
+<p>The following design rule applies everywhere builtin Python types are used
+within this API standard: <em>where a Python builtin type is specified, an
+implementation may always replace it by an equivalent library-specific type
+that duck types with the Python builtin type.</em></p>
 </section>
 
 
@@ -336,7 +364,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
           
-            <a href="../assumptions.html" title="Assumptions"
+            <a href="data_interchange.html" title="Data interchange mechanisms"
                class="md-flex md-footer-nav__link md-footer-nav__link--prev"
                rel="prev">
               <div class="md-flex__cell md-flex__cell--shrink">
@@ -345,17 +373,17 @@
               <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
                 <span class="md-flex__ellipsis">
                   <span
-                      class="md-footer-nav__direction"> Previous </span> Assumptions </span>
+                      class="md-footer-nav__direction"> Previous </span> Data interchange mechanisms </span>
               </div>
             </a>
           
           
-            <a href="backwards_compatibility.html" title="Backwards compatibility"
+            <a href="../future_API_evolution.html" title="Future API standard evolution"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> Backwards compatibility </span>
+                class="md-footer-nav__direction"> Next </span> Future API standard evolution </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
