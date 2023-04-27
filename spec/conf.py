@@ -51,7 +51,7 @@ autodoc_default_options = {
     'members':          True,
     'special-members':  True,
     'undoc-members':    True,
-    'exclude-members': '__annotations__, __dict__,__weakref__,__module__',
+    'exclude-members': '__annotations__, __dict__,__weakref__,__module__,__hash__',
 }
 add_module_names = False
 napoleon_numpy_docstring = True
