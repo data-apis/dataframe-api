@@ -589,12 +589,14 @@ class DataFrame:
         Notes
         -----
         Does *not* include NaN-like entries.
+        May optionally include 'NaT' values (if present in an implementation),
+        but note that the Standard makes no guarantees about them.
         """
         ...
 
     def isnan(self) -> DataFrame:
         """
-        Check for nan-like entries.
+        Check for nan entries.
 
         Returns
         -------
@@ -606,7 +608,8 @@ class DataFrame:
 
         Notes
         -----
-        Includes anything with NaN-like semantics, e.g. np.datetime64("NaT").
+        This only checks for 'NaN'.
         Does *not* include 'missing' or 'null' entries.
+        In particular, does not check for `np.timedelta64('NaT')`.
         """
         ...
