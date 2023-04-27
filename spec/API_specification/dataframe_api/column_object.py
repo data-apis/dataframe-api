@@ -259,42 +259,57 @@ class Column:
 
     def min(self, skip_nulls: bool = True) -> dtype:
         """
-        Reduction returns a scalar.
+        Reduction returns a scalar. Any data type that supports comparisons
+        must be supported. The returned value has the same dtype as the column.
         """
 
     def max(self, skip_nulls: bool = True) -> dtype:
         """
-        Reduction returns a scalar.
+        Reduction returns a scalar. Any data type that supports comparisons
+        must be supported. The returned value has the same dtype as the column.
         """
 
     def sum(self, skip_nulls: bool = True) -> dtype:
         """
-        Reduction returns a scalar.
+        Reduction returns a scalar. Must be supported for numerical and
+        datetime data types. The returned value has the same dtype as the
+        column.
         """
 
     def prod(self, skip_nulls: bool = True) -> dtype:
         """
-        Reduction returns a scalar.
+        Reduction returns a scalar. Must be supported for numerical data types.
+        The returned value has the same dtype as the column.
         """
 
     def median(self, skip_nulls: bool = True) -> dtype:
         """
-        Reduction returns a scalar.
+        Reduction returns a scalar. Any data type that supports comparisons
+        must be supported. The returned value has the same dtype as the column.
         """
 
     def mean(self, skip_nulls: bool = True) -> dtype:
         """
-        Reduction returns a scalar.
+        Reduction returns a scalar. Must be supported for numerical and
+        datetime data types. Returns a float for numerical data types, and
+        datetime (with the appropriate timedelta format string) for datetime
+        dtypes.
         """
 
     def std(self, skip_nulls: bool = True) -> dtype:
         """
-        Reduction returns a scalar.
+        Reduction returns a scalar. Must be supported for numerical and
+        datetime data types. Returns a float for numerical data types, and
+        datetime (with the appropriate timedelta format string) for datetime
+        dtypes.
         """
 
     def var(self, skip_nulls: bool = True) -> dtype:
         """
-        Reduction returns a scalar.
+        Reduction returns a scalar. Must be supported for numerical and
+        datetime data types. Returns a float for numerical data types, and
+        datetime (with the appropriate timedelta format string) for datetime
+        dtypes.
         """
 
     def isnull(self) -> Column:
