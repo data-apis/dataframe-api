@@ -262,8 +262,6 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__gt__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__gt__()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__hash__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__hash__</span></code></a>
-        </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__invert__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__invert__()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__iter__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__iter__()</span></code></a>
@@ -331,6 +329,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.shape" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.shape()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.slice_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.slice_rows()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.sorted_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.sorted_indices()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.std()</span></code></a>
         </li>
@@ -412,8 +412,6 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__gt__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__gt__()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__hash__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__hash__</span></code></a>
-        </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__invert__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__invert__()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__iter__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__iter__()</span></code></a>
@@ -481,6 +479,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.shape" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.shape()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.slice_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.slice_rows()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.sorted_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.sorted_indices()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.std()</span></code></a>
         </li>
@@ -613,10 +613,6 @@ for the operation by the underling dtypes.</p>
 </dd>
 </dl>
 </dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="dataframe_api.DataFrame.__hash__">
-<span class="sig-name descname"><span class="pre">__hash__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#dataframe_api.DataFrame.__hash__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__invert__">
 <span class="sig-name descname"><span class="pre">__invert__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__invert__" title="Permalink to this definition">¶</a></dt>
@@ -770,7 +766,7 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.all_rowwise">
-<span class="sig-name descname"><span class="pre">all_rowwise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skipna</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.all_rowwise" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">all_rowwise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.all_rowwise" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reduction returns a Column.</p>
 <p>Differs from <code class="docutils literal notranslate"><span class="pre">DataFrame.all</span></code> and that the reduction happens
 for each row, rather than for each column.</p>
@@ -792,7 +788,7 @@ for each row, rather than for each column.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.any_rowwise">
-<span class="sig-name descname"><span class="pre">any_rowwise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skipna</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.any_rowwise" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">any_rowwise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.any_rowwise" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reduction returns a Column.</p>
 <p>Differs from <code class="docutils literal notranslate"><span class="pre">DataFrame.any</span></code> and that the reduction happens
 for each row, rather than for each column.</p>
@@ -1037,6 +1033,37 @@ but note that the Standard makes no guarantees about them.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.sorted_indices">
+<span class="sig-name descname"><span class="pre">sorted_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ascending</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nulls_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'first'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'last'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'last'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.sorted_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return row numbers which would sort according to given columns.</p>
+<p>If you need to sort the DataFrame, you can simply do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">get_rows</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">sorted_indices</span><span class="p">(</span><span class="n">keys</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keys</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em>) – Names of columns to sort by.</p></li>
+<li><p><strong>ascending</strong> (<em>Sequence</em><em>[</em><em>bool</em><em>] or </em><em>bool</em>) – If <code class="code docutils literal notranslate"><span class="pre">True</span></code>, sort by all keys in ascending order.
+If <code class="code docutils literal notranslate"><span class="pre">False</span></code>, sort by all keys in descending order.
+If a sequence, it must be the same length as <code class="code docutils literal notranslate"><span class="pre">keys</span></code>,
+and determines the direction with which to use each
+key to sort by.</p></li>
+<li><p><strong>nulls_position</strong> (<code class="docutils literal notranslate"><span class="pre">{'first',</span> <span class="pre">'last'}</span></code>) – Whether null values should be placed at the beginning
+or at the end of the result.
+Note that the position of NaNs is unspecified and may
+vary based on the implementation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Column[int]</strong></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If <code class="code docutils literal notranslate"><span class="pre">keys</span></code> and <code class="code docutils literal notranslate"><span class="pre">ascending</span></code> are sequences of different lengths.</p>
 </dd>
 </dl>
 </dd></dl>
