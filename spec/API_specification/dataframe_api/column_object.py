@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from ._types import Scalar
+from ._types import Scalar, dtype
 
 class Column:
     def __eq__(self, other: Column | Scalar) -> Column:
@@ -257,44 +257,44 @@ class Column:
             If column is not boolean.
         """
 
-    def min(self, skip_nulls: bool = True) -> float:
+    def min(self, skip_nulls: bool = True) -> dtype:
         """
-        Reduction returns a float.
-        """
-
-    def max(self, skip_nulls: bool = True) -> float:
-        """
-        Reduction returns a float.
+        Reduction returns a scalar.
         """
 
-    def sum(self, skipna: bool = True) -> float:
+    def max(self, skip_nulls: bool = True) -> dtype:
         """
-        Reduction returns a float.
-        """
-
-    def prod(self, skipna: bool = True) -> float:
-        """
-        Reduction returns a float.
+        Reduction returns a scalar.
         """
 
-    def median(self, skipna: bool = True) -> float:
+    def sum(self, skipna: bool = True) -> dtype:
         """
-        Reduction returns a float.
-        """
-
-    def mean(self, skipna: bool = True) -> float:
-        """
-        Reduction returns a float.
+        Reduction returns a scalar.
         """
 
-    def std(self, skipna: bool = True) -> float:
+    def prod(self, skipna: bool = True) -> dtype:
         """
-        Reduction returns a float.
+        Reduction returns a scalar.
         """
 
-    def var(self, skipna: bool = True) -> float:
+    def median(self, skipna: bool = True) -> dtype:
         """
-        Reduction returns a float.
+        Reduction returns a scalar.
+        """
+
+    def mean(self, skipna: bool = True) -> dtype:
+        """
+        Reduction returns a scalar.
+        """
+
+    def std(self, skipna: bool = True) -> dtype:
+        """
+        Reduction returns a scalar.
+        """
+
+    def var(self, skipna: bool = True) -> dtype:
+        """
+        Reduction returns a scalar.
         """
 
     def isnull(self) -> Column:
