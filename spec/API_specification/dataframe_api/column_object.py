@@ -267,32 +267,32 @@ class Column:
         Reduction returns a scalar.
         """
 
-    def sum(self, skipna: bool = True) -> dtype:
+    def sum(self, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar.
         """
 
-    def prod(self, skipna: bool = True) -> dtype:
+    def prod(self, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar.
         """
 
-    def median(self, skipna: bool = True) -> dtype:
+    def median(self, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar.
         """
 
-    def mean(self, skipna: bool = True) -> dtype:
+    def mean(self, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar.
         """
 
-    def std(self, skipna: bool = True) -> dtype:
+    def std(self, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar.
         """
 
-    def var(self, skipna: bool = True) -> dtype:
+    def var(self, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar.
         """

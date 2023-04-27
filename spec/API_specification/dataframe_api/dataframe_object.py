@@ -498,7 +498,7 @@ class DataFrame:
         """
         ...
     
-    def any_rowwise(self, skipna: bool = True) -> Column:
+    def any_rowwise(self, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
@@ -512,7 +512,7 @@ class DataFrame:
         """
         ...
 
-    def all_rowwise(self, skipna: bool = True) -> Column:
+    def all_rowwise(self, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
