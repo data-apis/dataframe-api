@@ -254,7 +254,7 @@ class DataFrame:
         Notes
         -----
         The order in which the input DataFrames appear in
-        the output is not guaranteed and may vary across implementations.
+        the output is preserved.
 
         Returns
         -------
