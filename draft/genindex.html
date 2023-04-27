@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,14 +48,13 @@
     <link rel="apple-touch-icon" href="_static/images/apple-icon-152x152.png"/>
   
   
-    <title>Index &#8212; Python dataframe API standard 2022.12-DRAFT documentation</title>
+    <title>Index &#8212; Python dataframe API standard 2023.04-DRAFT documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/material.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="#" />
@@ -85,7 +84,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="index.html" title="Python dataframe API standard 2022.12-DRAFT documentation"
+        <a href="index.html" title="Python dataframe API standard 2023.04-DRAFT documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe869</i>
@@ -97,7 +96,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Python dataframe API standard 2022.12-DRAFT</span>
+          <span class="md-header-nav__topic">Python dataframe API standard 2023.04-DRAFT</span>
           <span class="md-header-nav__topic"> Index </span>
         </div>
       </div>
@@ -107,7 +106,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="search.html" method="GET" name="search">
+    <form class="md-search__form" action="search.html" method="get" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -169,13 +168,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="index.html" title="Python dataframe API standard 2022.12-DRAFT documentation" class="md-nav__button md-logo">
+    <a href="index.html" title="Python dataframe API standard 2023.04-DRAFT documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe869</i>
       
     </a>
     <a href="index.html"
-       title="Python dataframe API standard 2022.12-DRAFT documentation">Python dataframe API standard 2022.12-DRAFT</a>
+       title="Python dataframe API standard 2023.04-DRAFT documentation">Python dataframe API standard 2023.04-DRAFT</a>
   </label>
   
 
@@ -235,13 +234,13 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">Methodology and Usage</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">Methodology and Tooling</span></span>
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="usage_data.html" class="md-nav__link">Data on existing API design & usage</a>
+      <a href="api_design_methodology.html" class="md-nav__link">Methodology for API design</a>
       
     
     </li>
@@ -249,13 +248,6 @@
     
     
       <a href="verification_test_suite.html" class="md-nav__link">Verification - test suite</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="benchmark_suite.html" class="md-nav__link">Benchmark suite</a>
       
     
     </li>
@@ -287,8 +279,14 @@
 <div class="genindex-jumpbox">
  <a href="#_"><strong>_</strong></a>
  | <a href="#A"><strong>A</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#I"><strong>I</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#V"><strong>V</strong></a>
  
@@ -296,33 +294,41 @@
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__add__.html#dataframe_api.DataFrame.__add__">__add__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__add__">__add__() (DataFrame method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__eq__.html#dataframe_api.DataFrame.__eq__">__eq__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__divmod__">__divmod__() (DataFrame method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__floordiv__.html#dataframe_api.DataFrame.__floordiv__">__floordiv__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__eq__">__eq__() (DataFrame method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__ge__.html#dataframe_api.DataFrame.__ge__">__ge__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__floordiv__">__floordiv__() (DataFrame method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__gt__.html#dataframe_api.DataFrame.__gt__">__gt__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__ge__">__ge__() (DataFrame method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__le__.html#dataframe_api.DataFrame.__le__">__le__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__gt__">__gt__() (DataFrame method)</a>
+</li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__hash__">__hash__ (DataFrame attribute)</a>
+</li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__invert__">__invert__() (DataFrame method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__lt__.html#dataframe_api.DataFrame.__lt__">__lt__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__iter__">__iter__() (DataFrame method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__mod__.html#dataframe_api.DataFrame.__mod__">__mod__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__le__">__le__() (DataFrame method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__mul__.html#dataframe_api.DataFrame.__mul__">__mul__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__lt__">__lt__() (DataFrame method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__ne__.html#dataframe_api.DataFrame.__ne__">__ne__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__mod__">__mod__() (DataFrame method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__pow__.html#dataframe_api.DataFrame.__pow__">__pow__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__mul__">__mul__() (DataFrame method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__sub__.html#dataframe_api.DataFrame.__sub__">__sub__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__ne__">__ne__() (DataFrame method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.DataFrame.__truediv__.html#dataframe_api.DataFrame.__truediv__">__truediv__() (DataFrame method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__pow__">__pow__() (DataFrame method)</a>
+</li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__sub__">__sub__() (DataFrame method)</a>
+</li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__truediv__">__truediv__() (DataFrame method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -330,11 +336,93 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API_specification/generated/dataframe_api.GroupBy.all.html#dataframe_api.GroupBy.all">all() (GroupBy method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.all">all() (DataFrame method)</a>
+
+      <ul>
+        <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy.all">(GroupBy method)</a>
+</li>
+      </ul></li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.all_rowwise">all_rowwise() (DataFrame method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API_specification/generated/dataframe_api.GroupBy.any.html#dataframe_api.GroupBy.any">any() (GroupBy method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.any">any() (DataFrame method)</a>
+
+      <ul>
+        <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy.any">(GroupBy method)</a>
+</li>
+      </ul></li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.any_rowwise">any_rowwise() (DataFrame method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_specification/column_object.html#dataframe_api.Column">Column (class in dataframe_api)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame">DataFrame (class in dataframe_api)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.dataframe">dataframe (DataFrame property)</a>
+</li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.drop_column">drop_column() (DataFrame method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.from_dict">from_dict() (DataFrame class method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_specification/column_object.html#dataframe_api.Column.from_sequence">from_sequence() (Column class method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.get_column_by_name">get_column_by_name() (DataFrame method)</a>
+</li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.get_column_names">get_column_names() (DataFrame method)</a>
+</li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.get_columns_by_name">get_columns_by_name() (DataFrame method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.get_rows">get_rows() (DataFrame method)</a>
+</li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.get_rows_by_mask">get_rows_by_mask() (DataFrame method)</a>
+</li>
+      <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy">GroupBy (class in dataframe_api)</a>
+</li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.groupby">groupby() (DataFrame method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.insert">insert() (DataFrame method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.isnan">isnan() (DataFrame method)</a>
+</li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.isnull">isnull() (DataFrame method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -342,23 +430,51 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API_specification/generated/dataframe_api.GroupBy.max.html#dataframe_api.GroupBy.max">max() (GroupBy method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.max">max() (DataFrame method)</a>
+
+      <ul>
+        <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy.max">(GroupBy method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.GroupBy.mean.html#dataframe_api.GroupBy.mean">mean() (GroupBy method)</a>
+      </ul></li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.mean">mean() (DataFrame method)</a>
+
+      <ul>
+        <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy.mean">(GroupBy method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API_specification/generated/dataframe_api.GroupBy.median.html#dataframe_api.GroupBy.median">median() (GroupBy method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.median">median() (DataFrame method)</a>
+
+      <ul>
+        <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy.median">(GroupBy method)</a>
 </li>
-      <li><a href="API_specification/generated/dataframe_api.GroupBy.min.html#dataframe_api.GroupBy.min">min() (GroupBy method)</a>
+      </ul></li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.min">min() (DataFrame method)</a>
+
+      <ul>
+        <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy.min">(GroupBy method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API_specification/generated/dataframe_api.GroupBy.prod.html#dataframe_api.GroupBy.prod">prod() (GroupBy method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.prod">prod() (DataFrame method)</a>
+
+      <ul>
+        <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy.prod">(GroupBy method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.rename_columns">rename_columns() (DataFrame method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -366,20 +482,38 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API_specification/generated/dataframe_api.GroupBy.std.html#dataframe_api.GroupBy.std">std() (GroupBy method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.shape">shape() (DataFrame method)</a>
+</li>
+      <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy.size">size() (GroupBy method)</a>
+</li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.slice_rows">slice_rows() (DataFrame method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API_specification/generated/dataframe_api.GroupBy.sum.html#dataframe_api.GroupBy.sum">sum() (GroupBy method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.std">std() (DataFrame method)</a>
+
+      <ul>
+        <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy.std">(GroupBy method)</a>
 </li>
+      </ul></li>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.sum">sum() (DataFrame method)</a>
+
+      <ul>
+        <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy.sum">(GroupBy method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API_specification/generated/dataframe_api.GroupBy.var.html#dataframe_api.GroupBy.var">var() (GroupBy method)</a>
+      <li><a href="API_specification/dataframe_object.html#dataframe_api.DataFrame.var">var() (DataFrame method)</a>
+
+      <ul>
+        <li><a href="API_specification/groupby_object.html#dataframe_api.GroupBy.var">(GroupBy method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -403,11 +537,11 @@
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2022, Consortium for Python Data API Standards.
+              &#169; Copyright 2021-, Consortium for Python Data API Standards.
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -49,19 +49,18 @@
     <link rel="apple-touch-icon" href="../_static/images/apple-icon-152x152.png"/>
   
   
-    <title>Dataframe object &#8212; Python dataframe API standard 2022.12-DRAFT documentation</title>
+    <title>Dataframe object &#8212; Python dataframe API standard 2023.04-DRAFT documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/material.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="__add__" href="generated/dataframe_api.DataFrame.__add__.html" />
+    <link rel="next" title="Column object" href="column_object.html" />
     <link rel="prev" title="API specification" href="index.html" />
   
     <link rel="apple-touch-icon" href="../_static/images/apple-icon-152x152.png"/>
@@ -88,7 +87,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../index.html" title="Python dataframe API standard 2022.12-DRAFT documentation"
+        <a href="../index.html" title="Python dataframe API standard 2023.04-DRAFT documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe869</i>
@@ -100,7 +99,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Python dataframe API standard 2022.12-DRAFT</span>
+          <span class="md-header-nav__topic">Python dataframe API standard 2023.04-DRAFT</span>
           <span class="md-header-nav__topic"> Dataframe object </span>
         </div>
       </div>
@@ -110,7 +109,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="../search.html" method="GET" name="search">
+    <form class="md-search__form" action="../search.html" method="get" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -173,13 +172,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../index.html" title="Python dataframe API standard 2022.12-DRAFT documentation" class="md-nav__button md-logo">
+    <a href="../index.html" title="Python dataframe API standard 2023.04-DRAFT documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe869</i>
       
     </a>
     <a href="../index.html"
-       title="Python dataframe API standard 2022.12-DRAFT documentation">Python dataframe API standard 2022.12-DRAFT</a>
+       title="Python dataframe API standard 2023.04-DRAFT documentation">Python dataframe API standard 2023.04-DRAFT</a>
   </label>
   
 
@@ -249,25 +248,97 @@
   <ul class="md-nav__list" data-md-scrollfix="">
         <li class="md-nav__item"><a href="#api-specification-dataframe-object--page-root" class="md-nav__link">Dataframe object</a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#operators" class="md-nav__link">Operators</a><nav class="md-nav">
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#arithmetic-operators" class="md-nav__link">Arithmetic Operators</a>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__add__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__add__()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#comparison-operators" class="md-nav__link">Comparison Operators</a>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__divmod__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__divmod__()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#in-place-operators" class="md-nav__link">In-place Operators</a>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__eq__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__eq__()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#reflected-operators" class="md-nav__link">Reflected Operators</a><nav class="md-nav">
-              <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#id16" class="md-nav__link">Arithmetic Operators</a>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__floordiv__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__floordiv__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__ge__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__ge__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__gt__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__gt__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__hash__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__hash__</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__invert__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__invert__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__iter__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__iter__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__le__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__le__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__lt__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__lt__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__mod__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__mod__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__mul__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__mul__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__ne__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__ne__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__pow__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__pow__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__sub__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__sub__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__truediv__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__truediv__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.all" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.all()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.all_rowwise" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.all_rowwise()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.any" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.any()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.any_rowwise" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.any_rowwise()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.dataframe" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.dataframe</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.drop_column" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.drop_column()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.from_dict" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.from_dict()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_column_by_name" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_column_by_name()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_column_names" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_column_names()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_columns_by_name" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_columns_by_name()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_rows()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_rows_by_mask" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_rows_by_mask()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.groupby" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.groupby()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.insert" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.insert()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.isnan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.isnan()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.isnull" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.isnull()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.max()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.mean" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.mean()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.median" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.median()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.min" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.min()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.prod" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.prod()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.rename_columns" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.rename_columns()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.shape" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.shape()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.slice_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.slice_rows()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.std()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.sum()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.var" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.var()</span></code></a>
         </li></ul>
             </nav>
-        </li></ul>
-            </nav>
-        </li>
-        <li class="md-nav__item"><a href="#attributes" class="md-nav__link">Attributes</a>
-        </li>
-        <li class="md-nav__item"><a href="#methods" class="md-nav__link">Methods</a>
         </li></ul>
             </nav>
         </li>
@@ -294,13 +365,13 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">Methodology and Usage</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">Methodology and Tooling</span></span>
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="../usage_data.html" class="md-nav__link">Data on existing API design & usage</a>
+      <a href="../api_design_methodology.html" class="md-nav__link">Methodology for API design</a>
       
     
     </li>
@@ -308,13 +379,6 @@
     
     
       <a href="../verification_test_suite.html" class="md-nav__link">Verification - test suite</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../benchmark_suite.html" class="md-nav__link">Benchmark suite</a>
       
     
     </li>
@@ -334,25 +398,97 @@
   <ul class="md-nav__list" data-md-scrollfix="">
         <li class="md-nav__item"><a href="#api-specification-dataframe-object--page-root" class="md-nav__link">Dataframe object</a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#operators" class="md-nav__link">Operators</a><nav class="md-nav">
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#arithmetic-operators" class="md-nav__link">Arithmetic Operators</a>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__add__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__add__()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#comparison-operators" class="md-nav__link">Comparison Operators</a>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__divmod__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__divmod__()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#in-place-operators" class="md-nav__link">In-place Operators</a>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__eq__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__eq__()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#reflected-operators" class="md-nav__link">Reflected Operators</a><nav class="md-nav">
-              <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#id16" class="md-nav__link">Arithmetic Operators</a>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__floordiv__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__floordiv__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__ge__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__ge__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__gt__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__gt__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__hash__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__hash__</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__invert__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__invert__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__iter__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__iter__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__le__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__le__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__lt__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__lt__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__mod__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__mod__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__mul__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__mul__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__ne__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__ne__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__pow__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__pow__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__sub__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__sub__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.__truediv__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.__truediv__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.all" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.all()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.all_rowwise" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.all_rowwise()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.any" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.any()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.any_rowwise" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.any_rowwise()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.dataframe" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.dataframe</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.drop_column" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.drop_column()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.from_dict" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.from_dict()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_column_by_name" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_column_by_name()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_column_names" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_column_names()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_columns_by_name" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_columns_by_name()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_rows()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_rows_by_mask" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_rows_by_mask()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.groupby" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.groupby()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.insert" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.insert()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.isnan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.isnan()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.isnull" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.isnull()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.max()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.mean" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.mean()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.median" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.median()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.min" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.min()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.prod" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.prod()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.rename_columns" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.rename_columns()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.shape" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.shape()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.slice_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.slice_rows()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.std()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.sum()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.var" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.var()</span></code></a>
         </li></ul>
             </nav>
-        </li></ul>
-            </nav>
-        </li>
-        <li class="md-nav__item"><a href="#attributes" class="md-nav__link">Attributes</a>
-        </li>
-        <li class="md-nav__item"><a href="#methods" class="md-nav__link">Methods</a>
         </li></ul>
             </nav>
         </li>
@@ -366,191 +502,560 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <section id="dataframe-object">
-<span id="id1"></span><h1 id="api-specification-dataframe-object--page-root">Dataframe object<a class="headerlink" href="#api-specification-dataframe-object--page-root" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1 id="api-specification-dataframe-object--page-root">Dataframe object<a class="headerlink" href="#api-specification-dataframe-object--page-root" title="Permalink to this heading">¶</a></h1>
 <p>A conforming implementation of the dataframe API standard must provide and
-support a dataframe object having the following attributes and methods.</p>
-<hr class="docutils"/>
-<section id="operators">
-<span id="id2"></span><h2 id="operators">Operators<a class="headerlink" href="#operators" title="Permalink to this headline">¶</a></h2>
-<p>A conforming implementation of the dataframe API standard must provide and
-support a dataframe object supporting the following Python operators.</p>
-<section id="arithmetic-operators">
-<h3 id="arithmetic-operators">Arithmetic Operators<a class="headerlink" href="#arithmetic-operators" title="Permalink to this headline">¶</a></h3>
-<p>A conforming implementation of the array API standard must provide and support
-an array object supporting the following Python arithmetic operators.</p>
-<ul class="simple">
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">+</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__add__.html#dataframe_api.DataFrame.__add__" title="dataframe_api.DataFrame.__add__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__add__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.add">operator.add(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__add__">operator.__add__(x1, x2)</a></p></li>
+support a dataframe object having the following methods, attributes, and
+behavior.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DataFrame</span></span><a class="headerlink" href="#dataframe_api.DataFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>DataFrame object</p>
+<p>Note that this dataframe object is not meant to be instantiated directly by
+users of the library implementing the dataframe API standard. Rather, use
+constructor functions or an already-created dataframe object retrieved via</p>
+<p><strong>Python operator support</strong></p>
+<p>All arithmetic operators defined by the Python language, except for
+<code class="docutils literal notranslate"><span class="pre">__matmul__</span></code>, <code class="docutils literal notranslate"><span class="pre">__neg__</span></code> and <code class="docutils literal notranslate"><span class="pre">__pos__</span></code>, must be supported for
+numerical data types.</p>
+<p>All comparison operators defined by the Python language must be supported
+by the dataframe object for all data types for which those comparisons are
+supported by the builtin scalar types corresponding to a data type.</p>
+<p>In-place operators must not be supported. All operations on the dataframe
+object are out-of-place.</p>
+<p><strong>Methods and Attributes</strong></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__add__">
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__add__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar to this dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__divmod__">
+<span class="sig-name descname"><span class="pre">__divmod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__divmod__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return quotient and remainder of integer division. See <code class="code docutils literal notranslate"><span class="pre">divmod</span></code> builtin function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>A tuple of two DataFrame’s</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__eq__">
+<span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__eq__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare for equality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__floordiv__">
+<span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__floordiv__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Floor-divide (returns integers) this dataframe by <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__ge__">
+<span class="sig-name descname"><span class="pre">__ge__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__ge__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare for “greater than or equal to” <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__gt__">
+<span class="sig-name descname"><span class="pre">__gt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__gt__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare for “greater than” <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__hash__">
+<span class="sig-name descname"><span class="pre">__hash__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#dataframe_api.DataFrame.__hash__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__invert__">
+<span class="sig-name descname"><span class="pre">__invert__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__invert__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invert truthiness of (boolean) elements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If any of the DataFrame’s columns is not boolean.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over elements.</p>
+<p>This is intentionally “poisoned” to discourage inefficient code patterns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__le__">
+<span class="sig-name descname"><span class="pre">__le__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__le__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare for “less than or equal to” <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__lt__">
+<span class="sig-name descname"><span class="pre">__lt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__lt__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare for “less than” <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__mod__">
+<span class="sig-name descname"><span class="pre">__mod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__mod__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return modulus of this dataframe by <code class="code docutils literal notranslate"><span class="pre">other</span></code> (<code class="code docutils literal notranslate"><span class="pre">%</span></code> operator).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__mul__">
+<span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__mul__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiply  <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar with this dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__ne__">
+<span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__ne__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare for non-equality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__pow__">
+<span class="sig-name descname"><span class="pre">__pow__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__pow__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise this dataframe to the power of <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__sub__">
+<span class="sig-name descname"><span class="pre">__sub__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__sub__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar from this dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.__truediv__">
+<span class="sig-name descname"><span class="pre">__truediv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__truediv__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divide  this dataframe by <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar. True division, returns floats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
+“Scalar” here is defined implicitly by what scalar types are allowed
+for the operation by the underling dtypes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.all">
+<span class="sig-name descname"><span class="pre">all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a 1-row DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If any of the DataFrame’s columns is not boolean.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.all_rowwise">
+<span class="sig-name descname"><span class="pre">all_rowwise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skipna</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.all_rowwise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a Column.</p>
+<p>Differs from <code class="docutils literal notranslate"><span class="pre">DataFrame.all</span></code> and that the reduction happens
+for each row, rather than for each column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If any of the DataFrame’s columns is not boolean.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.any">
+<span class="sig-name descname"><span class="pre">any</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.any" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a 1-row DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If any of the DataFrame’s columns is not boolean.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.any_rowwise">
+<span class="sig-name descname"><span class="pre">any_rowwise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skipna</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.any_rowwise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a Column.</p>
+<p>Differs from <code class="docutils literal notranslate"><span class="pre">DataFrame.any</span></code> and that the reduction happens
+for each row, rather than for each column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If any of the DataFrame’s columns is not boolean.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.dataframe">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dataframe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">object</span></em><a class="headerlink" href="#dataframe_api.DataFrame.dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return underlying (not-necessarily-Standard-compliant) DataFrame.</p>
+<p>If a library only implements the Standard, then this can return <code class="code docutils literal notranslate"><span class="pre">self</span></code>.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.drop_column">
+<span class="sig-name descname"><span class="pre">drop_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.drop_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drop the specified column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>label</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>KeyError</strong> – If the label is not present.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct DataFrame from map of column names to Columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>]</em>) – Column must be of the corresponding type of the DataFrame.
+For example, it is only supported to build a <code class="docutils literal notranslate"><span class="pre">LibraryXDataFrame</span></code> using
+<code class="docutils literal notranslate"><span class="pre">LibraryXColumn</span></code> instances.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.get_column_by_name">
+<span class="sig-name descname"><span class="pre">get_column_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.get_column_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a column by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Column</strong></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>KeyError</strong> – If the key is not present.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.get_column_names">
+<span class="sig-name descname"><span class="pre">get_column_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.get_column_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Sequence[str]</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.get_columns_by_name">
+<span class="sig-name descname"><span class="pre">get_columns_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.get_columns_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select multiple columns by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>names</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>KeyError</strong> – If the any requested key is not present.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.get_rows">
+<span class="sig-name descname"><span class="pre">get_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.get_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a subset of rows, similar to <code class="code docutils literal notranslate"><span class="pre">ndarray.take</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>indices</strong> (<a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>[</em><em>int</em><em>]</em>) – Positions of rows to select.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.get_rows_by_mask">
+<span class="sig-name descname"><span class="pre">get_rows_by_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.get_rows_by_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a subset of rows corresponding to a mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mask</strong> (<a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>[</em><em>bool</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Some participants preferred a weaker type Arraylike[bool] for mask,
+where ‘Arraylike’ denotes an object adhering to the Array API standard.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.groupby">
+<span class="sig-name descname"><span class="pre">groupby</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy" title="dataframe_api.GroupBy"><span class="pre">GroupBy</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.groupby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Group the DataFrame by the given columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>keys</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>GroupBy</strong></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>KeyError</strong> – If any of the requested keys are not present.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Downstream operations from this function, like aggregations, return
+results for which row order is not guaranteed and is implementation
+defined.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert column into DataFrame at specified location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>loc</strong> (<em>int</em>) – Insertion index. Must verify 0 &lt;= loc &lt;= len(columns).</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – Label of the inserted column.</p></li>
+<li><p><strong>value</strong> (<a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a>) – </p></li>
 </ul>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">-</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__sub__.html#dataframe_api.DataFrame.__sub__" title="dataframe_api.DataFrame.__sub__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__sub__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.sub">operator.sub(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__sub__">operator.__sub__(x1, x2)</a></p></li>
-</ul>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">*</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__mul__.html#dataframe_api.DataFrame.__mul__" title="dataframe_api.DataFrame.__mul__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__mul__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.mul">operator.mul(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__mul__">operator.__mul__(x1, x2)</a></p></li>
-</ul>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">/</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__truediv__.html#dataframe_api.DataFrame.__truediv__" title="dataframe_api.DataFrame.__truediv__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__truediv__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.truediv">operator.truediv(x1,x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__truediv__">operator.__truediv__(x1, x2)</a></p></li>
-</ul>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">//</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__floordiv__.html#dataframe_api.DataFrame.__floordiv__" title="dataframe_api.DataFrame.__floordiv__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__floordiv__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.floordiv">operator.floordiv(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__floordiv__">operator.__floordiv__(x1, x2)</a></p></li>
-</ul>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">%</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__mod__.html#dataframe_api.DataFrame.__mod__" title="dataframe_api.DataFrame.__mod__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__mod__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.mod">operator.mod(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__mod__">operator.__mod__(x1, x2)</a></p></li>
-</ul>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">**</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__pow__.html#dataframe_api.DataFrame.__pow__" title="dataframe_api.DataFrame.__pow__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__pow__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.pow">operator.pow(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__pow__">operator.__pow__(x1, x2)</a></p></li>
-</ul>
-</li>
-</ul>
-<p>Arithmetic operators should be defined for a dataframe having real-valued data types.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>TODO: figure out whether we want to add <code class="docutils literal notranslate"><span class="pre">__neg__</span></code> and <code class="docutils literal notranslate"><span class="pre">__pos__</span></code>, those
-are the two missing arithmetic operators.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.isnan">
+<span class="sig-name descname"><span class="pre">isnan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.isnan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check for nan entries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#dataframe_api.DataFrame.isnull" title="dataframe_api.DataFrame.isnull"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isnull</span></code></a></p>
 </div>
-</section>
-<section id="comparison-operators">
-<h3 id="comparison-operators">Comparison Operators<a class="headerlink" href="#comparison-operators" title="Permalink to this headline">¶</a></h3>
-<p>A conforming implementation of the dataframe API standard must provide and
-support a dataframe object supporting the following Python comparison
-operators.</p>
-<ul class="simple">
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">&lt;</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__lt__.html#dataframe_api.DataFrame.__lt__" title="dataframe_api.DataFrame.__lt__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__lt__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.lt">operator.lt(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__lt__">operator.__lt__(x1, x2)</a></p></li>
+<p class="rubric">Notes</p>
+<p>This only checks for ‘NaN’.
+Does <em>not</em> include ‘missing’ or ‘null’ entries.
+In particular, does not check for <code class="code docutils literal notranslate"><span class="pre">np.timedelta64('NaT')</span></code>.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.isnull">
+<span class="sig-name descname"><span class="pre">isnull</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.isnull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check for ‘missing’ or ‘null’ entries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#dataframe_api.DataFrame.isnan" title="dataframe_api.DataFrame.isnan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isnan</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>Does <em>not</em> include NaN-like entries.
+May optionally include ‘NaT’ values (if present in an implementation),
+but note that the Standard makes no guarantees about them.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.max">
+<span class="sig-name descname"><span class="pre">max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a 1-row DataFrame.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.mean">
+<span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a 1-row DataFrame.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.median">
+<span class="sig-name descname"><span class="pre">median</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.median" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a 1-row DataFrame.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.min">
+<span class="sig-name descname"><span class="pre">min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a 1-row DataFrame.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.prod">
+<span class="sig-name descname"><span class="pre">prod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.prod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a 1-row DataFrame.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.rename_columns">
+<span class="sig-name descname"><span class="pre">rename_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.rename_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mapping</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Keys are old column names, values are new column names.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of rows and number of columns.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.slice_rows">
+<span class="sig-name descname"><span class="pre">slice_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.slice_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a subset of rows corresponding to a slice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>int</em><em> or </em><em>None</em>) – </p></li>
+<li><p><strong>stop</strong> (<em>int</em><em> or </em><em>None</em>) – </p></li>
+<li><p><strong>step</strong> (<em>int</em><em> or </em><em>None</em>) – </p></li>
 </ul>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">&lt;=</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__le__.html#dataframe_api.DataFrame.__le__" title="dataframe_api.DataFrame.__le__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__le__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.le">operator.le(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__le__">operator.__le__(x1, x2)</a></p></li>
-</ul>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">&gt;</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__gt__.html#dataframe_api.DataFrame.__gt__" title="dataframe_api.DataFrame.__gt__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__gt__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.gt">operator.gt(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__gt__">operator.__gt__(x1, x2)</a></p></li>
-</ul>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">&gt;=</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__ge__.html#dataframe_api.DataFrame.__ge__" title="dataframe_api.DataFrame.__ge__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__ge__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.ge">operator.ge(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__ge__">operator.__ge__(x1, x2)</a></p></li>
-</ul>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">==</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__eq__.html#dataframe_api.DataFrame.__eq__" title="dataframe_api.DataFrame.__eq__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__eq__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.eq">operator.eq(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__eq__">operator.__eq__(x1, x2)</a></p></li>
-</ul>
-</li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">x1</span> <span class="pre">!=</span> <span class="pre">x2</span></code>: <a class="reference internal" href="generated/dataframe_api.DataFrame.__ne__.html#dataframe_api.DataFrame.__ne__" title="dataframe_api.DataFrame.__ne__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.__ne__()</span></code></a></p>
-<ul>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.ne">operator.ne(x1, x2)</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/operator.html#operator.__ne__">operator.__ne__(x1, x2)</a></p></li>
-</ul>
-</li>
-</ul>
-<p>Comparison operators should be defined for dataframes having any data type.</p>
-</section>
-<section id="in-place-operators">
-<h3 id="in-place-operators">In-place Operators<a class="headerlink" href="#in-place-operators" title="Permalink to this headline">¶</a></h3>
-<p>TODO</p>
-</section>
-<section id="reflected-operators">
-<h3 id="reflected-operators">Reflected Operators<a class="headerlink" href="#reflected-operators" title="Permalink to this headline">¶</a></h3>
-<p>TODO</p>
-<section id="id16">
-<h4 id="id16">Arithmetic Operators<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">__radd__</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">__rsub__</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">__rmul__</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">__rtruediv__</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">__rfloordiv__</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">__rpow__</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">__rmod__</span></code></p></li>
-</ul>
-</section>
-</section>
-</section>
-<hr class="docutils"/>
-<section id="attributes">
-<h2 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
-<p>TODO</p>
-</section>
-<hr class="docutils"/>
-<section id="methods">
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%"/>
-<col style="width: 90%"/>
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__add__.html#dataframe_api.DataFrame.__add__" title="dataframe_api.DataFrame.__add__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__add__</span></code></a>(other)</p></td>
-<td><p>Add <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar to this dataframe.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__eq__.html#dataframe_api.DataFrame.__eq__" title="dataframe_api.DataFrame.__eq__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__eq__</span></code></a>(other)</p></td>
-<td><p>Compare for equality.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__floordiv__.html#dataframe_api.DataFrame.__floordiv__" title="dataframe_api.DataFrame.__floordiv__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__floordiv__</span></code></a>(other)</p></td>
-<td><p>Floor-divide (returns integers) this dataframe by <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__ge__.html#dataframe_api.DataFrame.__ge__" title="dataframe_api.DataFrame.__ge__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__ge__</span></code></a>(other)</p></td>
-<td><p>Compare for "greater than or equal to" <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__gt__.html#dataframe_api.DataFrame.__gt__" title="dataframe_api.DataFrame.__gt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__gt__</span></code></a>(other)</p></td>
-<td><p>Compare for "greater than" <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__le__.html#dataframe_api.DataFrame.__le__" title="dataframe_api.DataFrame.__le__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__le__</span></code></a>(other)</p></td>
-<td><p>Compare for "less than or equal to" <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__lt__.html#dataframe_api.DataFrame.__lt__" title="dataframe_api.DataFrame.__lt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__lt__</span></code></a>(other)</p></td>
-<td><p>Compare for "less than" <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__ne__.html#dataframe_api.DataFrame.__ne__" title="dataframe_api.DataFrame.__ne__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__ne__</span></code></a>(other)</p></td>
-<td><p>Compare for non-equality.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__mod__.html#dataframe_api.DataFrame.__mod__" title="dataframe_api.DataFrame.__mod__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__mod__</span></code></a>(other)</p></td>
-<td><p>Return modulus of this dataframe by <code class="code docutils literal notranslate"><span class="pre">other</span></code> (<code class="code docutils literal notranslate"><span class="pre">%</span></code> operator).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__mul__.html#dataframe_api.DataFrame.__mul__" title="dataframe_api.DataFrame.__mul__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__mul__</span></code></a>(other)</p></td>
-<td><p>Multiply  <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar with this dataframe.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__pow__.html#dataframe_api.DataFrame.__pow__" title="dataframe_api.DataFrame.__pow__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__pow__</span></code></a>(other)</p></td>
-<td><p>Raise this dataframe to the power of <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__sub__.html#dataframe_api.DataFrame.__sub__" title="dataframe_api.DataFrame.__sub__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__sub__</span></code></a>(other)</p></td>
-<td><p>Subtract <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar from this dataframe.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.DataFrame.__truediv__.html#dataframe_api.DataFrame.__truediv__" title="dataframe_api.DataFrame.__truediv__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataFrame.__truediv__</span></code></a>(other)</p></td>
-<td><p>Divide  this dataframe by <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar.</p></td>
-</tr>
-</tbody>
-</table>
-</section>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.std">
+<span class="sig-name descname"><span class="pre">std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.std" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a 1-row DataFrame.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.sum">
+<span class="sig-name descname"><span class="pre">sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a 1-row DataFrame.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.var">
+<span class="sig-name descname"><span class="pre">var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.var" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a 1-row DataFrame.</p>
+</dd></dl>
+</dd></dl>
 </section>
 
 
@@ -577,12 +1082,12 @@ operators.</p>
             </a>
           
           
-            <a href="generated/dataframe_api.DataFrame.__add__.html" title="__add__"
+            <a href="column_object.html" title="Column object"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> __add__ </span>
+                class="md-footer-nav__direction"> Next </span> Column object </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
@@ -596,11 +1101,11 @@ operators.</p>
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2022, Consortium for Python Data API Standards.
+              &#169; Copyright 2021-, Consortium for Python Data API Standards.
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -49,14 +49,13 @@
     <link rel="apple-touch-icon" href="_static/images/apple-icon-152x152.png"/>
   
   
-    <title>Purpose and scope &#8212; Python dataframe API standard 2022.12-DRAFT documentation</title>
+    <title>Purpose and scope &#8212; Python dataframe API standard 2023.04-DRAFT documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/material.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -88,7 +87,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="index.html" title="Python dataframe API standard 2022.12-DRAFT documentation"
+        <a href="index.html" title="Python dataframe API standard 2023.04-DRAFT documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe869</i>
@@ -100,7 +99,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Python dataframe API standard 2022.12-DRAFT</span>
+          <span class="md-header-nav__topic">Python dataframe API standard 2023.04-DRAFT</span>
           <span class="md-header-nav__topic"> Purpose and scope </span>
         </div>
       </div>
@@ -110,7 +109,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="search.html" method="GET" name="search">
+    <form class="md-search__form" action="search.html" method="get" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -172,13 +171,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="index.html" title="Python dataframe API standard 2022.12-DRAFT documentation" class="md-nav__button md-logo">
+    <a href="index.html" title="Python dataframe API standard 2023.04-DRAFT documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe869</i>
       
     </a>
     <a href="index.html"
-       title="Python dataframe API standard 2022.12-DRAFT documentation">Python dataframe API standard 2022.12-DRAFT</a>
+       title="Python dataframe API standard 2023.04-DRAFT documentation">Python dataframe API standard 2023.04-DRAFT</a>
   </label>
   
 
@@ -357,13 +356,13 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">Methodology and Usage</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">Methodology and Tooling</span></span>
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="usage_data.html" class="md-nav__link">Data on existing API design & usage</a>
+      <a href="api_design_methodology.html" class="md-nav__link">Methodology for API design</a>
       
     
     </li>
@@ -371,13 +370,6 @@
     
     
       <a href="verification_test_suite.html" class="md-nav__link">Verification - test suite</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="benchmark_suite.html" class="md-nav__link">Benchmark suite</a>
       
     
     </li>
@@ -451,16 +443,16 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <section id="purpose-and-scope">
-<h1 id="purpose-and-scope--page-root">Purpose and scope<a class="headerlink" href="#purpose-and-scope--page-root" title="Permalink to this headline">¶</a></h1>
+<h1 id="purpose-and-scope--page-root">Purpose and scope<a class="headerlink" href="#purpose-and-scope--page-root" title="Permalink to this heading">¶</a></h1>
 <section id="introduction">
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This document defines a Python dataframe API.</p>
 <p>A dataframe is a programming interface for expressing data manipulations over a
 data structure consisting of rows and columns. Columns are named, and values in a
 column share a common data type. This definition is intentionally left broad.</p>
 </section>
 <section id="history-and-dataframe-implementations">
-<h2 id="history-and-dataframe-implementations">History and dataframe implementations<a class="headerlink" href="#history-and-dataframe-implementations" title="Permalink to this headline">¶</a></h2>
+<h2 id="history-and-dataframe-implementations">History and dataframe implementations<a class="headerlink" href="#history-and-dataframe-implementations" title="Permalink to this heading">¶</a></h2>
 <p>Dataframe libraries in several programming language exist, such as
 <a class="reference external" href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame">R</a>,
 <a class="reference external" href="https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-scala.html">Scala</a>,
@@ -512,7 +504,7 @@ public API is suboptimal as a standard, for its size, complexity, and implementa
 it exposes (for example, using NumPy data types or <code class="docutils literal notranslate"><span class="pre">NaN</span></code>).</p>
 </section>
 <section id="scope">
-<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permalink to this headline">¶</a></h2>
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permalink to this heading">¶</a></h2>
 <p>In the first iteration of the API standard, the scope is limited to create a data exchange
 protocol. In future iterations the scope will be broader, including elements to operate with
 the data.</p>
@@ -527,7 +519,7 @@ and semantics. To be more specific:</p>
 <p>The scope of this document is limited to generic dataframes, and not dataframes specific to
 certain domains.</p>
 <section id="goals">
-<h3 id="goals">Goals<a class="headerlink" href="#goals" title="Permalink to this headline">¶</a></h3>
+<h3 id="goals">Goals<a class="headerlink" href="#goals" title="Permalink to this heading">¶</a></h3>
 <p>The goal of the first iteration is to provide a data exchange protocol, so consumers of dataframes
 can interact with a standard interface to access their data.</p>
 <p>The goal of future iterations will be to provide a standard interface that encapsulates
@@ -547,12 +539,12 @@ implementations</p></li>
 libraries for interactive use or specific domains and industries</p></li>
 <li><p>Help user transition from one dataframe library to another</p></li>
 </ul>
-<p>See the <a class="reference internal" href="use_cases.html"><span class="doc std std-doc">use cases</span></a> section for details on the exact use cases considered.</p>
+<p>See the <a class="reference internal" href="use_cases.html"><span class="std std-doc">use cases</span></a> section for details on the exact use cases considered.</p>
 </section>
 <section id="out-of-scope">
-<h3 id="out-of-scope">Out-of-scope<a class="headerlink" href="#out-of-scope" title="Permalink to this headline">¶</a></h3>
+<h3 id="out-of-scope">Out-of-scope<a class="headerlink" href="#out-of-scope" title="Permalink to this heading">¶</a></h3>
 <section id="execution-details">
-<h4 id="execution-details">Execution details<a class="headerlink" href="#execution-details" title="Permalink to this headline">¶</a></h4>
+<h4 id="execution-details">Execution details<a class="headerlink" href="#execution-details" title="Permalink to this heading">¶</a></h4>
 <p>Implementation details of the dataframes and execution of operations. This includes:</p>
 <ul class="simple">
 <li><p>How data is represented and stored (whether the data is in memory, disk, distributed)</p></li>
@@ -565,7 +557,7 @@ Any decision that involves assumptions on where the data is stored, or where exe
 could prevent implementation from adopting the standard.</p>
 </section>
 <section id="high-level-apis">
-<h4 id="high-level-apis">High level APIs<a class="headerlink" href="#high-level-apis" title="Permalink to this headline">¶</a></h4>
+<h4 id="high-level-apis">High level APIs<a class="headerlink" href="#high-level-apis" title="Permalink to this heading">¶</a></h4>
 <p>It is out of scope to provide an API designed for interactive use. While interactive use
 is a key aspect of dataframes, an API designed for interactive use can be built on top
 of the API defined in this document.</p>
@@ -582,7 +574,7 @@ simple and easy to adopt.</p>
 </section>
 </section>
 <section id="non-goals">
-<h3 id="non-goals">Non-goals<a class="headerlink" href="#non-goals" title="Permalink to this headline">¶</a></h3>
+<h3 id="non-goals">Non-goals<a class="headerlink" href="#non-goals" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Build an API that is appropriate to all users</p></li>
 <li><p>Have a unique dataframe implementation for Python</p></li>
@@ -591,10 +583,10 @@ simple and easy to adopt.</p>
 </section>
 </section>
 <section id="stakeholders">
-<h2 id="stakeholders">Stakeholders<a class="headerlink" href="#stakeholders" title="Permalink to this headline">¶</a></h2>
+<h2 id="stakeholders">Stakeholders<a class="headerlink" href="#stakeholders" title="Permalink to this heading">¶</a></h2>
 <p>This section provides the list of stakeholders considered for the definition of this API.</p>
 <section id="dataframe-library-authors">
-<h3 id="dataframe-library-authors">Dataframe library authors<a class="headerlink" href="#dataframe-library-authors" title="Permalink to this headline">¶</a></h3>
+<h3 id="dataframe-library-authors">Dataframe library authors<a class="headerlink" href="#dataframe-library-authors" title="Permalink to this heading">¶</a></h3>
 <p>We encourage dataframe libraries in Python to implement the API defined in this document
 in their libraries.</p>
 <p>The list of known Python dataframe libraries at the time of writing this document is next:</p>
@@ -618,7 +610,7 @@ in their libraries.</p>
 </ul>
 </section>
 <section id="downstream-library-authors">
-<h3 id="downstream-library-authors">Downstream library authors<a class="headerlink" href="#downstream-library-authors" title="Permalink to this headline">¶</a></h3>
+<h3 id="downstream-library-authors">Downstream library authors<a class="headerlink" href="#downstream-library-authors" title="Permalink to this heading">¶</a></h3>
 <p>Authors of libraries that consume dataframes. They can use the API defined in this document
 to know how the data contained in a dataframe can be consumed, and which operations are implemented.</p>
 <p>A non-exhaustive list of downstream library categories is next:</p>
@@ -629,7 +621,7 @@ to know how the data contained in a dataframe can be consumed, and which operati
 </ul>
 </section>
 <section id="upstream-library-authors">
-<h3 id="upstream-library-authors">Upstream library authors<a class="headerlink" href="#upstream-library-authors" title="Permalink to this headline">¶</a></h3>
+<h3 id="upstream-library-authors">Upstream library authors<a class="headerlink" href="#upstream-library-authors" title="Permalink to this heading">¶</a></h3>
 <p>Authors of libraries that provide functionality used by dataframes.</p>
 <p>A non-exhaustive list of upstream categories is next:</p>
 <ul class="simple">
@@ -640,7 +632,7 @@ to know how the data contained in a dataframe can be consumed, and which operati
 </ul>
 </section>
 <section id="dataframe-power-users">
-<h3 id="dataframe-power-users">Dataframe power users<a class="headerlink" href="#dataframe-power-users" title="Permalink to this headline">¶</a></h3>
+<h3 id="dataframe-power-users">Dataframe power users<a class="headerlink" href="#dataframe-power-users" title="Permalink to this heading">¶</a></h3>
 <p>This group considers developers of reusable code that use dataframes. For example, developers of
 applications that use dataframes. Or authors of libraries that provide specialized dataframe
 APIs to be built on top of the standard API.</p>
@@ -656,19 +648,19 @@ sugar required for fast analysis of data.</p>
 </section>
 </section>
 <section id="high-level-api-overview">
-<h2 id="high-level-api-overview">High-level API overview<a class="headerlink" href="#high-level-api-overview" title="Permalink to this headline">¶</a></h2>
+<h2 id="high-level-api-overview">High-level API overview<a class="headerlink" href="#high-level-api-overview" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="how-to-read-this-document">
-<h2 id="how-to-read-this-document">How to read this document<a class="headerlink" href="#how-to-read-this-document" title="Permalink to this headline">¶</a></h2>
+<h2 id="how-to-read-this-document">How to read this document<a class="headerlink" href="#how-to-read-this-document" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="how-to-adopt-this-api">
-<h2 id="how-to-adopt-this-api">How to adopt this API<a class="headerlink" href="#how-to-adopt-this-api" title="Permalink to this headline">¶</a></h2>
+<h2 id="how-to-adopt-this-api">How to adopt this API<a class="headerlink" href="#how-to-adopt-this-api" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="definitions">
-<h2 id="definitions">Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h2>
+<h2 id="definitions">Definitions<a class="headerlink" href="#definitions" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="references">
-<h2 id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -715,11 +707,11 @@ sugar required for fast analysis of data.</p>
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2022, Consortium for Python Data API Standards.
+              &#169; Copyright 2021-, Consortium for Python Data API Standards.
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

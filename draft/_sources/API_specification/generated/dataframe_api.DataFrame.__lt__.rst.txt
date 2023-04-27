@@ -1,6 +1,0 @@
-﻿.. currentmodule:: dataframe_api
-
-__lt__
-======
-
-.. automethod:: DataFrame.__lt__

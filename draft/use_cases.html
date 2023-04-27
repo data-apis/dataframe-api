@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -49,14 +49,13 @@
     <link rel="apple-touch-icon" href="_static/images/apple-icon-152x152.png"/>
   
   
-    <title>Use cases &#8212; Python dataframe API standard 2022.12-DRAFT documentation</title>
+    <title>Use cases &#8212; Python dataframe API standard 2023.04-DRAFT documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/material.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -88,7 +87,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="index.html" title="Python dataframe API standard 2022.12-DRAFT documentation"
+        <a href="index.html" title="Python dataframe API standard 2023.04-DRAFT documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe869</i>
@@ -100,7 +99,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Python dataframe API standard 2022.12-DRAFT</span>
+          <span class="md-header-nav__topic">Python dataframe API standard 2023.04-DRAFT</span>
           <span class="md-header-nav__topic"> Use cases </span>
         </div>
       </div>
@@ -110,7 +109,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="search.html" method="GET" name="search">
+    <form class="md-search__form" action="search.html" method="get" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -172,13 +171,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="index.html" title="Python dataframe API standard 2022.12-DRAFT documentation" class="md-nav__button md-logo">
+    <a href="index.html" title="Python dataframe API standard 2023.04-DRAFT documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe869</i>
       
     </a>
     <a href="index.html"
-       title="Python dataframe API standard 2022.12-DRAFT documentation">Python dataframe API standard 2022.12-DRAFT</a>
+       title="Python dataframe API standard 2023.04-DRAFT documentation">Python dataframe API standard 2023.04-DRAFT</a>
   </label>
   
 
@@ -285,13 +284,13 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">Methodology and Usage</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">Methodology and Tooling</span></span>
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="usage_data.html" class="md-nav__link">Data on existing API design & usage</a>
+      <a href="api_design_methodology.html" class="md-nav__link">Methodology for API design</a>
       
     
     </li>
@@ -299,13 +298,6 @@
     
     
       <a href="verification_test_suite.html" class="md-nav__link">Verification - test suite</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="benchmark_suite.html" class="md-nav__link">Benchmark suite</a>
       
     
     </li>
@@ -349,17 +341,13 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <section id="use-cases">
-<h1 id="use-cases--page-root">Use cases<a class="headerlink" href="#use-cases--page-root" title="Permalink to this headline">¶</a></h1>
+<h1 id="use-cases--page-root">Use cases<a class="headerlink" href="#use-cases--page-root" title="Permalink to this heading">¶</a></h1>
 <section id="introduction">
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This section discusses the use cases considered for the standard dataframe API.</p>
-<p>The goals and scope of this API are defined in the <a class="reference internal" href="purpose_and_scope.html#goals"><span class="std std-ref">goals</span></a>,
-and <a class="reference internal" href="purpose_and_scope.html#scope"><span class="std std-ref">scope</span></a> sections.</p>
-<p>The target audience and stakeholders are presented in the
-<a class="reference internal" href="purpose_and_scope.html#stakeholders"><span class="std std-ref">stakeholders</span></a> section.</p>
 </section>
 <section id="types-of-use-cases">
-<h2 id="types-of-use-cases">Types of use cases<a class="headerlink" href="#types-of-use-cases" title="Permalink to this headline">¶</a></h2>
+<h2 id="types-of-use-cases">Types of use cases<a class="headerlink" href="#types-of-use-cases" title="Permalink to this heading">¶</a></h2>
 <p>The next types of use cases can be accomplished by the use of the standard Python dataframe
 API defined in this document:</p>
 <ul class="simple">
@@ -369,10 +357,10 @@ API defined in this document:</p>
 <p>Other types of uses cases not related to data interchange will be added later.</p>
 </section>
 <section id="concrete-use-cases">
-<h2 id="concrete-use-cases">Concrete use cases<a class="headerlink" href="#concrete-use-cases" title="Permalink to this headline">¶</a></h2>
+<h2 id="concrete-use-cases">Concrete use cases<a class="headerlink" href="#concrete-use-cases" title="Permalink to this heading">¶</a></h2>
 <p>In this section we define concrete examples of the types of use cases defined above.</p>
 <section id="plotting-library-receiving-data-as-a-dataframe">
-<h3 id="plotting-library-receiving-data-as-a-dataframe">Plotting library receiving data as a dataframe<a class="headerlink" href="#plotting-library-receiving-data-as-a-dataframe" title="Permalink to this headline">¶</a></h3>
+<h3 id="plotting-library-receiving-data-as-a-dataframe">Plotting library receiving data as a dataframe<a class="headerlink" href="#plotting-library-receiving-data-as-a-dataframe" title="Permalink to this heading">¶</a></h3>
 <p>One use case we facilitate with the API defined in this document is a plotting library
 receiving the data to be plotted as a dataframe object.</p>
 <p>Consider the case of a scatter plot, that will be plotted with the data contained in a
@@ -459,7 +447,7 @@ expect a generic dataframe. And any library implementing the standard dataframe
 API could be plotted with the previous example (Vaex, cuDF, Ibis, Dask, Modin, etc.).</p>
 </section>
 <section id="change-object-from-one-implementation-to-another">
-<h3 id="change-object-from-one-implementation-to-another">Change object from one implementation to another<a class="headerlink" href="#change-object-from-one-implementation-to-another" title="Permalink to this headline">¶</a></h3>
+<h3 id="change-object-from-one-implementation-to-another">Change object from one implementation to another<a class="headerlink" href="#change-object-from-one-implementation-to-another" title="Permalink to this heading">¶</a></h3>
 <p>Another considered use case is transforming the data from one implementation to another.</p>
 <p>As an example, consider we are using Dask dataframes, given that our data is too big to
 fit in memory, and we are working over a cluster. At some point in our pipeline, we
@@ -565,11 +553,11 @@ xarray, SQLAlchemy and others.</p>
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2022, Consortium for Python Data API Standards.
+              &#169; Copyright 2021-, Consortium for Python Data API Standards.
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

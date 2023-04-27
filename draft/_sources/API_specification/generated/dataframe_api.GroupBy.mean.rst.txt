@@ -1,6 +1,0 @@
-﻿.. currentmodule:: dataframe_api
-
-mean
-====
-
-.. automethod:: GroupBy.mean

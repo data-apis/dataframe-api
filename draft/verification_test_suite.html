@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -49,20 +49,18 @@
     <link rel="apple-touch-icon" href="_static/images/apple-icon-152x152.png"/>
   
   
-    <title>Verification - test suite &#8212; Python dataframe API standard 2022.12-DRAFT documentation</title>
+    <title>Verification - test suite &#8212; Python dataframe API standard 2023.04-DRAFT documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/material.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Benchmark suite" href="benchmark_suite.html" />
-    <link rel="prev" title="Data on existing API design &amp; usage" href="usage_data.html" />
+    <link rel="prev" title="Methodology for API design" href="api_design_methodology.html" />
   
     <link rel="apple-touch-icon" href="_static/images/apple-icon-152x152.png"/>
   
@@ -88,7 +86,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="index.html" title="Python dataframe API standard 2022.12-DRAFT documentation"
+        <a href="index.html" title="Python dataframe API standard 2023.04-DRAFT documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe869</i>
@@ -100,7 +98,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Python dataframe API standard 2022.12-DRAFT</span>
+          <span class="md-header-nav__topic">Python dataframe API standard 2023.04-DRAFT</span>
           <span class="md-header-nav__topic"> Verification - test suite </span>
         </div>
       </div>
@@ -110,7 +108,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="search.html" method="GET" name="search">
+    <form class="md-search__form" action="search.html" method="get" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -172,13 +170,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="index.html" title="Python dataframe API standard 2022.12-DRAFT documentation" class="md-nav__button md-logo">
+    <a href="index.html" title="Python dataframe API standard 2023.04-DRAFT documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe869</i>
       
     </a>
     <a href="index.html"
-       title="Python dataframe API standard 2022.12-DRAFT documentation">Python dataframe API standard 2022.12-DRAFT</a>
+       title="Python dataframe API standard 2023.04-DRAFT documentation">Python dataframe API standard 2023.04-DRAFT</a>
   </label>
   
 
@@ -238,13 +236,13 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">Methodology and Usage</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">Methodology and Tooling</span></span>
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="usage_data.html" class="md-nav__link">Data on existing API design & usage</a>
+      <a href="api_design_methodology.html" class="md-nav__link">Methodology for API design</a>
       
     
     </li>
@@ -261,13 +259,6 @@
   <ul class="md-nav__list" data-md-scrollfix="">
   </ul>
 </nav>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="benchmark_suite.html" class="md-nav__link">Benchmark suite</a>
       
     
     </li>
@@ -294,7 +285,7 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <section id="verification-test-suite">
-<h1 id="verification-test-suite--page-root">Verification - test suite<a class="headerlink" href="#verification-test-suite--page-root" title="Permalink to this headline">¶</a></h1>
+<h1 id="verification-test-suite--page-root">Verification - test suite<a class="headerlink" href="#verification-test-suite--page-root" title="Permalink to this heading">¶</a></h1>
 </section>
 
 
@@ -307,7 +298,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
           
-            <a href="usage_data.html" title="Data on existing API design &amp; usage"
+            <a href="api_design_methodology.html" title="Methodology for API design"
                class="md-flex md-footer-nav__link md-footer-nav__link--prev"
                rel="prev">
               <div class="md-flex__cell md-flex__cell--shrink">
@@ -316,21 +307,10 @@
               <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
                 <span class="md-flex__ellipsis">
                   <span
-                      class="md-footer-nav__direction"> Previous </span> Data on existing API design &amp; usage </span>
+                      class="md-footer-nav__direction"> Previous </span> Methodology for API design </span>
               </div>
             </a>
           
-          
-            <a href="benchmark_suite.html" title="Benchmark suite"
-               class="md-flex md-footer-nav__link md-footer-nav__link--next"
-               rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
-                class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> Benchmark suite </span>
-            </div>
-            <div class="md-flex__cell md-flex__cell--shrink"><i
-                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
           
         </a>
         
@@ -340,11 +320,11 @@
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2022, Consortium for Python Data API Standards.
+              &#169; Copyright 2021-, Consortium for Python Data API Standards.
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

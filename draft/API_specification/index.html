@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -49,14 +49,13 @@
     <link rel="apple-touch-icon" href="../_static/images/apple-icon-152x152.png"/>
   
   
-    <title>API specification &#8212; Python dataframe API standard 2022.12-DRAFT documentation</title>
+    <title>API specification &#8212; Python dataframe API standard 2023.04-DRAFT documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/material.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -88,7 +87,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../index.html" title="Python dataframe API standard 2022.12-DRAFT documentation"
+        <a href="../index.html" title="Python dataframe API standard 2023.04-DRAFT documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe869</i>
@@ -100,7 +99,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Python dataframe API standard 2022.12-DRAFT</span>
+          <span class="md-header-nav__topic">Python dataframe API standard 2023.04-DRAFT</span>
           <span class="md-header-nav__topic"> API specification </span>
         </div>
       </div>
@@ -110,7 +109,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="../search.html" method="GET" name="search">
+    <form class="md-search__form" action="../search.html" method="get" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -172,13 +171,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../index.html" title="Python dataframe API standard 2022.12-DRAFT documentation" class="md-nav__button md-logo">
+    <a href="../index.html" title="Python dataframe API standard 2023.04-DRAFT documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe869</i>
       
     </a>
     <a href="../index.html"
-       title="Python dataframe API standard 2022.12-DRAFT documentation">Python dataframe API standard 2022.12-DRAFT</a>
+       title="Python dataframe API standard 2023.04-DRAFT documentation">Python dataframe API standard 2023.04-DRAFT</a>
   </label>
   
 
@@ -268,13 +267,13 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">Methodology and Usage</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">Methodology and Tooling</span></span>
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="../usage_data.html" class="md-nav__link">Data on existing API design & usage</a>
+      <a href="../api_design_methodology.html" class="md-nav__link">Methodology for API design</a>
       
     
     </li>
@@ -282,13 +281,6 @@
     
     
       <a href="../verification_test_suite.html" class="md-nav__link">Verification - test suite</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../benchmark_suite.html" class="md-nav__link">Benchmark suite</a>
       
     
     </li>
@@ -315,53 +307,79 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <section id="api-specification">
-<h1 id="api-specification-index--page-root">API specification<a class="headerlink" href="#api-specification-index--page-root" title="Permalink to this headline">¶</a></h1>
+<h1 id="api-specification-index--page-root">API specification<a class="headerlink" href="#api-specification-index--page-root" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">API specification</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="dataframe_object.html">Dataframe object</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dataframe_object.html#operators">Operators</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#arithmetic-operators">Arithmetic Operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#comparison-operators">Comparison Operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#in-place-operators">In-place Operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#reflected-operators">Reflected Operators</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="dataframe_object.html#attributes">Attributes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dataframe_object.html#methods">Methods</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__add__.html">__add__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__eq__.html">__eq__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__floordiv__.html">__floordiv__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__ge__.html">__ge__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__gt__.html">__gt__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__le__.html">__le__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__lt__.html">__lt__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__ne__.html">__ne__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__mod__.html">__mod__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__mul__.html">__mul__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__pow__.html">__pow__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__sub__.html">__sub__</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.DataFrame.__truediv__.html">__truediv__</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame"><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__add__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__add__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__divmod__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__divmod__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__eq__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__eq__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__floordiv__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__floordiv__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__ge__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__ge__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__gt__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__gt__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__hash__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__hash__</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__invert__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__invert__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__iter__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__iter__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__le__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__le__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__lt__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__lt__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__mod__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__mod__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__mul__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__mul__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__ne__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__ne__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__pow__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__pow__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__sub__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__sub__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.__truediv__"><code class="docutils literal notranslate"><span class="pre">DataFrame.__truediv__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.all"><code class="docutils literal notranslate"><span class="pre">DataFrame.all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.all_rowwise"><code class="docutils literal notranslate"><span class="pre">DataFrame.all_rowwise()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.any"><code class="docutils literal notranslate"><span class="pre">DataFrame.any()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.any_rowwise"><code class="docutils literal notranslate"><span class="pre">DataFrame.any_rowwise()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.dataframe"><code class="docutils literal notranslate"><span class="pre">DataFrame.dataframe</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.drop_column"><code class="docutils literal notranslate"><span class="pre">DataFrame.drop_column()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.from_dict"><code class="docutils literal notranslate"><span class="pre">DataFrame.from_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.get_column_by_name"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_column_by_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.get_column_names"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_column_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.get_columns_by_name"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_columns_by_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.get_rows"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_rows()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.get_rows_by_mask"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_rows_by_mask()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.groupby"><code class="docutils literal notranslate"><span class="pre">DataFrame.groupby()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.insert"><code class="docutils literal notranslate"><span class="pre">DataFrame.insert()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.isnan"><code class="docutils literal notranslate"><span class="pre">DataFrame.isnan()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.isnull"><code class="docutils literal notranslate"><span class="pre">DataFrame.isnull()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.max"><code class="docutils literal notranslate"><span class="pre">DataFrame.max()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.mean"><code class="docutils literal notranslate"><span class="pre">DataFrame.mean()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.median"><code class="docutils literal notranslate"><span class="pre">DataFrame.median()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.min"><code class="docutils literal notranslate"><span class="pre">DataFrame.min()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.prod"><code class="docutils literal notranslate"><span class="pre">DataFrame.prod()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.rename_columns"><code class="docutils literal notranslate"><span class="pre">DataFrame.rename_columns()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.shape"><code class="docutils literal notranslate"><span class="pre">DataFrame.shape()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.slice_rows"><code class="docutils literal notranslate"><span class="pre">DataFrame.slice_rows()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.std"><code class="docutils literal notranslate"><span class="pre">DataFrame.std()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.sum"><code class="docutils literal notranslate"><span class="pre">DataFrame.sum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.var"><code class="docutils literal notranslate"><span class="pre">DataFrame.var()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="column_object.html">Column object</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="column_object.html#methods">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="column_object.html#dataframe_api.Column"><code class="docutils literal notranslate"><span class="pre">Column</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="column_object.html#dataframe_api.Column.from_sequence"><code class="docutils literal notranslate"><span class="pre">Column.from_sequence()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="groupby_object.html">Groupby object</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="groupby_object.html#methods">Methods</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.all.html">all</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.any.html">any</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.max.html">max</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.min.html">min</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.mean.html">mean</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.median.html">median</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.prod.html">prod</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.std.html">std</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.sum.html">sum</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/dataframe_api.GroupBy.var.html">var</a></li>
+<li class="toctree-l2"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy"><code class="docutils literal notranslate"><span class="pre">GroupBy</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy.all"><code class="docutils literal notranslate"><span class="pre">GroupBy.all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy.any"><code class="docutils literal notranslate"><span class="pre">GroupBy.any()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy.max"><code class="docutils literal notranslate"><span class="pre">GroupBy.max()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy.mean"><code class="docutils literal notranslate"><span class="pre">GroupBy.mean()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy.median"><code class="docutils literal notranslate"><span class="pre">GroupBy.median()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy.min"><code class="docutils literal notranslate"><span class="pre">GroupBy.min()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy.prod"><code class="docutils literal notranslate"><span class="pre">GroupBy.prod()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy.size"><code class="docutils literal notranslate"><span class="pre">GroupBy.size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy.std"><code class="docutils literal notranslate"><span class="pre">GroupBy.std()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy.sum"><code class="docutils literal notranslate"><span class="pre">GroupBy.sum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy.var"><code class="docutils literal notranslate"><span class="pre">GroupBy.var()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -413,11 +431,11 @@
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2022, Consortium for Python Data API Standards.
+              &#169; Copyright 2021-, Consortium for Python Data API Standards.
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

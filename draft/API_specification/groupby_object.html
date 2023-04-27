@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -49,19 +49,18 @@
     <link rel="apple-touch-icon" href="../_static/images/apple-icon-152x152.png"/>
   
   
-    <title>Groupby object &#8212; Python dataframe API standard 2022.12-DRAFT documentation</title>
+    <title>Groupby object &#8212; Python dataframe API standard 2023.04-DRAFT documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/material.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="all" href="generated/dataframe_api.GroupBy.all.html" />
+    <link rel="next" title="Methodology for API design" href="../api_design_methodology.html" />
     <link rel="prev" title="Column object" href="column_object.html" />
   
     <link rel="apple-touch-icon" href="../_static/images/apple-icon-152x152.png"/>
@@ -88,7 +87,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../index.html" title="Python dataframe API standard 2022.12-DRAFT documentation"
+        <a href="../index.html" title="Python dataframe API standard 2023.04-DRAFT documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe869</i>
@@ -100,7 +99,7 @@
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
-          <span class="md-header-nav__topic">Python dataframe API standard 2022.12-DRAFT</span>
+          <span class="md-header-nav__topic">Python dataframe API standard 2023.04-DRAFT</span>
           <span class="md-header-nav__topic"> Groupby object </span>
         </div>
       </div>
@@ -110,7 +109,7 @@
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
-    <form class="md-search__form" action="../search.html" method="GET" name="search">
+    <form class="md-search__form" action="../search.html" method="get" name="search">
       <input type="text" class="md-search__input" name="q" placeholder="Search"
              autocapitalize="off" autocomplete="off" spellcheck="false"
              data-md-component="query" data-md-state="active">
@@ -173,13 +172,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../index.html" title="Python dataframe API standard 2022.12-DRAFT documentation" class="md-nav__button md-logo">
+    <a href="../index.html" title="Python dataframe API standard 2023.04-DRAFT documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe869</i>
       
     </a>
     <a href="../index.html"
-       title="Python dataframe API standard 2022.12-DRAFT documentation">Python dataframe API standard 2022.12-DRAFT</a>
+       title="Python dataframe API standard 2023.04-DRAFT documentation">Python dataframe API standard 2023.04-DRAFT</a>
   </label>
   
 
@@ -263,7 +262,31 @@
   <ul class="md-nav__list" data-md-scrollfix="">
         <li class="md-nav__item"><a href="#api-specification-groupby-object--page-root" class="md-nav__link">Groupby object</a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#methods" class="md-nav__link">Methods</a>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.all" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.all()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.any" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.any()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.max()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.mean" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.mean()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.median" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.median()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.min" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.min()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.prod" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.prod()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.size" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.size()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.std()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.sum()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.var" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.var()</span></code></a>
+        </li></ul>
+            </nav>
         </li></ul>
             </nav>
         </li>
@@ -276,13 +299,13 @@
     </li>
     <li class="md-nav__item">
     
-      <span class="md-nav__link caption"><span class="caption-text">Methodology and Usage</span></span>
+      <span class="md-nav__link caption"><span class="caption-text">Methodology and Tooling</span></span>
     
     </li>
     <li class="md-nav__item">
     
     
-      <a href="../usage_data.html" class="md-nav__link">Data on existing API design & usage</a>
+      <a href="../api_design_methodology.html" class="md-nav__link">Methodology for API design</a>
       
     
     </li>
@@ -290,13 +313,6 @@
     
     
       <a href="../verification_test_suite.html" class="md-nav__link">Verification - test suite</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="../benchmark_suite.html" class="md-nav__link">Benchmark suite</a>
       
     
     </li>
@@ -316,7 +332,31 @@
   <ul class="md-nav__list" data-md-scrollfix="">
         <li class="md-nav__item"><a href="#api-specification-groupby-object--page-root" class="md-nav__link">Groupby object</a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#methods" class="md-nav__link">Methods</a>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.all" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.all()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.any" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.any()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.max()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.mean" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.mean()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.median" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.median()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.min" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.min()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.prod" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.prod()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.size" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.size()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.std()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.sum()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.GroupBy.var" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">GroupBy.var()</span></code></a>
+        </li></ul>
+            </nav>
         </li></ul>
             </nav>
         </li>
@@ -330,51 +370,61 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <section id="groupby-object">
-<span id="id1"></span><h1 id="api-specification-groupby-object--page-root">Groupby object<a class="headerlink" href="#api-specification-groupby-object--page-root" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1 id="api-specification-groupby-object--page-root">Groupby object<a class="headerlink" href="#api-specification-groupby-object--page-root" title="Permalink to this heading">¶</a></h1>
 <p>A conforming implementation of the dataframe API standard must provide and
-support a groupby object having the following attributes and methods.</p>
-<hr class="docutils"/>
-<section id="methods">
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%"/>
-<col style="width: 90%"/>
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.GroupBy.all.html#dataframe_api.GroupBy.all" title="dataframe_api.GroupBy.all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupBy.all</span></code></a>(skip_nulls=True)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/dataframe_api.GroupBy.any.html#dataframe_api.GroupBy.any" title="dataframe_api.GroupBy.any"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupBy.any</span></code></a>(skip_nulls=True)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.GroupBy.max.html#dataframe_api.GroupBy.max" title="dataframe_api.GroupBy.max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupBy.max</span></code></a>(skip_nulls=True)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/dataframe_api.GroupBy.min.html#dataframe_api.GroupBy.min" title="dataframe_api.GroupBy.min"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupBy.min</span></code></a>(skip_nulls=True)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.GroupBy.mean.html#dataframe_api.GroupBy.mean" title="dataframe_api.GroupBy.mean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupBy.mean</span></code></a>(skip_nulls=True)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/dataframe_api.GroupBy.median.html#dataframe_api.GroupBy.median" title="dataframe_api.GroupBy.median"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupBy.median</span></code></a>(skip_nulls=True)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.GroupBy.prod.html#dataframe_api.GroupBy.prod" title="dataframe_api.GroupBy.prod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupBy.prod</span></code></a>(skip_nulls=True)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/dataframe_api.GroupBy.std.html#dataframe_api.GroupBy.std" title="dataframe_api.GroupBy.std"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupBy.std</span></code></a>(skip_nulls=True)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/dataframe_api.GroupBy.sum.html#dataframe_api.GroupBy.sum" title="dataframe_api.GroupBy.sum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupBy.sum</span></code></a>(skip_nulls=True)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/dataframe_api.GroupBy.var.html#dataframe_api.GroupBy.var" title="dataframe_api.GroupBy.var"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupBy.var</span></code></a>(skip_nulls=True)</p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</section>
+support a groupby object with the following API:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GroupBy</span></span><a class="headerlink" href="#dataframe_api.GroupBy" title="Permalink to this definition">¶</a></dt>
+<dd><p>GroupBy object.</p>
+<p>Note that this class is not meant to be constructed by users.
+It is returned from <code class="code docutils literal notranslate"><span class="pre">DataFrame.groupby</span></code>.</p>
+<p><strong>Methods</strong></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy.all">
+<span class="sig-name descname"><span class="pre">all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.GroupBy.all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy.any">
+<span class="sig-name descname"><span class="pre">any</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.GroupBy.any" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy.max">
+<span class="sig-name descname"><span class="pre">max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.GroupBy.max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy.mean">
+<span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.GroupBy.mean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy.median">
+<span class="sig-name descname"><span class="pre">median</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.GroupBy.median" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy.min">
+<span class="sig-name descname"><span class="pre">min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.GroupBy.min" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy.prod">
+<span class="sig-name descname"><span class="pre">prod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.GroupBy.prod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.GroupBy.size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy.std">
+<span class="sig-name descname"><span class="pre">std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.GroupBy.std" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy.sum">
+<span class="sig-name descname"><span class="pre">sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.GroupBy.sum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.GroupBy.var">
+<span class="sig-name descname"><span class="pre">var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.GroupBy.var" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</dd></dl>
 </section>
 
 
@@ -401,12 +451,12 @@ support a groupby object having the following attributes and methods.</p>
             </a>
           
           
-            <a href="generated/dataframe_api.GroupBy.all.html" title="all"
+            <a href="../api_design_methodology.html" title="Methodology for API design"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> all </span>
+                class="md-footer-nav__direction"> Next </span> Methodology for API design </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
@@ -420,11 +470,11 @@ support a groupby object having the following attributes and methods.</p>
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2022, Consortium for Python Data API Standards.
+              &#169; Copyright 2021-, Consortium for Python Data API Standards.
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>
