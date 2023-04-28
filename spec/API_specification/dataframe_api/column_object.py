@@ -76,7 +76,7 @@ class Column:
         
         Returns
         -------
-        Scalar
+        dtype
             Depends on the dtype of the Column, and may vary
             across implementations.
         """
