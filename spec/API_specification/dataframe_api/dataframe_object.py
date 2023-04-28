@@ -241,29 +241,6 @@ class DataFrame:
         """
         ...
 
-    def concat(self, other: Sequence[DataFrame]) -> DataFrame:
-        """
-        Concatenate current and other DataFrames vertically.
-
-        To concatenate horizontally, please use ``insert``.
-
-        Parameters
-        ----------
-        other : Sequence[DataFrame]
-            DataFrames to concatenate with.
-            Column names, ordering, and dtypes must match.
-
-        Notes
-        -----
-        The order in which the input DataFrames appear in
-        the output is preserved.
-
-        Returns
-        -------
-        DataFrame
-        """
-        ...
-
     def sorted_indices(
         self,
         keys: Sequence[str],
