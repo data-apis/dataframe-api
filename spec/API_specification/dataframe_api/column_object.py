@@ -399,7 +399,7 @@ class Column:
         There are no ordering guarantees.
         If the original Column contains multiple `'NaN'` values, then
         only a single index corresponding to those values should be returned.
-        Likewise, for null values (if ``skip_nulls=False``).
+        Likewise for null values (if ``skip_nulls=False``).
         To get the unique values, you can do ``df.get_rows(df.unique_indices())``.
         """
         ...
