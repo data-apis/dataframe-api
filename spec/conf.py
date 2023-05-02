@@ -18,11 +18,11 @@ sys.path.insert(0, os.path.abspath('./API_specification'))
 # -- Project information -----------------------------------------------------
 
 project = 'Python dataframe API standard'
-copyright = '2022, Consortium for Python Data API Standards'
+copyright = '2021-, Consortium for Python Data API Standards'
 author = 'Consortium for Python Data API Standards'
 
 # The full version, including alpha/beta/rc tags
-release = '2022.12-DRAFT'
+release = '2023.04-DRAFT'
 
 
 # -- General configuration ---------------------------------------------------
@@ -46,7 +46,15 @@ extensions = [
 
 autosummary_generate = True
 autodoc_typehints = 'signature'
+autodoc_default_options = {
+#    'attributes':       True,
+    'members':          True,
+    'special-members':  True,
+    'undoc-members':    True,
+    'exclude-members': '__annotations__, __dict__,__weakref__,__module__,__hash__',
+}
 add_module_names = False
+napoleon_numpy_docstring = True
 napoleon_custom_sections = [('Returns', 'params_style')]
 default_role = 'code'
 

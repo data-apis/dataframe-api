@@ -1,5 +1,7 @@
 from __future__ import annotations
-from typing import Sequence, Union, TYPE_CHECKING, NoReturn
+
+from typing import Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoReturn
+
 
 if TYPE_CHECKING:
     from .column_object import Column
@@ -11,6 +13,47 @@ __all__ = ["DataFrame"]
 
 
 class DataFrame:
+    """
+    DataFrame object
+
+    Note that this dataframe object is not meant to be instantiated directly by
+    users of the library implementing the dataframe API standard. Rather, use
+    constructor functions or an already-created dataframe object retrieved via
+    
+    **Python operator support**
+
+    All arithmetic operators defined by the Python language, except for
+    ``__matmul__``, ``__neg__`` and ``__pos__``, must be supported for
+    numerical data types.
+
+    All comparison operators defined by the Python language must be supported
+    by the dataframe object for all data types for which those comparisons are
+    supported by the builtin scalar types corresponding to a data type.
+
+    In-place operators must not be supported. All operations on the dataframe
+    object are out-of-place.
+
+    **Methods and Attributes**
+
+    """
+
+    @classmethod
+    def from_dict(cls, data: Mapping[str, Column]) -> DataFrame:
+        """
+        Construct DataFrame from map of column names to Columns.
+
+        Parameters
+        ----------
+        data : Mapping[str, Column]
+            Column must be of the corresponding type of the DataFrame.
+            For example, it is only supported to build a ``LibraryXDataFrame`` using
+            ``LibraryXColumn`` instances.
+
+        Returns
+        -------
+        DataFrame
+        """
+
     @property
     def dataframe(self) -> object:
         """
@@ -88,24 +131,18 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Sequence[int]) -> DataFrame:
+    def get_rows(self, indices: "Column[int]") -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
         Parameters
         ----------
-        indices : Sequence[int]
+        indices : Column[int]
             Positions of rows to select.
 
         Returns
         -------
         DataFrame
-
-        Notes
-        -----
-        Some discussion participants prefer a stricter type Column[int] for
-        indices in order to make it easier to implement in a performant manner
-        on GPUs.
         """
         ...
 
@@ -201,6 +238,47 @@ class DataFrame:
         Returns
         -------
         Sequence[str]
+        """
+        ...
+
+    def sorted_indices(
+        self,
+        keys: Sequence[str],
+        *,
+        ascending: Sequence[bool] | bool = True,
+        nulls_position: Literal['first', 'last'] = 'last',
+    ) -> Column[int]:
+        """
+        Return row numbers which would sort according to given columns.
+
+        If you need to sort the DataFrame, you can simply do::
+
+            df.get_rows(df.sorted_indices(keys))
+
+        Parameters
+        ----------
+        keys : Sequence[str]
+            Names of columns to sort by.
+        ascending : Sequence[bool] or bool
+            If `True`, sort by all keys in ascending order.
+            If `False`, sort by all keys in descending order.
+            If a sequence, it must be the same length as `keys`,
+            and determines the direction with which to use each
+            key to sort by.
+        nulls_position : ``{'first', 'last'}``
+            Whether null values should be placed at the beginning
+            or at the end of the result.
+            Note that the position of NaNs is unspecified and may
+            vary based on the implementation.
+
+        Returns
+        -------
+        Column[int]
+    
+        Raises
+        ------
+        ValueError
+            If `keys` and `ascending` are sequences of different lengths.
         """
         ...
 
@@ -465,7 +543,7 @@ class DataFrame:
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
-    def any(self, skipna: bool = True) -> DataFrame:
+    def any(self, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -476,7 +554,7 @@ class DataFrame:
         """
         ...
 
-    def all(self, skipna: bool = True) -> DataFrame:
+    def all(self, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -487,7 +565,7 @@ class DataFrame:
         """
         ...
     
-    def any_rowwise(self, skipna: bool = True) -> Column:
+    def any_rowwise(self, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
@@ -501,7 +579,7 @@ class DataFrame:
         """
         ...
 
-    def all_rowwise(self, skipna: bool = True) -> Column:
+    def all_rowwise(self, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
@@ -515,49 +593,49 @@ class DataFrame:
         """
         ...
 
-    def min(self, skipna: bool = True) -> DataFrame:
+    def min(self, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def max(self, skipna: bool = True) -> DataFrame:
+    def max(self, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def sum(self, skipna: bool = True) -> DataFrame:
+    def sum(self, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def prod(self, skipna: bool = True) -> DataFrame:
+    def prod(self, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def median(self, skipna: bool = True) -> DataFrame:
+    def median(self, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def mean(self, skipna: bool = True) -> DataFrame:
+    def mean(self, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def std(self, skipna: bool = True) -> DataFrame:
+    def std(self, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def var(self, skipna: bool = True) -> DataFrame:
+    def var(self, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
@@ -578,12 +656,14 @@ class DataFrame:
         Notes
         -----
         Does *not* include NaN-like entries.
+        May optionally include 'NaT' values (if present in an implementation),
+        but note that the Standard makes no guarantees about them.
         """
         ...
 
     def isnan(self) -> DataFrame:
         """
-        Check for nan-like entries.
+        Check for nan entries.
 
         Returns
         -------
@@ -595,8 +675,9 @@ class DataFrame:
 
         Notes
         -----
-        Includes anything with NaN-like semantics, e.g. np.datetime64("NaT").
+        This only checks for 'NaN'.
         Does *not* include 'missing' or 'null' entries.
+        In particular, does not check for `np.timedelta64('NaT')`.
         """
         ...
 
