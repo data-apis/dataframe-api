@@ -384,3 +384,19 @@ class Column:
         Does *not* include 'missing' or 'null' entries.
         In particular, does not check for `np.timedelta64('NaT')`.
         """
+
+    def is_in(self, values: Sequence[object]) -> Column[bool]:
+        """
+        Indicate whether the value at each row matches any value in `values`.
+
+        Parameters
+        ----------
+        values : Sequence[object]
+            Values to compare against. May include ``float('nan')`` and
+            ``namespace.null``.
+
+        Returns
+        -------
+        Column[bool]
+        """
+        ...
