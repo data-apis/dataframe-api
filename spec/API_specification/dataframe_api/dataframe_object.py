@@ -680,22 +680,3 @@ class DataFrame:
         In particular, does not check for `np.timedelta64('NaT')`.
         """
         ...
-
-    def unique(self, keys: Sequence[str]) -> DataFrame:
-        """
-        Return a DataFrame with a row for each unique combination of `keys`.
-
-        Parameters
-        ----------
-        keys : Sequence[str]
-            Columns to use to find unique values.
-
-        Returns
-        -------
-        DataFrame
-
-        Notes
-        -----
-        There are no ordering guarantees.
-        """
-        ...
