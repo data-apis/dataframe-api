@@ -385,15 +385,17 @@ class Column:
         In particular, does not check for `np.timedelta64('NaT')`.
         """
 
-    def is_in(self, values: Sequence[object]) -> Column[bool]:
+    def is_in(self, values: Column) -> Column[bool]:
         """
         Indicate whether the value at each row matches any value in `values`.
 
         Parameters
         ----------
-        values : Sequence[object]
-            Values to compare against. May include ``float('nan')`` and
-            ``namespace.null``.
+        values : Column
+            Contains values to compare against. May include ``float('nan')`` and
+            ``namespace.null``, which which case ``'nan'`` and ``null`` will
+            respectively return ``True`` even though ``float('nan') == float('nan')``
+            isn't ``True``.
 
         Returns
         -------
