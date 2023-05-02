@@ -265,7 +265,7 @@ class DataFrame:
             If a sequence, it must be the same length as `keys`,
             and determines the direction with which to use each
             key to sort by.
-        nulls_position : ``{'first', 'last'}``
+        nulls_position : {'first', 'last'}
             Whether null values should be placed at the beginning
             or at the end of the result.
             Note that the position of NaNs is unspecified and may
