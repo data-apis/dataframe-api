@@ -543,7 +543,7 @@ class DataFrame:
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
-    def any(self, skip_nulls: bool = True) -> DataFrame:
+    def any(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -554,7 +554,7 @@ class DataFrame:
         """
         ...
 
-    def all(self, skip_nulls: bool = True) -> DataFrame:
+    def all(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -565,7 +565,7 @@ class DataFrame:
         """
         ...
     
-    def any_rowwise(self, skip_nulls: bool = True) -> Column:
+    def any_rowwise(self, *, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
@@ -579,7 +579,7 @@ class DataFrame:
         """
         ...
 
-    def all_rowwise(self, skip_nulls: bool = True) -> Column:
+    def all_rowwise(self, *, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
@@ -593,49 +593,49 @@ class DataFrame:
         """
         ...
 
-    def min(self, skip_nulls: bool = True) -> DataFrame:
+    def min(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def max(self, skip_nulls: bool = True) -> DataFrame:
+    def max(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def sum(self, skip_nulls: bool = True) -> DataFrame:
+    def sum(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def prod(self, skip_nulls: bool = True) -> DataFrame:
+    def prod(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def median(self, skip_nulls: bool = True) -> DataFrame:
+    def median(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def mean(self, skip_nulls: bool = True) -> DataFrame:
+    def mean(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def std(self, skip_nulls: bool = True) -> DataFrame:
+    def std(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def var(self, skip_nulls: bool = True) -> DataFrame:
+    def var(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
