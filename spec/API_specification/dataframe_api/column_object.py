@@ -17,6 +17,54 @@ class Column:
     constructor functions or an already-created dataframe object retrieved via
 
     """
+    def to_array_obj(self) -> object:
+        """
+        Obtain an object that can be used as input to ``asarray`` or ``from_dlpack``
+
+        The returned object must only be used for one thing: calling the ``asarray``
+        or ``from_dlpack`` functions of a library implementing the array API
+        standard, or equivalent ``asarray``/``from_dlpack`` functions to the
+        one in that standard. In practice that means that the returned object
+        may either already *be* an array type of a specific array library, or
+        it may implement one or more of the following methods or behaviors:
+
+        - ``__dlpack__``
+        - the Python buffer protocol
+        - ``__array__``
+        - ``__array_interface__``
+        - ``__cuda_array_interface__``
+        - the Python ``Sequence`` interface
+        - any other method that is known to work with an ``asarray`` function
+          in a library of interest
+
+        Importantly, the returned object must only implement/expose those
+        methods that work. An ``asarray`` function may try to use any of the
+        above methods, and the order in which it does so is not guaranteed.
+        Hence it is expected that if a method is present, it works correctly
+        and does not raise an exception (e.g., because of an unsupported dtype
+        or device).
+
+        .. admonition:: Tip
+
+           One way to expose methods only if they will work for the dtype,
+           device, and other characteristics of the column is to hide access to
+           the methods dynamically, so ``hasattr`` does the right thing. For
+           example::
+
+              def __dir__(self):
+                  methods = dir(self.__class__)
+                  attrs = list(self.__dict__.keys())
+                  keys = methods + attrs
+                  if not self.dtype in _dlpack_supported_dtypes:
+                      keys.remove("__dlpack__")
+
+                  return keys
+
+              def __dlpack__(self):
+                  ...
+
+        """
+
     @classmethod
     def from_sequence(cls, sequence: Sequence[object], dtype: dtype) -> Column:
         """
