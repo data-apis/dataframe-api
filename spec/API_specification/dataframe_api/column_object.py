@@ -396,6 +396,7 @@ class Column:
             ``namespace.null``, which which case ``'nan'`` and ``null`` will
             respectively return ``True`` even though ``float('nan') == float('nan')``
             isn't ``True``.
+            The dtype of `values` must match the current column's dtype.
 
         Returns
         -------
