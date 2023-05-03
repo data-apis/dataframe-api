@@ -396,7 +396,9 @@ class Column:
 
         Notes
         -----
-        There are no ordering guarantees.
+        There are no ordering guarantees. In particular, if there are multiple
+        indices corresponding to the same unique value, there is no guarantee
+        about which one will appear in the result.
         If the original Column contains multiple `'NaN'` values, then
         only a single index corresponding to those values should be returned.
         Likewise for null values (if ``skip_nulls=False``).
