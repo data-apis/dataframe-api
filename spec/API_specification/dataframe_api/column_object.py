@@ -270,7 +270,7 @@ class Column:
             If any of the Column's columns is not boolean.
         """
 
-    def any(self, skip_nulls: bool = True) -> bool:
+    def any(self, *, skip_nulls: bool = True) -> bool:
         """
         Reduction returns a bool.
 
@@ -280,7 +280,7 @@ class Column:
             If column is not boolean.
         """
 
-    def all(self, skip_nulls: bool = True) -> bool:
+    def all(self, *, skip_nulls: bool = True) -> bool:
         """
         Reduction returns a bool.
 
@@ -290,32 +290,32 @@ class Column:
             If column is not boolean.
         """
 
-    def min(self, skip_nulls: bool = True) -> dtype:
+    def min(self, *, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def max(self, skip_nulls: bool = True) -> dtype:
+    def max(self, *, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def sum(self, skip_nulls: bool = True) -> dtype:
+    def sum(self, *, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def prod(self, skip_nulls: bool = True) -> dtype:
+    def prod(self, *, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar. Must be supported for numerical data types.
         The returned value has the same dtype as the column.
         """
 
-    def median(self, skip_nulls: bool = True) -> dtype:
+    def median(self, *, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -323,7 +323,7 @@ class Column:
         dtypes.
         """
 
-    def mean(self, skip_nulls: bool = True) -> dtype:
+    def mean(self, *, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -331,7 +331,7 @@ class Column:
         dtypes.
         """
 
-    def std(self, skip_nulls: bool = True) -> dtype:
+    def std(self, *, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -339,7 +339,7 @@ class Column:
         dtypes.
         """
 
-    def var(self, skip_nulls: bool = True) -> dtype:
+    def var(self, *, skip_nulls: bool = True) -> dtype:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
