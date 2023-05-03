@@ -238,11 +238,15 @@
         </li>
         <li class="md-nav__item"><a href="#how-to-read-this-document" class="md-nav__link">How to read this document</a>
         </li>
-        <li class="md-nav__item"><a href="#how-to-adopt-this-api" class="md-nav__link">How to adopt this API</a>
+        <li class="md-nav__item"><a href="#how-to-adopt-this-api" class="md-nav__link">How to adopt this API</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#checking-a-dataframe-object-for-compliance" class="md-nav__link">Checking a dataframe object for Compliance</a>
         </li>
-        <li class="md-nav__item"><a href="#definitions" class="md-nav__link">Definitions</a>
+        <li class="md-nav__item"><a href="#discoverability-of-conforming-implementations" class="md-nav__link">Discoverability of conforming implementations</a>
+        </li></ul>
+            </nav>
         </li>
-        <li class="md-nav__item"><a href="#references" class="md-nav__link">References</a>
+        <li class="md-nav__item"><a href="#conformance" class="md-nav__link">Conformance</a>
         </li></ul>
             </nav>
         </li>
@@ -301,14 +305,7 @@
     <li class="md-nav__item">
     
     
-      <a href="#definitions" class="md-nav__link">Definitions</a>
-      
-    
-    </li>
-    <li class="md-nav__item">
-    
-    
-      <a href="#references" class="md-nav__link">References</a>
+      <a href="#conformance" class="md-nav__link">Conformance</a>
       
     
     </li></ul>
@@ -425,11 +422,15 @@
         </li>
         <li class="md-nav__item"><a href="#how-to-read-this-document" class="md-nav__link">How to read this document</a>
         </li>
-        <li class="md-nav__item"><a href="#how-to-adopt-this-api" class="md-nav__link">How to adopt this API</a>
+        <li class="md-nav__item"><a href="#how-to-adopt-this-api" class="md-nav__link">How to adopt this API</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#checking-a-dataframe-object-for-compliance" class="md-nav__link">Checking a dataframe object for Compliance</a>
         </li>
-        <li class="md-nav__item"><a href="#definitions" class="md-nav__link">Definitions</a>
+        <li class="md-nav__item"><a href="#discoverability-of-conforming-implementations" class="md-nav__link">Discoverability of conforming implementations</a>
+        </li></ul>
+            </nav>
         </li>
-        <li class="md-nav__item"><a href="#references" class="md-nav__link">References</a>
+        <li class="md-nav__item"><a href="#conformance" class="md-nav__link">Conformance</a>
         </li></ul>
             </nav>
         </li>
@@ -652,15 +653,108 @@ sugar required for fast analysis of data.</p>
 </section>
 <section id="how-to-read-this-document">
 <h2 id="how-to-read-this-document">How to read this document<a class="headerlink" href="#how-to-read-this-document" title="Permalink to this heading">¶</a></h2>
+<p>The API specification itself can be found under <a class="reference internal" href="API_specification/index.html#api-specification"><span class="std std-ref">API specification</span></a>.</p>
+<p>For guidance on how to read and understand the type annotations included in
+this specification, consult the Python
+<a class="reference external" href="https://docs.python.org/3/library/typing.html">documentation</a>.</p>
 </section>
 <section id="how-to-adopt-this-api">
-<h2 id="how-to-adopt-this-api">How to adopt this API<a class="headerlink" href="#how-to-adopt-this-api" title="Permalink to this heading">¶</a></h2>
+<span id="id1"></span><h2 id="how-to-adopt-this-api">How to adopt this API<a class="headerlink" href="#how-to-adopt-this-api" title="Permalink to this heading">¶</a></h2>
+<p>Most (all) existing dataframe libraries will find something in this API standard
+that is incompatible with a current implementation, and that they cannot
+change due to backwards compatibility concerns. Therefore we expect that each
+of those libraries will want to offer a standard-compliant API in a <em>new
+namespace</em>. The question then becomes: how does a user access this namespace?</p>
+<p>The simplest method is: document the import to use to directly access the
+namespace (e.g. <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">package_name.dataframe_api</span></code>). This has two issues
+though:</p>
+<ol class="arabic simple">
+<li><p>Dataframe-consuming libraries that want to support multiple dataframe
+libraries then have to explicitly import each library.</p></li>
+<li><p>It is difficult to <em>version</em> the dataframe API standard implementation (see
+<a class="reference internal" href="future_API_evolution.html#api-versioning"><span class="std std-ref">Versioning</span></a>).</p></li>
+</ol>
+<p>To address both issues, a uniform way must be provided by a conforming
+implementation to access the API namespace, namely a <a class="reference internal" href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__dataframe_namespace__" title="dataframe_api.DataFrame.__dataframe_namespace__"><span class="xref myst py py-meth">method on the dataframe
+object</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xp</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">__dataframe_namespace__</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The method must take one keyword, <code class="docutils literal notranslate"><span class="pre">api_version=None</span></code>, to make it possible to
+request a specific API version:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xp</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">__dataframe_namespace__</span><span class="p">(</span><span class="n">api_version</span><span class="o">=</span><span class="s1">'2023.04'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">xp</span></code> namespace must contain all functionality specified in
+<a class="reference internal" href="API_specification/index.html#api-specification"><span class="std std-ref">API specification</span></a>. The namespace may contain other functionality; however,
+including additional functionality is not recommended as doing so may hinder
+portability and inter-operation of dataframe libraries within user code.</p>
+<section id="checking-a-dataframe-object-for-compliance">
+<h3 id="checking-a-dataframe-object-for-compliance">Checking a dataframe object for Compliance<a class="headerlink" href="#checking-a-dataframe-object-for-compliance" title="Permalink to this heading">¶</a></h3>
+<p>Dataframe-consuming libraries are likely to want a mechanism for determining
+whether a provided dataframe is specification compliant. The recommended
+approach to check for compliance is by checking whether a dataframe object has
+an <code class="docutils literal notranslate"><span class="pre">__dataframe_namespace__</span></code> attribute, as this is the one distinguishing
+feature of a dataframe-compliant object.</p>
+<p>Checking for an <code class="docutils literal notranslate"><span class="pre">__dataframe_namespace__</span></code> attribute can be implemented as a
+small utility function similar to the following.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_dataframe_api_obj</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">'__dataframe_namespace__'</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
-<section id="definitions">
-<h2 id="definitions">Definitions<a class="headerlink" href="#definitions" title="Permalink to this heading">¶</a></h2>
+<section id="discoverability-of-conforming-implementations">
+<h3 id="discoverability-of-conforming-implementations">Discoverability of conforming implementations<a class="headerlink" href="#discoverability-of-conforming-implementations" title="Permalink to this heading">¶</a></h3>
+<p>It may be useful to have a way to discover all packages in a Python
+environment which provide a conforming dataframe API implementation, and the
+namespace that that implementation resides in.
+To assist dataframe-consuming libraries which need to create dataframes originating
+from multiple conforming dataframe implementations, or developers who want to perform
+for example cross-library testing, libraries may provide an
+<a class="reference external" href="https://packaging.python.org/specifications/entry-points/">entry point</a> in order to make a dataframe API
+namespace discoverable.</p>
+<div class="admonition-optional-feature admonition">
+<p class="admonition-title">Optional feature</p>
+<p>Given that entry points typically require build system &amp; package installer
+specific implementation, this standard chooses to recommend rather than
+mandate providing an entry point.</p>
+</div>
+<p>The following code is an example for how one can discover installed
+conforming libraries:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">importlib.metadata</span> <span class="kn">import</span> <span class="n">entry_points</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="n">entry_points</span><span class="p">()[</span><span class="s1">'dataframe_api'</span><span class="p">]</span>
+    <span class="n">ep</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">ep</span> <span class="k">for</span> <span class="n">ep</span> <span class="ow">in</span> <span class="n">eps</span> <span class="k">if</span> <span class="n">ep</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">'package_name'</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+    <span class="c1"># The dict interface for entry_points() is deprecated in py3.10,</span>
+    <span class="c1"># supplanted by a new select interface.</span>
+    <span class="n">ep</span> <span class="o">=</span> <span class="n">entry_points</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">'dataframe_api'</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'package_name'</span><span class="p">)</span>
+
+<span class="n">xp</span> <span class="o">=</span> <span class="n">ep</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>An entry point must have the following properties:</p>
+<ul class="simple">
+<li><p><strong>group</strong>: equal to <code class="docutils literal notranslate"><span class="pre">dataframe_api</span></code>.</p></li>
+<li><p><strong>name</strong>: equal to the package name.</p></li>
+<li><p><strong>object reference</strong>: equal to the dataframe API namespace import path.</p></li>
+</ul>
 </section>
-<section id="references">
-<h2 id="references">References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
+</section>
+<hr class="docutils"/>
+<section id="conformance">
+<h2 id="conformance">Conformance<a class="headerlink" href="#conformance" title="Permalink to this heading">¶</a></h2>
+<p>A conforming implementation of the dataframe API standard must provide and
+support all the functions, arguments, data types, syntax, and semantics
+described in this specification.</p>
+<p>A conforming implementation of the dataframe API standard may provide
+additional values, objects, properties, data types, and functions beyond those
+described in this specification.</p>
+<p>Libraries which aim to provide a conforming implementation but haven’t yet
+completed such an implementation may, and are encouraged to, provide details on
+the level of (non-)conformance. For details on how to do this, see
+<a class="reference internal" href="verification_test_suite.html"><span class="std std-doc">Verification - measuring conformance</span></a>.</p>
 </section>
 </section>
 
