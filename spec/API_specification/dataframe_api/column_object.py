@@ -402,6 +402,6 @@ class Column:
         If the original Column contains multiple `'NaN'` values, then
         only a single index corresponding to those values should be returned.
         Likewise for null values (if ``skip_nulls=False``).
-        To get the unique values, you can do ``df.get_rows(df.unique_indices())``.
+        To get the unique values, you can do ``col.get_rows(col.unique_indices())``.
         """
         ...
