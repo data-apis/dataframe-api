@@ -17,7 +17,7 @@ class Column:
     constructor functions or an already-created dataframe object retrieved via
 
     """
-    def to_array_obj(self) -> object:
+    def to_array_obj(self, *, null_handling: str | None = None) -> object:
         """
         Obtain an object that can be used as input to ``asarray`` or ``from_dlpack``
 
@@ -62,6 +62,38 @@ class Column:
 
               def __dlpack__(self):
                   ...
+
+        Parameters
+        ----------
+        null_handling : str or None
+            Determine how to treat ``null`` values that may be present in the
+            column. Valid options are:
+
+            - ``None`` (default): no special handling. This assumes that either
+              no missing values are present, or there is an array type with
+              native support for missing values that is/can be converted to.
+              *Note: there is currently no such library that is in wide use;
+              NumPy's masked arrays are non-recommended, and other array
+              libraries do not support missing values at all.*
+            - ``raise``: always raise a ``ValueError`` if nulls are present.
+            - ``to-nan``: for floating-point dtypes, convert any nulls to ``nan``.
+              For other dtypes, do the same as ``None``.
+
+            Note that if it is desired to convert nulls to a dtype-specific
+            sentinel value, the user should do this before calling
+            ``is_array_obj`` with `.isnull()` and replacing the values
+            directly.
+
+        Raises
+        ------
+        TypeError
+            In case it is not possible to convert the column to any (known) array
+            library type, or use any of the possible interchange methods.
+            This can be due to the dtype (e.g., no array library supports datetime
+            dtypes with a time zone), device, or other reasons.
+        ValueError
+            If the column contains ``null`` values which prevent returning an
+            array object.
 
         """
 
