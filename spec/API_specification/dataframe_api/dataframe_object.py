@@ -36,6 +36,32 @@ class DataFrame:
     **Methods and Attributes**
 
     """
+    def __dataframe_namespace__(
+        self: DataFrame, /, *, api_version: Optional[str] = None
+    ) -> Any:
+        """
+        Returns an object that has all the dataframe API functions on it.
+
+        Parameters
+        ----------
+        api_version: Optional[str]
+            String representing the version of the dataframe API specification
+            to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
+            If it is ``None``, it should return the namespace corresponding to
+            latest version of the dataframe API specification.  If the given
+            version is invalid or not implemented for the given module, an
+            error should be raised. Default: ``None``.
+
+        Returns
+        -------
+        namespace: Any
+            An object representing the dataframe API namespace. It should have
+            every top-level function defined in the specification as an
+            attribute. It may contain other public names as well, but it is
+            recommended to only include those names that are part of the
+            specification.
+
+        """
 
     @classmethod
     def from_dict(cls, data: Mapping[str, Column]) -> DataFrame:
@@ -543,7 +569,7 @@ class DataFrame:
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
-    def any(self, skip_nulls: bool = True) -> DataFrame:
+    def any(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -554,7 +580,7 @@ class DataFrame:
         """
         ...
 
-    def all(self, skip_nulls: bool = True) -> DataFrame:
+    def all(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -565,7 +591,7 @@ class DataFrame:
         """
         ...
     
-    def any_rowwise(self, skip_nulls: bool = True) -> Column:
+    def any_rowwise(self, *, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
@@ -579,7 +605,7 @@ class DataFrame:
         """
         ...
 
-    def all_rowwise(self, skip_nulls: bool = True) -> Column:
+    def all_rowwise(self, *, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
@@ -593,49 +619,49 @@ class DataFrame:
         """
         ...
 
-    def min(self, skip_nulls: bool = True) -> DataFrame:
+    def min(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def max(self, skip_nulls: bool = True) -> DataFrame:
+    def max(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def sum(self, skip_nulls: bool = True) -> DataFrame:
+    def sum(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def prod(self, skip_nulls: bool = True) -> DataFrame:
+    def prod(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def median(self, skip_nulls: bool = True) -> DataFrame:
+    def median(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def mean(self, skip_nulls: bool = True) -> DataFrame:
+    def mean(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def std(self, skip_nulls: bool = True) -> DataFrame:
+    def std(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def var(self, skip_nulls: bool = True) -> DataFrame:
+    def var(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
