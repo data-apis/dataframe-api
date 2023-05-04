@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Sequence
+from typing import NoReturn, Sequence
 
 from ._types import Scalar, dtype
 
@@ -35,6 +35,52 @@ class Column:
         -------
         Column
         """
+        ...
+
+    def __len__(self) -> int:
+        """
+        Return the number of rows.
+        """
+
+    def __iter__(self) -> NoReturn:
+        """
+        Iterate over elements.
+
+        This is intentionally "poisoned" to discourage inefficient code patterns.
+
+        Raises
+        ------
+        NotImplementedError
+        """
+        raise NotImplementedError("'__iter__' is intentionally not implemented.")
+
+    def get_rows(self, indices: Column[int]) -> Column:
+        """
+        Select a subset of rows, similar to `ndarray.take`.
+
+        Parameters
+        ----------
+        indices : Column[int]
+            Positions of rows to select.
+        """
+        ...
+
+    def get_value(self, row_number: int) -> dtype:
+        """
+        Select the value at a row number, similar to `ndarray.__getitem__(<int>)`.
+
+        Parameters
+        ----------
+        row_number : int
+            Row number of value to return.
+        
+        Returns
+        -------
+        dtype
+            Depends on the dtype of the Column, and may vary
+            across implementations.
+        """
+        ...
 
     def __eq__(self, other: Column | Scalar) -> Column:
         """
