@@ -385,7 +385,7 @@ class Column:
         In particular, does not check for `np.timedelta64('NaT')`.
         """
 
-    def unique_indices(self, *, skip_nulls: bool) -> Column[int]:
+    def unique_indices(self, *, skip_nulls: bool = True) -> Column[int]:
         """
         Return indices corresponding to unique values in Column.
 
