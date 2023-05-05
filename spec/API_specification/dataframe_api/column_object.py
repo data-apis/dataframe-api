@@ -410,3 +410,24 @@ class Column:
         Does *not* include 'missing' or 'null' entries.
         In particular, does not check for `np.timedelta64('NaT')`.
         """
+
+    def unique_indices(self, *, skip_nulls: bool = True) -> Column[int]:
+        """
+        Return indices corresponding to unique values in Column.
+
+        Returns
+        -------
+        Column[int]
+            Indices corresponding to unique values.
+
+        Notes
+        -----
+        There are no ordering guarantees. In particular, if there are multiple
+        indices corresponding to the same unique value, there is no guarantee
+        about which one will appear in the result.
+        If the original Column contains multiple `'NaN'` values, then
+        only a single index corresponding to those values should be returned.
+        Likewise for null values (if ``skip_nulls=False``).
+        To get the unique values, you can do ``col.get_rows(col.unique_indices())``.
+        """
+        ...
