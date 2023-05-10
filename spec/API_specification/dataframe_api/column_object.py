@@ -54,6 +54,12 @@ class Column:
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
+    @property
+    def dtype(self) -> dtype:
+        """
+        Return data type of column.
+        """
+
     def get_rows(self, indices: Column[int]) -> Column:
         """
         Select a subset of rows, similar to `ndarray.take`.
