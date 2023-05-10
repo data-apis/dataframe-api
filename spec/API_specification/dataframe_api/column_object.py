@@ -431,6 +431,24 @@ class Column:
         In particular, does not check for `np.timedelta64('NaT')`.
         """
 
+    def is_in(self, values: Column) -> Column[bool]:
+        """
+        Indicate whether the value at each row matches any value in `values`.
+
+        Parameters
+        ----------
+        values : Column
+            Contains values to compare against. May include ``float('nan')`` and
+            ``null``, in which case ``'nan'`` and ``null`` will
+            respectively return ``True`` even though ``float('nan') == float('nan')``
+            isn't ``True``.
+            The dtype of ``values`` must match the current column's dtype.
+
+        Returns
+        -------
+        Column[bool]
+        """
+
     def unique_indices(self, *, skip_nulls: bool = True) -> Column[int]:
         """
         Return indices corresponding to unique values in Column.
