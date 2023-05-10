@@ -77,33 +77,28 @@ def dataframe_from_dict(data: Mapping[str, Column]) -> DataFrame:
 
 class null:
     """
-    A `null` singleton object to represent missing data.
+    A `null` object to represent missing data.
 
-    ``null`` may be used when constructing a `Column` from a Python sequence.
-    It supports ``is``, and does not support ``==`` and ``bool``.
+    ``null`` is a scalar, and may be used when constructing a `Column` from a
+    Python sequence with `column_from_sequence`. It does not support ``is``,
+    ``==`` or ``bool``.
 
-    Methods
-    -------
-    __bool__
-    __eq__
+    Raises
+    ------
+    TypeError
+        From ``__eq__`` and from ``__bool__``.
+
+        For ``_eq__``: a missing value must not be compared for equality
+        directly. Instead, use `DataFrame.isnull` or `Column.isnull` to check
+        for presence of missing values.
+
+        For ``__bool__``: truthiness of a missing value is ambiguous.
+
+    Notes
+    -----
+    Like for Python scalars, the ``null`` object may be duck typed so it can
+    reside on (e.g.) a GPU. Hence, the builtin ``is`` keyword should not be
+    used to check if an object *is* the ``null`` object.
 
     """
-    def __eq__(self):
-        """
-        Raises
-        ------
-        RuntimeError
-            A missing value must not be compared for equality. Use ``is`` to check
-            if an object *is* this ``null`` object, and `DataFrame.isnull` or
-            `Column.isnull` to check for presence of missing values.
-        """
-        ...
-
-    def __bool__(self):
-        """
-        Raises
-        ------
-        TypeError
-            Truthiness of a missing value is ambiguous
-        """
-        ...
+    ...
