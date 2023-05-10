@@ -84,6 +84,15 @@ class Column:
             ``is_array_obj`` with `.isnull()` and replacing the values
             directly.
 
+        Returns
+        -------
+        array_obj : object
+            Either a custom object or an instance of the  array type of a
+            specific array library. In the latter case, the array must have the
+            closest matching dtype of the array library (e.g., a column with a
+            floating-point dtype must produce the corresponding floating-point
+            dtype of the same precision that the array library offers).
+
         Raises
         ------
         TypeError
