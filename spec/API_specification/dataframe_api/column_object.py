@@ -439,10 +439,10 @@ class Column:
         ----------
         values : Column
             Contains values to compare against. May include ``float('nan')`` and
-            ``null``, which case ``'nan'`` and ``null`` will
+            ``null``, in which case ``'nan'`` and ``null`` will
             respectively return ``True`` even though ``float('nan') == float('nan')``
             isn't ``True``.
-            The dtype of `values` must match the current column's dtype.
+            The dtype of ``values`` must match the current column's dtype.
 
         Returns
         -------
