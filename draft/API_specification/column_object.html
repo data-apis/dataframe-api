@@ -295,11 +295,11 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.any" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.any()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.from_sequence" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.from_sequence()</span></code></a>
-        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.get_value" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_value()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.is_in" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.is_in()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.isnan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.isnan()</span></code></a>
         </li>
@@ -416,11 +416,11 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.any" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.any()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.from_sequence" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.from_sequence()</span></code></a>
-        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.get_value" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_value()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.is_in" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.is_in()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.isnan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.isnan()</span></code></a>
         </li>
@@ -726,24 +726,6 @@ for the operation by the underling dtypes.</p>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.Column.from_sequence">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_sequence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dtype</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.from_sequence" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct Column from sequence of elements.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sequence</strong> (<em>Sequence</em><em>[</em><em>object</em><em>]</em>) – Sequence of elements. Each element must be of the specified
-<code class="docutils literal notranslate"><span class="pre">dtype</span></code>, the corresponding Python builtin scalar type, or
-coercible to that Python scalar type.</p></li>
-<li><p><strong>dtype</strong> (<em>str</em>) – Dtype of result. Must be specified.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>Column</strong></p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.get_rows">
 <span class="sig-name descname"><span class="pre">get_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.get_rows" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select a subset of rows, similar to <code class="code docutils literal notranslate"><span class="pre">ndarray.take</span></code>.</p>
@@ -764,6 +746,23 @@ coercible to that Python scalar type.</p></li>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>dtype</strong> – Depends on the dtype of the Column, and may vary
 across implementations.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.is_in">
+<span class="sig-name descname"><span class="pre">is_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.Column.is_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicate whether the value at each row matches any value in <code class="code docutils literal notranslate"><span class="pre">values</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>values</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a>) – Contains values to compare against. May include <code class="docutils literal notranslate"><span class="pre">float('nan')</span></code> and
+<code class="docutils literal notranslate"><span class="pre">null</span></code>, in which case <code class="docutils literal notranslate"><span class="pre">'nan'</span></code> and <code class="docutils literal notranslate"><span class="pre">null</span></code> will
+respectively return <code class="docutils literal notranslate"><span class="pre">True</span></code> even though <code class="docutils literal notranslate"><span class="pre">float('nan')</span> <span class="pre">==</span> <span class="pre">float('nan')</span></code>
+isn’t <code class="docutils literal notranslate"><span class="pre">True</span></code>.
+The dtype of <code class="docutils literal notranslate"><span class="pre">values</span></code> must match the current column’s dtype.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Column[bool]</strong></p>
 </dd>
 </dl>
 </dd></dl>
