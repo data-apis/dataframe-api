@@ -18,7 +18,7 @@ String representing the version of the DataFrame API specification to which the
 conforming implementation adheres.
 """
 
-def column_from_sequence(sequence: Sequence[object], dtype: dtype) -> Column:
+def column_from_sequence(sequence: Sequence[object], *, dtype: dtype) -> Column:
     """
     Construct Column from sequence of elements.
 
