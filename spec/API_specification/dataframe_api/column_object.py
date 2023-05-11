@@ -54,8 +54,7 @@ class Column:
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
-    @property
-    def dtype(self) -> dtype:
+    def get_dtype(self) -> dtype:
         """
         Return data type of column.
         """
