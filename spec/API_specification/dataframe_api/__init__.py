@@ -29,8 +29,8 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     Notes
     -----
     The order in which the input DataFrames appear in
-    the output is preserved (so long as the DataFrame implementation supports ordered
-    columns).
+    the output is preserved (so long as the DataFrame implementation supports row
+    ordering).
 
     Returns
     -------
