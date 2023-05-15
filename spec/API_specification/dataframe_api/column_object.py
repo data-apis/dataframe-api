@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from typing import NoReturn, Sequence
+from typing import NoReturn, Sequence, TYPE_CHECKING
 
-from ._types import Scalar, DType
+if TYPE_CHECKING:
+    from ._types import Scalar, DType
 
 
 __all__ = ['Column']
