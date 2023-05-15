@@ -1,13 +1,9 @@
 """
 Function stubs and API documentation for the DataFrame API standard.
 """
-<<<<<<< HEAD
-from typing import Sequence
-=======
 from __future__ import annotations
 
 from typing import Mapping, Sequence
->>>>>>> upstream/main
 
 from .column_object import *
 from .dataframe_object import *
