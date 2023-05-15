@@ -17,26 +17,6 @@ class Column:
     constructor functions or an already-created dataframe object retrieved via
 
     """
-    @classmethod
-    def from_sequence(cls, sequence: Sequence[object], dtype: DType) -> Column:
-        """
-        Construct Column from sequence of elements.
-
-        Parameters
-        ----------
-        sequence : Sequence[object]
-            Sequence of elements. Each element must be of the specified
-            ``dtype``, the corresponding Python builtin scalar type, or
-            coercible to that Python scalar type.
-        dtype : str
-            Dtype of result. Must be specified.
-        
-        Returns
-        -------
-        Column
-        """
-        ...
-
     def __len__(self) -> int:
         """
         Return the number of rows.
@@ -435,6 +415,24 @@ class Column:
         This only checks for 'NaN'.
         Does *not* include 'missing' or 'null' entries.
         In particular, does not check for `np.timedelta64('NaT')`.
+        """
+
+    def is_in(self, values: Column) -> Column[bool]:
+        """
+        Indicate whether the value at each row matches any value in `values`.
+
+        Parameters
+        ----------
+        values : Column
+            Contains values to compare against. May include ``float('nan')`` and
+            ``null``, in which case ``'nan'`` and ``null`` will
+            respectively return ``True`` even though ``float('nan') == float('nan')``
+            isn't ``True``.
+            The dtype of ``values`` must match the current column's dtype.
+
+        Returns
+        -------
+        Column[bool]
         """
 
     def unique_indices(self, *, skip_nulls: bool = True) -> Column[int]:
