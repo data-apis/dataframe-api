@@ -9,7 +9,7 @@ from .column_object import *
 from .dataframe_object import *
 from .groupby_object import *
 
-from ._types import dtype
+from ._types import DType
 
 
 __dataframe_api_version__: str = "YYYY.MM"
@@ -18,7 +18,7 @@ String representing the version of the DataFrame API specification to which the
 conforming implementation adheres.
 """
 
-def column_from_sequence(sequence: Sequence[object], *, dtype: dtype) -> Column:
+def column_from_sequence(sequence: Sequence[object], *, dtype: DType) -> Column:
     """
     Construct Column from sequence of elements.
 
@@ -28,7 +28,7 @@ def column_from_sequence(sequence: Sequence[object], *, dtype: dtype) -> Column:
         Sequence of elements. Each element must be of the specified
         ``dtype``, the corresponding Python builtin scalar type, or
         coercible to that Python scalar type.
-    dtype : str
+    dtype : DType
         Dtype of result. Must be specified.
 
     Returns
