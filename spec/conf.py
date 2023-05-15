@@ -75,7 +75,7 @@ nitpick_ignore = [
     ('py:class', 'array'),
     ('py:class', 'DataFrame'),
     ('py:class', 'device'),
-    ('py:class', 'dtype'),
+    ('py:class', 'DType'),
     ('py:class', 'NestedSequence'),
     ('py:class', 'collections.abc.Sequence'),
     ('py:class', 'PyCapsule'),
