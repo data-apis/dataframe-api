@@ -18,6 +18,26 @@ String representing the version of the DataFrame API specification to which the
 conforming implementation adheres.
 """
 
+def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
+    """
+    Concatenate DataFrames vertically.
+
+    To concatenate horizontally, please use ``insert``.
+
+    Parameters
+    ----------
+    dataframes : Sequence[DataFrame]
+        DataFrames to concatenate.
+        Column names, ordering, and dtypes must match.
+
+    Notes
+    -----
+    The order in which the input DataFrames appear in
+    the output is preserved (so long as the DataFrame implementation supports row
+    ordering).
+    """
+    ...
+
 def column_from_sequence(sequence: Sequence[object], *, dtype: dtype) -> Column:
     """
     Construct Column from sequence of elements.
@@ -52,3 +72,4 @@ def dataframe_from_dict(data: Mapping[str, Column]) -> DataFrame:
     -------
     DataFrame
     """
+    ...
