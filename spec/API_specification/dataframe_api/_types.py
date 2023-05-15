@@ -57,7 +57,7 @@ __all__ = [
     "Sequence",
     "array",
     "device",
-    "dtype",
+    "DType",
     "ellipsis",
     "Enum",
 ]
