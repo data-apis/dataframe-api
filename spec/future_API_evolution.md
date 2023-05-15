@@ -1,13 +1,63 @@
+(future-API-evolution)=
+
 # Future API standard evolution
 
 ## Scope extensions
 
+Proposals for scope extensions in a future version of the API standard will
+be proposed in an issue on the
+[data-apis/dataframe-api](https://github.com/data-apis/dataframe-api/issues)
+repository, and discussed in public and decided upon.
+
+```{note}
+In the future, once the API standard matures, this may be changed and follow
+the more formal process documented at
+[data-apis/governance::process_document.md](https://github.com/data-apis/governance/blob/main/process_document.md).
+```
 
 
 ## Backwards compatibility
 
+Functions, objects, keywords and specified behavior are added to this API
+standard only if there is a clear need, and functionality is either very
+minimally scoped or are already present in multiple existing dataframe
+libraries. Therefore it is highly unlikely that future versions of this
+standard will make backwards-incompatible changes.
 
+The aim is for future versions to be 100% backwards compatible with older
+versions. Any exceptions must have strong rationales and be clearly documented
+in the updated API specification and Changelog for a release.
+
+
+(api-versioning)=
 
 ## Versioning
 
+This API standard uses the following versioning scheme:
 
+- The version is date-based, in the form `yyyy.mm` (e.g., `2020.12`).
+- The version shall not include a standard way to do `alpha`/`beta`/`rc` or
+  `.post`/`.dev` type versions.
+  _Rationale: that's for Python packages, not for a standard._
+- The version must be made available at runtime via an attribute
+  `__dataframe_api_version__` by a compliant implementation, in `'yyyy.mm'` format
+  as a string, in the namespace that implements the API standard.
+  _Rationale: dunder version strings are the standard way of doing this._
+
+No utilities for dealing with version comparisons need to be provided; given
+the format simple string comparisons with Python operators (`=-`, `<`, `>=`,
+etc.) will be enough.
+
+```{note}
+Rationale for the `yyyy.mm` versioning scheme choice:
+the API will be provided as part of a library, which already has a versioning
+scheme (typically PEP 440 compliant and in the form `major.minor.bugfix`),
+and a way to access it via `module.__version__`. The API standard version is
+completely independent from the package version. Given the standardization
+process, it resembles a C/C++ versioning scheme (e.g. `C99`, `C++14`) more
+than Python package versioning.
+```
+
+The frequency of releasing a new version of an API standard will likely be at
+regular intervals and on the order of one year, however no assumption on
+frequency of new versions appearing must be made.
