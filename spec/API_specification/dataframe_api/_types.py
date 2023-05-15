@@ -23,7 +23,7 @@ from enum import Enum
 array = TypeVar("array")
 Scalar = TypeVar("Scalar")
 device = TypeVar("device")
-dtype = TypeVar("dtype")
+DType = TypeVar("DType")
 SupportsDLPack = TypeVar("SupportsDLPack")
 SupportsBufferProtocol = TypeVar("SupportsBufferProtocol")
 PyCapsule = TypeVar("PyCapsule")
@@ -57,7 +57,7 @@ __all__ = [
     "Sequence",
     "array",
     "device",
-    "dtype",
+    "DType",
     "ellipsis",
     "Enum",
 ]
