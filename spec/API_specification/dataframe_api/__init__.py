@@ -3,7 +3,7 @@ Function stubs and API documentation for the DataFrame API standard.
 """
 from __future__ import annotations
 
-from typing import Mapping, Sequence
+from typing import Mapping, Sequence, Any
 
 from .column_object import *
 from .dataframe_object import *
@@ -102,3 +102,20 @@ class null:
 
     """
     ...
+
+def isnull(value: Any, /) -> bool:
+    """
+    Check if an object is a `null` scalar.
+
+    Parameters
+    ----------
+    value : Any
+        Any input type is valid.
+
+    Returns
+    -------
+    bool
+        True if the input is a `null` object from the same library which
+        implements the dataframe API standard, False otherwise.
+
+    """
