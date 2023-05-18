@@ -167,7 +167,7 @@ class Column:
 
     def __and__(self, other: Column | Scalar) -> Column:
         """
-        Add `other` dataframe or scalar to this column.
+        Apply logical 'and' to `other` dataframe or scalar and this column.
 
         Parameters
         ----------
