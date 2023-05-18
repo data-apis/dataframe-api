@@ -165,20 +165,42 @@ class Column:
         Column
         """
 
-    def __and__(self, other: Column | Scalar) -> Column:
+    def __and__(self, other: Column[bool] | bool) -> Column:
         """
-        Apply logical 'and' to `other` dataframe or scalar and this column.
+        Apply logical 'and' to `other` dataframe (or scalar) and this column.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Column[bool] or bool
             If Column, must have same length.
-            "Scalar" here is defined implicitly by what scalar types are allowed
-            for the operation by the underling dtypes.
 
         Returns
         -------
         Column
+
+        Raises
+        ------
+        ValueError
+            If column is not boolean.
+        """
+
+    def __or__(self, other: Column[bool] | bool) -> Column:
+        """
+        Apply logical 'or' to `other` dataframe (or scalar) and this column.
+
+        Parameters
+        ----------
+        other : Column[bool] or Scalar
+            If Column, must have same length.
+
+        Returns
+        -------
+        Column[bool]
+
+        Raises
+        ------
+        ValueError
+            If column is not boolean.
         """
 
     def __sub__(self, other: Column | Scalar) -> Column:
