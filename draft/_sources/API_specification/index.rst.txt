@@ -5,6 +5,21 @@ API specification
 
 .. currentmodule:: dataframe_api
 
+The API consists of dataframe, column and groupby classes, plus a small number
+of objects and functions in the top-level namespace. The latter are:
+
+.. autosummary::
+   :toctree: generated
+   :template: attribute.rst
+   :nosignatures:
+
+   __dataframe_api_version__
+   isnull
+   null
+
+The ``DataFrame``, ``Column`` and ``GroupBy`` objects have the following
+methods and attributes:
+
 .. toctree::
    :maxdepth: 3
 
