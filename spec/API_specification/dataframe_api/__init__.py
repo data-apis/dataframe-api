@@ -88,7 +88,7 @@ class null:
     TypeError
         From ``__eq__`` and from ``__bool__``.
 
-        For ``_eq__``: a missing value must not be compared for equality
+        For ``__eq__``: a missing value must not be compared for equality
         directly. Instead, use `DataFrame.isnull` or `Column.isnull` to check
         for presence of missing values.
 
