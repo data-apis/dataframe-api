@@ -103,13 +103,13 @@ class null:
     """
     ...
 
-def isnull(value: Any, /) -> bool:
+def isnull(value: object, /) -> bool:
     """
     Check if an object is a `null` scalar.
 
     Parameters
     ----------
-    value : Any
+    value : object
         Any input type is valid.
 
     Returns
