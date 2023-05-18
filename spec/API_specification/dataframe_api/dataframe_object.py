@@ -410,6 +410,44 @@ class DataFrame:
         """
         ...
 
+    def __and__(self, other: DataFrame[bool] | bool) -> DataFrame:
+        """
+        Apply logical 'and' to `other` DataFrame (or scalar) and this dataframe.
+
+        Parameters
+        ----------
+        other : DataFrame[bool] or bool
+            If DataFrame, must have same length.
+
+        Returns
+        -------
+        DataFrame[bool]
+
+        Raises
+        ------
+        ValueError
+            If `self` or `other` is not boolean.
+        """
+
+    def __or__(self, other: DataFrame[bool] | bool) -> DataFrame:
+        """
+        Apply logical 'or' to `other` DataFrame (or scalar) and this DataFrame.
+
+        Parameters
+        ----------
+        other : DataFrame[bool] or Scalar
+            If DataFrame, must have same length.
+
+        Returns
+        -------
+        DataFrame[bool]
+
+        Raises
+        ------
+        ValueError
+            If `self` or `other` is not boolean.
+        """
+
     def __add__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Add `other` dataframe or scalar to this dataframe.

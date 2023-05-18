@@ -167,7 +167,7 @@ class Column:
 
     def __and__(self, other: Column[bool] | bool) -> Column:
         """
-        Apply logical 'and' to `other` dataframe (or scalar) and this column.
+        Apply logical 'and' to `other` Column (or scalar) and this Column.
 
         Parameters
         ----------
@@ -181,12 +181,12 @@ class Column:
         Raises
         ------
         ValueError
-            If column is not boolean.
+            If `self` or `other` is not boolean.
         """
 
     def __or__(self, other: Column[bool] | bool) -> Column:
         """
-        Apply logical 'or' to `other` dataframe (or scalar) and this column.
+        Apply logical 'or' to `other` Column (or scalar) and this column.
 
         Parameters
         ----------
@@ -200,12 +200,28 @@ class Column:
         Raises
         ------
         ValueError
-            If column is not boolean.
+            If `self` or `other` is not boolean.
+        """
+
+    def __add__(self, other: Column | Scalar) -> Column:
+        """
+        Add `other` column or scalar from this column.
+
+        Parameters
+        ----------
+        other : Column or Scalar
+            If Column, must have same length.
+            "Scalar" here is defined implicitly by what scalar types are allowed
+            for the operation by the underling dtypes.
+
+        Returns
+        -------
+        Column
         """
 
     def __sub__(self, other: Column | Scalar) -> Column:
         """
-        Subtract `other` dataframe or scalar from this column.
+        Subtract `other` column or scalar from this column.
 
         Parameters
         ----------
@@ -221,7 +237,7 @@ class Column:
 
     def __mul__(self, other: Column | Scalar) -> Column:
         """
-        Multiply `other` dataframe or scalar with this column.
+        Multiply `other` column or scalar with this column.
 
         Parameters
         ----------
@@ -253,7 +269,7 @@ class Column:
 
     def __floordiv__(self, other: Column | Scalar) -> Column:
         """
-        Floor-divide `other` dataframe or scalar to this column.
+        Floor-divide `other` column or scalar to this column.
 
         Parameters
         ----------
