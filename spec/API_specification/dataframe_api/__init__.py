@@ -3,7 +3,7 @@ Function stubs and API documentation for the DataFrame API standard.
 """
 from __future__ import annotations
 
-from typing import Mapping, Sequence
+from typing import Mapping, Sequence, Any
 
 from .column_object import *
 from .dataframe_object import *
@@ -14,8 +14,9 @@ from ._types import DType
 
 __dataframe_api_version__: str = "YYYY.MM"
 """
-String representing the version of the DataFrame API specification to which the
-conforming implementation adheres.
+String representing the version of the DataFrame API specification to which
+the conforming implementation adheres. Set to a concrete value for a stable
+implementation of the dataframe API standard.
 """
 
 def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
@@ -73,3 +74,48 @@ def dataframe_from_dict(data: Mapping[str, Column]) -> DataFrame:
     DataFrame
     """
     ...
+
+class null:
+    """
+    A `null` object to represent missing data.
+
+    ``null`` is a scalar, and may be used when constructing a `Column` from a
+    Python sequence with `column_from_sequence`. It does not support ``is``,
+    ``==`` or ``bool``.
+
+    Raises
+    ------
+    TypeError
+        From ``__eq__`` and from ``__bool__``.
+
+        For ``__eq__``: a missing value must not be compared for equality
+        directly. Instead, use `DataFrame.isnull` or `Column.isnull` to check
+        for presence of missing values.
+
+        For ``__bool__``: truthiness of a missing value is ambiguous.
+
+    Notes
+    -----
+    Like for Python scalars, the ``null`` object may be duck typed so it can
+    reside on (e.g.) a GPU. Hence, the builtin ``is`` keyword should not be
+    used to check if an object *is* the ``null`` object.
+
+    """
+    ...
+
+def isnull(value: object, /) -> bool:
+    """
+    Check if an object is a `null` scalar.
+
+    Parameters
+    ----------
+    value : object
+        Any input type is valid.
+
+    Returns
+    -------
+    bool
+        True if the input is a `null` object from the same library which
+        implements the dataframe API standard, False otherwise.
+
+    """
