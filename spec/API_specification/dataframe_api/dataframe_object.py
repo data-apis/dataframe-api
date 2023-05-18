@@ -707,7 +707,7 @@ class DataFrame:
         """
         ...
 
-    def fill_nan(self, value: float | null, /):
+    def fill_nan(self, value: float | 'null', /):
         """
         Fill ``nan`` values with the given fill value.
 
