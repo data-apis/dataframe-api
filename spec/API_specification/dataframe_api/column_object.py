@@ -457,7 +457,7 @@ class Column:
         """
         ...
 
-    def fill_nan(self, value: float | 'null', /):
+    def fill_nan(self, value: float | 'null', /) -> Column:
         """
         Fill floating point ``nan`` values with the given fill value.
 
