@@ -719,7 +719,7 @@ class DataFrame:
         value : float or `null`
             Value used to replace any ``nan`` in the column with. Must be
             of the Python scalar type matching the dtype of the column (or
-            be `null`.
+            be `null`).
 
         """
         ...
