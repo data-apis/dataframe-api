@@ -706,3 +706,20 @@ class DataFrame:
         In particular, does not check for `np.timedelta64('NaT')`.
         """
         ...
+
+    def fill_nan(self, value: float | 'null', /) -> DataFrame:
+        """
+        Fill ``nan`` values with the given fill value.
+
+        The fill operation will apply to all columns with a floating-point
+        dtype. Other columns remain unchanged.
+
+        Parameters
+        ----------
+        value : float or `null`
+            Value used to replace any ``nan`` in the column with. Must be
+            of the Python scalar type matching the dtype of the column (or
+            be `null`).
+
+        """
+        ...

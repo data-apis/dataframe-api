@@ -456,3 +456,17 @@ class Column:
         To get the unique values, you can do ``col.get_rows(col.unique_indices())``.
         """
         ...
+
+    def fill_nan(self, value: float | 'null', /) -> Column:
+        """
+        Fill floating point ``nan`` values with the given fill value.
+
+        Parameters
+        ----------
+        value : float or `null`
+            Value used to replace any ``nan`` in the column with. Must be
+            of the Python scalar type matching the dtype of the column (or
+            be `null`).
+
+        """
+        ...
