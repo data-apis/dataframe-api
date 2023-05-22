@@ -435,7 +435,7 @@ class DataFrame:
 
         Parameters
         ----------
-        other : DataFrame[bool] or Scalar
+        other : DataFrame[bool] or bool
             If DataFrame, must have same length.
 
         Returns
