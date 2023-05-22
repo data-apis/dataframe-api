@@ -318,6 +318,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.dtype" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.dtype</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.fill_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.fill_nan()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.get_value" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_value()</span></code></a>
@@ -440,6 +442,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.any" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.any()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.dtype" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.dtype</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.fill_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.fill_nan()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows()</span></code></a>
         </li>
@@ -754,6 +758,18 @@ for the operation by the underling dtypes.</p>
 <dt class="sig sig-object py" id="dataframe_api.Column.dtype">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dtype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DType</span></em><a class="headerlink" href="#dataframe_api.Column.dtype" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return data type of column.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.fill_nan">
+<span class="sig-name descname"><span class="pre">fill_nan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'null'</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.fill_nan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill floating point <code class="docutils literal notranslate"><span class="pre">nan</span></code> values with the given fill value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (float or <code class="code docutils literal notranslate"><span class="pre">null</span></code>) – Value used to replace any <code class="docutils literal notranslate"><span class="pre">nan</span></code> in the column with. Must be
+of the Python scalar type matching the dtype of the column (or
+be <code class="code docutils literal notranslate"><span class="pre">null</span></code>).</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.get_rows">
