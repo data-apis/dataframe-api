@@ -641,3 +641,16 @@ class Column:
 
         """
         ...
+
+    def fill_null(self, value: Scalar, /) -> Column:
+        """
+        Fill null values with the given fill value.
+
+        Parameters
+        ----------
+        value : Scalar
+            Value used to replace any ``null`` values in the column with.
+            Must be of the Python scalar type matching the dtype of the column.
+
+        """
+        ...
