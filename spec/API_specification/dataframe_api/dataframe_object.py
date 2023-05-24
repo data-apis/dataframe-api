@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoReturn
+from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoReturn
 
 
 if TYPE_CHECKING:
@@ -37,7 +37,7 @@ class DataFrame:
 
     """
     def __dataframe_namespace__(
-        self: DataFrame, /, *, api_version: Optional[str] = None
+        self: DataFrame, /, *, api_version: str | None = None
     ) -> Any:
         """
         Returns an object that has all the dataframe API functions on it.
