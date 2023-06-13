@@ -19,11 +19,11 @@ class Column:
 
     """
 
-    def __dataframe_namespace__(
+    def __column_namespace__(
         self: Column, /, *, api_version: str | None = None
     ) -> Any:
         """
-        Returns an object that has all the dataframe API functions on it.
+        Returns an object that has all the Dataframe Standard API functions on it.
 
         Parameters
         ----------
