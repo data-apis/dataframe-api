@@ -73,6 +73,8 @@ class Column:
         """
         Compare for equality.
 
+        Nulls should follow Kleene Logic.
+
         Parameters
         ----------
         other : Column or Scalar
@@ -88,6 +90,8 @@ class Column:
     def __ne__(self, other: Column | Scalar) -> Column:
         """
         Compare for non-equality.
+
+        Nulls should follow Kleene Logic.
 
         Parameters
         ----------
@@ -169,6 +173,8 @@ class Column:
         """
         Apply logical 'and' to `other` Column (or scalar) and this Column.
 
+        Nulls should follow Kleene Logic.
+
         Parameters
         ----------
         other : Column[bool] or bool
@@ -187,6 +193,8 @@ class Column:
     def __or__(self, other: Column[bool] | bool) -> Column:
         """
         Apply logical 'or' to `other` Column (or scalar) and this column.
+
+        Nulls should follow Kleene Logic.
 
         Parameters
         ----------
