@@ -19,6 +19,17 @@ __all__ = [
     "dataframe_from_dict",
     "isnull",
     "null",
+    "DType",
+    "Int64",
+    "Int32",
+    "Int16",
+    "Int8",
+    "UInt64",
+    "UInt32",
+    "UInt16",
+    "UInt8",
+    "Float64",
+    "Float32",
 ]
 
 
@@ -129,3 +140,43 @@ def isnull(value: object, /) -> bool:
         implements the dataframe API standard, False otherwise.
 
     """
+
+##########
+# Dtypes #
+##########
+
+class DType:
+    """Base class for all dtypes."""
+
+class Int64(DType):
+    """Integer type with 64 bits of precision."""
+
+class Int32(DType):
+    """Integer type with 32 bits of precision."""
+
+class Int16(DType):
+    """Integer type with 16 bits of precision."""
+
+class Int8(DType):
+    """Integer type with 8 bits of precision."""
+
+class UInt64(DType):
+    """Unsigned integer type with 64 bits of precision."""
+
+class UInt32(DType):
+    """Unsigned integer type with 32 bits of precision."""
+
+class UInt16(DType):
+    """Unsigned integer type with 16 bits of precision."""
+
+class UInt8(DType):
+    """Unsigned integer type with 8 bits of precision."""
+
+class Float64(DType):
+    """Floating point type with 64 bits of precision."""
+
+class Float32(DType):
+    """Floating point type with 32 bits of precision."""
+
+class Bool(DType):
+    """Boolean type."""
