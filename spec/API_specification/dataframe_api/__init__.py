@@ -9,8 +9,6 @@ from .column_object import *
 from .dataframe_object import *
 from .groupby_object import *
 
-from ._types import DType
-
 
 __all__ = [
     "__dataframe_api_version",
