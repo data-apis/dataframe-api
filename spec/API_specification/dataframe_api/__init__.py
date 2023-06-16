@@ -28,6 +28,8 @@ __all__ = [
     "UInt8",
     "Float64",
     "Float32",
+    "Bool8",
+    "Bool1",
 ]
 
 
@@ -176,5 +178,8 @@ class Float64(DType):
 class Float32(DType):
     """Floating point type with 32 bits of precision."""
 
-class Bool(DType):
-    """Boolean type."""
+class Bool8(DType):
+    """Boolean type with 8 bits of precision."""
+
+class Bool1(DType):
+    """Boolean type with 1 bit of precision."""
