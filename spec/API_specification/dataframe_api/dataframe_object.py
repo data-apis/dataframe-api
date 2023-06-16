@@ -414,7 +414,7 @@ class DataFrame:
         """
         ...
 
-    def __and__(self, other: DataFrame[bool] | bool) -> DataFrame:
+    def __and__(self, other: DataFrame[bool] | bool) -> DataFrame[bool]:
         """
         Apply logical 'and' to `other` DataFrame (or scalar) and this dataframe.
 
@@ -435,7 +435,7 @@ class DataFrame:
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self, other: DataFrame[bool] | bool) -> DataFrame:
+    def __or__(self, other: DataFrame[bool] | bool) -> DataFrame[bool]:
         """
         Apply logical 'or' to `other` DataFrame (or scalar) and this DataFrame.
 

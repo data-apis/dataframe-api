@@ -169,7 +169,7 @@ class Column:
         Column
         """
 
-    def __and__(self, other: Column[bool] | bool) -> Column:
+    def __and__(self, other: Column[bool] | bool) -> Column[bool]:
         """
         Apply logical 'and' to `other` Column (or scalar) and this Column.
 
@@ -190,7 +190,7 @@ class Column:
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self, other: Column[bool] | bool) -> Column:
+    def __or__(self, other: Column[bool] | bool) -> Column[bool]:
         """
         Apply logical 'or' to `other` Column (or scalar) and this column.
 
