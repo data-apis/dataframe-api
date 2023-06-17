@@ -63,23 +63,6 @@ class DataFrame:
 
         """
 
-    @classmethod
-    def from_dict(cls, data: Mapping[str, Column]) -> DataFrame:
-        """
-        Construct DataFrame from map of column names to Columns.
-
-        Parameters
-        ----------
-        data : Mapping[str, Column]
-            Column must be of the corresponding type of the DataFrame.
-            For example, it is only supported to build a ``LibraryXDataFrame`` using
-            ``LibraryXColumn`` instances.
-
-        Returns
-        -------
-        DataFrame
-        """
-
     @property
     def dataframe(self) -> object:
         """
