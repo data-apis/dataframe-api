@@ -319,8 +319,6 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.fill_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.fill_nan()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.from_dict" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.from_dict()</span></code></a>
-        </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_column_by_name" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_column_by_name()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_column_names" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_column_names()</span></code></a>
@@ -472,8 +470,6 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.drop_column" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.drop_column()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.fill_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.fill_nan()</span></code></a>
-        </li>
-        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.from_dict" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.from_dict()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_column_by_name" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_column_by_name()</span></code></a>
         </li>
@@ -882,21 +878,6 @@ dtype. Other columns remain unchanged.</p>
 <dd class="field-odd"><p><strong>value</strong> (float or <code class="code docutils literal notranslate"><span class="pre">null</span></code>) – Value used to replace any <code class="docutils literal notranslate"><span class="pre">nan</span></code> in the column with. Must be
 of the Python scalar type matching the dtype of the column (or
 be <code class="code docutils literal notranslate"><span class="pre">null</span></code>).</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.DataFrame.from_dict">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.from_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct DataFrame from map of column names to Columns.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>]</em>) – Column must be of the corresponding type of the DataFrame.
-For example, it is only supported to build a <code class="docutils literal notranslate"><span class="pre">LibraryXDataFrame</span></code> using
-<code class="docutils literal notranslate"><span class="pre">LibraryXColumn</span></code> instances.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>DataFrame</strong></p>
 </dd>
 </dl>
 </dd></dl>
