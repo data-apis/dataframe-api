@@ -278,6 +278,8 @@
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#dataframe_api.Column" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column</span></code></a><nav class="md-nav">
               <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#dataframe_api.Column.__add__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__add__()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__and__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__and__()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__divmod__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__divmod__()</span></code></a>
@@ -305,6 +307,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.__mul__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__mul__()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__ne__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__ne__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.__or__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__or__()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__pow__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__pow__()</span></code></a>
         </li>
@@ -403,6 +407,8 @@
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#dataframe_api.Column" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column</span></code></a><nav class="md-nav">
               <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#dataframe_api.Column.__add__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__add__()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__and__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__and__()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__divmod__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__divmod__()</span></code></a>
@@ -430,6 +436,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.__mul__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__mul__()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__ne__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__ne__()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.__or__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__or__()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__pow__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__pow__()</span></code></a>
         </li>
@@ -499,9 +507,9 @@ behavior.</p>
 users of the library implementing the dataframe API standard. Rather, use
 constructor functions or an already-created dataframe object retrieved via</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.Column.__and__">
-<span class="sig-name descname"><span class="pre">__and__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.__and__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar to this column.</p>
+<dt class="sig sig-object py" id="dataframe_api.Column.__add__">
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.__add__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add <code class="code docutils literal notranslate"><span class="pre">other</span></code> column or scalar to this column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em> or </em><em>Scalar</em>) – If Column, must have same length.
@@ -510,6 +518,23 @@ for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>Column</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.__and__">
+<span class="sig-name descname"><span class="pre">__and__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.Column.__and__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply logical ‘and’ to <code class="code docutils literal notranslate"><span class="pre">other</span></code> Column (or scalar) and this Column.</p>
+<p>Nulls should follow Kleene Logic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>[</em><em>bool</em><em>] or </em><em>bool</em>) – If Column, must have same length.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Column</strong></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If <code class="code docutils literal notranslate"><span class="pre">self</span></code> or <code class="code docutils literal notranslate"><span class="pre">other</span></code> is not boolean.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -532,6 +557,7 @@ for the operation by the underling dtypes.</p>
 <dt class="sig sig-object py" id="dataframe_api.Column.__eq__">
 <span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.__eq__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compare for equality.</p>
+<p>Nulls should follow Kleene Logic.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em> or </em><em>Scalar</em>) – If Column, must have same length.
@@ -546,7 +572,7 @@ for the operation by the underling dtypes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__floordiv__">
 <span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.__floordiv__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Floor-divide <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar to this column.</p>
+<dd><p>Floor-divide <code class="code docutils literal notranslate"><span class="pre">other</span></code> column or scalar to this column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em> or </em><em>Scalar</em>) – If Column, must have same length.
@@ -662,7 +688,7 @@ for the operation by the underling dtypes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__mul__">
 <span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.__mul__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multiply <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar with this column.</p>
+<dd><p>Multiply <code class="code docutils literal notranslate"><span class="pre">other</span></code> column or scalar with this column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em> or </em><em>Scalar</em>) – If Column, must have same length.
@@ -678,6 +704,7 @@ for the operation by the underling dtypes.</p>
 <dt class="sig sig-object py" id="dataframe_api.Column.__ne__">
 <span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.__ne__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compare for non-equality.</p>
+<p>Nulls should follow Kleene Logic.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em> or </em><em>Scalar</em>) – If Column, must have same length.
@@ -686,6 +713,23 @@ for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>Column</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.__or__">
+<span class="sig-name descname"><span class="pre">__or__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.Column.__or__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply logical ‘or’ to <code class="code docutils literal notranslate"><span class="pre">other</span></code> Column (or scalar) and this column.</p>
+<p>Nulls should follow Kleene Logic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>[</em><em>bool</em><em>] or </em><em>Scalar</em>) – If Column, must have same length.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Column[bool]</strong></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If <code class="code docutils literal notranslate"><span class="pre">self</span></code> or <code class="code docutils literal notranslate"><span class="pre">other</span></code> is not boolean.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -707,7 +751,7 @@ for the operation by the underling dtypes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__sub__">
 <span class="sig-name descname"><span class="pre">__sub__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.__sub__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Subtract <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar from this column.</p>
+<dd><p>Subtract <code class="code docutils literal notranslate"><span class="pre">other</span></code> column or scalar from this column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em> or </em><em>Scalar</em>) – If Column, must have same length.
