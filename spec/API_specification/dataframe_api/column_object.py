@@ -426,7 +426,7 @@ class Column:
         dtypes.
         """
 
-    def isnull(self) -> Column:
+    def is_null(self) -> Column:
         """
         Check for 'missing' or 'null' entries.
 
@@ -436,7 +436,7 @@ class Column:
 
         See also
         --------
-        isnan
+        is_nan
 
         Notes
         -----
@@ -445,7 +445,7 @@ class Column:
         but note that the Standard makes no guarantees about them.
         """
 
-    def isnan(self) -> Column:
+    def is_nan(self) -> Column:
         """
         Check for nan entries.
 
@@ -455,7 +455,7 @@ class Column:
 
         See also
         --------
-        isnull
+        is_null
 
         Notes
         -----

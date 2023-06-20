@@ -14,7 +14,7 @@ of objects and functions in the top-level namespace. The latter are:
    :nosignatures:
 
    __dataframe_api_version__
-   isnull
+   is_null
    null
 
 The ``DataFrame``, ``Column`` and ``GroupBy`` objects have the following

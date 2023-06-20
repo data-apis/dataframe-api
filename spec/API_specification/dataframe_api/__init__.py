@@ -17,7 +17,7 @@ __all__ = [
     "column_from_sequence",
     "concat",
     "dataframe_from_dict",
-    "isnull",
+    "is_null",
     "null",
 ]
 
@@ -99,7 +99,7 @@ class null:
         From ``__eq__`` and from ``__bool__``.
 
         For ``__eq__``: a missing value must not be compared for equality
-        directly. Instead, use `DataFrame.isnull` or `Column.isnull` to check
+        directly. Instead, use `DataFrame.is_null` or `Column.is_null` to check
         for presence of missing values.
 
         For ``__bool__``: truthiness of a missing value is ambiguous.
@@ -113,7 +113,7 @@ class null:
     """
     ...
 
-def isnull(value: object, /) -> bool:
+def is_null(value: object, /) -> bool:
     """
     Check if an object is a `null` scalar.
 
