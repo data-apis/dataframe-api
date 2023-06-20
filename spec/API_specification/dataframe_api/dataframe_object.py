@@ -528,6 +528,9 @@ class DataFrame:
         """
         Raise this dataframe to the power of `other`.
 
+        Integer to the power of non-negative integer is integer.
+        Float to the power of integer or float is float.
+
         Parameters
         ----------
         other : DataFrame or Scalar
