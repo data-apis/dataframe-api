@@ -295,6 +295,8 @@ class DataFrame:
         """
         Compare for equality.
 
+        Nulls should follow Kleene Logic.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -311,6 +313,8 @@ class DataFrame:
     def __ne__(self, other: DataFrame | Scalar) -> DataFrame:
         """
         Compare for non-equality.
+
+        Nulls should follow Kleene Logic.
 
         Parameters
         ----------
@@ -392,6 +396,48 @@ class DataFrame:
         DataFrame
         """
         ...
+
+    def __and__(self, other: DataFrame[bool] | bool) -> DataFrame[bool]:
+        """
+        Apply logical 'and' to `other` DataFrame (or scalar) and this dataframe.
+
+        Nulls should follow Kleene Logic.
+
+        Parameters
+        ----------
+        other : DataFrame[bool] or bool
+            If DataFrame, must have same length.
+
+        Returns
+        -------
+        DataFrame[bool]
+
+        Raises
+        ------
+        ValueError
+            If `self` or `other` is not boolean.
+        """
+
+    def __or__(self, other: DataFrame[bool] | bool) -> DataFrame[bool]:
+        """
+        Apply logical 'or' to `other` DataFrame (or scalar) and this DataFrame.
+
+        Nulls should follow Kleene Logic.
+
+        Parameters
+        ----------
+        other : DataFrame[bool] or bool
+            If DataFrame, must have same length.
+
+        Returns
+        -------
+        DataFrame[bool]
+
+        Raises
+        ------
+        ValueError
+            If `self` or `other` is not boolean.
+        """
 
     def __add__(self, other: DataFrame | Scalar) -> DataFrame:
         """

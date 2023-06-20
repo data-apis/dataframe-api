@@ -73,6 +73,8 @@ class Column:
         """
         Compare for equality.
 
+        Nulls should follow Kleene Logic.
+
         Parameters
         ----------
         other : Column or Scalar
@@ -88,6 +90,8 @@ class Column:
     def __ne__(self, other: Column | Scalar) -> Column:
         """
         Compare for non-equality.
+
+        Nulls should follow Kleene Logic.
 
         Parameters
         ----------
@@ -165,9 +169,51 @@ class Column:
         Column
         """
 
-    def __and__(self, other: Column | Scalar) -> Column:
+    def __and__(self, other: Column[bool] | bool) -> Column[bool]:
         """
-        Add `other` dataframe or scalar to this column.
+        Apply logical 'and' to `other` Column (or scalar) and this Column.
+
+        Nulls should follow Kleene Logic.
+
+        Parameters
+        ----------
+        other : Column[bool] or bool
+            If Column, must have same length.
+
+        Returns
+        -------
+        Column
+
+        Raises
+        ------
+        ValueError
+            If `self` or `other` is not boolean.
+        """
+
+    def __or__(self, other: Column[bool] | bool) -> Column[bool]:
+        """
+        Apply logical 'or' to `other` Column (or scalar) and this column.
+
+        Nulls should follow Kleene Logic.
+
+        Parameters
+        ----------
+        other : Column[bool] or Scalar
+            If Column, must have same length.
+
+        Returns
+        -------
+        Column[bool]
+
+        Raises
+        ------
+        ValueError
+            If `self` or `other` is not boolean.
+        """
+
+    def __add__(self, other: Column | Scalar) -> Column:
+        """
+        Add `other` column or scalar to this column.
 
         Parameters
         ----------
@@ -183,7 +229,7 @@ class Column:
 
     def __sub__(self, other: Column | Scalar) -> Column:
         """
-        Subtract `other` dataframe or scalar from this column.
+        Subtract `other` column or scalar from this column.
 
         Parameters
         ----------
@@ -199,7 +245,7 @@ class Column:
 
     def __mul__(self, other: Column | Scalar) -> Column:
         """
-        Multiply `other` dataframe or scalar with this column.
+        Multiply `other` column or scalar with this column.
 
         Parameters
         ----------
@@ -231,7 +277,7 @@ class Column:
 
     def __floordiv__(self, other: Column | Scalar) -> Column:
         """
-        Floor-divide `other` dataframe or scalar to this column.
+        Floor-divide `other` column or scalar to this column.
 
         Parameters
         ----------
