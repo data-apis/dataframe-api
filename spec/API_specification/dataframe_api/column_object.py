@@ -80,7 +80,7 @@ class Column:
 
         If you need to sort the Column, you can simply do::
 
-            col.get_rows(col.sorted_indices(keys))
+            col.get_rows(col.sorted_indices())
 
         Parameters
         ----------
