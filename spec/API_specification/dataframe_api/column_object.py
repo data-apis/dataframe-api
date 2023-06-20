@@ -410,20 +410,36 @@ class Column:
         dtypes.
         """
 
-    def std(self, *, skip_nulls: bool = True) -> DType:
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
+
+        Parameters
+        ----------
+        correction
+            Correction to apply to the result. 0 for sample standard deviation
+            and 1 for population standard deviation.
+        skip_nulls
+            Whether to skip null values.
         """
 
-    def var(self, *, skip_nulls: bool = True) -> DType:
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
+
+        Parameters
+        ----------
+        correction
+            Correction to apply to the result. 0 for sample standard deviation
+            and 1 for population standard deviation.
+        skip_nulls
+            Whether to skip null values.
         """
 
     def is_null(self) -> Column:
