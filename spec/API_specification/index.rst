@@ -27,8 +27,7 @@ of objects and functions in the top-level namespace. The latter are:
    UInt8
    Float64
    Float32
-   Bool8
-   Bool1
+   Bool
 
 The ``DataFrame``, ``Column`` and ``GroupBy`` objects have the following
 methods and attributes:
