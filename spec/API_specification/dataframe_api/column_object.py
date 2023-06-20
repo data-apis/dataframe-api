@@ -213,7 +213,7 @@ class Column:
 
     def __add__(self, other: Column | Scalar) -> Column:
         """
-        Add `other` column or scalar from this column.
+        Add `other` column or scalar to this column.
 
         Parameters
         ----------
