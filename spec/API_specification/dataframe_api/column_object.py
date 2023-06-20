@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import NoReturn, Sequence, TYPE_CHECKING
+from typing import NoReturn, Sequence, TYPE_CHECKING, Literal
 
 if TYPE_CHECKING:
     from ._types import Scalar, DType
@@ -66,6 +66,36 @@ class Column:
         dtype
             Depends on the dtype of the Column, and may vary
             across implementations.
+        """
+        ...
+
+    def sorted_indices(
+        self,
+        *,
+        ascending: bool = True,
+        nulls_position: Literal['first', 'last'] = 'last',
+    ) -> Column[int]:
+        """
+        Return row numbers which would sort column.
+
+        If you need to sort the Column, you can simply do::
+
+            col.get_rows(col.sorted_indices(keys))
+
+        Parameters
+        ----------
+        ascending : bool
+            If `True`, sort in ascending order.
+            If `False`, sort in descending order.
+        nulls_position : ``{'first', 'last'}``
+            Whether null values should be placed at the beginning
+            or at the end of the result.
+            Note that the position of NaNs is unspecified and may
+            vary based on the implementation.
+
+        Returns
+        -------
+        Column[int]
         """
         ...
 
