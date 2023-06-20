@@ -366,6 +366,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__and__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__and__()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.__column_namespace__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__column_namespace__()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__divmod__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__divmod__()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__eq__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__eq__()</span></code></a>
@@ -495,6 +497,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__and__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__and__()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.__column_namespace__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__column_namespace__()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__divmod__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__divmod__()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.__eq__" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.__eq__()</span></code></a>
@@ -619,6 +623,28 @@ for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – If <code class="code docutils literal notranslate"><span class="pre">self</span></code> or <code class="code docutils literal notranslate"><span class="pre">other</span></code> is not boolean.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.__column_namespace__">
+<span class="sig-name descname"><span class="pre">__column_namespace__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#dataframe_api.Column.__column_namespace__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an object that has all the Dataframe Standard API functions on it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>api_version</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – String representing the version of the dataframe API specification
+to be returned, in <code class="docutils literal notranslate"><span class="pre">'YYYY.MM'</span></code> form, for example, <code class="docutils literal notranslate"><span class="pre">'2023.04'</span></code>.
+If it is <code class="docutils literal notranslate"><span class="pre">None</span></code>, it should return the namespace corresponding to
+latest version of the dataframe API specification.  If the given
+version is invalid or not implemented for the given module, an
+error should be raised. Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>namespace</strong> (<em>Any</em>) – An object representing the dataframe API namespace. It should have
+every top-level function defined in the specification as an
+attribute. It may contain other public names as well, but it is
+recommended to only include those names that are part of the
+specification.</p>
 </dd>
 </dl>
 </dd></dl>
