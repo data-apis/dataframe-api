@@ -1,6 +1,6 @@
 ﻿.. currentmodule:: dataframe_api
 
-isnull
-======
+is_null
+=======
 
-.. autodata:: isnull
+.. autodata:: is_null

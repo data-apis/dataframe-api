@@ -244,7 +244,7 @@
     <li class="md-nav__item">
     
     
-      <a href="generated/dataframe_api.isnull.html" class="md-nav__link">isnull</a>
+      <a href="generated/dataframe_api.is_null.html" class="md-nav__link">is_null</a>
       
     
     </li>
@@ -330,9 +330,9 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.is_in" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.is_in()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.isnan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.isnan()</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.is_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.is_nan()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.isnull" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.isnull()</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.is_null" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.is_null()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.max()</span></code></a>
         </li>
@@ -459,9 +459,9 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.is_in" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.is_in()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.isnan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.isnan()</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.is_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.is_nan()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.isnull" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.isnull()</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.is_null" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.is_null()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.max()</span></code></a>
         </li>
@@ -857,8 +857,8 @@ The dtype of <code class="docutils literal notranslate"><span class="pre">values
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.Column.isnan">
-<span class="sig-name descname"><span class="pre">isnan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.isnan" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dataframe_api.Column.is_nan">
+<span class="sig-name descname"><span class="pre">is_nan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.is_nan" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check for nan entries.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -867,7 +867,7 @@ The dtype of <code class="docutils literal notranslate"><span class="pre">values
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="generated/dataframe_api.isnull.html#dataframe_api.isnull" title="dataframe_api.isnull"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isnull</span></code></a></p>
+<p><a class="reference internal" href="generated/dataframe_api.is_null.html#dataframe_api.is_null" title="dataframe_api.is_null"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_null</span></code></a></p>
 </div>
 <p class="rubric">Notes</p>
 <p>This only checks for ‘NaN’.
@@ -875,8 +875,8 @@ Does <em>not</em> include ‘missing’ or ‘null’ entries.
 In particular, does not check for <code class="code docutils literal notranslate"><span class="pre">np.timedelta64('NaT')</span></code>.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.Column.isnull">
-<span class="sig-name descname"><span class="pre">isnull</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.isnull" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dataframe_api.Column.is_null">
+<span class="sig-name descname"><span class="pre">is_null</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.is_null" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check for ‘missing’ or ‘null’ entries.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -885,7 +885,7 @@ In particular, does not check for <code class="code docutils literal notranslate
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#dataframe_api.Column.isnan" title="dataframe_api.Column.isnan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isnan</span></code></a></p>
+<p><a class="reference internal" href="#dataframe_api.Column.is_nan" title="dataframe_api.Column.is_nan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_nan</span></code></a></p>
 </div>
 <p class="rubric">Notes</p>
 <p>Does <em>not</em> include NaN-like entries.
