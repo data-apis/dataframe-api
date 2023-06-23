@@ -46,6 +46,15 @@ class Column:
             specification.
 
         """
+    
+    @property
+    def column(self) -> object:
+        """
+        Return underlying (not-necessarily-Standard-compliant) column.
+
+        If a library only implements the Standard, then this can return `self`.
+        """
+        ...
 
     def __len__(self) -> int:
         """
