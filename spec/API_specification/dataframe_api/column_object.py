@@ -137,7 +137,7 @@ class Column(Generic[T]):
         """
         ...
 
-    def __eq__(self, other: Column[Bool] | Scalar[Bool]) -> Column[Bool]:  # type: ignore[override]
+    def __eq__(self, other: Column[T] | Scalar[T]) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -155,7 +155,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __ne__(self, other: Column[Bool] | Scalar[Bool]) -> Column[Bool]:  # type: ignore[override]
+    def __ne__(self, other: Column[T] | Scalar[T]) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -173,7 +173,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __ge__(self, other: Column[Any] | Scalar[Any]) -> Column[Any]:
+    def __ge__(self, other: Column[T] | Scalar[T]) -> Column[Bool]:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -189,7 +189,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __gt__(self, other: Column[Any] | Scalar[Any]) -> Column[Any]:
+    def __gt__(self, other: Column[T] | Scalar[T]) -> Column[Any]:
         """
         Compare for "greater than" `other`.
 
@@ -205,7 +205,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __le__(self, other: Column[Any] | Scalar[Any]) -> Column[Any]:
+    def __le__(self, other: Column[T] | Scalar[T]) -> Column[Bool]:
         """
         Compare for "less than or equal to" `other`.
 
@@ -221,7 +221,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __lt__(self, other: Column[Any] | Scalar[Any]) -> Column[Any]:
+    def __lt__(self, other: Column[T] | Scalar[T]) -> Column[Bool]:
         """
         Compare for "less than" `other`.
 
@@ -237,7 +237,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __and__(self, other: Column[Bool] | bool) -> Column[Bool]:
+    def __and__(self: Column[Bool], other: Column[Bool] | bool) -> Column[Bool]:
         """
         Apply logical 'and' to `other` Column (or scalar) and this Column.
 
@@ -258,7 +258,7 @@ class Column(Generic[T]):
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self, other: Column[Bool] | bool) -> Column[Bool]:
+    def __or__(self: Column[Bool], other: Column[Bool] | bool) -> Column[Bool]:
         """
         Apply logical 'or' to `other` Column (or scalar) and this column.
 
@@ -343,7 +343,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __floordiv__(self, other: Column[Any] | Scalar[Any]) -> Column[Any]:
+    def __floordiv__(self, other: Column[Any] | Scalar[Any]) -> Column[T]:
         """
         Floor-divide `other` column or scalar to this column.
 
@@ -359,7 +359,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __pow__(self, other: Column[Any] | Scalar[Any]) -> Column[Any]:
+    def __pow__(self, other: Column[Any] | Scalar[Any]) -> Column[T]:
         """
         Raise this column to the power of `other`.
 

@@ -293,7 +293,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def __eq__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Bool]:  # type: ignore[override]
+    def __eq__(self, other: DataFrame[T] | Scalar[T]) -> DataFrame[Bool]:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -312,7 +312,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def __ne__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Bool]:  # type: ignore[override]
+    def __ne__(self, other: DataFrame[T] | Scalar[T]) -> DataFrame[Bool]:  # type: ignore[override]
         """
         Compare for non-equality.
 
