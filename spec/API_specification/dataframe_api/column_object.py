@@ -5,7 +5,7 @@ from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal, Generic, Type
 if TYPE_CHECKING:
     from . import DType, IntDType, FloatDType, Bool, null, Scalar
 
-T = TypeVar('T', bound=DType)
+T = TypeVar('T', bound="DType")
 
 __all__ = ['Column']
 

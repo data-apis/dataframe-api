@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 __all__ = ["DataFrame"]
 
-T = TypeVar("T", bound=DType)
+T = TypeVar("T", bound="DType")
 
 
 class DataFrame(Generic[T]):

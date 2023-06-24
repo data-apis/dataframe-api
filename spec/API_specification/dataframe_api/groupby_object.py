@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import TYPE_CHECKING, TypeVar, Generic, Any
 
 if TYPE_CHECKING:
@@ -7,7 +9,7 @@ if TYPE_CHECKING:
 
 __all__ = ['GroupBy']
 
-T = TypeVar('T', bound=DType)
+T = TypeVar('T', bound="DType")
 
 
 class GroupBy:
