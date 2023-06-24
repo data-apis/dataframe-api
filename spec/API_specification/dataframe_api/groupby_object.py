@@ -22,34 +22,34 @@ class GroupBy:
     **Methods**
 
     """
-    def any(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Bool]:
+    def any(self, *, skip_nulls: bool = True) -> DataFrame[Bool]:
         ...
 
-    def all(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Bool]:
+    def all(self, *, skip_nulls: bool = True) -> DataFrame[Bool]:
         ...
 
-    def min(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def min(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         ...
 
-    def max(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def max(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         ...
 
-    def sum(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def sum(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         ...
 
-    def prod(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def prod(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         ...
 
-    def median(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def median(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         ...
 
-    def mean(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def mean(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         ...
 
-    def std(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def std(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         ...
 
-    def var(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def var(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         ...
 
     def size(self) -> DataFrame[IntDType]:

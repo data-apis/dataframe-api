@@ -417,7 +417,7 @@ class Column(Generic[T]):
             If any of the Column's columns is not boolean.
         """
 
-    def any(self: Column[Bool], *, skip_nulls: Scalar[Bool] = True) -> Scalar[Bool]:
+    def any(self: Column[Bool], *, skip_nulls: bool = True) -> Scalar[Bool]:
         """
         Reduction returns a bool.
 
@@ -427,7 +427,7 @@ class Column(Generic[T]):
             If column is not boolean.
         """
 
-    def all(self: Column[Bool], *, skip_nulls: Scalar[Bool] = True) -> Scalar[Bool]:
+    def all(self: Column[Bool], *, skip_nulls: bool = True) -> Scalar[Bool]:
         """
         Reduction returns a bool.
 
@@ -437,32 +437,32 @@ class Column(Generic[T]):
             If column is not boolean.
         """
 
-    def min(self, *, skip_nulls: Scalar[Bool] = True) -> Scalar[T]:
+    def min(self, *, skip_nulls: bool = True) -> Scalar[T]:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def max(self, *, skip_nulls: Scalar[Bool] = True) -> Scalar[T]:
+    def max(self, *, skip_nulls: bool = True) -> Scalar[T]:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def sum(self, *, skip_nulls: Scalar[Bool] = True) -> Scalar[T]:
+    def sum(self, *, skip_nulls: bool = True) -> Scalar[T]:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def prod(self, *, skip_nulls: Scalar[Bool] = True) -> Scalar[Any]:
+    def prod(self, *, skip_nulls: bool = True) -> Scalar[Any]:
         """
         Reduction returns a scalar. Must be supported for numerical data types.
         The returned value has the same dtype as the column.
         """
 
-    def median(self, *, skip_nulls: Scalar[Bool] = True) -> Scalar[Any]:
+    def median(self, *, skip_nulls: bool = True) -> Scalar[Any]:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -470,7 +470,7 @@ class Column(Generic[T]):
         dtypes.
         """
 
-    def mean(self, *, skip_nulls: Scalar[Bool] = True) -> Scalar[Any]:
+    def mean(self, *, skip_nulls: bool = True) -> Scalar[Any]:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -478,7 +478,7 @@ class Column(Generic[T]):
         dtypes.
         """
 
-    def std(self, *, skip_nulls: Scalar[Bool] = True) -> Scalar[Any]:
+    def std(self, *, skip_nulls: bool = True) -> Scalar[Any]:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -486,7 +486,7 @@ class Column(Generic[T]):
         dtypes.
         """
 
-    def var(self, *, skip_nulls: Scalar[Bool] = True) -> Scalar[Any]:
+    def var(self, *, skip_nulls: bool = True) -> Scalar[Any]:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -550,7 +550,7 @@ class Column(Generic[T]):
         Column[bool]
         """
 
-    def unique_indices(self, *, skip_nulls: Scalar[Bool] = True) -> Column[IntDType]:
+    def unique_indices(self, *, skip_nulls: bool = True) -> Column[IntDType]:
         """
         Return indices corresponding to unique values in Column.
 

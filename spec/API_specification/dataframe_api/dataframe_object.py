@@ -600,7 +600,7 @@ class DataFrame(Generic[T]):
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
-    def any(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Bool]:
+    def any(self, *, skip_nulls: bool = True) -> DataFrame[Bool]:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -611,7 +611,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def all(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Bool]:
+    def all(self, *, skip_nulls: bool = True) -> DataFrame[Bool]:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -622,7 +622,7 @@ class DataFrame(Generic[T]):
         """
         ...
     
-    def any_rowwise(self, *, skip_nulls: Scalar[Bool] = True) -> Column[Bool]:
+    def any_rowwise(self, *, skip_nulls: bool = True) -> Column[Bool]:
         """
         Reduction returns a Column.
 
@@ -636,7 +636,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def all_rowwise(self, *, skip_nulls: Scalar[Bool] = True) -> Column[Bool]:
+    def all_rowwise(self, *, skip_nulls: bool = True) -> Column[Bool]:
         """
         Reduction returns a Column.
 
@@ -650,49 +650,49 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def min(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[T]:
+    def min(self, *, skip_nulls: bool = True) -> DataFrame[T]:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def max(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[T]:
+    def max(self, *, skip_nulls: bool = True) -> DataFrame[T]:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def sum(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def sum(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def prod(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def prod(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def median(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def median(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def mean(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def mean(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def std(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def std(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def var(self, *, skip_nulls: Scalar[Bool] = True) -> DataFrame[Any]:
+    def var(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
         """
         Reduction returns a 1-row DataFrame.
         """
