@@ -110,7 +110,7 @@ class Column(Generic[DTypeT]):
     def sorted_indices(
         self,
         *,
-        ascending: Scalar[Bool] = True,
+        ascending: bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
     ) -> Column[IntDType]:
         """
