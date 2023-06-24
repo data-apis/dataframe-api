@@ -29,6 +29,8 @@ of objects and functions in the top-level namespace. The latter are:
    Float32
    Bool
    DTypeT
+   IntDType
+   FloatDType
 
 The ``DataFrame``, ``Column`` and ``GroupBy`` objects have the following
 methods and attributes:

@@ -30,6 +30,8 @@ __all__ = [
     "Float32",
     "Bool",
     "DTypeT",
+    "FloatDType",
+    "IntDType",
 ]
 
 
