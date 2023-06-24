@@ -4,13 +4,12 @@ from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal, Generic, Type
 
 if TYPE_CHECKING:
     from . import DType, IntDType, FloatDType, Bool, null, Scalar
-
-T = TypeVar('T', bound="DType")
+    from ._types import DTypeT
 
 __all__ = ['Column']
 
 
-class Column(Generic[T]):
+class Column(Generic[DTypeT]):
     """
     Column object
 
@@ -79,7 +78,7 @@ class Column(Generic[T]):
         Return data type of column.
         """
 
-    def get_rows(self, indices: Column[IntDType]) -> Column[T]:
+    def get_rows(self, indices: Column[IntDType]) -> Column[DTypeT]:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -90,7 +89,7 @@ class Column(Generic[T]):
         """
         ...
 
-    def get_value(self, row_number: Scalar[IntDType]) -> Scalar[T]:
+    def get_value(self, row_number: Scalar[IntDType]) -> Scalar[DTypeT]:
         """
         Select the value at a row number, similar to `ndarray.__getitem__(<int>)`.
 
@@ -137,7 +136,7 @@ class Column(Generic[T]):
         """
         ...
 
-    def __eq__(self, other: Column[T] | Scalar[T]) -> Column[Bool]:  # type: ignore[override]
+    def __eq__(self, other: Column[DTypeT] | Scalar[DTypeT]) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -155,7 +154,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __ne__(self, other: Column[T] | Scalar[T]) -> Column[Bool]:  # type: ignore[override]
+    def __ne__(self, other: Column[DTypeT] | Scalar[DTypeT]) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -173,7 +172,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __ge__(self, other: Column[T] | Scalar[T]) -> Column[Bool]:
+    def __ge__(self, other: Column[DTypeT] | Scalar[DTypeT]) -> Column[Bool]:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -189,7 +188,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __gt__(self, other: Column[T] | Scalar[T]) -> Column[Bool]:
+    def __gt__(self, other: Column[DTypeT] | Scalar[DTypeT]) -> Column[Bool]:
         """
         Compare for "greater than" `other`.
 
@@ -205,7 +204,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __le__(self, other: Column[T] | Scalar[T]) -> Column[Bool]:
+    def __le__(self, other: Column[DTypeT] | Scalar[DTypeT]) -> Column[Bool]:
         """
         Compare for "less than or equal to" `other`.
 
@@ -221,7 +220,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __lt__(self, other: Column[T] | Scalar[T]) -> Column[Bool]:
+    def __lt__(self, other: Column[DTypeT] | Scalar[DTypeT]) -> Column[Bool]:
         """
         Compare for "less than" `other`.
 
@@ -279,7 +278,7 @@ class Column(Generic[T]):
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self, other: Column[T] | Scalar[T]) -> Column[T]:
+    def __add__(self, other: Column[DTypeT] | Scalar[DTypeT]) -> Column[DTypeT]:
         """
         Add `other` column or scalar to this column.
 
@@ -295,7 +294,7 @@ class Column(Generic[T]):
         Column
         """
 
-    def __sub__(self, other: Column[T] | Scalar[T]) -> Column[T]:
+    def __sub__(self, other: Column[DTypeT] | Scalar[DTypeT]) -> Column[DTypeT]:
         """
         Subtract `other` column or scalar from this column.
 
@@ -437,19 +436,19 @@ class Column(Generic[T]):
             If column is not boolean.
         """
 
-    def min(self, *, skip_nulls: bool = True) -> Scalar[T]:
+    def min(self, *, skip_nulls: bool = True) -> Scalar[DTypeT]:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def max(self, *, skip_nulls: bool = True) -> Scalar[T]:
+    def max(self, *, skip_nulls: bool = True) -> Scalar[DTypeT]:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def sum(self, *, skip_nulls: bool = True) -> Scalar[T]:
+    def sum(self, *, skip_nulls: bool = True) -> Scalar[DTypeT]:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
@@ -532,7 +531,7 @@ class Column(Generic[T]):
         In particular, does not check for `np.timedelta64('NaT')`.
         """
 
-    def is_in(self, values: Column[T]) -> Column[Bool]:
+    def is_in(self, values: Column[DTypeT]) -> Column[Bool]:
         """
         Indicate whether the value at each row matches any value in `values`.
 
@@ -571,7 +570,7 @@ class Column(Generic[T]):
         """
         ...
 
-    def fill_nan(self, value: float | 'null', /) -> Column[T]:
+    def fill_nan(self, value: float | 'null', /) -> Column[DTypeT]:
         """
         Fill floating point ``nan`` values with the given fill value.
 

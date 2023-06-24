@@ -7,14 +7,13 @@ if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
     from . import DType, IntDType, FloatDType, Bool, null, Scalar
+    from ._types import DTypeT
 
 
 __all__ = ["DataFrame"]
 
-T = TypeVar("T", bound="DType")
 
-
-class DataFrame(Generic[T]):
+class DataFrame(Generic[DTypeT]):
     """
     DataFrame object
 
@@ -104,7 +103,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def get_column_by_name(self, name: str, /) -> Column[T]:
+    def get_column_by_name(self, name: str, /) -> Column[DTypeT]:
         """
         Select a column by name.
 
@@ -123,7 +122,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def get_columns_by_name(self, names: Sequence[str], /) -> DataFrame[T]:
+    def get_columns_by_name(self, names: Sequence[str], /) -> DataFrame[DTypeT]:
         """
         Select multiple columns by name.
 
@@ -142,7 +141,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def get_rows(self, indices: Column[IntDType]) -> DataFrame[T]:
+    def get_rows(self, indices: Column[IntDType]) -> DataFrame[DTypeT]:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -159,7 +158,7 @@ class DataFrame(Generic[T]):
 
     def slice_rows(
         self, start: int | None, stop: int | None, step: int | None
-    ) -> DataFrame[T]:
+    ) -> DataFrame[DTypeT]:
         """
         Select a subset of rows corresponding to a slice.
 
@@ -175,7 +174,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def get_rows_by_mask(self, mask: Column[Bool]) -> DataFrame[T]:
+    def get_rows_by_mask(self, mask: Column[Bool]) -> DataFrame[DTypeT]:
         """
         Select a subset of rows corresponding to a mask.
 
@@ -208,7 +207,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def drop_column(self, label: str) -> DataFrame[T]:
+    def drop_column(self, label: str) -> DataFrame[DTypeT]:
         """
         Drop the specified column.
 
@@ -227,7 +226,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def rename_columns(self, mapping: Mapping[str, str]) -> DataFrame[T]:
+    def rename_columns(self, mapping: Mapping[str, str]) -> DataFrame[DTypeT]:
         """
         Rename columns.
 
@@ -293,7 +292,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def __eq__(self, other: DataFrame[T] | Scalar[T]) -> DataFrame[Bool]:  # type: ignore[override]
+    def __eq__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -312,7 +311,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def __ne__(self, other: DataFrame[T] | Scalar[T]) -> DataFrame[Bool]:  # type: ignore[override]
+    def __ne__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -650,13 +649,13 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def min(self, *, skip_nulls: bool = True) -> DataFrame[T]:
+    def min(self, *, skip_nulls: bool = True) -> DataFrame[DTypeT]:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def max(self, *, skip_nulls: bool = True) -> DataFrame[T]:
+    def max(self, *, skip_nulls: bool = True) -> DataFrame[DTypeT]:
         """
         Reduction returns a 1-row DataFrame.
         """
@@ -738,7 +737,7 @@ class DataFrame(Generic[T]):
         """
         ...
 
-    def fill_nan(self, value: float | 'null', /) -> DataFrame[T]:
+    def fill_nan(self, value: float | 'null', /) -> DataFrame[DTypeT]:
         """
         Fill ``nan`` values with the given fill value.
 

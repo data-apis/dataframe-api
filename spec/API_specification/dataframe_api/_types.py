@@ -17,13 +17,17 @@ from typing import (
     TypeVar,
     Union,
     Protocol,
+    TYPE_CHECKING,
 )
 from enum import Enum
+
+if TYPE_CHECKING:
+    from . import DType
 
 array = TypeVar("array")
 Scalar = TypeVar("Scalar")
 device = TypeVar("device")
-DType = TypeVar("DType")
+DTypeT = TypeVar("DTypeT", bound="DType")
 SupportsDLPack = TypeVar("SupportsDLPack")
 SupportsBufferProtocol = TypeVar("SupportsBufferProtocol")
 PyCapsule = TypeVar("PyCapsule")

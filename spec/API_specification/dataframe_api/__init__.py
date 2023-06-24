@@ -8,8 +8,7 @@ from typing import Mapping, Sequence, Any, Generic, TypeVar
 from .column_object import *
 from .dataframe_object import DataFrame
 from .groupby_object import *
-
-T = TypeVar("T", bound="DType")
+from ._types import DTypeT
 
 __all__ = [
     "__dataframe_api_version",
@@ -191,5 +190,5 @@ class Bool(DType):
 # Scalar #
 ##########
 
-class Scalar(Generic[T]):
+class Scalar(Generic[DTypeT]):
     ...
