@@ -331,7 +331,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __ge__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Bool]:
+    def __ge__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -348,7 +348,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __gt__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Bool]:
+    def __gt__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:
         """
         Compare for "greater than" `other`.
 
@@ -365,7 +365,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __le__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Bool]:
+    def __le__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:
         """
         Compare for "less than or equal to" `other`.
 
@@ -382,7 +382,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __lt__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Bool]:
+    def __lt__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:
         """
         Compare for "less than" `other`.
 

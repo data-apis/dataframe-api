@@ -64,7 +64,7 @@ def concat(dataframes: Sequence[DataFrame[Any]]) -> DataFrame[Any]:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Scalar[DType]], *, dtype: DType) -> Column[DType]:
+def column_from_sequence(sequence: Sequence[Scalar[DType]], *, dtype: DType) -> Column[DTypeT]:
     """
     Construct Column from sequence of elements.
 
