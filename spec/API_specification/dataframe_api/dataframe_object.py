@@ -399,7 +399,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __and__(self, other: DataFrame[Bool] | bool) -> DataFrame[Bool]:
+    def __and__(self, other: DataFrame[Bool] | Scalar[Bool]) -> DataFrame[Bool]:
         """
         Apply logical 'and' to `other` DataFrame (or scalar) and this dataframe.
 
@@ -420,7 +420,7 @@ class DataFrame(Generic[DTypeT]):
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self, other: DataFrame[Bool] | bool) -> DataFrame[Bool]:
+    def __or__(self, other: DataFrame[Bool] | Scalar[Bool]) -> DataFrame[Bool]:
         """
         Apply logical 'or' to `other` DataFrame (or scalar) and this DataFrame.
 

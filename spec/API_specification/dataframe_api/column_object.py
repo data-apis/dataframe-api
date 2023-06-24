@@ -48,7 +48,7 @@ class Column(Generic[DTypeT]):
         """
     
     @property
-    def column(self) -> object:
+    def column(self) -> Any:
         """
         Return underlying (not-necessarily-Standard-compliant) column.
 
@@ -237,7 +237,7 @@ class Column(Generic[DTypeT]):
         Column
         """
 
-    def __and__(self: Column[Bool], other: Column[Bool] | bool) -> Column[Bool]:
+    def __and__(self: Column[Bool], other: Column[Bool] | Scalar[Bool]) -> Column[Bool]:
         """
         Apply logical 'and' to `other` Column (or scalar) and this Column.
 
@@ -258,7 +258,7 @@ class Column(Generic[DTypeT]):
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self: Column[Bool], other: Column[Bool] | bool) -> Column[Bool]:
+    def __or__(self: Column[Bool], other: Column[Bool] | Scalar[Bool]) -> Column[Bool]:
         """
         Apply logical 'or' to `other` Column (or scalar) and this column.
 
