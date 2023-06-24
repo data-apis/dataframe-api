@@ -4,7 +4,8 @@ from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal, Generic, Type
 
 if TYPE_CHECKING:
     from . import DType, IntDType, FloatDType, Bool, null, Scalar
-    from ._types import DTypeT
+
+from ._types import DTypeT
 
 __all__ = ['Column']
 
