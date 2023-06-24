@@ -124,7 +124,7 @@ class null:
     """
     ...
 
-def is_null(value: object, /) -> bool:
+def is_null(value: object, /) -> Scalar[Bool]:
     """
     Check if an object is a `null` scalar.
 
