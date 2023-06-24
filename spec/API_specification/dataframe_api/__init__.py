@@ -11,6 +11,8 @@ from .groupby_object import *
 from ._types import DTypeT
 
 __all__ = [
+    "DataFrame",
+    "Column",
     "__dataframe_api_version",
     "column_from_sequence",
     "concat",
