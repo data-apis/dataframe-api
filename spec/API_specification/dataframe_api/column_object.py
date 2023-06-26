@@ -479,8 +479,8 @@ class Column:
         Parameters
         ----------
         correction
-            Correction to apply to the result. 0 for sample standard deviation
-            and 1 for population standard deviation.
+            Correction to apply to the result. For example, 0 for sample standard
+            deviation and 1 for population standard deviation.
         skip_nulls
             Whether to skip null values.
         """
