@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 __all__ = ["DataFrame"]
 
 
-class DataFrame(Generic[DTypeT]):
+class DataFrame:
     """
     DataFrame object
 
@@ -123,7 +123,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def get_columns_by_name(self, names: Sequence[str], /) -> DataFrame[DTypeT]:
+    def get_columns_by_name(self, names: Sequence[str], /) -> DataFrame:
         """
         Select multiple columns by name.
 
@@ -142,7 +142,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def get_rows(self, indices: Column[IntDType]) -> DataFrame[DTypeT]:
+    def get_rows(self, indices: Column[IntDType]) -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -159,7 +159,7 @@ class DataFrame(Generic[DTypeT]):
 
     def slice_rows(
         self, start: int | None, stop: int | None, step: int | None
-    ) -> DataFrame[DTypeT]:
+    ) -> DataFrame:
         """
         Select a subset of rows corresponding to a slice.
 
@@ -175,7 +175,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def get_rows_by_mask(self, mask: Column[Bool]) -> DataFrame[DTypeT]:
+    def get_rows_by_mask(self, mask: Column[Bool]) -> DataFrame:
         """
         Select a subset of rows corresponding to a mask.
 
@@ -194,7 +194,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def insert(self, loc: int, label: str, value: Column[Any]) -> DataFrame[Any]:
+    def insert(self, loc: int, label: str, value: Column[Any]) -> DataFrame:
         """
         Insert column into DataFrame at specified location.
 
@@ -208,7 +208,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def drop_column(self, label: str) -> DataFrame[DTypeT]:
+    def drop_column(self, label: str) -> DataFrame:
         """
         Drop the specified column.
 
@@ -227,7 +227,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def rename_columns(self, mapping: Mapping[str, str]) -> DataFrame[DTypeT]:
+    def rename_columns(self, mapping: Mapping[str, str]) -> DataFrame:
         """
         Rename columns.
 
@@ -293,7 +293,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __eq__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:  # type: ignore[override]
+    def __eq__(self, other: DataFrame | Scalar[DTypeT]) -> DataFrame:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -312,7 +312,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __ne__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:  # type: ignore[override]
+    def __ne__(self, other: DataFrame | Scalar[DTypeT]) -> DataFrame:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -331,7 +331,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __ge__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:
+    def __ge__(self, other: DataFrame | Scalar[DTypeT]) -> DataFrame:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -348,7 +348,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __gt__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:
+    def __gt__(self, other: DataFrame | Scalar[DTypeT]) -> DataFrame:
         """
         Compare for "greater than" `other`.
 
@@ -365,7 +365,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __le__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:
+    def __le__(self, other: DataFrame | Scalar[DTypeT]) -> DataFrame:
         """
         Compare for "less than or equal to" `other`.
 
@@ -382,7 +382,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __lt__(self, other: DataFrame[DTypeT] | Scalar[DTypeT]) -> DataFrame[Bool]:
+    def __lt__(self, other: DataFrame | Scalar[DTypeT]) -> DataFrame:
         """
         Compare for "less than" `other`.
 
@@ -399,7 +399,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __and__(self, other: DataFrame[Bool] | Scalar[Bool]) -> DataFrame[Bool]:
+    def __and__(self, other: DataFrame | Scalar[Bool]) -> DataFrame:
         """
         Apply logical 'and' to `other` DataFrame (or scalar) and this dataframe.
 
@@ -420,7 +420,7 @@ class DataFrame(Generic[DTypeT]):
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self, other: DataFrame[Bool] | Scalar[Bool]) -> DataFrame[Bool]:
+    def __or__(self, other: DataFrame | Scalar[Bool]) -> DataFrame:
         """
         Apply logical 'or' to `other` DataFrame (or scalar) and this DataFrame.
 
@@ -441,7 +441,7 @@ class DataFrame(Generic[DTypeT]):
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Any]:
+    def __add__(self, other: DataFrame | Scalar[Any]) -> DataFrame:
         """
         Add `other` dataframe or scalar to this dataframe.
 
@@ -458,7 +458,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __sub__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Any]:
+    def __sub__(self, other: DataFrame | Scalar[Any]) -> DataFrame:
         """
         Subtract `other` dataframe or scalar from this dataframe.
 
@@ -475,7 +475,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __mul__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Any]:
+    def __mul__(self, other: DataFrame | Scalar[Any]) -> DataFrame:
         """
         Multiply  `other` dataframe or scalar with this dataframe.
 
@@ -492,7 +492,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __truediv__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Any]:
+    def __truediv__(self, other: DataFrame | Scalar[Any]) -> DataFrame:
         """
         Divide  this dataframe by `other` dataframe or scalar. True division, returns floats.
 
@@ -509,7 +509,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __floordiv__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Any]:
+    def __floordiv__(self, other: DataFrame | Scalar[Any]) -> DataFrame:
         """
         Floor-divide (returns integers) this dataframe by `other` dataframe or scalar.
 
@@ -526,7 +526,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __pow__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Any]:
+    def __pow__(self, other: DataFrame | Scalar[Any]) -> DataFrame:
         """
         Raise this dataframe to the power of `other`.
 
@@ -543,7 +543,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __mod__(self, other: DataFrame[Any] | Scalar[Any]) -> DataFrame[Any]:
+    def __mod__(self, other: DataFrame | Scalar[Any]) -> DataFrame:
         """
         Return modulus of this dataframe by `other` (`%` operator).
 
@@ -560,7 +560,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __divmod__(self, other: DataFrame[Any] | Scalar[Any]) -> tuple[DataFrame[Any], DataFrame[Any]]:
+    def __divmod__(self, other: DataFrame | Scalar[Any]) -> tuple[DataFrame, DataFrame]:
         """
         Return quotient and remainder of integer division. See `divmod` builtin function.
 
@@ -577,7 +577,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def __invert__(self: DataFrame[Bool]) -> DataFrame[Bool]:
+    def __invert__(self: DataFrame) -> DataFrame:
         """
         Invert truthiness of (boolean) elements.
 
@@ -600,7 +600,7 @@ class DataFrame(Generic[DTypeT]):
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
-    def any(self, *, skip_nulls: bool = True) -> DataFrame[Bool]:
+    def any(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -611,7 +611,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def all(self, *, skip_nulls: bool = True) -> DataFrame[Bool]:
+    def all(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -650,55 +650,55 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def min(self, *, skip_nulls: bool = True) -> DataFrame[DTypeT]:
+    def min(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def max(self, *, skip_nulls: bool = True) -> DataFrame[DTypeT]:
+    def max(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def sum(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
+    def sum(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def prod(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
+    def prod(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def median(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
+    def median(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def mean(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
+    def mean(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def std(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
+    def std(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def var(self, *, skip_nulls: bool = True) -> DataFrame[Any]:
+    def var(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def is_null(self) -> DataFrame[Bool]:
+    def is_null(self) -> DataFrame:
         """
         Check for 'missing' or 'null' entries.
 
@@ -718,7 +718,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def is_nan(self) -> DataFrame[Bool]:
+    def is_nan(self) -> DataFrame:
         """
         Check for nan entries.
 
@@ -738,7 +738,7 @@ class DataFrame(Generic[DTypeT]):
         """
         ...
 
-    def fill_nan(self, value: float | 'null', /) -> DataFrame[DTypeT]:
+    def fill_nan(self, value: float | 'null', /) -> DataFrame:
         """
         Fill ``nan`` values with the given fill value.
 

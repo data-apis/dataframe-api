@@ -44,7 +44,7 @@ the conforming implementation adheres. Set to a concrete value for a stable
 implementation of the dataframe API standard.
 """
 
-def concat(dataframes: Sequence[DataFrame[Any]]) -> DataFrame[Any]:
+def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     Concatenate DataFrames vertically.
 
@@ -83,7 +83,7 @@ def column_from_sequence(sequence: Sequence[Scalar[DType]], *, dtype: DType) -> 
     """
     ...
 
-def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame[Any]:
+def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
     """
     Construct DataFrame from map of column names to Columns.
 
