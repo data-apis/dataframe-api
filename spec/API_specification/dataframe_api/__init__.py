@@ -64,7 +64,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Scalar[DType]], *, dtype: DType) -> Column[DTypeT]:
+def column_from_sequence(sequence: Sequence[Scalar], *, dtype: DType) -> Column[DTypeT]:
     """
     Construct Column from sequence of elements.
 
@@ -128,7 +128,7 @@ class null:
     """
     ...
 
-def is_null(value: object, /) -> Scalar[Bool]:
+def is_null(value: object, /) -> bool:
     """
     Check if an object is a `null` scalar.
 
@@ -195,5 +195,5 @@ class Bool(DType):
 # Scalar #
 ##########
 
-class Scalar(Generic[DTypeT]):
+class Scalar:
     ...
