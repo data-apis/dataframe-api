@@ -19,7 +19,6 @@ __all__ = [
     "dataframe_from_dict",
     "is_null",
     "null",
-    "DType",
     "Int64",
     "Int32",
     "Int16",
@@ -30,10 +29,6 @@ __all__ = [
     "UInt8",
     "Float64",
     "Float32",
-    "Bool",
-    "DType",
-    "FloatDType",
-    "IntDType",
 ]
 
 
