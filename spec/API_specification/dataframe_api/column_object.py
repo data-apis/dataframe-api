@@ -279,7 +279,7 @@ class Column(Generic[DType]):
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self: Column[DType], other: Column[DType] | Any) -> Column[DType]:
+    def __add__(self: Column[Any], other: Column[Any] | Any) -> Column[Any]:
         """
         Add `other` column or scalar to this column.
 
@@ -295,7 +295,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __sub__(self: Column[DType], other: Column[DType] | Any) -> Column[DType]:
+    def __sub__(self: Column[Any], other: Column[Any] | Any) -> Column[Any]:
         """
         Subtract `other` column or scalar from this column.
 
