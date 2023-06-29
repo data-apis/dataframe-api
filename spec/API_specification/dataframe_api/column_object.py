@@ -137,7 +137,7 @@ class Column(Generic[DType]):
         """
         ...
 
-    def __eq__(self, other: Column[DType] | Any) -> Column[Bool]:  # type: ignore[override]
+    def __eq__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -155,7 +155,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __ne__(self, other: Column[DType] | Any) -> Column[Bool]:  # type: ignore[override]
+    def __ne__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -173,7 +173,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __ge__(self, other: Column[DType] | Any) -> Column[Bool]:
+    def __ge__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -189,7 +189,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __gt__(self, other: Column[DType] | Any) -> Column[Bool]:
+    def __gt__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:
         """
         Compare for "greater than" `other`.
 
@@ -205,7 +205,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __le__(self, other: Column[DType] | Any) -> Column[Bool]:
+    def __le__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:
         """
         Compare for "less than or equal to" `other`.
 
@@ -221,7 +221,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __lt__(self, other: Column[DType] | Any) -> Column[Bool]:
+    def __lt__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:
         """
         Compare for "less than" `other`.
 
@@ -279,7 +279,7 @@ class Column(Generic[DType]):
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self, other: Column[DType] | Any) -> Column[DType]:
+    def __add__(self: Column[DType], other: Column[DType] | Any) -> Column[DType]:
         """
         Add `other` column or scalar to this column.
 
@@ -295,7 +295,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __sub__(self, other: Column[DType] | Any) -> Column[DType]:
+    def __sub__(self: Column[DType], other: Column[DType] | Any) -> Column[DType]:
         """
         Subtract `other` column or scalar from this column.
 
@@ -532,7 +532,7 @@ class Column(Generic[DType]):
         In particular, does not check for `np.timedelta64('NaT')`.
         """
 
-    def is_in(self, values: Column[DType]) -> Column[Bool]:
+    def is_in(self: Column[DType], values: Column[DType]) -> Column[Bool]:
         """
         Indicate whether the value at each row matches any value in `values`.
 
@@ -571,7 +571,7 @@ class Column(Generic[DType]):
         """
         ...
 
-    def fill_nan(self, value: float | 'null', /) -> Column[DType]:
+    def fill_nan(self: Column[DType], value: float | 'null', /) -> Column[DType]:
         """
         Fill floating point ``nan`` values with the given fill value.
 

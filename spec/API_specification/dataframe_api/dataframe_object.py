@@ -104,7 +104,7 @@ class DataFrame:
         """
         ...
 
-    def get_column_by_name(self, name: str, /) -> Column[DType]:
+    def get_column_by_name(self, name: str, /) -> Column[Any]:
         """
         Select a column by name.
 
