@@ -9,7 +9,6 @@ if TYPE_CHECKING:
 __all__ = ['GroupBy']
 
 
-
 class GroupBy:
     """
     GroupBy object.

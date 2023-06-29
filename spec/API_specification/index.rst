@@ -16,7 +16,6 @@ of objects and functions in the top-level namespace. The latter are:
    __dataframe_api_version__
    is_null
    null
-   DType
    Int64
    Int32
    Int16
@@ -28,9 +27,6 @@ of objects and functions in the top-level namespace. The latter are:
    Float64
    Float32
    Bool
-   DTypeT
-   IntDType
-   FloatDType
 
 The ``DataFrame``, ``Column`` and ``GroupBy`` objects have the following
 methods and attributes:

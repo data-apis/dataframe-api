@@ -577,7 +577,7 @@ class DataFrame:
         """
         ...
 
-    def __invert__(self: DataFrame) -> DataFrame:
+    def __invert__(self) -> DataFrame:
         """
         Invert truthiness of (boolean) elements.
 

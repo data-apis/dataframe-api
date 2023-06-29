@@ -29,6 +29,7 @@ __all__ = [
     "UInt8",
     "Float64",
     "Float32",
+    "Bool",
 ]
 
 
