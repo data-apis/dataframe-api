@@ -296,6 +296,7 @@ class Column:
         Raise this column to the power of `other`.
 
         Integer dtype to the power of non-negative integer dtype is integer dtype.
+        Integer dtype to the power of float dtype is float dtype.
         Float dtype to the power of integer dtype or float dtype is float dtype.
 
         Parameters
