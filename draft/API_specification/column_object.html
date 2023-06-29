@@ -855,6 +855,9 @@ for the operation by the underling dtypes.</p>
 <dt class="sig sig-object py" id="dataframe_api.Column.__pow__">
 <span class="sig-name descname"><span class="pre">__pow__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.__pow__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raise this column to the power of <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p>
+<p>Integer dtype to the power of non-negative integer dtype is integer dtype.
+Integer dtype to the power of float dtype is float dtype.
+Float dtype to the power of integer dtype or float dtype is float dtype.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em> or </em><em>Scalar</em>) – If Column, must have same length.
