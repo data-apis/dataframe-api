@@ -148,7 +148,7 @@ class DataFrame:
 
         Parameters
         ----------
-        indices : Column[IntDType]
+        indices : Column[int]
             Positions of rows to select.
 
         Returns
@@ -284,7 +284,7 @@ class DataFrame:
 
         Returns
         -------
-        Column[IntDType]
+        Column[int]
     
         Raises
         ------

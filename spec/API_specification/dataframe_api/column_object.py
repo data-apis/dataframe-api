@@ -85,7 +85,7 @@ class Column(Generic[DType]):
 
         Parameters
         ----------
-        indices : Column[IntDType]
+        indices : Column[int]
             Positions of rows to select.
         """
         ...
@@ -133,7 +133,7 @@ class Column(Generic[DType]):
 
         Returns
         -------
-        Column[IntDType]
+        Column[int]
         """
         ...
 
@@ -556,7 +556,7 @@ class Column(Generic[DType]):
 
         Returns
         -------
-        Column[IntDType]
+        Column[int]
             Indices corresponding to unique values.
 
         Notes
