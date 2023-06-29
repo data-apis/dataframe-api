@@ -1,14 +1,11 @@
 from __future__ import annotations
 
-from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoReturn, TypeVar, Generic
-
-from ._types import DType
+from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoReturn
 
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
     from . import Bool, null
-
 
 
 __all__ = ["DataFrame"]

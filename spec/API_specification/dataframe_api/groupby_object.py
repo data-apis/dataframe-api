@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, TypeVar, Generic, Any
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .dataframe_object import DataFrame

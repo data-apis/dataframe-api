@@ -17,7 +17,6 @@ from typing import (
     TypeVar,
     Union,
     Protocol,
-    TYPE_CHECKING,
 )
 from enum import Enum
 
