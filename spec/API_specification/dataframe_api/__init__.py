@@ -3,7 +3,7 @@ Function stubs and API documentation for the DataFrame API standard.
 """
 from __future__ import annotations
 
-from typing import Mapping, Sequence, Any, Generic, TypeVar
+from typing import Mapping, Sequence, Any
 
 from .column_object import *
 from .dataframe_object import DataFrame
@@ -11,9 +11,9 @@ from .groupby_object import *
 from ._types import DType
 
 __all__ = [
+    "__dataframe_api_version__",
     "DataFrame",
     "Column",
-    "__dataframe_api_version__",
     "column_from_sequence",
     "concat",
     "dataframe_from_dict",
