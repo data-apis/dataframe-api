@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal, Generic, TypeVar
 
+from ._types import DType
+
 if TYPE_CHECKING:
     from . import Bool, null
-    from ._types import DType
 
 
 __all__ = ['Column']

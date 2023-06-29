@@ -13,7 +13,7 @@ from ._types import DType
 __all__ = [
     "DataFrame",
     "Column",
-    "__dataframe_api_version",
+    "__dataframe_api_version__",
     "column_from_sequence",
     "concat",
     "dataframe_from_dict",
