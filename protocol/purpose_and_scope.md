@@ -76,14 +76,6 @@ def somefunc(df, ...):
     # From now on, use `df` methods and `namespace` functions/objects
 ```
 
-Libraries which implement the Standard in a separate namespace
-are required to provide the following methods:
-- ``__dataframe_standard__``: used for converting a non-compliant dataframe to a compliant one;
-- ``__column_standard__``: used for converting a non-compliant column to a compliant one.
-
-For example, pandas would have ``pandas.DataFrame.__dataframe_standard__`` and
-``pandas.Series.__column_standard__``.
-
 ### History
 
 Dataframe libraries in several programming language exist, such as
