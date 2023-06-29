@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal, Generic, TypeVar
 
 if TYPE_CHECKING:
-    from . import Bool, null, Scalar
+    from . import Bool, null
     from ._types import DType
 
 
@@ -90,7 +90,7 @@ class Column(Generic[DType]):
         """
         ...
 
-    def get_value(self, row_number: int) -> Scalar:
+    def get_value(self, row_number: int) -> Any:
         """
         Select the value at a row number, similar to `ndarray.__getitem__(<int>)`.
 
@@ -137,7 +137,7 @@ class Column(Generic[DType]):
         """
         ...
 
-    def __eq__(self, other: Column[DType] | Scalar) -> Column[Bool]:  # type: ignore[override]
+    def __eq__(self, other: Column[DType] | Any) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -155,7 +155,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __ne__(self, other: Column[DType] | Scalar) -> Column[Bool]:  # type: ignore[override]
+    def __ne__(self, other: Column[DType] | Any) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -173,7 +173,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __ge__(self, other: Column[DType] | Scalar) -> Column[Bool]:
+    def __ge__(self, other: Column[DType] | Any) -> Column[Bool]:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -189,7 +189,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __gt__(self, other: Column[DType] | Scalar) -> Column[Bool]:
+    def __gt__(self, other: Column[DType] | Any) -> Column[Bool]:
         """
         Compare for "greater than" `other`.
 
@@ -205,7 +205,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __le__(self, other: Column[DType] | Scalar) -> Column[Bool]:
+    def __le__(self, other: Column[DType] | Any) -> Column[Bool]:
         """
         Compare for "less than or equal to" `other`.
 
@@ -221,7 +221,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __lt__(self, other: Column[DType] | Scalar) -> Column[Bool]:
+    def __lt__(self, other: Column[DType] | Any) -> Column[Bool]:
         """
         Compare for "less than" `other`.
 
@@ -279,7 +279,7 @@ class Column(Generic[DType]):
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self, other: Column[DType] | Scalar) -> Column[DType]:
+    def __add__(self, other: Column[DType] | Any) -> Column[DType]:
         """
         Add `other` column or scalar to this column.
 
@@ -295,7 +295,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __sub__(self, other: Column[DType] | Scalar) -> Column[DType]:
+    def __sub__(self, other: Column[DType] | Any) -> Column[DType]:
         """
         Subtract `other` column or scalar from this column.
 
@@ -311,7 +311,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __mul__(self, other: Column[Any] | Scalar) -> Column[Any]:
+    def __mul__(self, other: Column[Any] | Any) -> Column[Any]:
         """
         Multiply `other` column or scalar with this column.
 
@@ -327,7 +327,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __truediv__(self, other: Column[Any] | Scalar) -> Column[Any]:
+    def __truediv__(self, other: Column[Any] | Any) -> Column[Any]:
         """
         Divide this column by `other` column or scalar. True division, returns floats.
 
@@ -343,7 +343,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __floordiv__(self, other: Column[Any] | Scalar) -> Column[Any]:
+    def __floordiv__(self, other: Column[Any] | Any) -> Column[Any]:
         """
         Floor-divide `other` column or scalar to this column.
 
@@ -359,7 +359,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __pow__(self, other: Column[Any] | Scalar) -> Column[Any]:
+    def __pow__(self, other: Column[Any] | Any) -> Column[Any]:
         """
         Raise this column to the power of `other`.
 
@@ -375,7 +375,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __mod__(self, other: Column[Any] | Scalar) -> Column[Any]:
+    def __mod__(self, other: Column[Any] | Any) -> Column[Any]:
         """
         Returns modulus of this column by `other` (`%` operator).
 
@@ -391,7 +391,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __divmod__(self, other: Column[Any] | Scalar) -> tuple[Column[Any], Column[Any]]:
+    def __divmod__(self, other: Column[Any] | Any) -> tuple[Column[Any], Column[Any]]:
         """
         Return quotient and remainder of integer division. See `divmod` builtin function.
 
@@ -437,32 +437,32 @@ class Column(Generic[DType]):
             If column is not boolean.
         """
 
-    def min(self, *, skip_nulls: bool = True) -> Scalar:
+    def min(self, *, skip_nulls: bool = True) -> Any:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def max(self, *, skip_nulls: bool = True) -> Scalar:
+    def max(self, *, skip_nulls: bool = True) -> Any:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def sum(self, *, skip_nulls: bool = True) -> Scalar:
+    def sum(self, *, skip_nulls: bool = True) -> Any:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def prod(self, *, skip_nulls: bool = True) -> Scalar:
+    def prod(self, *, skip_nulls: bool = True) -> Any:
         """
         Reduction returns a scalar. Must be supported for numerical data types.
         The returned value has the same dtype as the column.
         """
 
-    def median(self, *, skip_nulls: bool = True) -> Scalar:
+    def median(self, *, skip_nulls: bool = True) -> Any:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -470,7 +470,7 @@ class Column(Generic[DType]):
         dtypes.
         """
 
-    def mean(self, *, skip_nulls: bool = True) -> Scalar:
+    def mean(self, *, skip_nulls: bool = True) -> Any:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -478,7 +478,7 @@ class Column(Generic[DType]):
         dtypes.
         """
 
-    def std(self, *, skip_nulls: bool = True) -> Scalar:
+    def std(self, *, skip_nulls: bool = True) -> Any:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -486,7 +486,7 @@ class Column(Generic[DType]):
         dtypes.
         """
 
-    def var(self, *, skip_nulls: bool = True) -> Scalar:
+    def var(self, *, skip_nulls: bool = True) -> Any:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and

@@ -59,7 +59,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Scalar], *, dtype: Any) -> Column[Any]:
+def column_from_sequence(sequence: Sequence[Any], *, dtype: Any) -> Column[Any]:
     """
     Construct Column from sequence of elements.
 
@@ -176,10 +176,3 @@ class Float32:
 
 class Bool:
     """Boolean type with 8 bits of precision."""
-
-##########
-# Scalar #
-##########
-
-class Scalar:
-    ...

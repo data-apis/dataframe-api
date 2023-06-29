@@ -21,8 +21,8 @@ from typing import (
 )
 from enum import Enum
 
-
 array = TypeVar("array")
+Scalar = TypeVar("Scalar")
 device = TypeVar("device")
 DType = TypeVar("DType")
 SupportsDLPack = TypeVar("SupportsDLPack")
