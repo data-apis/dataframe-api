@@ -3,14 +3,14 @@ from __future__ import annotations
 from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal, Generic, TypeVar
 
 if TYPE_CHECKING:
-    from . import DType, IntDType, FloatDType, Bool, null, Scalar
+    from . import Bool, null, Scalar
+    from ._types import DType
 
-from ._types import DTypeT
 
 __all__ = ['Column']
 
 
-class Column(Generic[DTypeT]):
+class Column(Generic[DType]):
     """
     Column object
 
@@ -74,12 +74,12 @@ class Column(Generic[DTypeT]):
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
     @property
-    def dtype(self) -> DType:
+    def dtype(self) -> Any:
         """
         Return data type of column.
         """
 
-    def get_rows(self, indices: Column[IntDType]) -> Column[DTypeT]:
+    def get_rows(self: Column[DType], indices: Column[Any]) -> Column[DType]:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -112,7 +112,7 @@ class Column(Generic[DTypeT]):
         *,
         ascending: bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column[IntDType]:
+    ) -> Column[Any]:
         """
         Return row numbers which would sort column.
 
@@ -137,7 +137,7 @@ class Column(Generic[DTypeT]):
         """
         ...
 
-    def __eq__(self, other: Column[DTypeT] | Scalar) -> Column[Bool]:  # type: ignore[override]
+    def __eq__(self, other: Column[DType] | Scalar) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -155,7 +155,7 @@ class Column(Generic[DTypeT]):
         Column
         """
 
-    def __ne__(self, other: Column[DTypeT] | Scalar) -> Column[Bool]:  # type: ignore[override]
+    def __ne__(self, other: Column[DType] | Scalar) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -173,7 +173,7 @@ class Column(Generic[DTypeT]):
         Column
         """
 
-    def __ge__(self, other: Column[DTypeT] | Scalar) -> Column[Bool]:
+    def __ge__(self, other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -189,7 +189,7 @@ class Column(Generic[DTypeT]):
         Column
         """
 
-    def __gt__(self, other: Column[DTypeT] | Scalar) -> Column[Bool]:
+    def __gt__(self, other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "greater than" `other`.
 
@@ -205,7 +205,7 @@ class Column(Generic[DTypeT]):
         Column
         """
 
-    def __le__(self, other: Column[DTypeT] | Scalar) -> Column[Bool]:
+    def __le__(self, other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "less than or equal to" `other`.
 
@@ -221,7 +221,7 @@ class Column(Generic[DTypeT]):
         Column
         """
 
-    def __lt__(self, other: Column[DTypeT] | Scalar) -> Column[Bool]:
+    def __lt__(self, other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "less than" `other`.
 
@@ -279,7 +279,7 @@ class Column(Generic[DTypeT]):
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self, other: Column[DTypeT] | Scalar) -> Column[DTypeT]:
+    def __add__(self, other: Column[DType] | Scalar) -> Column[DType]:
         """
         Add `other` column or scalar to this column.
 
@@ -295,7 +295,7 @@ class Column(Generic[DTypeT]):
         Column
         """
 
-    def __sub__(self, other: Column[DTypeT] | Scalar) -> Column[DTypeT]:
+    def __sub__(self, other: Column[DType] | Scalar) -> Column[DType]:
         """
         Subtract `other` column or scalar from this column.
 
@@ -327,7 +327,7 @@ class Column(Generic[DTypeT]):
         Column
         """
 
-    def __truediv__(self, other: Column[Any] | Scalar) -> Column[FloatDType]:
+    def __truediv__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Divide this column by `other` column or scalar. True division, returns floats.
 
@@ -343,7 +343,7 @@ class Column(Generic[DTypeT]):
         Column
         """
 
-    def __floordiv__(self, other: Column[Any] | Scalar) -> Column[IntDType]:
+    def __floordiv__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Floor-divide `other` column or scalar to this column.
 
@@ -391,7 +391,7 @@ class Column(Generic[DTypeT]):
         Column
         """
 
-    def __divmod__(self, other: Column[Any] | Scalar) -> tuple[Column[IntDType], Column[FloatDType]]:
+    def __divmod__(self, other: Column[Any] | Scalar) -> tuple[Column[Any], Column[Any]]:
         """
         Return quotient and remainder of integer division. See `divmod` builtin function.
 
@@ -532,7 +532,7 @@ class Column(Generic[DTypeT]):
         In particular, does not check for `np.timedelta64('NaT')`.
         """
 
-    def is_in(self, values: Column[DTypeT]) -> Column[Bool]:
+    def is_in(self, values: Column[DType]) -> Column[Bool]:
         """
         Indicate whether the value at each row matches any value in `values`.
 
@@ -550,7 +550,7 @@ class Column(Generic[DTypeT]):
         Column[bool]
         """
 
-    def unique_indices(self, *, skip_nulls: bool = True) -> Column[IntDType]:
+    def unique_indices(self, *, skip_nulls: bool = True) -> Column[Any]:
         """
         Return indices corresponding to unique values in Column.
 
@@ -571,7 +571,7 @@ class Column(Generic[DTypeT]):
         """
         ...
 
-    def fill_nan(self, value: float | 'null', /) -> Column[DTypeT]:
+    def fill_nan(self, value: float | 'null', /) -> Column[DType]:
         """
         Fill floating point ``nan`` values with the given fill value.
 

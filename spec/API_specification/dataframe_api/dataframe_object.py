@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoReturn, TypeVar, Generic
 
-from ._types import DTypeT
+from ._types import DType
 
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
-    from . import DType, IntDType, FloatDType, Bool, null, Scalar
+    from . import Bool, null, Scalar
 
 
 
@@ -104,7 +104,7 @@ class DataFrame:
         """
         ...
 
-    def get_column_by_name(self, name: str, /) -> Column[DTypeT]:
+    def get_column_by_name(self, name: str, /) -> Column[DType]:
         """
         Select a column by name.
 
@@ -142,7 +142,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Column[IntDType]) -> DataFrame:
+    def get_rows(self, indices: Column[Any]) -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -258,7 +258,7 @@ class DataFrame:
         *,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column[IntDType]:
+    ) -> Column[Any]:
         """
         Return row numbers which would sort according to given columns.
 

@@ -4,12 +4,10 @@ from typing import TYPE_CHECKING, TypeVar, Generic, Any
 
 if TYPE_CHECKING:
     from .dataframe_object import DataFrame
-    from . import IntDType, DType, Bool
 
 
 __all__ = ['GroupBy']
 
-T = TypeVar('T', bound="DType")
 
 
 class GroupBy:

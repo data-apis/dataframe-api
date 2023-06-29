@@ -8,7 +8,7 @@ from typing import Mapping, Sequence, Any, Generic, TypeVar
 from .column_object import *
 from .dataframe_object import DataFrame
 from .groupby_object import *
-from ._types import DTypeT
+from ._types import DType
 
 __all__ = [
     "DataFrame",
@@ -31,7 +31,7 @@ __all__ = [
     "Float64",
     "Float32",
     "Bool",
-    "DTypeT",
+    "DType",
     "FloatDType",
     "IntDType",
 ]
@@ -64,7 +64,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Scalar], *, dtype: DType) -> Column[DTypeT]:
+def column_from_sequence(sequence: Sequence[Scalar], *, dtype: Any) -> Column[Any]:
     """
     Construct Column from sequence of elements.
 
@@ -149,46 +149,37 @@ def is_null(value: object, /) -> bool:
 # Dtypes #
 ##########
 
-class DType:
-    """Base class for all dtypes."""
-
-class IntDType(DType):
-    """Base class for all integer dtypes."""
-
-class FloatDType(DType):
-    """Base class for all float dtypes."""
-
-class Int64(IntDType):
+class Int64:
     """Integer type with 64 bits of precision."""
 
-class Int32(IntDType):
+class Int32:
     """Integer type with 32 bits of precision."""
 
-class Int16(IntDType):
+class Int16:
     """Integer type with 16 bits of precision."""
 
-class Int8(IntDType):
+class Int8:
     """Integer type with 8 bits of precision."""
 
-class UInt64(IntDType):
+class UInt64:
     """Unsigned integer type with 64 bits of precision."""
 
-class UInt32(IntDType):
+class UInt32:
     """Unsigned integer type with 32 bits of precision."""
 
-class UInt16(IntDType):
+class UInt16:
     """Unsigned integer type with 16 bits of precision."""
 
-class UInt8(IntDType):
+class UInt8:
     """Unsigned integer type with 8 bits of precision."""
 
-class Float64(FloatDType):
+class Float64:
     """Floating point type with 64 bits of precision."""
 
-class Float32(FloatDType):
+class Float32:
     """Floating point type with 32 bits of precision."""
 
-class Bool(DType):
+class Bool:
     """Boolean type with 8 bits of precision."""
 
 ##########
