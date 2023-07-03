@@ -498,6 +498,32 @@ class Column:
         dtypes.
         """
 
+    def cummax(self) -> Column:
+        """
+        Reduction returns a Column. Any data type that supports comparisons
+        must be supported. The returned value has the same dtype as the column.
+        """
+
+    def cummin(self) -> Column:
+        """
+        Reduction returns a Column. Any data type that supports comparisons
+        must be supported. The returned value has the same dtype as the column.
+        """
+
+    def cumsum(self) -> Column:
+        """
+        Reduction returns a Column. Must be supported for numerical and
+        datetime data types. The returned value has the same dtype as the
+        column.
+        """
+
+    def cumprod(self) -> Column:
+        """
+        Reduction returns a Column. Must be supported for numerical and
+        datetime data types. The returned value has the same dtype as the
+        column.
+        """
+
     def is_null(self) -> Column:
         """
         Check for 'missing' or 'null' entries.
