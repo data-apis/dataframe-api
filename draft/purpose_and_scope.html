@@ -755,6 +755,14 @@ described in this specification.</p>
 completed such an implementation may, and are encouraged to, provide details on
 the level of (non-)conformance. For details on how to do this, see
 <a class="reference internal" href="verification_test_suite.html"><span class="std std-doc">Verification - measuring conformance</span></a>.</p>
+<p>Libraries which implement the Standard in a separate namespace
+are required to provide the following methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__dataframe_standard__</span></code>: used for converting a non-compliant dataframe to a compliant one;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__column_standard__</span></code>: used for converting a non-compliant column to a compliant one.</p></li>
+</ul>
+<p>For example, pandas would have <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame.__dataframe_standard__</span></code> and
+<code class="docutils literal notranslate"><span class="pre">pandas.Series.__column_standard__</span></code>.</p>
 </section>
 </section>
 
