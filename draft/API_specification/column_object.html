@@ -1079,11 +1079,30 @@ vary based on the implementation.</p></li>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.std">
-<span class="sig-name descname"><span class="pre">std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span></span></span><a class="headerlink" href="#dataframe_api.Column.std" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span></span></span><a class="headerlink" href="#dataframe_api.Column.std" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reduction returns a scalar. Must be supported for numerical and
 datetime data types. Returns a float for numerical data types, and
 datetime (with the appropriate timedelta format string) for datetime
 dtypes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>correction</strong> – Degrees of freedom adjustment. Setting this parameter to a value other
+than <code class="docutils literal notranslate"><span class="pre">0</span></code> has the effect of adjusting the divisor during the
+calculation of the standard deviation according to <code class="docutils literal notranslate"><span class="pre">N-correction</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">N</span></code> corresponds to the total number of elements over which
+the standard deviation is computed. When computing the standard
+deviation of a population, setting this parameter to <code class="docutils literal notranslate"><span class="pre">0</span></code> is the
+standard choice (i.e., the provided column contains data
+constituting an entire population). When computing the corrected
+sample standard deviation, setting this parameter to <code class="docutils literal notranslate"><span class="pre">1</span></code> is the
+standard choice (i.e., the provided column contains data sampled
+from a larger population; this is commonly referred to as Bessel’s
+correction). Fractional (float) values are allowed. Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></li>
+<li><p><strong>skip_nulls</strong> – Whether to skip null values.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.sum">
@@ -1112,11 +1131,21 @@ To get the unique values, you can do <code class="docutils literal notranslate">
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.var">
-<span class="sig-name descname"><span class="pre">var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span></span></span><a class="headerlink" href="#dataframe_api.Column.var" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span></span></span><a class="headerlink" href="#dataframe_api.Column.var" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reduction returns a scalar. Must be supported for numerical and
 datetime data types. Returns a float for numerical data types, and
 datetime (with the appropriate timedelta format string) for datetime
 dtypes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>correction</strong> – Correction to apply to the result. For example, <code class="docutils literal notranslate"><span class="pre">0</span></code> for sample
+standard deviation and <code class="docutils literal notranslate"><span class="pre">1</span></code> for population standard deviation.
+See <code class="code docutils literal notranslate"><span class="pre">Column.std</span></code> for a more detailed description.</p></li>
+<li><p><strong>skip_nulls</strong> – Whether to skip null values.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 </dd></dl>
 </section>
