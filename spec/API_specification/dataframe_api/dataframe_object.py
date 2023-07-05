@@ -782,11 +782,10 @@ class DataFrame:
         Fill null values with the given fill value.
 
         This method can only be used if all columns that are to be filled are
-        of the same dtype kind (e.g., all floating-point, all integer, all
-        string or all datetime dtypes). If that is not the case, it is not
-        possible to use a single Python scalar type that matches the dtype of
-        all columns to which ``fill_null`` is being applied, and hence an
-        exception will be raised.
+        of the same dtype (e.g., all of ``Float64`` or all of string dtype).
+        If that is not the case, it is not possible to use a single Python
+        scalar type that matches the dtype of all columns to which
+        ``fill_null`` is being applied, and hence an exception will be raised.
 
         Parameters
         ----------
@@ -795,7 +794,7 @@ class DataFrame:
             Must be of the Python scalar type matching the dtype(s) of the dataframe.
         column_names : list[str] | None
             A list of column names for which to replace nulls with the given
-            scalar value.
+            scalar value. If ``None``, nulls will be replaced in all columns.
 
         Raises
         ------
