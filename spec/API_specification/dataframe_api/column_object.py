@@ -482,20 +482,47 @@ class Column:
         dtypes.
         """
 
-    def std(self, *, skip_nulls: bool = True) -> Scalar:
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
+
+        Parameters
+        ----------
+        correction
+            Degrees of freedom adjustment. Setting this parameter to a value other
+            than ``0`` has the effect of adjusting the divisor during the
+            calculation of the standard deviation according to ``N-correction``,
+            where ``N`` corresponds to the total number of elements over which
+            the standard deviation is computed. When computing the standard
+            deviation of a population, setting this parameter to ``0`` is the
+            standard choice (i.e., the provided column contains data
+            constituting an entire population). When computing the corrected
+            sample standard deviation, setting this parameter to ``1`` is the
+            standard choice (i.e., the provided column contains data sampled
+            from a larger population; this is commonly referred to as Bessel's
+            correction). Fractional (float) values are allowed. Default: ``1``.
+        skip_nulls
+            Whether to skip null values.
         """
 
-    def var(self, *, skip_nulls: bool = True) -> Scalar:
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
+
+        Parameters
+        ----------
+        correction
+            Correction to apply to the result. For example, ``0`` for sample
+            standard deviation and ``1`` for population standard deviation.
+            See `Column.std` for a more detailed description.
+        skip_nulls
+            Whether to skip null values.
         """
 
     def cummax(self) -> Column:
