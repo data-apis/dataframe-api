@@ -525,26 +525,26 @@ class Column:
             Whether to skip null values.
         """
 
-    def cummax(self) -> Column:
+    def cumulative_max(self) -> Column:
         """
         Reduction returns a Column. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def cummin(self) -> Column:
+    def cumulative_min(self) -> Column:
         """
         Reduction returns a Column. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def cumsum(self) -> Column:
+    def cumulative_sum(self) -> Column:
         """
         Reduction returns a Column. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def cumprod(self) -> Column:
+    def cumulative_prod(self) -> Column:
         """
         Reduction returns a Column. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
