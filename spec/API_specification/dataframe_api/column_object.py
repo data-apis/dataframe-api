@@ -525,6 +525,32 @@ class Column:
             Whether to skip null values.
         """
 
+    def cumulative_max(self) -> Column:
+        """
+        Reduction returns a Column. Any data type that supports comparisons
+        must be supported. The returned value has the same dtype as the column.
+        """
+
+    def cumulative_min(self) -> Column:
+        """
+        Reduction returns a Column. Any data type that supports comparisons
+        must be supported. The returned value has the same dtype as the column.
+        """
+
+    def cumulative_sum(self) -> Column:
+        """
+        Reduction returns a Column. Must be supported for numerical and
+        datetime data types. The returned value has the same dtype as the
+        column.
+        """
+
+    def cumulative_prod(self) -> Column:
+        """
+        Reduction returns a Column. Must be supported for numerical and
+        datetime data types. The returned value has the same dtype as the
+        column.
+        """
+
     def is_null(self) -> Column:
         """
         Check for 'missing' or 'null' entries.
