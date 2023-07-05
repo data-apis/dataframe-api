@@ -408,6 +408,14 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.column" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.column</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.cumulative_max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.cumulative_max()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.cumulative_min" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.cumulative_min()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.cumulative_prod" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.cumulative_prod()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.cumulative_sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.cumulative_sum()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.dtype" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.dtype</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.fill_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.fill_nan()</span></code></a>
@@ -542,6 +550,14 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.any" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.any()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.column" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.column</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.cumulative_max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.cumulative_max()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.cumulative_min" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.cumulative_min()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.cumulative_prod" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.cumulative_prod()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.cumulative_sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.cumulative_sum()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.dtype" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.dtype</span></code></a>
         </li>
@@ -924,6 +940,32 @@ for the operation by the underling dtypes.</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">object</span></em><a class="headerlink" href="#dataframe_api.Column.column" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return underlying (not-necessarily-Standard-compliant) column.</p>
 <p>If a library only implements the Standard, then this can return <code class="code docutils literal notranslate"><span class="pre">self</span></code>.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.cumulative_max">
+<span class="sig-name descname"><span class="pre">cumulative_max</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.cumulative_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a Column. Any data type that supports comparisons
+must be supported. The returned value has the same dtype as the column.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.cumulative_min">
+<span class="sig-name descname"><span class="pre">cumulative_min</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.cumulative_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a Column. Any data type that supports comparisons
+must be supported. The returned value has the same dtype as the column.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.cumulative_prod">
+<span class="sig-name descname"><span class="pre">cumulative_prod</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.cumulative_prod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a Column. Must be supported for numerical and
+datetime data types. The returned value has the same dtype as the
+column.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.cumulative_sum">
+<span class="sig-name descname"><span class="pre">cumulative_sum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a></span></span><a class="headerlink" href="#dataframe_api.Column.cumulative_sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduction returns a Column. Must be supported for numerical and
+datetime data types. The returned value has the same dtype as the
+column.</p>
 </dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="dataframe_api.Column.dtype">
