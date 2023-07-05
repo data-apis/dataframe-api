@@ -688,15 +688,33 @@ class DataFrame:
         """
         ...
 
-    def std(self, *, skip_nulls: bool = True) -> DataFrame:
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
+
+        Parameters
+        ----------
+        correction
+            Correction to apply to the result. For example, ``0`` for sample
+            standard deviation and ``1`` for population standard deviation.
+            See `Column.std` for a more detailed description.
+        skip_nulls
+            Whether to skip null values.
         """
         ...
 
-    def var(self, *, skip_nulls: bool = True) -> DataFrame:
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
+
+        Parameters
+        ----------
+        correction
+            Correction to apply to the result. For example, ``0`` for sample
+            standard deviation and ``1`` for population standard deviation.
+            See `Column.std` for a more detailed description.
+        skip_nulls
+            Whether to skip null values.
         """
         ...
 
