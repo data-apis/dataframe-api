@@ -157,7 +157,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __ne__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:  # type: ignore[override]
+    def __ne__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -175,7 +175,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __ge__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:
+    def __ge__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -191,7 +191,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __gt__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:
+    def __gt__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "greater than" `other`.
 
@@ -207,7 +207,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __le__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:
+    def __le__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "less than or equal to" `other`.
 
@@ -223,7 +223,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __lt__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:
+    def __lt__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "less than" `other`.
 
