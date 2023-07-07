@@ -359,3 +359,11 @@ completed such an implementation may, and are encouraged to, provide details on
 the level of (non-)conformance. For details on how to do this, see
 [Verification - measuring conformance](verification_test_suite.md).
 
+Libraries which implement the Standard in a separate namespace
+are required to provide the following methods:
+- ``__dataframe_standard__``: used for converting a non-compliant dataframe to a compliant one;
+- ``__column_standard__``: used for converting a non-compliant column to a compliant one.
+
+For example, pandas would have ``pandas.DataFrame.__dataframe_standard__`` and
+``pandas.Series.__column_standard__``.
+

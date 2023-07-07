@@ -76,7 +76,6 @@ def somefunc(df, ...):
     # From now on, use `df` methods and `namespace` functions/objects
 ```
 
-
 ### History
 
 Dataframe libraries in several programming language exist, such as
