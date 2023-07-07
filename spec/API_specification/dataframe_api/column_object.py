@@ -443,32 +443,32 @@ class Column(Generic[DType]):
             If column is not boolean.
         """
 
-    def min(self, *, skip_nulls: bool = True) -> Any:
+    def min(self, *, skip_nulls: bool = True) -> Scalar:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def max(self, *, skip_nulls: bool = True) -> Any:
+    def max(self, *, skip_nulls: bool = True) -> Scalar:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def sum(self, *, skip_nulls: bool = True) -> Any:
+    def sum(self, *, skip_nulls: bool = True) -> Scalar:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def prod(self, *, skip_nulls: bool = True) -> Any:
+    def prod(self, *, skip_nulls: bool = True) -> Scalar:
         """
         Reduction returns a scalar. Must be supported for numerical data types.
         The returned value has the same dtype as the column.
         """
 
-    def median(self, *, skip_nulls: bool = True) -> Any:
+    def median(self, *, skip_nulls: bool = True) -> Scalar:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -476,7 +476,7 @@ class Column(Generic[DType]):
         dtypes.
         """
 
-    def mean(self, *, skip_nulls: bool = True) -> Any:
+    def mean(self, *, skip_nulls: bool = True) -> Scalar:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -484,7 +484,7 @@ class Column(Generic[DType]):
         dtypes.
         """
 
-    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Any:
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -510,7 +510,7 @@ class Column(Generic[DType]):
             Whether to skip null values.
         """
 
-    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Any:
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
