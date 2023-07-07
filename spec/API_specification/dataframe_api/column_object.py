@@ -527,26 +527,26 @@ class Column(Generic[DType]):
             Whether to skip null values.
         """
 
-    def cumulative_max(self) -> Column:
+    def cumulative_max(self: Column[DType]) -> Column[DType]:
         """
         Reduction returns a Column. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def cumulative_min(self) -> Column:
+    def cumulative_min(self: Column[DType]) -> Column[DType]:
         """
         Reduction returns a Column. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def cumulative_sum(self) -> Column:
+    def cumulative_sum(self: Column[DType]) -> Column[DType]:
         """
         Reduction returns a Column. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def cumulative_prod(self) -> Column:
+    def cumulative_prod(self: Column[DType]) -> Column[DType]:
         """
         Reduction returns a Column. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
@@ -644,7 +644,7 @@ class Column(Generic[DType]):
         """
         ...
 
-    def fill_null(self, value: Scalar, /) -> Column:
+    def fill_null(self: Column[DType], value: Scalar, /) -> Column[DType]:
         """
         Fill null values with the given fill value.
 
