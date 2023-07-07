@@ -12,7 +12,7 @@ the `float` it is documented to return, in combination with the `__gt__` method
 
 ```python
 class DataFrame:
-    def __gt__(self, other: DataFrame | Any) -> DataFrame:
+    def __gt__(self, other: DataFrame | Scalar) -> DataFrame:
         ...
     def get_column_by_name(self, name: str, /) -> Column:
         ...

@@ -6,6 +6,7 @@ from ._types import DType
 
 if TYPE_CHECKING:
     from . import Bool, null
+    from ._types import Scalar
 
 
 __all__ = ['Column']
@@ -91,7 +92,7 @@ class Column(Generic[DType]):
         """
         ...
 
-    def get_value(self, row_number: int) -> Any:
+    def get_value(self, row_number: int) -> Scalar:
         """
         Select the value at a row number, similar to `ndarray.__getitem__(<int>)`.
 
@@ -138,7 +139,7 @@ class Column(Generic[DType]):
         """
         ...
 
-    def __eq__(self: Column[DType], other: Column[DType] | Any) -> Column[Bool]:  # type: ignore[override]
+    def __eq__(self, other: Column[Any] | Scalar) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -280,7 +281,7 @@ class Column(Generic[DType]):
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self: Column[Any], other: Column[Any] | Any) -> Column[Any]:
+    def __add__(self: Column[Any], other: Column[Any] | Scalar) -> Column[Any]:
         """
         Add `other` column or scalar to this column.
 
@@ -296,7 +297,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __sub__(self: Column[Any], other: Column[Any] | Any) -> Column[Any]:
+    def __sub__(self: Column[Any], other: Column[Any] | Scalar) -> Column[Any]:
         """
         Subtract `other` column or scalar from this column.
 
@@ -312,7 +313,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __mul__(self, other: Column[Any] | Any) -> Column[Any]:
+    def __mul__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Multiply `other` column or scalar with this column.
 
@@ -328,7 +329,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __truediv__(self, other: Column[Any] | Any) -> Column[Any]:
+    def __truediv__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Divide this column by `other` column or scalar. True division, returns floats.
 
@@ -344,7 +345,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __floordiv__(self, other: Column[Any] | Any) -> Column[Any]:
+    def __floordiv__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Floor-divide `other` column or scalar to this column.
 
@@ -360,7 +361,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __pow__(self, other: Column[Any] | Any) -> Column[Any]:
+    def __pow__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Raise this column to the power of `other`.
 
@@ -380,7 +381,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __mod__(self, other: Column[Any] | Any) -> Column[Any]:
+    def __mod__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Returns modulus of this column by `other` (`%` operator).
 
@@ -396,7 +397,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __divmod__(self, other: Column[Any] | Any) -> tuple[Column[Any], Column[Any]]:
+    def __divmod__(self, other: Column[Any] | Scalar) -> tuple[Column[Any], Column[Any]]:
         """
         Return quotient and remainder of integer division. See `divmod` builtin function.
 
