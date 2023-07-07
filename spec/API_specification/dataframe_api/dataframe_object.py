@@ -760,7 +760,7 @@ class DataFrame:
 
     def unique_indices(self, keys: Sequence[str], *, skip_nulls: bool = True) -> Column[int]:
         """
-        Return indices corresponding to unique values across in selected columns.
+        Return indices corresponding to unique values across selected columns.
 
         Returns
         -------
@@ -773,7 +773,7 @@ class DataFrame:
         indices corresponding to the same unique value(s), there is no guarantee
         about which one will appear in the result.
         If the original column(s) contain multiple `'NaN'` values, then
-        only a single index corresponding to those values should be returned.
+        only a single index corresponding to those values will be returned.
         Likewise for null values (if ``skip_nulls=False``).
         To get the unique values, you can do ``df.get_rows(df.unique_indices(keys))``.
         """
