@@ -43,10 +43,17 @@ class GroupBy:
     def mean(self, *, skip_nulls: bool = True) -> DataFrame:
         ...
 
+<<<<<<< HEAD
     def std(self, *, skip_nulls: bool = True) -> DataFrame:
         ...
 
     def var(self, *, skip_nulls: bool = True) -> DataFrame:
+=======
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> "DataFrame":
+        ...
+
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> "DataFrame":
+>>>>>>> upstream/main
         ...
 
     def size(self) -> DataFrame:

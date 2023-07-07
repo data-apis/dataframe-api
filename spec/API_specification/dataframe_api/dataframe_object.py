@@ -528,6 +528,10 @@ class DataFrame:
         """
         Raise this dataframe to the power of `other`.
 
+        Integer dtype to the power of non-negative integer dtype is integer dtype.
+        Integer dtype to the power of float dtype is float dtype.
+        Float dtype to the power of integer dtype or float dtype is float dtype.
+
         Parameters
         ----------
         other : DataFrame or Scalar
@@ -684,15 +688,33 @@ class DataFrame:
         """
         ...
 
-    def std(self, *, skip_nulls: bool = True) -> DataFrame:
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
+
+        Parameters
+        ----------
+        correction
+            Correction to apply to the result. For example, ``0`` for sample
+            standard deviation and ``1`` for population standard deviation.
+            See `Column.std` for a more detailed description.
+        skip_nulls
+            Whether to skip null values.
         """
         ...
 
-    def var(self, *, skip_nulls: bool = True) -> DataFrame:
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
+
+        Parameters
+        ----------
+        correction
+            Correction to apply to the result. For example, ``0`` for sample
+            standard deviation and ``1`` for population standard deviation.
+            See `Column.std` for a more detailed description.
+        skip_nulls
+            Whether to skip null values.
         """
         ...
 
@@ -749,6 +771,38 @@ class DataFrame:
             Value used to replace any ``nan`` in the column with. Must be
             of the Python scalar type matching the dtype of the column (or
             be `null`).
+
+        """
+        ...
+
+    def fill_null(
+        self, value: Scalar, /, *, column_names : list[str] | None = None
+    ) -> DataFrame:
+        """
+        Fill null values with the given fill value.
+
+        This method can only be used if all columns that are to be filled are
+        of the same dtype (e.g., all of ``Float64`` or all of string dtype).
+        If that is not the case, it is not possible to use a single Python
+        scalar type that matches the dtype of all columns to which
+        ``fill_null`` is being applied, and hence an exception will be raised.
+
+        Parameters
+        ----------
+        value : Scalar
+            Value used to replace any ``null`` values in the dataframe with.
+            Must be of the Python scalar type matching the dtype(s) of the dataframe.
+        column_names : list[str] | None
+            A list of column names for which to replace nulls with the given
+            scalar value. If ``None``, nulls will be replaced in all columns.
+
+        Raises
+        ------
+        TypeError
+            If the columns of the dataframe are not all of the same kind.
+        KeyError
+            If ``column_names`` contains a column name that is not present in
+            the dataframe.
 
         """
         ...
