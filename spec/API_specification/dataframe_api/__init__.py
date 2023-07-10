@@ -6,18 +6,19 @@ from __future__ import annotations
 from typing import Mapping, Sequence, Any
 
 from .column_object import *
-from .dataframe_object import *
+from .dataframe_object import DataFrame
 from .groupby_object import *
-
+from ._types import DType
 
 __all__ = [
-    "__dataframe_api_version",
+    "__dataframe_api_version__",
+    "DataFrame",
+    "Column",
     "column_from_sequence",
     "concat",
     "dataframe_from_dict",
     "is_null",
     "null",
-    "DType",
     "Int64",
     "Int32",
     "Int16",
@@ -59,7 +60,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[object], *, dtype: DType) -> Column:
+def column_from_sequence(sequence: Sequence[Any], *, dtype: Any) -> Column[Any]:
     """
     Construct Column from sequence of elements.
 
@@ -78,7 +79,7 @@ def column_from_sequence(sequence: Sequence[object], *, dtype: DType) -> Column:
     """
     ...
 
-def dataframe_from_dict(data: Mapping[str, Column]) -> DataFrame:
+def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
     """
     Construct DataFrame from map of column names to Columns.
 
@@ -144,38 +145,35 @@ def is_null(value: object, /) -> bool:
 # Dtypes #
 ##########
 
-class DType:
-    """Base class for all dtypes."""
-
-class Int64(DType):
+class Int64:
     """Integer type with 64 bits of precision."""
 
-class Int32(DType):
+class Int32:
     """Integer type with 32 bits of precision."""
 
-class Int16(DType):
+class Int16:
     """Integer type with 16 bits of precision."""
 
-class Int8(DType):
+class Int8:
     """Integer type with 8 bits of precision."""
 
-class UInt64(DType):
+class UInt64:
     """Unsigned integer type with 64 bits of precision."""
 
-class UInt32(DType):
+class UInt32:
     """Unsigned integer type with 32 bits of precision."""
 
-class UInt16(DType):
+class UInt16:
     """Unsigned integer type with 16 bits of precision."""
 
-class UInt8(DType):
+class UInt8:
     """Unsigned integer type with 8 bits of precision."""
 
-class Float64(DType):
+class Float64:
     """Floating point type with 64 bits of precision."""
 
-class Float32(DType):
+class Float32:
     """Floating point type with 32 bits of precision."""
 
-class Bool(DType):
+class Bool:
     """Boolean type with 8 bits of precision."""

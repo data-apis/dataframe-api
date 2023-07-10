@@ -82,6 +82,7 @@ nitpick_ignore = [
     ('py:class', 'enum.Enum'),
     ('py:class', 'ellipsis'),
     ('py:class', 'Scalar'),
+    ('py:class', 'Bool'),
 ]
 # NOTE: this alias handling isn't used yet - added in anticipation of future
 #       need based on dataframe API aliases.

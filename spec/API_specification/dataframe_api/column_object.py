@@ -1,16 +1,18 @@
 from __future__ import annotations
 
-from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal
+from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal, Generic
+
+from ._types import DType
 
 if TYPE_CHECKING:
+    from . import Bool, null
     from ._types import Scalar
-    from . import DType
 
 
 __all__ = ['Column']
 
 
-class Column:
+class Column(Generic[DType]):
     """
     Column object
 
@@ -21,7 +23,7 @@ class Column:
     """
 
     def __column_namespace__(
-        self: Column, /, *, api_version: str | None = None
+        self, /, *, api_version: str | None = None
     ) -> Any:
         """
         Returns an object that has all the Dataframe Standard API functions on it.
@@ -48,7 +50,7 @@ class Column:
         """
     
     @property
-    def column(self) -> object:
+    def column(self) -> Any:
         """
         Return underlying (not-necessarily-Standard-compliant) column.
 
@@ -74,12 +76,12 @@ class Column:
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
     @property
-    def dtype(self) -> DType:
+    def dtype(self) -> Any:
         """
         Return data type of column.
         """
 
-    def get_rows(self, indices: Column[int]) -> Column:
+    def get_rows(self: Column[DType], indices: Column[Any]) -> Column[DType]:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -112,7 +114,7 @@ class Column:
         *,
         ascending: bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column[int]:
+    ) -> Column[Any]:
         """
         Return row numbers which would sort column.
 
@@ -137,7 +139,7 @@ class Column:
         """
         ...
 
-    def __eq__(self, other: Column | Scalar) -> Column:
+    def __eq__(self, other: Column[Any] | Scalar) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -155,7 +157,7 @@ class Column:
         Column
         """
 
-    def __ne__(self, other: Column | Scalar) -> Column:
+    def __ne__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -173,7 +175,7 @@ class Column:
         Column
         """
 
-    def __ge__(self, other: Column | Scalar) -> Column:
+    def __ge__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -189,7 +191,7 @@ class Column:
         Column
         """
 
-    def __gt__(self, other: Column | Scalar) -> Column:
+    def __gt__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "greater than" `other`.
 
@@ -205,7 +207,7 @@ class Column:
         Column
         """
 
-    def __le__(self, other: Column | Scalar) -> Column:
+    def __le__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "less than or equal to" `other`.
 
@@ -221,7 +223,7 @@ class Column:
         Column
         """
 
-    def __lt__(self, other: Column | Scalar) -> Column:
+    def __lt__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
         """
         Compare for "less than" `other`.
 
@@ -237,7 +239,7 @@ class Column:
         Column
         """
 
-    def __and__(self, other: Column[bool] | bool) -> Column[bool]:
+    def __and__(self: Column[Bool], other: Column[Bool] | bool) -> Column[Bool]:
         """
         Apply logical 'and' to `other` Column (or scalar) and this Column.
 
@@ -258,7 +260,7 @@ class Column:
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self, other: Column[bool] | bool) -> Column[bool]:
+    def __or__(self: Column[Bool], other: Column[Bool] | bool) -> Column[Bool]:
         """
         Apply logical 'or' to `other` Column (or scalar) and this column.
 
@@ -279,7 +281,7 @@ class Column:
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self, other: Column | Scalar) -> Column:
+    def __add__(self: Column[Any], other: Column[Any] | Scalar) -> Column[Any]:
         """
         Add `other` column or scalar to this column.
 
@@ -295,7 +297,7 @@ class Column:
         Column
         """
 
-    def __sub__(self, other: Column | Scalar) -> Column:
+    def __sub__(self: Column[Any], other: Column[Any] | Scalar) -> Column[Any]:
         """
         Subtract `other` column or scalar from this column.
 
@@ -311,7 +313,7 @@ class Column:
         Column
         """
 
-    def __mul__(self, other: Column | Scalar) -> Column:
+    def __mul__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Multiply `other` column or scalar with this column.
 
@@ -327,7 +329,7 @@ class Column:
         Column
         """
 
-    def __truediv__(self, other: Column | Scalar) -> Column:
+    def __truediv__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Divide this column by `other` column or scalar. True division, returns floats.
 
@@ -343,7 +345,7 @@ class Column:
         Column
         """
 
-    def __floordiv__(self, other: Column | Scalar) -> Column:
+    def __floordiv__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Floor-divide `other` column or scalar to this column.
 
@@ -359,7 +361,7 @@ class Column:
         Column
         """
 
-    def __pow__(self, other: Column | Scalar) -> Column:
+    def __pow__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Raise this column to the power of `other`.
 
@@ -379,7 +381,7 @@ class Column:
         Column
         """
 
-    def __mod__(self, other: Column | Scalar) -> Column:
+    def __mod__(self, other: Column[Any] | Scalar) -> Column[Any]:
         """
         Returns modulus of this column by `other` (`%` operator).
 
@@ -395,7 +397,7 @@ class Column:
         Column
         """
 
-    def __divmod__(self, other: Column | Scalar) -> tuple[Column, Column]:
+    def __divmod__(self, other: Column[Any] | Scalar) -> tuple[Column[Any], Column[Any]]:
         """
         Return quotient and remainder of integer division. See `divmod` builtin function.
 
@@ -411,7 +413,7 @@ class Column:
         Column
         """
 
-    def __invert__(self) -> Column:
+    def __invert__(self: Column[Bool]) -> Column[Bool]:
         """
         Invert truthiness of (boolean) elements.
 
@@ -421,7 +423,7 @@ class Column:
             If any of the Column's columns is not boolean.
         """
 
-    def any(self, *, skip_nulls: bool = True) -> bool:
+    def any(self: Column[Bool], *, skip_nulls: bool = True) -> bool:
         """
         Reduction returns a bool.
 
@@ -431,7 +433,7 @@ class Column:
             If column is not boolean.
         """
 
-    def all(self, *, skip_nulls: bool = True) -> bool:
+    def all(self: Column[Bool], *, skip_nulls: bool = True) -> bool:
         """
         Reduction returns a bool.
 
@@ -525,33 +527,33 @@ class Column:
             Whether to skip null values.
         """
 
-    def cumulative_max(self) -> Column:
+    def cumulative_max(self: Column[DType]) -> Column[DType]:
         """
         Reduction returns a Column. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def cumulative_min(self) -> Column:
+    def cumulative_min(self: Column[DType]) -> Column[DType]:
         """
         Reduction returns a Column. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def cumulative_sum(self) -> Column:
+    def cumulative_sum(self: Column[DType]) -> Column[DType]:
         """
         Reduction returns a Column. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def cumulative_prod(self) -> Column:
+    def cumulative_prod(self: Column[DType]) -> Column[DType]:
         """
         Reduction returns a Column. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def is_null(self) -> Column:
+    def is_null(self) -> Column[Bool]:
         """
         Check for 'missing' or 'null' entries.
 
@@ -570,7 +572,7 @@ class Column:
         but note that the Standard makes no guarantees about them.
         """
 
-    def is_nan(self) -> Column:
+    def is_nan(self) -> Column[Bool]:
         """
         Check for nan entries.
 
@@ -589,7 +591,7 @@ class Column:
         In particular, does not check for `np.timedelta64('NaT')`.
         """
 
-    def is_in(self, values: Column) -> Column[bool]:
+    def is_in(self: Column[DType], values: Column[DType]) -> Column[Bool]:
         """
         Indicate whether the value at each row matches any value in `values`.
 
@@ -607,7 +609,7 @@ class Column:
         Column[bool]
         """
 
-    def unique_indices(self, *, skip_nulls: bool = True) -> Column[int]:
+    def unique_indices(self, *, skip_nulls: bool = True) -> Column[Any]:
         """
         Return indices corresponding to unique values in Column.
 
@@ -628,7 +630,7 @@ class Column:
         """
         ...
 
-    def fill_nan(self, value: float | 'null', /) -> Column:
+    def fill_nan(self: Column[DType], value: float | 'null', /) -> Column[DType]:
         """
         Fill floating point ``nan`` values with the given fill value.
 
@@ -642,7 +644,7 @@ class Column:
         """
         ...
 
-    def fill_null(self, value: Scalar, /) -> Column:
+    def fill_null(self: Column[DType], value: Scalar, /) -> Column[DType]:
         """
         Fill null values with the given fill value.
 

@@ -6,6 +6,7 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
+    from . import Bool, null
     from ._types import Scalar
 
 
@@ -37,7 +38,7 @@ class DataFrame:
 
     """
     def __dataframe_namespace__(
-        self: DataFrame, /, *, api_version: str | None = None
+        self, /, *, api_version: str | None = None
     ) -> Any:
         """
         Returns an object that has all the dataframe API functions on it.
@@ -102,7 +103,7 @@ class DataFrame:
         """
         ...
 
-    def get_column_by_name(self, name: str, /) -> Column:
+    def get_column_by_name(self, name: str, /) -> Column[Any]:
         """
         Select a column by name.
 
@@ -140,7 +141,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: "Column[int]") -> DataFrame:
+    def get_rows(self, indices: Column[Any]) -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -173,7 +174,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows_by_mask(self, mask: "Column[bool]") -> DataFrame:
+    def get_rows_by_mask(self, mask: Column[Bool]) -> DataFrame:
         """
         Select a subset of rows corresponding to a mask.
 
@@ -192,7 +193,7 @@ class DataFrame:
         """
         ...
 
-    def insert(self, loc: int, label: str, value: Column) -> DataFrame:
+    def insert(self, loc: int, label: str, value: Column[Any]) -> DataFrame:
         """
         Insert column into DataFrame at specified location.
 
@@ -256,7 +257,7 @@ class DataFrame:
         *,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column[int]:
+    ) -> Column[Any]:
         """
         Return row numbers which would sort according to given columns.
 
@@ -291,7 +292,7 @@ class DataFrame:
         """
         ...
 
-    def __eq__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __eq__(self, other: DataFrame | Scalar) -> DataFrame:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -310,7 +311,7 @@ class DataFrame:
         """
         ...
 
-    def __ne__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __ne__(self, other: DataFrame | Scalar) -> DataFrame:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -397,7 +398,7 @@ class DataFrame:
         """
         ...
 
-    def __and__(self, other: DataFrame[bool] | bool) -> DataFrame[bool]:
+    def __and__(self, other: DataFrame | bool) -> DataFrame:
         """
         Apply logical 'and' to `other` DataFrame (or scalar) and this dataframe.
 
@@ -418,7 +419,7 @@ class DataFrame:
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self, other: DataFrame[bool] | bool) -> DataFrame[bool]:
+    def __or__(self, other: DataFrame | bool) -> DataFrame:
         """
         Apply logical 'or' to `other` DataFrame (or scalar) and this DataFrame.
 
@@ -624,7 +625,7 @@ class DataFrame:
         """
         ...
     
-    def any_rowwise(self, *, skip_nulls: bool = True) -> Column:
+    def any_rowwise(self, *, skip_nulls: bool = True) -> Column[Bool]:
         """
         Reduction returns a Column.
 
@@ -638,7 +639,7 @@ class DataFrame:
         """
         ...
 
-    def all_rowwise(self, *, skip_nulls: bool = True) -> Column:
+    def all_rowwise(self, *, skip_nulls: bool = True) -> Column[Bool]:
         """
         Reduction returns a Column.
 

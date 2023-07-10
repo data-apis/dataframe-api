@@ -20,8 +20,11 @@ from typing import (
 )
 from enum import Enum
 
+# Type alias: Mypy needs Any, but for readability we need to make clear this
+# is a Python scalar (i.e., an instance of `bool`, `int`, `float`, `str`, etc.)
+Scalar = Any
+
 array = TypeVar("array")
-Scalar = TypeVar("Scalar")
 device = TypeVar("device")
 DType = TypeVar("DType")
 SupportsDLPack = TypeVar("SupportsDLPack")
