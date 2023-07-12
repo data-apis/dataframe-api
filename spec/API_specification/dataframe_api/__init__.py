@@ -3,7 +3,7 @@ Function stubs and API documentation for the DataFrame API standard.
 """
 from __future__ import annotations
 
-from typing import Mapping, Sequence, Any
+from typing import Mapping, Sequence, Any, Literal
 
 from .column_object import *
 from .dataframe_object import DataFrame
@@ -177,3 +177,25 @@ class Float32:
 
 class Bool:
     """Boolean type with 8 bits of precision."""
+
+class Datetime:
+    """
+    Datetime type with 64 bits of precision.
+
+    Attributes
+    ----------
+    time_unit : Literal['ms', 'us', 'ns']
+        Precision of the datetime type.
+    time_zone : str | None
+        Time zone of the datetime type. Only IANA time zones are supported.
+        `None` indicates time-zone-naive data.
+    """
+    time_unit: Literal['ms', 'us', 'ns']
+    time_zone: str | None  # Only IANA time zones are supported
+
+class Duration:
+    """Duration type with 64 bits of precision."""
+    time_unit: Literal['ms', 'us', 'ns']
+
+class String:
+    """String type."""
