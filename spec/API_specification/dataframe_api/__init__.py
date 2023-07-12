@@ -8,7 +8,8 @@ from typing import Mapping, Sequence, Any
 from .column_object import *
 from .dataframe_object import DataFrame
 from .groupby_object import *
-from ._types import DTypeT
+from .dtypes import *
+from ._types import DType
 
 __all__ = [
     "__dataframe_api_version__",
@@ -60,7 +61,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Any], *, dtype: Any) -> Column[Any]:
+def column_from_sequence(sequence: Sequence[Any], *, dtype: DType) -> Column[Any]:
     """
     Construct Column from sequence of elements.
 
@@ -140,40 +141,3 @@ def is_null(value: object, /) -> bool:
         implements the dataframe API standard, False otherwise.
 
     """
-
-##########
-# Dtypes #
-##########
-
-class Int64:
-    """Integer type with 64 bits of precision."""
-
-class Int32:
-    """Integer type with 32 bits of precision."""
-
-class Int16:
-    """Integer type with 16 bits of precision."""
-
-class Int8:
-    """Integer type with 8 bits of precision."""
-
-class UInt64:
-    """Unsigned integer type with 64 bits of precision."""
-
-class UInt32:
-    """Unsigned integer type with 32 bits of precision."""
-
-class UInt16:
-    """Unsigned integer type with 16 bits of precision."""
-
-class UInt8:
-    """Unsigned integer type with 8 bits of precision."""
-
-class Float64:
-    """Floating point type with 64 bits of precision."""
-
-class Float32:
-    """Floating point type with 32 bits of precision."""
-
-class Bool:
-    """Boolean type with 8 bits of precision."""

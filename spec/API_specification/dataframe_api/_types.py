@@ -20,6 +20,22 @@ from typing import (
 )
 from enum import Enum
 
+from .dtypes import (
+    Bool,
+    Float32,
+    Float64,
+    Int16,
+    Int32,
+    Int64,
+    Int8,
+    UInt16,
+    UInt32,
+    UInt64,
+    UInt8,
+)
+
+DType = Bool | Float32 | Float64 | Int16 | Int32 | Int64 | Int8 | UInt16 | UInt32 | UInt64
+
 # Type alias: Mypy needs Any, but for readability we need to make clear this
 # is a Python scalar (i.e., an instance of `bool`, `int`, `float`, `str`, etc.)
 Scalar = Any
