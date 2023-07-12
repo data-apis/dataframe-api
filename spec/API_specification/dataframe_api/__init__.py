@@ -8,7 +8,7 @@ from typing import Mapping, Sequence, Any
 from .column_object import *
 from .dataframe_object import DataFrame
 from .groupby_object import *
-from ._types import DType
+from ._types import DTypeT
 
 __all__ = [
     "__dataframe_api_version__",

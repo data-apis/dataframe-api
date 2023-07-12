@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal, Generic
 
-from ._types import DType
+from ._types import DTypeT
 
 if TYPE_CHECKING:
     from . import Bool, null
@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 __all__ = ['Column']
 
 
-class Column(Generic[DType]):
+class Column(Generic[DTypeT]):
     """
     Column object
 
@@ -81,7 +81,7 @@ class Column(Generic[DType]):
         Return data type of column.
         """
 
-    def get_rows(self: Column[DType], indices: Column[Any]) -> Column[DType]:
+    def get_rows(self: Column[DTypeT], indices: Column[Any]) -> Column[DTypeT]:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -157,7 +157,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __ne__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:  # type: ignore[override]
+    def __ne__(self: Column[DTypeT], other: Column[DTypeT] | Scalar) -> Column[Bool]:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -175,7 +175,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __ge__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
+    def __ge__(self: Column[DTypeT], other: Column[DTypeT] | Scalar) -> Column[Bool]:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -191,7 +191,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __gt__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
+    def __gt__(self: Column[DTypeT], other: Column[DTypeT] | Scalar) -> Column[Bool]:
         """
         Compare for "greater than" `other`.
 
@@ -207,7 +207,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __le__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
+    def __le__(self: Column[DTypeT], other: Column[DTypeT] | Scalar) -> Column[Bool]:
         """
         Compare for "less than or equal to" `other`.
 
@@ -223,7 +223,7 @@ class Column(Generic[DType]):
         Column
         """
 
-    def __lt__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
+    def __lt__(self: Column[DTypeT], other: Column[DTypeT] | Scalar) -> Column[Bool]:
         """
         Compare for "less than" `other`.
 
@@ -527,26 +527,26 @@ class Column(Generic[DType]):
             Whether to skip null values.
         """
 
-    def cumulative_max(self: Column[DType]) -> Column[DType]:
+    def cumulative_max(self: Column[DTypeT]) -> Column[DTypeT]:
         """
         Reduction returns a Column. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def cumulative_min(self: Column[DType]) -> Column[DType]:
+    def cumulative_min(self: Column[DTypeT]) -> Column[DTypeT]:
         """
         Reduction returns a Column. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def cumulative_sum(self: Column[DType]) -> Column[DType]:
+    def cumulative_sum(self: Column[DTypeT]) -> Column[DTypeT]:
         """
         Reduction returns a Column. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def cumulative_prod(self: Column[DType]) -> Column[DType]:
+    def cumulative_prod(self: Column[DTypeT]) -> Column[DTypeT]:
         """
         Reduction returns a Column. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
@@ -591,7 +591,7 @@ class Column(Generic[DType]):
         In particular, does not check for `np.timedelta64('NaT')`.
         """
 
-    def is_in(self: Column[DType], values: Column[DType]) -> Column[Bool]:
+    def is_in(self: Column[DTypeT], values: Column[DTypeT]) -> Column[Bool]:
         """
         Indicate whether the value at each row matches any value in `values`.
 
@@ -630,7 +630,7 @@ class Column(Generic[DType]):
         """
         ...
 
-    def fill_nan(self: Column[DType], value: float | 'null', /) -> Column[DType]:
+    def fill_nan(self: Column[DTypeT], value: float | 'null', /) -> Column[DTypeT]:
         """
         Fill floating point ``nan`` values with the given fill value.
 
@@ -644,7 +644,7 @@ class Column(Generic[DType]):
         """
         ...
 
-    def fill_null(self: Column[DType], value: Scalar, /) -> Column[DType]:
+    def fill_null(self: Column[DTypeT], value: Scalar, /) -> Column[DTypeT]:
         """
         Fill null values with the given fill value.
 

@@ -26,7 +26,7 @@ Scalar = Any
 
 array = TypeVar("array")
 device = TypeVar("device")
-DType = TypeVar("DType")
+DTypeT = TypeVar("DTypeT")
 SupportsDLPack = TypeVar("SupportsDLPack")
 SupportsBufferProtocol = TypeVar("SupportsBufferProtocol")
 PyCapsule = TypeVar("PyCapsule")
@@ -60,7 +60,7 @@ __all__ = [
     "Sequence",
     "array",
     "device",
-    "DType",
+    "DTypeT",
     "ellipsis",
     "Enum",
 ]
