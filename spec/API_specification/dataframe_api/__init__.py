@@ -206,7 +206,7 @@ def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
             and the function must return a boolean indicating whether the input dtype
             is either equal to a specified dtype or belongs to at least one specified
             data type kind.
-    
+
     Returns
     -------
     bool
