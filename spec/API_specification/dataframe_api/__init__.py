@@ -3,13 +3,15 @@ Function stubs and API documentation for the DataFrame API standard.
 """
 from __future__ import annotations
 
-from typing import Mapping, Sequence, Any
+from typing import Mapping, Sequence, Any, TYPE_CHECKING
 
 from .column_object import *
 from .dataframe_object import DataFrame
 from .groupby_object import *
 from .dtypes import *
-from ._types import DType
+
+if TYPE_CHECKING:
+    from ._types import DType
 
 __all__ = [
     "__dataframe_api_version__",
