@@ -30,6 +30,10 @@ __all__ = [
     "Float64",
     "Float32",
     "Bool",
+    "Date",
+    "Datetime",
+    "Duration",
+    "String",
 ]
 
 
@@ -178,9 +182,12 @@ class Float32:
 class Bool:
     """Boolean type with 8 bits of precision."""
 
+class Date:
+    """Date type."""
+
 class Datetime:
     """
-    Datetime type with 64 bits of precision.
+    Datetime type.
 
     Attributes
     ----------

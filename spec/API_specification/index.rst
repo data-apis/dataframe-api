@@ -27,6 +27,10 @@ of objects and functions in the top-level namespace. The latter are:
    Float64
    Float32
    Bool
+   Date
+   Datetime
+   Duration
+   String
 
 The ``DataFrame``, ``Column`` and ``GroupBy`` objects have the following
 methods and attributes:
