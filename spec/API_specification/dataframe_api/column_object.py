@@ -92,6 +92,46 @@ class Column(Generic[DType]):
         """
         ...
 
+
+    def slice_rows(
+        self: Column[DType], start: int | None, stop: int | None, step: int | None
+    ) -> Column[DType]:
+        """
+        Select a subset of rows corresponding to a slice.
+
+        Parameters
+        ----------
+        start : int or None
+        stop : int or None
+        step : int or None
+
+        Returns
+        -------
+        Column
+        """
+        ...
+
+
+    def get_rows_by_mask(self: Column[DType], mask: Column[Bool]) -> Column[DType]:
+        """
+        Select a subset of rows corresponding to a mask.
+
+        Parameters
+        ----------
+        mask : Column[bool]
+
+        Returns
+        -------
+        Column
+
+        Notes
+        -----
+        Some participants preferred a weaker type Arraylike[bool] for mask,
+        where 'Arraylike' denotes an object adhering to the Array API standard.
+        """
+        ...
+
+
     def get_value(self, row_number: int) -> Scalar:
         """
         Select the value at a row number, similar to `ndarray.__getitem__(<int>)`.
