@@ -180,7 +180,7 @@ class Float32:
     """Floating point type with 32 bits of precision."""
 
 class Bool:
-    """Boolean type with 8 bits of precision."""
+    """Boolean type."""
 
 class Date:
     """Date type."""
@@ -201,7 +201,7 @@ class Datetime:
     time_zone: str | None  # Only IANA time zones are supported
 
 class Duration:
-    """Duration type with 64 bits of precision."""
+    """Duration type."""
     time_unit: Literal['ms', 'us', 'ns']
 
 class String:
