@@ -442,6 +442,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.sum()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.unique_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.unique_indices()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.var" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.var()</span></code></a>
         </li></ul>
             </nav>
@@ -599,6 +601,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.std()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.sum()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.unique_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.unique_indices()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.var" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.var()</span></code></a>
         </li></ul>
@@ -1287,6 +1291,24 @@ See <code class="code docutils literal notranslate"><span class="pre">Column.std
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.sum">
 <span class="sig-name descname"><span class="pre">sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reduction returns a 1-row DataFrame.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.unique_indices">
+<span class="sig-name descname"><span class="pre">unique_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.unique_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return indices corresponding to unique values across selected columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Column[int]</strong> – Indices corresponding to unique values.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>There are no ordering guarantees. In particular, if there are multiple
+indices corresponding to the same unique value(s), there is no guarantee
+about which one will appear in the result.
+If the original column(s) contain multiple <code class="code docutils literal notranslate"><span class="pre">'NaN'</span></code> values, then
+only a single index corresponding to those values will be returned.
+Likewise for null values (if <code class="docutils literal notranslate"><span class="pre">skip_nulls=False</span></code>).
+To get the unique values, you can do <code class="docutils literal notranslate"><span class="pre">df.get_rows(df.unique_indices(keys))</span></code>.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.var">
