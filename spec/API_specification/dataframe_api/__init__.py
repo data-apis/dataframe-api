@@ -95,6 +95,13 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
     Returns
     -------
     DataFrame
+    
+    Raises
+    ------
+    ValueError
+        If any of the columns already has a name, and the corresponding key
+        in `data` doesn't match.
+
     """
     ...
 
