@@ -96,13 +96,22 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
     """
     ...
 
-def dataframe_from_2d_array(array: Any) -> DataFrame:
+def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any]) -> DataFrame:
     """
     Construct DataFrame from 2D array.
 
-    See `column_from_sequece` for related 1D function.
+    See `column_from_sequence` for related 1D function.
 
     Only Array-API-compliant 2D arrays are supported.
+
+    Parameters
+    ----------
+    array : array
+        array-API compliant 2D array
+    names : Sequence[str]
+        Names to give columns. Must be the same length as ``array.shape[1]``.
+    dtypes : Mapping[str, DType]
+        Dtype of each column. Must be the same length as ``array.shape[1]``.
 
     Returns
     -------
