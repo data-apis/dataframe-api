@@ -15,8 +15,10 @@ __all__ = [
     "DataFrame",
     "Column",
     "column_from_sequence",
+    "column_from_1d_array",
     "concat",
     "dataframe_from_dict",
+    "dataframe_from_2d_array",
     "is_null",
     "null",
     "Int64",
@@ -96,11 +98,35 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
     """
     ...
 
+
+def column_from_1d_array(array: Any, *, name: str, dtype: Any) -> Column[Any]:
+    """
+    Construct Column from 1D array.
+
+    See `dataframe_from_2d_array` for related 2D function.
+
+    Only Array-API-compliant 1D arrays are supported.
+
+    Parameters
+    ----------
+    array : array
+        array-API compliant 1D array
+    name : str
+        Name to give columns.
+    dtype : DType
+        Dtype of column.
+
+    Returns
+    -------
+    Column
+    """
+    ...
+
 def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any]) -> DataFrame:
     """
     Construct DataFrame from 2D array.
 
-    See `column_from_sequence` for related 1D function.
+    See `column_from_1d_array` for related 1D function.
 
     Only Array-API-compliant 2D arrays are supported.
 
