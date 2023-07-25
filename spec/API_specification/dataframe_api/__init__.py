@@ -60,7 +60,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Any], *, dtype: Any) -> Column[Any]:
+def column_from_sequence(sequence: Sequence[Any], *, name: str | None, dtype: Any) -> Column[Any]:
     """
     Construct Column from sequence of elements.
 
@@ -70,6 +70,8 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: Any) -> Column[Any]:
         Sequence of elements. Each element must be of the specified
         ``dtype``, the corresponding Python builtin scalar type, or
         coercible to that Python scalar type.
+    name : str, optional
+        Name of column.
     dtype : DType
         Dtype of result. Must be specified.
 
@@ -93,6 +95,13 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
     Returns
     -------
     DataFrame
+    
+    Raises
+    ------
+    ValueError
+        If any of the columns already has a name, and the corresponding key
+        in `data` doesn't match.
+
     """
     ...
 

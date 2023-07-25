@@ -57,6 +57,10 @@ class Column(Generic[DType]):
         If a library only implements the Standard, then this can return `self`.
         """
         ...
+    
+    @property
+    def name(self) -> str | None:
+        """Return name of column."""
 
     def __len__(self) -> int:
         """
