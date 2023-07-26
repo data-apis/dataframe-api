@@ -30,7 +30,6 @@ __all__ = [
     "Float64",
     "Float32",
     "Bool",
-    "Date",
     "Datetime",
     "Duration",
     "String",
@@ -182,9 +181,6 @@ class Float32:
 class Bool:
     """Boolean type."""
 
-class Date:
-    """Date type."""
-
 class Datetime:
     """
     Datetime type.
@@ -192,7 +188,8 @@ class Datetime:
     Attributes
     ----------
     time_unit : Literal['ms', 'us', 'ns']
-        Precision of the datetime type.
+        Precision of the datetime type. There is no guarantee that the full
+        range of dates available for the specified precision is supported.
     time_zone : str | None
         Time zone of the datetime type. Only IANA time zones are supported.
         `None` indicates time-zone-naive data.
