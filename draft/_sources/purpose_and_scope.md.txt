@@ -367,3 +367,20 @@ are required to provide the following methods:
 For example, pandas would have ``pandas.DataFrame.__dataframe_standard__`` and
 ``pandas.Series.__column_standard__``.
 
+The signatures should be (note: docstring is optional):
+```python
+def __dataframe_standard__(
+    self, /, *, api_version: str | None = None
+) -> Any:
+
+def __column_standard__(
+    self, /, *, api_version: str | None = None
+) -> Any:
+```
+`api_version` is
+a string representing the version of the dataframe API specification
+to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
+If it is ``None``, it should return the namespace corresponding to
+latest version of the dataframe API specification.  If the given
+version is invalid or not implemented for the given module, an
+error should be raised. Default: ``None``.
