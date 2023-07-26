@@ -196,7 +196,7 @@ def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
             - 'bool': boolean data type (Bool).
             - 'signed integer': signed integer data types (Int8, Int16, Int32, Int64).
             - 'unsigned integer': unsigned integer data types (UInt8, UInt16, UInt32, UInt64).
-            - 'temporal': temporal data types (Date, Datetime, Duration).
+            - 'temporal': temporal data types (Datetime, Duration).
             - 'string': string data type (String).
             - 'floating': floating-point data types (Float32, Float64).
             - 'integral': integer data types. Shorthand for ('signed integer', 'unsigned integer').
