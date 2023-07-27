@@ -240,7 +240,7 @@ class DataFrame:
 
     def sorted_indices(
         self,
-        keys: Sequence[str],
+        keys: Sequence[str] | None = None,
         *,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
@@ -254,8 +254,9 @@ class DataFrame:
 
         Parameters
         ----------
-        keys : Sequence[str]
+        keys : Sequence[str] | None
             Names of columns to sort by.
+            If `None`, sort by all columns.
         ascending : Sequence[bool] or bool
             If `True`, sort by all keys in ascending order.
             If `False`, sort by all keys in descending order.
