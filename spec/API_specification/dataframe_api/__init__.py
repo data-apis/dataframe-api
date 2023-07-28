@@ -106,6 +106,8 @@ def column_from_1d_array(array: Any, *, name: str, dtype: Any) -> Column[Any]:
     See `dataframe_from_2d_array` for related 2D function.
 
     Only Array-API-compliant 1D arrays are supported.
+    Cross-kind casting is undefined and may vary across implementations.
+    Downcasting is disallowed.
 
     Parameters
     ----------
@@ -129,6 +131,8 @@ def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping
     See `column_from_1d_array` for related 1D function.
 
     Only Array-API-compliant 2D arrays are supported.
+    Cross-kind casting is undefined and may vary across implementations.
+    Downcasting is disallowed.
 
     Parameters
     ----------
