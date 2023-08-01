@@ -18,7 +18,7 @@ class DataFrame:
         ...
 
 class Column:
-    def mean(self, skip_nulls: bool = True) -> float | null:
+    def mean(self, skip_nulls: bool = True) -> float | NullType:
         ...
 
 larger = df2 > df1.get_column_by_name('foo').mean()
