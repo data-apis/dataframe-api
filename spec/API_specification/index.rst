@@ -28,6 +28,10 @@ of objects and functions in the top-level namespace. The latter are:
    Float32
    Bool
    is_dtype
+   column_from_sequence
+   column_from_1d_array
+   dataframe_from_dict
+   dataframe_from_2d_array
 
 The ``DataFrame``, ``Column`` and ``GroupBy`` objects have the following
 methods and attributes:

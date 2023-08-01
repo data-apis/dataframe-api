@@ -57,6 +57,10 @@ class Column(Generic[DType]):
         If a library only implements the Standard, then this can return `self`.
         """
         ...
+    
+    @property
+    def name(self) -> str | None:
+        """Return name of column."""
 
     def __len__(self) -> int:
         """
@@ -91,6 +95,46 @@ class Column(Generic[DType]):
             Positions of rows to select.
         """
         ...
+
+
+    def slice_rows(
+        self: Column[DType], start: int | None, stop: int | None, step: int | None
+    ) -> Column[DType]:
+        """
+        Select a subset of rows corresponding to a slice.
+
+        Parameters
+        ----------
+        start : int or None
+        stop : int or None
+        step : int or None
+
+        Returns
+        -------
+        Column
+        """
+        ...
+
+
+    def get_rows_by_mask(self: Column[DType], mask: Column[Bool]) -> Column[DType]:
+        """
+        Select a subset of rows corresponding to a mask.
+
+        Parameters
+        ----------
+        mask : Column[bool]
+
+        Returns
+        -------
+        Column
+
+        Notes
+        -----
+        Some participants preferred a weaker type Arraylike[bool] for mask,
+        where 'Arraylike' denotes an object adhering to the Array API standard.
+        """
+        ...
+
 
     def get_value(self, row_number: int) -> Scalar:
         """
@@ -624,7 +668,7 @@ class Column(Generic[DType]):
         indices corresponding to the same unique value, there is no guarantee
         about which one will appear in the result.
         If the original Column contains multiple `'NaN'` values, then
-        only a single index corresponding to those values should be returned.
+        only a single index corresponding to those values will be returned.
         Likewise for null values (if ``skip_nulls=False``).
         To get the unique values, you can do ``col.get_rows(col.unique_indices())``.
         """
@@ -656,3 +700,25 @@ class Column(Generic[DType]):
 
         """
         ...
+
+    def to_array_object(self, dtype: Any) -> Any:
+        """
+        Convert to array-API-compliant object.
+
+        Parameters
+        ----------
+        dtype : Any
+            The dtype of the array-API-compliant object to return.
+        
+        Returns
+        -------
+        Any
+            An array-API-compliant object.
+        
+        Notes
+        -----
+        While numpy arrays are not yet array-API-compliant, implementations
+        may choose to return a numpy array (for numpy prior to 2.0), with the
+        understanding that consuming libraries would then use the
+        ``array-api-compat`` package to convert it to a Standard-compliant array.
+        """

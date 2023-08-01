@@ -37,21 +37,9 @@ class DataFrame:
     **Methods and Attributes**
 
     """
-    def __dataframe_namespace__(
-        self, /, *, api_version: str | None = None
-    ) -> Any:
+    def __dataframe_namespace__(self) -> Any:
         """
-        Returns an object that has all the dataframe API functions on it.
-
-        Parameters
-        ----------
-        api_version: Optional[str]
-            String representing the version of the dataframe API specification
-            to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-            If it is ``None``, it should return the namespace corresponding to
-            latest version of the dataframe API specification.  If the given
-            version is invalid or not implemented for the given module, an
-            error should be raised. Default: ``None``.
+        Returns an object that has all the top-level dataframe API functions on it.
 
         Returns
         -------
@@ -61,7 +49,6 @@ class DataFrame:
             attribute. It may contain other public names as well, but it is
             recommended to only include those names that are part of the
             specification.
-
         """
 
     @property
@@ -253,7 +240,7 @@ class DataFrame:
 
     def sorted_indices(
         self,
-        keys: Sequence[str],
+        keys: Sequence[str] | None = None,
         *,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
@@ -267,8 +254,9 @@ class DataFrame:
 
         Parameters
         ----------
-        keys : Sequence[str]
+        keys : Sequence[str] | None
             Names of columns to sort by.
+            If `None`, sort by all columns.
         ascending : Sequence[bool] or bool
             If `True`, sort by all keys in ascending order.
             If `False`, sort by all keys in descending order.
@@ -759,6 +747,27 @@ class DataFrame:
         """
         ...
 
+    def unique_indices(self, keys: Sequence[str], *, skip_nulls: bool = True) -> Column[int]:
+        """
+        Return indices corresponding to unique values across selected columns.
+
+        Returns
+        -------
+        Column[int]
+            Indices corresponding to unique values.
+
+        Notes
+        -----
+        There are no ordering guarantees. In particular, if there are multiple
+        indices corresponding to the same unique value(s), there is no guarantee
+        about which one will appear in the result.
+        If the original column(s) contain multiple `'NaN'` values, then
+        only a single index corresponding to those values will be returned.
+        Likewise for null values (if ``skip_nulls=False``).
+        To get the unique values, you can do ``df.get_rows(df.unique_indices(keys))``.
+        """
+        ...
+
     def fill_nan(self, value: float | 'null', /) -> DataFrame:
         """
         Fill ``nan`` values with the given fill value.
@@ -807,3 +816,25 @@ class DataFrame:
 
         """
         ...
+    
+    def to_array_object(self, dtype: Any) -> Any:
+        """
+        Convert to array-API-compliant object.
+
+        Parameters
+        ----------
+        dtype : Any
+            The dtype of the array-API-compliant object to return.
+        
+        Returns
+        -------
+        Any
+            An array-API-compliant object.
+        
+        Notes
+        -----
+        While numpy arrays are not yet array-API-compliant, implementations
+        may choose to return a numpy array (for numpy prior to 2.0), with the
+        understanding that consuming libraries would then use the
+        ``array-api-compat`` package to convert it to a Standard-compliant array.
+        """
