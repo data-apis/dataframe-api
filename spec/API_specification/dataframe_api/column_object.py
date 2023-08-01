@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal, Generic
+from typing import Any,NoReturn, TYPE_CHECKING, Literal, Generic
 
 from ._types import DType
 
