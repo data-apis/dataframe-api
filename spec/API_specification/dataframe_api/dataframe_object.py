@@ -816,3 +816,25 @@ class DataFrame:
 
         """
         ...
+    
+    def to_array_object(self, dtype: Any) -> Any:
+        """
+        Convert to array-API-compliant object.
+
+        Parameters
+        ----------
+        dtype : Any
+            The dtype of the array-API-compliant object to return.
+        
+        Returns
+        -------
+        Any
+            An array-API-compliant object.
+        
+        Notes
+        -----
+        While numpy arrays are not yet array-API-compliant, implementations
+        may choose to return a numpy array (for numpy prior to 2.0), with the
+        understanding that consuming libraries would then use the
+        ``array-api-compat`` package to convert it to a Standard-compliant array.
+        """
