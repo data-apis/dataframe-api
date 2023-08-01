@@ -701,14 +701,27 @@ class Column(Generic[DType]):
         """
         ...
 
-    def to_array_object(self, dtype: Any) -> Any:
+    def to_array_object(self, dtype: str) -> Any:
         """
         Convert to array-API-compliant object.
 
         Parameters
         ----------
-        dtype : Any
+        dtype : str
             The dtype of the array-API-compliant object to return.
+            Must be one of:
+
+            - bool
+            - int8
+            - int16
+            - int32
+            - int64
+            - uint8
+            - uint16
+            - uint32
+            - uint64
+            - float32
+            - float64
         
         Returns
         -------
