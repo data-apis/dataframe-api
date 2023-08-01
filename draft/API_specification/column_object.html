@@ -451,6 +451,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sum()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.to_array_object" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.to_array_object()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.unique_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.unique_indices()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.var" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.var()</span></code></a>
@@ -605,6 +607,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.std()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sum()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.to_array_object" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.to_array_object()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.unique_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.unique_indices()</span></code></a>
         </li>
@@ -1226,6 +1230,24 @@ correction). Fractional (float) values are allowed. Default: <code class="docuti
 <dd><p>Reduction returns a scalar. Must be supported for numerical and
 datetime data types. The returned value has the same dtype as the
 column.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.to_array_object">
+<span class="sig-name descname"><span class="pre">to_array_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#dataframe_api.Column.to_array_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to array-API-compliant object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dtype</strong> (<em>Any</em>) – The dtype of the array-API-compliant object to return.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Any</strong> – An array-API-compliant object.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>While numpy arrays are not yet array-API-compliant, implementations
+may choose to return a numpy array (for numpy prior to 2.0), with the
+understanding that consuming libraries would then use the
+<code class="docutils literal notranslate"><span class="pre">array-api-compat</span></code> package to convert it to a Standard-compliant array.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.unique_indices">
