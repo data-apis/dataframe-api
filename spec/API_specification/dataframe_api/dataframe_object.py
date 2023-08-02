@@ -838,3 +838,16 @@ class DataFrame:
         understanding that consuming libraries would then use the
         ``array-api-compat`` package to convert it to a Standard-compliant array.
         """
+
+    def collect(self) -> Any:
+        """
+        Materialize the DataFrame.
+
+        Non-lazy implementations may just return `self`.
+
+        Returns
+        -------
+        Any
+            The materialized object.
+        """
+        ...
