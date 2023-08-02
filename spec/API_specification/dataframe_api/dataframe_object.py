@@ -817,27 +817,27 @@ class DataFrame:
         """
         ...
     
-    def to_array_object(self, dtype: str) -> Any:
+    def to_array_object(self, dtype: Any) -> Any:
         """
         Convert to array-API-compliant object.
 
         Parameters
         ----------
-        dtype : str
+        dtype : DType
             The dtype of the array-API-compliant object to return:
             Must be one of:
 
-            - bool
-            - int8
-            - int16
-            - int32
-            - int64
-            - uint8
-            - uint16
-            - uint32
-            - uint64
-            - float32
-            - float64
+            - namespace.Bool()
+            - namespace.Int8()
+            - namespace.Int16()
+            - namespace.Int32()
+            - namespace.Int64()
+            - namespace.UInt8()
+            - namespace.UInt16()
+            - namespace.UInt32()
+            - namespace.UInt64()
+            - namespace.Float32()
+            - namespace.Float64()
         
         Returns
         -------
