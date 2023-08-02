@@ -47,7 +47,7 @@ class Column(Generic[DType]):
         ...
     
     @property
-    def name(self) -> str | None:
+    def name(self) -> str:
         """Return name of column."""
 
     def __len__(self) -> int:
@@ -711,7 +711,7 @@ class Column(Generic[DType]):
         ``array-api-compat`` package to convert it to a Standard-compliant array.
         """
 
-    def rename(self, name: str | None) -> Column[DType]:
+    def rename(self, name: str) -> Column[DType]:
         """
         Rename column.
 
