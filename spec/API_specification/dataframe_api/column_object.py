@@ -710,3 +710,19 @@ class Column(Generic[DType]):
         understanding that consuming libraries would then use the
         ``array-api-compat`` package to convert it to a Standard-compliant array.
         """
+
+    def rename(self, name: str | None) -> Column[DType]:
+        """
+        Rename column.
+
+        Parameters
+        ----------
+        name : str
+            New name for column.
+        
+        Returns
+        -------
+        Column
+            New column - this does not operate in-place.
+        """
+        ...
