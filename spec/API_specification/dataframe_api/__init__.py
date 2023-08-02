@@ -32,6 +32,7 @@ __all__ = [
     "Float64",
     "Float32",
     "Bool",
+    "is_dtype",
 ]
 
 
@@ -239,3 +240,35 @@ class Float32:
 
 class Bool:
     """Boolean type with 8 bits of precision."""
+
+
+def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
+    """
+    Returns a boolean indicating whether a provided dtype is of a specified data type “kind”.
+
+    Parameters
+    ----------
+        dtype: Any
+            The input dtype.
+        kind: str
+            data type kind.
+            The function must return a boolean indicating whether
+            the input dtype is of a specified data type kind.
+            The following dtype kinds must be supported:
+
+            - 'bool': boolean data type (Bool).
+            - 'signed integer': signed integer data types (Int8, Int16, Int32, Int64).
+            - 'unsigned integer': unsigned integer data types (UInt8, UInt16, UInt32, UInt64).
+            - 'floating': floating-point data types (Float32, Float64).
+            - 'integral': integer data types. Shorthand for ('signed integer', 'unsigned integer').
+            - 'numeric': numeric data types. Shorthand for ('integral', 'floating').
+
+            If kind is a tuple, the tuple specifies a union of dtypes and/or kinds,
+            and the function must return a boolean indicating whether the input dtype
+            is either equal to a specified dtype or belongs to at least one specified
+            data type kind.
+
+    Returns
+    -------
+    bool
+    """
