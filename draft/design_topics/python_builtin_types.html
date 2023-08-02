@@ -324,7 +324,7 @@ the <code class="docutils literal notranslate"><span class="pre">float</span></c
         <span class="o">...</span>
 
 <span class="k">class</span> <span class="nc">Column</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_nulls</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_nulls</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">NullType</span><span class="p">:</span>
         <span class="o">...</span>
 
 <span class="n">larger</span> <span class="o">=</span> <span class="n">df2</span> <span class="o">&gt;</span> <span class="n">df1</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="s1">'foo'</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
