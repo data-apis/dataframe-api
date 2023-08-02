@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal, Generic
+from typing import Any,NoReturn, TYPE_CHECKING, Literal, Generic
 
 from ._types import DType
 
 if TYPE_CHECKING:
-    from . import Bool, null
-    from ._types import Scalar
+    from . import Bool
+    from ._types import NullType, Scalar
 
 
 __all__ = ['Column']
@@ -22,21 +22,9 @@ class Column(Generic[DType]):
 
     """
 
-    def __column_namespace__(
-        self, /, *, api_version: str | None = None
-    ) -> Any:
+    def __column_namespace__(self) -> Any:
         """
         Returns an object that has all the Dataframe Standard API functions on it.
-
-        Parameters
-        ----------
-        api_version: Optional[str]
-            String representing the version of the dataframe API specification
-            to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-            If it is ``None``, it should return the namespace corresponding to
-            latest version of the dataframe API specification.  If the given
-            version is invalid or not implemented for the given module, an
-            error should be raised. Default: ``None``.
 
         Returns
         -------
@@ -57,6 +45,10 @@ class Column(Generic[DType]):
         If a library only implements the Standard, then this can return `self`.
         """
         ...
+    
+    @property
+    def name(self) -> str | None:
+        """Return name of column."""
 
     def __len__(self) -> int:
         """
@@ -91,6 +83,46 @@ class Column(Generic[DType]):
             Positions of rows to select.
         """
         ...
+
+
+    def slice_rows(
+        self: Column[DType], start: int | None, stop: int | None, step: int | None
+    ) -> Column[DType]:
+        """
+        Select a subset of rows corresponding to a slice.
+
+        Parameters
+        ----------
+        start : int or None
+        stop : int or None
+        step : int or None
+
+        Returns
+        -------
+        Column
+        """
+        ...
+
+
+    def get_rows_by_mask(self: Column[DType], mask: Column[Bool]) -> Column[DType]:
+        """
+        Select a subset of rows corresponding to a mask.
+
+        Parameters
+        ----------
+        mask : Column[bool]
+
+        Returns
+        -------
+        Column
+
+        Notes
+        -----
+        Some participants preferred a weaker type Arraylike[bool] for mask,
+        where 'Arraylike' denotes an object adhering to the Array API standard.
+        """
+        ...
+
 
     def get_value(self, row_number: int) -> Scalar:
         """
@@ -423,7 +455,7 @@ class Column(Generic[DType]):
             If any of the Column's columns is not boolean.
         """
 
-    def any(self: Column[Bool], *, skip_nulls: bool = True) -> bool:
+    def any(self: Column[Bool], *, skip_nulls: bool = True) -> bool | NullType:
         """
         Reduction returns a bool.
 
@@ -433,7 +465,7 @@ class Column(Generic[DType]):
             If column is not boolean.
         """
 
-    def all(self: Column[Bool], *, skip_nulls: bool = True) -> bool:
+    def all(self: Column[Bool], *, skip_nulls: bool = True) -> bool | NullType:
         """
         Reduction returns a bool.
 
@@ -443,32 +475,32 @@ class Column(Generic[DType]):
             If column is not boolean.
         """
 
-    def min(self, *, skip_nulls: bool = True) -> Scalar:
+    def min(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def max(self, *, skip_nulls: bool = True) -> Scalar:
+    def max(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def sum(self, *, skip_nulls: bool = True) -> Scalar:
+    def sum(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def prod(self, *, skip_nulls: bool = True) -> Scalar:
+    def prod(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical data types.
         The returned value has the same dtype as the column.
         """
 
-    def median(self, *, skip_nulls: bool = True) -> Scalar:
+    def median(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -476,7 +508,7 @@ class Column(Generic[DType]):
         dtypes.
         """
 
-    def mean(self, *, skip_nulls: bool = True) -> Scalar:
+    def mean(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -484,7 +516,7 @@ class Column(Generic[DType]):
         dtypes.
         """
 
-    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar:
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -510,7 +542,7 @@ class Column(Generic[DType]):
             Whether to skip null values.
         """
 
-    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar:
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -624,13 +656,13 @@ class Column(Generic[DType]):
         indices corresponding to the same unique value, there is no guarantee
         about which one will appear in the result.
         If the original Column contains multiple `'NaN'` values, then
-        only a single index corresponding to those values should be returned.
+        only a single index corresponding to those values will be returned.
         Likewise for null values (if ``skip_nulls=False``).
         To get the unique values, you can do ``col.get_rows(col.unique_indices())``.
         """
         ...
 
-    def fill_nan(self: Column[DType], value: float | 'null', /) -> Column[DType]:
+    def fill_nan(self: Column[DType], value: float | NullType, /) -> Column[DType]:
         """
         Fill floating point ``nan`` values with the given fill value.
 
@@ -656,3 +688,25 @@ class Column(Generic[DType]):
 
         """
         ...
+
+    def to_array_object(self, dtype: Any) -> Any:
+        """
+        Convert to array-API-compliant object.
+
+        Parameters
+        ----------
+        dtype : Any
+            The dtype of the array-API-compliant object to return.
+        
+        Returns
+        -------
+        Any
+            An array-API-compliant object.
+        
+        Notes
+        -----
+        While numpy arrays are not yet array-API-compliant, implementations
+        may choose to return a numpy array (for numpy prior to 2.0), with the
+        understanding that consuming libraries would then use the
+        ``array-api-compat`` package to convert it to a Standard-compliant array.
+        """
