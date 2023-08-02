@@ -827,17 +827,17 @@ class DataFrame:
             The dtype of the array-API-compliant object to return:
             Must be one of:
 
-            - namespace.Bool()
-            - namespace.Int8()
-            - namespace.Int16()
-            - namespace.Int32()
-            - namespace.Int64()
-            - namespace.UInt8()
-            - namespace.UInt16()
-            - namespace.UInt32()
-            - namespace.UInt64()
-            - namespace.Float32()
-            - namespace.Float64()
+            - Bool()
+            - Int8()
+            - Int16()
+            - Int32()
+            - Int64()
+            - UInt8()
+            - UInt16()
+            - UInt32()
+            - UInt64()
+            - Float32()
+            - Float64()
         
         Returns
         -------
