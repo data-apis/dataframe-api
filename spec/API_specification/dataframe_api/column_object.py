@@ -723,5 +723,6 @@ class Column(Generic[DType]):
         Returns
         -------
         Column
+            New column - this does not operate in-place.
         """
         ...
