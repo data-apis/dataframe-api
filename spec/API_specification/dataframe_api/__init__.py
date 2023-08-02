@@ -15,8 +15,10 @@ __all__ = [
     "DataFrame",
     "Column",
     "column_from_sequence",
+    "column_from_1d_array",
     "concat",
     "dataframe_from_dict",
+    "dataframe_from_2d_array",
     "is_null",
     "null",
     "Int64",
@@ -63,7 +65,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Any], *, dtype: Any) -> Column[Any]:
+def column_from_sequence(sequence: Sequence[Any], *, name: str | None, dtype: Any) -> Column[Any]:
     """
     Construct Column from sequence of elements.
 
@@ -73,6 +75,8 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: Any) -> Column[Any]:
         Sequence of elements. Each element must be of the specified
         ``dtype``, the corresponding Python builtin scalar type, or
         coercible to that Python scalar type.
+    name : str, optional
+        Name of column.
     dtype : DType
         Dtype of result. Must be specified.
 
@@ -92,6 +96,64 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
         Column must be of the corresponding type of the DataFrame.
         For example, it is only supported to build a ``LibraryXDataFrame`` using
         ``LibraryXColumn`` instances.
+
+    Returns
+    -------
+    DataFrame
+    
+    Raises
+    ------
+    ValueError
+        If any of the columns already has a name, and the corresponding key
+        in `data` doesn't match.
+
+    """
+    ...
+
+
+def column_from_1d_array(array: Any, *, name: str, dtype: Any) -> Column[Any]:
+    """
+    Construct Column from 1D array.
+
+    See `dataframe_from_2d_array` for related 2D function.
+
+    Only Array-API-compliant 1D arrays are supported.
+    Cross-kind casting is undefined and may vary across implementations.
+    Downcasting is disallowed.
+
+    Parameters
+    ----------
+    array : array
+        array-API compliant 1D array
+    name : str
+        Name to give columns.
+    dtype : DType
+        Dtype of column.
+
+    Returns
+    -------
+    Column
+    """
+    ...
+
+def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any]) -> DataFrame:
+    """
+    Construct DataFrame from 2D array.
+
+    See `column_from_1d_array` for related 1D function.
+
+    Only Array-API-compliant 2D arrays are supported.
+    Cross-kind casting is undefined and may vary across implementations.
+    Downcasting is disallowed.
+
+    Parameters
+    ----------
+    array : array
+        array-API compliant 2D array
+    names : Sequence[str]
+        Names to give columns. Must be the same length as ``array.shape[1]``.
+    dtypes : Mapping[str, DType]
+        Dtype of each column. Must be the same length as ``array.shape[1]``.
 
     Returns
     -------

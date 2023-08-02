@@ -30,6 +30,10 @@ of objects and functions in the top-level namespace. The latter are:
    Datetime
    Duration
    String
+   column_from_sequence
+   column_from_1d_array
+   dataframe_from_dict
+   dataframe_from_2d_array
 
 The ``DataFrame``, ``Column`` and ``GroupBy`` objects have the following
 methods and attributes:
