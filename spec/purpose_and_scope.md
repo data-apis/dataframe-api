@@ -361,20 +361,20 @@ the level of (non-)conformance. For details on how to do this, see
 
 Libraries which implement the Standard in a separate namespace
 are required to provide the following methods:
-- ``__dataframe_standard__``: used for converting a non-compliant dataframe to a compliant one;
-- ``__column_standard__``: used for converting a non-compliant column to a compliant one.
+- ``__dataframe_consortium_standard__``: used for converting a non-compliant dataframe to a compliant one;
+- ``__column_consortium_standard__``: used for converting a non-compliant column to a compliant one.
 
-For example, pandas would have ``pandas.DataFrame.__dataframe_standard__`` and
-``pandas.Series.__column_standard__``.
+For example, pandas would have ``pandas.DataFrame.__dataframe_consortium_standard__`` and
+``pandas.Series.__column_consortium_standard__``.
 
 The signatures should be (note: docstring is optional):
 ```python
-def __dataframe_standard__(
-    self, /, *, api_version: str | None = None
+def __dataframe_consortium_standard__(
+    self, *, api_version: str | None = None
 ) -> Any:
 
-def __column_standard__(
-    self, /, *, api_version: str | None = None
+def __column_consortium_standard__(
+    self, *, api_version: str | None = None
 ) -> Any:
 ```
 `api_version` is

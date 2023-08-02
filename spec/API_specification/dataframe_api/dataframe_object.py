@@ -6,8 +6,8 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
-    from . import Bool, null
-    from ._types import Scalar
+    from . import Bool
+    from ._types import NullType, Scalar
 
 
 __all__ = ["DataFrame"]
@@ -768,7 +768,7 @@ class DataFrame:
         """
         ...
 
-    def fill_nan(self, value: float | 'null', /) -> DataFrame:
+    def fill_nan(self, value: float | NullType, /) -> DataFrame:
         """
         Fill ``nan`` values with the given fill value.
 

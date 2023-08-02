@@ -23,6 +23,9 @@ from enum import Enum
 # Type alias: Mypy needs Any, but for readability we need to make clear this
 # is a Python scalar (i.e., an instance of `bool`, `int`, `float`, `str`, etc.)
 Scalar = Any
+# null is a special object which represents a missing value.
+# It is not valid as a type.
+NullType = Any
 
 array = TypeVar("array")
 device = TypeVar("device")
