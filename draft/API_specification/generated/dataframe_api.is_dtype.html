@@ -49,7 +49,7 @@
     <link rel="apple-touch-icon" href="../../_static/images/apple-icon-152x152.png"/>
   
   
-    <title>is_null &#8212; Python dataframe API standard 2023.04-DRAFT documentation</title>
+    <title>is_dtype &#8212; Python dataframe API standard 2023.04-DRAFT documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/material.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
@@ -60,8 +60,8 @@
     <script src="../../_static/copybutton.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="null" href="dataframe_api.null.html" />
-    <link rel="prev" title="__dataframe_api_version__" href="dataframe_api.__dataframe_api_version__.html" />
+    <link rel="next" title="column_from_sequence" href="dataframe_api.column_from_sequence.html" />
+    <link rel="prev" title="Bool" href="dataframe_api.Bool.html" />
   
     <link rel="apple-touch-icon" href="../../_static/images/apple-icon-152x152.png"/>
   
@@ -82,7 +82,7 @@
   <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
   <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
   <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
-  <a href="#API_specification/generated/dataframe_api.is_null" tabindex="1" class="md-skip"> Skip to content </a>
+  <a href="#API_specification/generated/dataframe_api.is_dtype" tabindex="1" class="md-skip"> Skip to content </a>
   <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
@@ -100,7 +100,7 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           <span class="md-header-nav__topic">Python dataframe API standard 2023.04-DRAFT</span>
-          <span class="md-header-nav__topic"> is_null </span>
+          <span class="md-header-nav__topic"> is_dtype </span>
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
@@ -244,23 +244,7 @@
     <li class="md-nav__item">
     
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    <label class="md-nav__link md-nav__link--active" for="__toc"> is_null </label>
-    
-      <a href="#" class="md-nav__link md-nav__link--active">is_null</a>
-      
-        
-<nav class="md-nav md-nav--secondary">
-    <label class="md-nav__title" for="__toc">Contents</label>
-  <ul class="md-nav__list" data-md-scrollfix="">
-        <li class="md-nav__item"><a href="#api-specification-generated-dataframe-api-is-null--page-root" class="md-nav__link">is_null</a><nav class="md-nav">
-              <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#dataframe_api.is_null" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">is_null</span></code></a>
-        </li></ul>
-            </nav>
-        </li>
-  </ul>
-</nav>
+      <a href="dataframe_api.is_null.html" class="md-nav__link">is_null</a>
       
     
     </li>
@@ -351,7 +335,23 @@
     <li class="md-nav__item">
     
     
-      <a href="dataframe_api.is_dtype.html" class="md-nav__link">is_dtype</a>
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    <label class="md-nav__link md-nav__link--active" for="__toc"> is_dtype </label>
+    
+      <a href="#" class="md-nav__link md-nav__link--active">is_dtype</a>
+      
+        
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">Contents</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#api-specification-generated-dataframe-api-is-dtype--page-root" class="md-nav__link">is_dtype</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#dataframe_api.is_dtype" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">is_dtype</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+  </ul>
+</nav>
       
     
     </li>
@@ -439,9 +439,9 @@
 <nav class="md-nav md-nav--secondary">
     <label class="md-nav__title" for="__toc">Contents</label>
   <ul class="md-nav__list" data-md-scrollfix="">
-        <li class="md-nav__item"><a href="#api-specification-generated-dataframe-api-is-null--page-root" class="md-nav__link">is_null</a><nav class="md-nav">
+        <li class="md-nav__item"><a href="#api-specification-generated-dataframe-api-is-dtype--page-root" class="md-nav__link">is_dtype</a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#dataframe_api.is_null" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">is_null</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.is_dtype" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">is_dtype</span></code></a>
         </li></ul>
             </nav>
         </li>
@@ -454,19 +454,37 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  <section id="is-null">
-<h1 id="api-specification-generated-dataframe-api-is-null--page-root">is_null<a class="headerlink" href="#api-specification-generated-dataframe-api-is-null--page-root" title="Permalink to this heading">¶</a></h1>
+  <section id="is-dtype">
+<h1 id="api-specification-generated-dataframe-api-is-dtype--page-root">is_dtype<a class="headerlink" href="#api-specification-generated-dataframe-api-is-dtype--page-root" title="Permalink to this heading">¶</a></h1>
 <dl class="py data">
-<dt class="sig sig-object py" id="dataframe_api.is_null">
-<span class="sig-name descname"><span class="pre">is_null</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;function</span> <span class="pre">is_null&gt;</span></em><a class="headerlink" href="#dataframe_api.is_null" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if an object is a <code class="code docutils literal notranslate"><span class="pre">null</span></code> scalar.</p>
+<dt class="sig sig-object py" id="dataframe_api.is_dtype">
+<span class="sig-name descname"><span class="pre">is_dtype</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;function</span> <span class="pre">is_dtype&gt;</span></em><a class="headerlink" href="#dataframe_api.is_dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a boolean indicating whether a provided dtype is of a specified data type “kind”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>value</strong> (<em>object</em>) – Any input type is valid.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dtype</strong> (<em>Any</em>) – The input dtype.</p></li>
+<li><p><strong>kind</strong> (<em>str</em>) – <p>data type kind.
+The function must return a boolean indicating whether
+the input dtype is of a specified data type kind.
+The following dtype kinds must be supported:</p>
+<ul>
+<li><p>’bool’: boolean data type (Bool).</p></li>
+<li><p>’signed integer’: signed integer data types (Int8, Int16, Int32, Int64).</p></li>
+<li><p>’unsigned integer’: unsigned integer data types (UInt8, UInt16, UInt32, UInt64).</p></li>
+<li><p>’floating’: floating-point data types (Float32, Float64).</p></li>
+<li><p>’integral’: integer data types. Shorthand for (‘signed integer’, ‘unsigned integer’).</p></li>
+<li><p>’numeric’: numeric data types. Shorthand for (‘integral’, ‘floating’).</p></li>
+</ul>
+<p>If kind is a tuple, the tuple specifies a union of dtypes and/or kinds,
+and the function must return a boolean indicating whether the input dtype
+is either equal to a specified dtype or belongs to at least one specified
+data type kind.</p>
+</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>bool</strong> – True if the input is a <code class="code docutils literal notranslate"><span class="pre">null</span></code> object from the same library which
-implements the dataframe API standard, False otherwise.</p>
+<dd class="field-even"><p><strong>bool</strong></p>
 </dd>
 </dl>
 </dd></dl>
@@ -482,7 +500,7 @@ implements the dataframe API standard, False otherwise.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
           
-            <a href="dataframe_api.__dataframe_api_version__.html" title="__dataframe_api_version__"
+            <a href="dataframe_api.Bool.html" title="Bool"
                class="md-flex md-footer-nav__link md-footer-nav__link--prev"
                rel="prev">
               <div class="md-flex__cell md-flex__cell--shrink">
@@ -491,17 +509,17 @@ implements the dataframe API standard, False otherwise.</p>
               <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
                 <span class="md-flex__ellipsis">
                   <span
-                      class="md-footer-nav__direction"> Previous </span> __dataframe_api_version__ </span>
+                      class="md-footer-nav__direction"> Previous </span> Bool </span>
               </div>
             </a>
           
           
-            <a href="dataframe_api.null.html" title="null"
+            <a href="dataframe_api.column_from_sequence.html" title="column_from_sequence"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> null </span>
+                class="md-footer-nav__direction"> Next </span> column_from_sequence </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
