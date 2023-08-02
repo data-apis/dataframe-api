@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import Any,NoReturn, Sequence, TYPE_CHECKING, Literal, Generic
+from typing import Any,NoReturn, TYPE_CHECKING, Literal, Generic
 
 from ._types import DType
 
 if TYPE_CHECKING:
-    from . import Bool, null
-    from ._types import Scalar
+    from . import Bool
+    from ._types import NullType, Scalar
 
 
 __all__ = ['Column']
@@ -455,7 +455,7 @@ class Column(Generic[DType]):
             If any of the Column's columns is not boolean.
         """
 
-    def any(self: Column[Bool], *, skip_nulls: bool = True) -> bool:
+    def any(self: Column[Bool], *, skip_nulls: bool = True) -> bool | NullType:
         """
         Reduction returns a bool.
 
@@ -465,7 +465,7 @@ class Column(Generic[DType]):
             If column is not boolean.
         """
 
-    def all(self: Column[Bool], *, skip_nulls: bool = True) -> bool:
+    def all(self: Column[Bool], *, skip_nulls: bool = True) -> bool | NullType:
         """
         Reduction returns a bool.
 
@@ -475,32 +475,32 @@ class Column(Generic[DType]):
             If column is not boolean.
         """
 
-    def min(self, *, skip_nulls: bool = True) -> Scalar:
+    def min(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def max(self, *, skip_nulls: bool = True) -> Scalar:
+    def max(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def sum(self, *, skip_nulls: bool = True) -> Scalar:
+    def sum(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def prod(self, *, skip_nulls: bool = True) -> Scalar:
+    def prod(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical data types.
         The returned value has the same dtype as the column.
         """
 
-    def median(self, *, skip_nulls: bool = True) -> Scalar:
+    def median(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -508,7 +508,7 @@ class Column(Generic[DType]):
         dtypes.
         """
 
-    def mean(self, *, skip_nulls: bool = True) -> Scalar:
+    def mean(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -516,7 +516,7 @@ class Column(Generic[DType]):
         dtypes.
         """
 
-    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar:
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -542,7 +542,7 @@ class Column(Generic[DType]):
             Whether to skip null values.
         """
 
-    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar:
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -662,7 +662,7 @@ class Column(Generic[DType]):
         """
         ...
 
-    def fill_nan(self: Column[DType], value: float | 'null', /) -> Column[DType]:
+    def fill_nan(self: Column[DType], value: float | NullType, /) -> Column[DType]:
         """
         Fill floating point ``nan`` values with the given fill value.
 
