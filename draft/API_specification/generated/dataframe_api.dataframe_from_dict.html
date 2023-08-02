@@ -49,7 +49,7 @@
     <link rel="apple-touch-icon" href="../../_static/images/apple-icon-152x152.png"/>
   
   
-    <title>UInt64 &#8212; Python dataframe API standard 2023.04-DRAFT documentation</title>
+    <title>dataframe_from_dict &#8212; Python dataframe API standard 2023.04-DRAFT documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/material.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
@@ -60,8 +60,8 @@
     <script src="../../_static/copybutton.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="UInt32" href="dataframe_api.UInt32.html" />
-    <link rel="prev" title="Int8" href="dataframe_api.Int8.html" />
+    <link rel="next" title="dataframe_from_2d_array" href="dataframe_api.dataframe_from_2d_array.html" />
+    <link rel="prev" title="column_from_1d_array" href="dataframe_api.column_from_1d_array.html" />
   
     <link rel="apple-touch-icon" href="../../_static/images/apple-icon-152x152.png"/>
   
@@ -82,7 +82,7 @@
   <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
   <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
   <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
-  <a href="#API_specification/generated/dataframe_api.UInt64" tabindex="1" class="md-skip"> Skip to content </a>
+  <a href="#API_specification/generated/dataframe_api.dataframe_from_dict" tabindex="1" class="md-skip"> Skip to content </a>
   <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
@@ -100,7 +100,7 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           <span class="md-header-nav__topic">Python dataframe API standard 2023.04-DRAFT</span>
-          <span class="md-header-nav__topic"> UInt64 </span>
+          <span class="md-header-nav__topic"> dataframe_from_dict </span>
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
@@ -286,23 +286,7 @@
     <li class="md-nav__item">
     
     
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    <label class="md-nav__link md-nav__link--active" for="__toc"> UInt64 </label>
-    
-      <a href="#" class="md-nav__link md-nav__link--active">UInt64</a>
-      
-        
-<nav class="md-nav md-nav--secondary">
-    <label class="md-nav__title" for="__toc">Contents</label>
-  <ul class="md-nav__list" data-md-scrollfix="">
-        <li class="md-nav__item"><a href="#api-specification-generated-dataframe-api-uint64--page-root" class="md-nav__link">UInt64</a><nav class="md-nav">
-              <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#dataframe_api.UInt64" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">UInt64</span></code></a>
-        </li></ul>
-            </nav>
-        </li>
-  </ul>
-</nav>
+      <a href="dataframe_api.UInt64.html" class="md-nav__link">UInt64</a>
       
     
     </li>
@@ -365,7 +349,23 @@
     <li class="md-nav__item">
     
     
-      <a href="dataframe_api.dataframe_from_dict.html" class="md-nav__link">dataframe_from_dict</a>
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    <label class="md-nav__link md-nav__link--active" for="__toc"> dataframe_from_dict </label>
+    
+      <a href="#" class="md-nav__link md-nav__link--active">dataframe_from_dict</a>
+      
+        
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">Contents</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#api-specification-generated-dataframe-api-dataframe-from-dict--page-root" class="md-nav__link">dataframe_from_dict</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#dataframe_api.dataframe_from_dict" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">dataframe_from_dict</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+  </ul>
+</nav>
       
     
     </li>
@@ -432,9 +432,9 @@
 <nav class="md-nav md-nav--secondary">
     <label class="md-nav__title" for="__toc">Contents</label>
   <ul class="md-nav__list" data-md-scrollfix="">
-        <li class="md-nav__item"><a href="#api-specification-generated-dataframe-api-uint64--page-root" class="md-nav__link">UInt64</a><nav class="md-nav">
+        <li class="md-nav__item"><a href="#api-specification-generated-dataframe-api-dataframe-from-dict--page-root" class="md-nav__link">dataframe_from_dict</a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#dataframe_api.UInt64" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">UInt64</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.dataframe_from_dict" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">dataframe_from_dict</span></code></a>
         </li></ul>
             </nav>
         </li>
@@ -447,12 +447,26 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  <section id="uint64">
-<h1 id="api-specification-generated-dataframe-api-uint64--page-root">UInt64<a class="headerlink" href="#api-specification-generated-dataframe-api-uint64--page-root" title="Permalink to this heading">¶</a></h1>
+  <section id="dataframe-from-dict">
+<h1 id="api-specification-generated-dataframe-api-dataframe-from-dict--page-root">dataframe_from_dict<a class="headerlink" href="#api-specification-generated-dataframe-api-dataframe-from-dict--page-root" title="Permalink to this heading">¶</a></h1>
 <dl class="py data">
-<dt class="sig sig-object py" id="dataframe_api.UInt64">
-<span class="sig-name descname"><span class="pre">UInt64</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;class</span> <span class="pre">'dataframe_api.UInt64'&gt;</span></em><a class="headerlink" href="#dataframe_api.UInt64" title="Permalink to this definition">¶</a></dt>
-<dd><p>Unsigned integer type with 64 bits of precision.</p>
+<dt class="sig sig-object py" id="dataframe_api.dataframe_from_dict">
+<span class="sig-name descname"><span class="pre">dataframe_from_dict</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;function</span> <span class="pre">dataframe_from_dict&gt;</span></em><a class="headerlink" href="#dataframe_api.dataframe_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct DataFrame from map of column names to Columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="../column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>]</em>) – Column must be of the corresponding type of the DataFrame.
+For example, it is only supported to build a <code class="docutils literal notranslate"><span class="pre">LibraryXDataFrame</span></code> using
+<code class="docutils literal notranslate"><span class="pre">LibraryXColumn</span></code> instances.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If any of the columns already has a name, and the corresponding key
+    in <code class="code docutils literal notranslate"><span class="pre">data</span></code> doesn’t match.</p>
+</dd>
+</dl>
 </dd></dl>
 </section>
 
@@ -466,7 +480,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
           
-            <a href="dataframe_api.Int8.html" title="Int8"
+            <a href="dataframe_api.column_from_1d_array.html" title="column_from_1d_array"
                class="md-flex md-footer-nav__link md-footer-nav__link--prev"
                rel="prev">
               <div class="md-flex__cell md-flex__cell--shrink">
@@ -475,17 +489,17 @@
               <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
                 <span class="md-flex__ellipsis">
                   <span
-                      class="md-footer-nav__direction"> Previous </span> Int8 </span>
+                      class="md-footer-nav__direction"> Previous </span> column_from_1d_array </span>
               </div>
             </a>
           
           
-            <a href="dataframe_api.UInt32.html" title="UInt32"
+            <a href="dataframe_api.dataframe_from_2d_array.html" title="dataframe_from_2d_array"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> UInt32 </span>
+                class="md-footer-nav__direction"> Next </span> dataframe_from_2d_array </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
