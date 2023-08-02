@@ -255,6 +255,7 @@ def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
             The function must return a boolean indicating whether
             the input dtype is of a specified data type kind.
             The following dtype kinds must be supported:
+
             - 'bool': boolean data type (Bool).
             - 'signed integer': signed integer data types (Int8, Int16, Int32, Int64).
             - 'unsigned integer': unsigned integer data types (UInt8, UInt16, UInt32, UInt64).
