@@ -369,11 +369,11 @@ For example, pandas would have ``pandas.DataFrame.__dataframe_consortium_standar
 
 The signatures should be (note: docstring is optional):
 ```python
-def __dataframe_standard__(
+def __dataframe_consortium_standard__(
     self, /, *, api_version: str | None = None
 ) -> Any:
 
-def __column_standard__(
+def __column_consortium_standard__(
     self, /, *, api_version: str | None = None
 ) -> Any:
 ```
