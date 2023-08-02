@@ -471,6 +471,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.prod" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.prod()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.rename" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.rename()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.slice_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.slice_rows()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.sorted_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sorted_indices()</span></code></a>
@@ -627,6 +629,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.name" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.name</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.prod" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.prod()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.rename" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.rename()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.slice_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.slice_rows()</span></code></a>
         </li>
@@ -1175,6 +1179,19 @@ must be supported. The returned value has the same dtype as the column.</p>
 <span class="sig-name descname"><span class="pre">prod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NullType</span></span></span><a class="headerlink" href="#dataframe_api.Column.prod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reduction returns a scalar. Must be supported for numerical data types.
 The returned value has the same dtype as the column.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.rename">
+<span class="sig-name descname"><span class="pre">rename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">DType</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.Column.rename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – New name for column.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Column</strong> – New column - this does not operate in-place.</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.slice_rows">
