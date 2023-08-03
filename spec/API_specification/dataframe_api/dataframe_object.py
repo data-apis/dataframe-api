@@ -824,7 +824,7 @@ class DataFrame:
         Parameters
         ----------
         dtype : DType
-            The dtype of the array-API-compliant object to return:
+            The dtype of the array-API-compliant object to return.
             Must be one of:
 
             - Bool()
