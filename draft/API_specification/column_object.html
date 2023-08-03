@@ -1281,7 +1281,22 @@ column.</p>
 <dd><p>Convert to array-API-compliant object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dtype</strong> (<em>Any</em>) – The dtype of the array-API-compliant object to return.</p>
+<dd class="field-odd"><p><strong>dtype</strong> (<em>DType</em>) – <p>The dtype of the array-API-compliant object to return.
+Must be one of:</p>
+<ul class="simple">
+<li><p>Bool()</p></li>
+<li><p>Int8()</p></li>
+<li><p>Int16()</p></li>
+<li><p>Int32()</p></li>
+<li><p>Int64()</p></li>
+<li><p>UInt8()</p></li>
+<li><p>UInt16()</p></li>
+<li><p>UInt32()</p></li>
+<li><p>UInt64()</p></li>
+<li><p>Float32()</p></li>
+<li><p>Float64()</p></li>
+</ul>
+</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>Any</strong> – An array-API-compliant object.</p>
