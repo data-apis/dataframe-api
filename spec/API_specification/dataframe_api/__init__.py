@@ -72,7 +72,7 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '')
         Sequence of elements. Each element must be of the specified
         ``dtype``, the corresponding Python builtin scalar type, or
         coercible to that Python scalar type.
-    name : str
+    name : str, optional (default: '')
         Name of column.
     dtype : DType
         Dtype of result. Must be specified.
@@ -122,7 +122,7 @@ def column_from_1d_array(array: Any, *, dtype: Any, name: str = '') -> Column[An
     ----------
     array : array
         array-API compliant 1D array
-    name : str
+    name : str, optional (default: '')
         Name to give columns.
     dtype : DType
         Dtype of column.
