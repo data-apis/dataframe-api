@@ -63,7 +63,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Any], *, name: str | None, dtype: Any) -> Column[Any]:
+def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '') -> Column[Any]:
     """
     Construct Column from sequence of elements.
 
@@ -109,7 +109,7 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
     ...
 
 
-def column_from_1d_array(array: Any, *, name: str, dtype: Any) -> Column[Any]:
+def column_from_1d_array(array: Any, *, dtype: Any, name: str = '') -> Column[Any]:
     """
     Construct Column from 1D array.
 
@@ -123,7 +123,7 @@ def column_from_1d_array(array: Any, *, name: str, dtype: Any) -> Column[Any]:
     ----------
     array : array
         array-API compliant 1D array
-    name : str
+    name : str, optional
         Name to give columns.
     dtype : DType
         Dtype of column.
