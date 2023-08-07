@@ -392,15 +392,11 @@ class DataFrame(ABC):
 
     @abstractmethod
     def __dataframe__(
-        self, nan_as_null: bool = False, allow_copy: bool = True
+        self, allow_copy: bool = True
     ) -> "DataFrame":
         """
         Construct a new exchange object, potentially changing the parameters.
 
-        ``nan_as_null`` is a keyword intended for the consumer to tell the
-        producer to overwrite null values in the data with ``NaN``.
-        It is intended for cases where the consumer does not support the bit
-        mask or byte mask that is the producer's native representation.
         ``allow_copy`` is a keyword that defines whether or not the library is
         allowed to make a copy of the data. For example, copying data would be
         necessary if a library supports strided buffers, given that this protocol
