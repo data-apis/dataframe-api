@@ -201,6 +201,67 @@ class DataFrame:
         """
         ...
 
+    def update_column(self, column: Column[Any]) -> DataFrame:
+        """
+        Update column in DataFrame.
+
+        The column's name must already be present in the dataframe.
+
+        Parameters
+        ----------
+        column : Column
+    
+        Returns
+        -------
+        DataFrame
+        """
+        ...
+
+    def update_columns(self, columns: Sequence[Column[Any]]) -> DataFrame:
+        """
+        Update values in existing columns.
+
+        Like :meth:`update_column`, but can update multiple (independent) columns.
+        Some implementations may be able to make use of parallelism in this
+        case. For example instead of:
+        
+        .. code-block:: python
+
+            new_column = df.get_column_by_name('a') + 1
+            df = df.update_column(new_column)
+            new_column = df.get_column_by_name('b') + 1
+            df = df.update_column(new_column)
+        
+        it would be better to write
+
+        .. code-block:: python
+
+            new_column_0 = df.get_column_by_name('a') + 1
+            new_column_1 = df.get_column_by_name('b') + 1
+            df = df.update_columns(
+                [
+                    new_column_0,
+                    new_column_1,
+                ]
+            )
+        
+        so that updates can happen in parallel for some implementations.
+
+        Parameters
+        ----------
+        columns : Sequence[Column]
+            Sequence of columns.
+            Must be independent of each other.
+            Column names must already be present in dataframe - use
+            :meth:`Column.rename` to rename them
+            beforehand if necessary.
+        
+        Returns
+        -------
+        DataFrame
+        """
+        ...
+
     def drop_column(self, label: str) -> DataFrame:
         """
         Drop the specified column.
