@@ -244,6 +244,47 @@ class DataFrame:
         Sequence[str]
         """
         ...
+    
+    def sort(
+        self,
+        keys: Sequence[str] | None = None,
+        *,
+        ascending: Sequence[bool] | bool = True,
+        nulls_position: Literal['first', 'last'] = 'last',
+    ) -> DataFrame:
+        """
+        Sort dataframe according to given columns.
+
+        If you only need the indices which would sort the dataframe, use
+        :meth:`sorted_indices`.
+
+        Parameters
+        ----------
+        keys : Sequence[str] | None
+            Names of columns to sort by.
+            If `None`, sort by all columns.
+        ascending : Sequence[bool] or bool
+            If `True`, sort by all keys in ascending order.
+            If `False`, sort by all keys in descending order.
+            If a sequence, it must be the same length as `keys`,
+            and determines the direction with which to use each
+            key to sort by.
+        nulls_position : ``{'first', 'last'}``
+            Whether null values should be placed at the beginning
+            or at the end of the result.
+            Note that the position of NaNs is unspecified and may
+            vary based on the implementation.
+
+        Returns
+        -------
+        DataFrame
+    
+        Raises
+        ------
+        ValueError
+            If `keys` and `ascending` are sequences of different lengths.
+        """
+        ...
 
     def sorted_indices(
         self,
