@@ -180,17 +180,24 @@ class DataFrame:
         """
         ...
 
-    def insert(self, loc: int, label: str, value: Column[Any]) -> DataFrame:
+    def insert_column(self, loc: int, column: Column[Any]) -> DataFrame:
         """
         Insert column into DataFrame at specified location.
+
+        The column's name will be used as the label in the resulting dataframe.
+        To insert the column with a different name, combine with `Column.rename`,
+        e.g.:
+
+        .. code-block :: python
+
+            new_column = df.get_column_by_name('a') + 1
+            df = df.insert(0, new_column.rename('a_plus_1'))
 
         Parameters
         ----------
         loc : int
             Insertion index. Must verify 0 <= loc <= len(columns).
-        label : str
-            Label of the inserted column.
-        value : Column
+        column : Column
         """
         ...
 
