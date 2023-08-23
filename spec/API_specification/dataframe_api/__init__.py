@@ -80,7 +80,7 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '',
     api_version: str | None
         A string representing the version of the dataframe API specification
         to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return the namespace corresponding to
+        If it is ``None``, it should return an object corresponding to
         latest version of the dataframe API specification.  If the given
         version is invalid or not implemented for the given module, an
         error should be raised. Default: ``None``.
@@ -104,7 +104,7 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]], *, api_version: str | N
     api_version: str | None
         A string representing the version of the dataframe API specification
         to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return the namespace corresponding to
+        If it is ``None``, it should return an object corresponding to
         latest version of the dataframe API specification.  If the given
         version is invalid or not implemented for the given module, an
         error should be raised. Default: ``None``.
@@ -144,7 +144,7 @@ def column_from_1d_array(array: Any, *, dtype: Any, name: str = '', api_version:
     api_version: str | None
         A string representing the version of the dataframe API specification
         to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return the namespace corresponding to
+        If it is ``None``, it should return an object corresponding to
         latest version of the dataframe API specification.  If the given
         version is invalid or not implemented for the given module, an
         error should be raised. Default: ``None``.
@@ -176,7 +176,7 @@ def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping
     api_version: str | None
         A string representing the version of the dataframe API specification
         to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return the namespace corresponding to
+        If it is ``None``, it should return an object corresponding to
         latest version of the dataframe API specification.  If the given
         version is invalid or not implemented for the given module, an
         error should be raised. Default: ``None``.
