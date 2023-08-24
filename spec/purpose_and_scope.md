@@ -379,7 +379,7 @@ def __column_consortium_standard__(
 ```
 `api_version` is
 a string representing the version of the dataframe API specification
-to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
+in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
 If it is ``None``, it should return the namespace corresponding to
 latest version of the dataframe API specification.  If the given
 version is invalid or not implemented for the given module, an
