@@ -296,9 +296,7 @@ class DataFrame:
         """
         Return row numbers which would sort according to given columns.
 
-        If you need to sort the DataFrame, you can simply do::
-
-            df.get_rows(df.sorted_indices(keys))
+        If you need to sort the DataFrame, use :meth:`sort`.
 
         Parameters
         ----------

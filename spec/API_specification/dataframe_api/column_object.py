@@ -179,9 +179,7 @@ class Column(Generic[DType]):
         """
         Return row numbers which would sort column.
 
-        If you need to sort the Column, you can simply do::
-
-            col.get_rows(col.sorted_indices())
+        If you need to sort the Column, use :meth:`sort`.
 
         Parameters
         ----------
