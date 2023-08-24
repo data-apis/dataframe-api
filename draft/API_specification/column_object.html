@@ -482,6 +482,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.slice_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.slice_rows()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.sort" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sort()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.sorted_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sorted_indices()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.std()</span></code></a>
@@ -640,6 +642,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.rename" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.rename()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.slice_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.slice_rows()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.sort" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sort()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.sorted_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sorted_indices()</span></code></a>
         </li>
@@ -1218,13 +1222,32 @@ The returned value has the same dtype as the column.</p>
 </dl>
 </dd></dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.sort">
+<span class="sig-name descname"><span class="pre">sort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ascending</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nulls_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'first'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'last'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'last'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">DType</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.Column.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort column.</p>
+<p>If you need the indices which would sort the column,
+use <a class="reference internal" href="#dataframe_api.Column.sorted_indices" title="dataframe_api.Column.sorted_indices"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sorted_indices()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ascending</strong> (<em>bool</em>) – If <code class="code docutils literal notranslate"><span class="pre">True</span></code>, sort in ascending order.
+If <code class="code docutils literal notranslate"><span class="pre">False</span></code>, sort in descending order.</p></li>
+<li><p><strong>nulls_position</strong> (<code class="docutils literal notranslate"><span class="pre">{'first',</span> <span class="pre">'last'}</span></code>) – Whether null values should be placed at the beginning
+or at the end of the result.
+Note that the position of NaNs is unspecified and may
+vary based on the implementation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Column</strong></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.sorted_indices">
 <span class="sig-name descname"><span class="pre">sorted_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ascending</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nulls_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'first'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'last'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'last'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.Column.sorted_indices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return row numbers which would sort column.</p>
-<p>If you need to sort the Column, you can simply do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">col</span><span class="o">.</span><span class="n">get_rows</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">sorted_indices</span><span class="p">())</span>
-</pre></div>
-</div>
+<p>If you need to sort the Column, use <a class="reference internal" href="#dataframe_api.Column.sort" title="dataframe_api.Column.sort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sort()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
