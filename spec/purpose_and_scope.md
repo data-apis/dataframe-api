@@ -275,6 +275,36 @@ latest version of the dataframe API specification.  If the given
 version is invalid or not implemented for the given module, an
 error should be raised. Default: ``None``.
 
+```python
+import pandas as pd
+import polars as pl
+
+
+df_pandas = pl.read_parquet('iris.parquet')
+df_polars = pl.scan_parquet('iris.parquet')
+
+def my_dataframe_agnostic_function(df):
+    df = df.__dataframe_consortium_standard__(api_version='2023.08-beta')
+
+    mask = df.get_column_by_name('species') != 'setosa'
+    df = df.get_rows_by_mask(mask)
+
+    for column_name in df.get_column_names():
+        if column_name == 'species':
+            continue
+        new_column = df.get_column_by_name(column_name)
+        new_column = (new_column - new_column.mean()) / new_column.std()
+        df = df.insert(loc=len(df.get_column_names()), label=f'{column_name}_scaled', value=new_column)
+
+    return df.dataframe
+
+#  Then, either of the following will work as expected:
+my_dataframe_agnostic_function(df_pandas)
+my_dataframe_agnostic_function(df_polars)
+```
+
+Example:
+
 ### Checking a dataframe object for Compliance
 
 Dataframe-consuming libraries are likely to want a mechanism for determining
