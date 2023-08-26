@@ -209,6 +209,52 @@ class DataFrame:
         """
         ...
 
+    def insert_columns(self, columns: Sequence[Column[Any]]) -> DataFrame:
+        """
+        Insert columns into DataFrame at rightmost location.
+
+        Like :meth:`insert_column`, but can insert multiple (independent) columns.
+        Some implementations may be able to make use of parallelism in this
+        case. For example instead of:
+        
+        .. code-block::
+
+            new_column = df.get_column_by_name('a') + 1
+            df = df.insert_column(new_column.rename('a_plus_1'))
+            new_column = df.get_column_by_name('b') + 1
+            df = df.insert_column(new_column.rename('b_plus_1'))
+        
+        it would be better to write
+
+        .. code-block::
+
+            new_column_0 = df.get_column_by_name('a') + 1
+            new_column_1 = df.get_column_by_name('b') + 1
+            df = df.insert_columns(
+                [
+                    new_column_0.rename('a_plus_1'),
+                    new_column_1.rename('b_plus_1'),
+                ]
+            )
+        
+        so that insertion can happen in parallel for some implementations.
+
+        Parameters
+        ----------
+        columns : Sequence[Column]
+            Sequence of `Column`s.
+            Must be independent of each other.
+            Column names must be unique.
+            Column names may not already be present in the
+            dataframe - use :meth:`Column.rename` to rename them
+            beforehand if necessary.
+        
+        Returns
+        -------
+        DataFrame
+        """
+        ...
+
     def drop_column(self, label: str) -> DataFrame:
         """
         Drop the specified column.
