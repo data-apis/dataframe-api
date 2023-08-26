@@ -249,40 +249,31 @@ this specification, consult the Python
 (how-to-adopt-this-api)=
 ## How to adopt this API
 
-Most (all) existing dataframe libraries will find something in this API standard
-that is incompatible with a current implementation, and that they cannot
-change due to backwards compatibility concerns. Therefore we expect that each
-of those libraries will want to offer a standard-compliant API in a _new
-namespace_. The question then becomes: how does a user access this namespace?
+Libraries which implement the Standard
+are required to provide the following methods:
+- ``__dataframe_consortium_standard__``: used for converting a non-compliant dataframe to a compliant one;
+- ``__column_consortium_standard__``: used for converting a non-compliant column to a compliant one.
 
-The simplest method is: document the import to use to directly access the
-namespace (e.g. `import package_name.dataframe_api`). This has two issues
-though:
+For example, pandas has ``pandas.DataFrame.__dataframe_consortium_standard__`` and
+``pandas.Series.__column_consortium_standard__`` as of version 2.1.0.
 
-1. Dataframe-consuming libraries that want to support multiple dataframe
-   libraries then have to explicitly import each library.
-2. It is difficult to _version_ the dataframe API standard implementation (see
-   {ref}`api-versioning`).
+The signatures should be (note: docstring is optional):
+```python
+def __dataframe_consortium_standard__(
+    self, *, api_version: str | None = None
+) -> Any:
 
-To address both issues, a uniform way must be provided by a conforming
-implementation to access the API namespace, namely a [method on the dataframe
-object](DataFrame.__dataframe_namespace__):
-
+def __column_consortium_standard__(
+    self, *, api_version: str | None = None
+) -> Any:
 ```
-xp = x.__dataframe_namespace__()
-```
-
-The method must take one keyword, `api_version=None`, to make it possible to
-request a specific API version:
-
-```
-xp = x.__dataframe_namespace__(api_version='2023.04')
-```
-
-The `xp` namespace must contain all functionality specified in
-{ref}`api-specification`. The namespace may contain other functionality; however,
-including additional functionality is not recommended as doing so may hinder
-portability and inter-operation of dataframe libraries within user code.
+`api_version` is
+a string representing the version of the dataframe API specification
+to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
+If it is ``None``, it should return the namespace corresponding to
+latest version of the dataframe API specification.  If the given
+version is invalid or not implemented for the given module, an
+error should be raised. Default: ``None``.
 
 ### Checking a dataframe object for Compliance
 
@@ -358,29 +349,3 @@ Libraries which aim to provide a conforming implementation but haven't yet
 completed such an implementation may, and are encouraged to, provide details on
 the level of (non-)conformance. For details on how to do this, see
 [Verification - measuring conformance](verification_test_suite.md).
-
-Libraries which implement the Standard in a separate namespace
-are required to provide the following methods:
-- ``__dataframe_consortium_standard__``: used for converting a non-compliant dataframe to a compliant one;
-- ``__column_consortium_standard__``: used for converting a non-compliant column to a compliant one.
-
-For example, pandas would have ``pandas.DataFrame.__dataframe_consortium_standard__`` and
-``pandas.Series.__column_consortium_standard__``.
-
-The signatures should be (note: docstring is optional):
-```python
-def __dataframe_consortium_standard__(
-    self, *, api_version: str | None = None
-) -> Any:
-
-def __column_consortium_standard__(
-    self, *, api_version: str | None = None
-) -> Any:
-```
-`api_version` is
-a string representing the version of the dataframe API specification
-to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-If it is ``None``, it should return the namespace corresponding to
-latest version of the dataframe API specification.  If the given
-version is invalid or not implemented for the given module, an
-error should be raised. Default: ``None``.
