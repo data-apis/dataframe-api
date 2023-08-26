@@ -191,7 +191,7 @@ class DataFrame:
         .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
-            df = df.insert(new_column.rename('a_plus_1'))
+            df = df.insert_column(new_column.rename('a_plus_1'))
         
         If you need to insert the column at a different location, combine with
         :meth:`get_columns_by_name`, e.g.:
@@ -200,7 +200,7 @@ class DataFrame:
 
             new_column = df.get_column_by_name('a') + 1
             new_columns_names = ['a_plus_1'] + df.get_column_names()
-            df = df.insert(new_column.rename('a_plus_1'))
+            df = df.insert_column(new_column.rename('a_plus_1'))
             df = df.get_columns_by_name(new_column_names)
 
         Parameters
