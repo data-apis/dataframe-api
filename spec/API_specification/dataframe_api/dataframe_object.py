@@ -897,3 +897,45 @@ class DataFrame:
         understanding that consuming libraries would then use the
         ``array-api-compat`` package to convert it to a Standard-compliant array.
         """
+    
+    def join(
+        self,
+        other: DataFrame,
+        *,
+        how: Literal['left', 'inner', 'outer'],
+        on: str | list[str] | None = None,
+        left_on: str | list[str] | None = None,
+        right_on: str | list[str] | None = None,
+    ) -> DataFrame:
+        """
+        Join with other dataframe.
+
+        Parameters
+        ----------
+        other : DataFrame
+            Dataframe to join with.
+        how : str
+            Kind of join to perform.
+            Must be one of {'left', 'inner', 'outer'}.
+        on : str | list[str], optional
+            Key(s) to use to perform join.
+            Cannot be used in conjunction with `left_on` or `right_on`.
+        left_on : str | list[str], optional
+            Key(s) from `self` to perform `join` on.
+            If more than one key is given, it must be
+            the same length as `right_on`.
+            Cannot be used in conjunction with `on`.
+        right_on : str | list[str], optional
+            Key(s) from `other` to perform `join` on.
+            If more than one key is given, it must be
+            the same length as `left_on`.
+            Cannot be used in conjunction with `on`.
+        
+        Returns
+        -------
+        DataFrame
+
+        Notes
+        -----
+        Either `on`, or both `left_on` and `right_on`, must be specified.
+        """
