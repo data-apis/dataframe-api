@@ -301,6 +301,7 @@ def my_dataframe_agnostic_function(df):
 #  Then, either of the following will work as expected:
 my_dataframe_agnostic_function(df_pandas)
 my_dataframe_agnostic_function(df_polars)
+my_dataframe_agnostic_function(df_any_other_library_with_a_standard_compliant_namespace)
 ```
 
 Example:
