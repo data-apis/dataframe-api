@@ -206,7 +206,7 @@ class DataFrame:
         If inserting multiple columns, they must be indepedent.
         For example, instead of
         
-        .. code-block::
+        .. code-block::python
 
             new_column = df.get_column_by_name('a') + 1
             df = df.insert_column(new_column.rename('a_plus_1'))
@@ -215,7 +215,7 @@ class DataFrame:
         
         it would be better to write
 
-        .. code-block::
+        .. code-block::python
 
             new_column_0 = df.get_column_by_name('a') + 1
             new_column_1 = df.get_column_by_name('b') + 1
@@ -233,7 +233,7 @@ class DataFrame:
         columns : Column | Sequence[Column]
             Column(s) to insert. Must be independent of each other. For example,
 
-            .. code-block:: python
+            .. code-block::python
                 new_column_1 = df.get_column_by_name('a').rename('b')
                 new_column_2 = (new_column_1 + 2).rename('c')
                 df.insert_columns([new_column_1, new_column_2])
