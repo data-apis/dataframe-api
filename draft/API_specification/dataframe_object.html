@@ -1093,11 +1093,11 @@ scalar value. If <code class="docutils literal notranslate"><span class="pre">No
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.get_column_names">
-<span class="sig-name descname"><span class="pre">get_column_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.get_column_names" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_column_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.get_column_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get column names.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>Sequence[str]</strong></p>
+<dd class="field-odd"><p><strong>list[str]</strong></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1168,21 +1168,26 @@ defined.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.insert_column">
-<span class="sig-name descname"><span class="pre">insert_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.insert_column" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert column into DataFrame at specified location.</p>
+<span class="sig-name descname"><span class="pre">insert_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.insert_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert column into DataFrame at rightmost location.</p>
 <p>The column’s name will be used as the label in the resulting dataframe.
 To insert the column with a different name, combine with <code class="code docutils literal notranslate"><span class="pre">Column.rename</span></code>,
 e.g.:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_column</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">new_column</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'a_plus_1'</span><span class="p">))</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">insert_column</span><span class="p">(</span><span class="n">new_column</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'a_plus_1'</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>If you need to insert the column at a different location, combine with
+<a class="reference internal" href="#dataframe_api.DataFrame.get_columns_by_name" title="dataframe_api.DataFrame.get_columns_by_name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_columns_by_name()</span></code></a>, e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_column</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">new_columns_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a_plus_1'</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_names</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">insert_column</span><span class="p">(</span><span class="n">new_column</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'a_plus_1'</span><span class="p">))</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_columns_by_name</span><span class="p">(</span><span class="n">new_column_names</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>loc</strong> (<em>int</em>) – Insertion index. Must verify 0 &lt;= loc &lt;= len(columns).</p></li>
-<li><p><strong>column</strong> (<a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a>) – </p></li>
-</ul>
+<dd class="field-odd"><p><strong>column</strong> (<a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a>) – </p>
 </dd>
 </dl>
 </dd></dl>
