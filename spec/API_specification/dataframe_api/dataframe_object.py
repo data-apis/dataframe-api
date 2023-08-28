@@ -203,8 +203,9 @@ class DataFrame:
             df = df.insert_column(new_column.rename('a_plus_1'))
             df = df.get_columns_by_name(new_column_names)
 
-        If inserting multiple columns, they must be indepedent.
-        For example, 
+        If inserting multiple columns, then the order in which they are inserted
+        is not guaranteed and may vary across implementations. For example, the
+        following
 
         .. code-block:: python
 
@@ -212,13 +213,13 @@ class DataFrame:
             new_column_2 = (new_column_1 + 2).rename('c')
             df.insert_columns([new_column_1, new_column_2])
             
-        is not allowed, as `new_column_2` depends on `new_column_1`.
+        is not supported, as `new_column_2` is derived from `new_column_1`, which may
+        not be part of the dataframe if `new_column_2` is inserted first.
 
         Parameters
         ----------
         columns : Column | Sequence[Column]
-            Column(s) to insert. Must be independent of each other, so that insertion
-            can happen in parallel in some implementations.
+            Column(s) to insert. Insertion order is not guaranteed.
         """
         ...
 
