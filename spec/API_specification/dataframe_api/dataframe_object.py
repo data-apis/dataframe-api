@@ -65,13 +65,13 @@ class DataFrame:
         Return number of rows and number of columns.
         """
 
-    def groupby(self, keys: Sequence[str], /) -> GroupBy:
+    def groupby(self, keys: str | list[str], /) -> GroupBy:
         """
         Group the DataFrame by the given columns.
 
         Parameters
         ----------
-        keys : Sequence[str]
+        keys : str | list[str]
 
         Returns
         -------
@@ -255,7 +255,7 @@ class DataFrame:
     
     def sort(
         self,
-        keys: Sequence[str] | None = None,
+        keys: str | list[str] | None = None,
         *,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
@@ -268,7 +268,7 @@ class DataFrame:
 
         Parameters
         ----------
-        keys : Sequence[str] | None
+        keys : str | list[str], optional
             Names of columns to sort by.
             If `None`, sort by all columns.
         ascending : Sequence[bool] or bool
@@ -296,7 +296,7 @@ class DataFrame:
 
     def sorted_indices(
         self,
-        keys: Sequence[str] | None = None,
+        keys: str | list[str] | None = None,
         *,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
@@ -308,7 +308,7 @@ class DataFrame:
 
         Parameters
         ----------
-        keys : Sequence[str] | None
+        keys : str | list[str], optional
             Names of columns to sort by.
             If `None`, sort by all columns.
         ascending : Sequence[bool] or bool
@@ -801,9 +801,15 @@ class DataFrame:
         """
         ...
 
-    def unique_indices(self, keys: Sequence[str], *, skip_nulls: bool = True) -> Column[int]:
+    def unique_indices(self, keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Column[int]:
         """
         Return indices corresponding to unique values across selected columns.
+
+        Parameters
+        ----------
+        keys : str | list[str], optional
+            Column names to consider when finding unique values.
+            If `None`, all columns are considered.
 
         Returns
         -------
