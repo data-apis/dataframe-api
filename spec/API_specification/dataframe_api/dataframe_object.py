@@ -180,47 +180,24 @@ class DataFrame:
         """
         ...
 
-    def insert_column(self, loc: int, column: Column[Any]) -> DataFrame:
+    def update_columns(self, columns: Column[Any] | Sequence[Column[Any]]) -> DataFrame:
         """
-        Insert column into DataFrame at specified location.
-
-        The column's name will be used as the label in the resulting dataframe.
-        To insert the column with a different name, combine with :meth:`Column.rename`,
-        e.g.:
-
-        .. code-block :: python
-
-            new_column = df.get_column_by_name('a') + 1
-            df = df.insert(0, new_column.rename('a_plus_1'))
-
-        Parameters
-        ----------
-        loc : int
-            Insertion index. Must verify 0 <= loc <= len(columns).
-        column : Column
-
-        Returns
-        -------
-        DataFrame
-        """
-        ...
-
-    def update_column(self, column: Column[Any]) -> DataFrame:
-        """
-        Update values in existing column from Dataframe.
+        Update values in existing column(s) from Dataframe.
 
         The column's name will be used to tell which column to update.
         To update a column with a different name, combine with :meth:`Column.rename`,
         e.g.:
 
-        .. code-block :: python
+        .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
             df = df.update_column(new_column.rename('b'))
 
         Parameters
         ----------
-        column : Column
+        columns : Column | Sequence[Column]
+            Column(s) to update. If updating multiple columns, they must all be
+            different.
 
         Returns
         -------
