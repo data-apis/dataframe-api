@@ -219,7 +219,8 @@ class DataFrame:
         Parameters
         ----------
         columns : Column | Sequence[Column]
-            Column(s) to insert. Insertion order is not guaranteed.
+            Column(s) to insert. These will appear at the rightmost location, but
+            insertion order is not guaranteed.
         """
         ...
 
