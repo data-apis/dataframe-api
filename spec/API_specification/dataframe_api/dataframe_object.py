@@ -201,61 +201,25 @@ class DataFrame:
         """
         ...
 
-    def update_column(self, column: Column[Any]) -> DataFrame:
+    def update_columns(self, columns: Column[Any] | Sequence[Column[Any]], /) -> DataFrame:
         """
-        Update column in DataFrame.
+        Update values in existing column(s) from Dataframe.
 
-        The column's name must already be present in the dataframe.
+        The column's name will be used to tell which column to update.
+        To update a column with a different name, combine with :meth:`Column.rename`,
+        e.g.:
 
-        Parameters
-        ----------
-        column : Column
-    
-        Returns
-        -------
-        DataFrame
-        """
-        ...
-
-    def update_columns(self, columns: Sequence[Column[Any]]) -> DataFrame:
-        """
-        Update values in existing columns.
-
-        Like :meth:`update_column`, but can update multiple (independent) columns.
-        Some implementations may be able to make use of parallelism in this
-        case. For example instead of:
-        
         .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
-            df = df.update_column(new_column)
-            new_column = df.get_column_by_name('b') + 1
-            df = df.update_column(new_column)
-        
-        it would be better to write
-
-        .. code-block:: python
-
-            new_column_0 = df.get_column_by_name('a') + 1
-            new_column_1 = df.get_column_by_name('b') + 1
-            df = df.update_columns(
-                [
-                    new_column_0,
-                    new_column_1,
-                ]
-            )
-        
-        so that updates can happen in parallel for some implementations.
+            df = df.update_column(new_column.rename('b'))
 
         Parameters
         ----------
-        columns : Sequence[Column]
-            Sequence of columns.
-            Must be independent of each other.
-            Column names must already be present in dataframe - use
-            :meth:`Column.rename` to rename them
-            beforehand if necessary.
-        
+        columns : Column | Sequence[Column]
+            Column(s) to update. If updating multiple columns, they must all have
+            different names.
+
         Returns
         -------
         DataFrame
