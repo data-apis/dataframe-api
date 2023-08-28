@@ -180,9 +180,9 @@ class DataFrame:
         """
         ...
 
-    def insert_column(self, column: Column[Any]) -> DataFrame:
+    def insert_columns(self, columns: Column[Any] | Sequence[Column[Any]]) -> DataFrame:
         """
-        Insert column into DataFrame at rightmost location.
+        Insert column(s) into DataFrame at rightmost location.
 
         The column's name will be used as the label in the resulting dataframe.
         To insert the column with a different name, combine with `Column.rename`,
@@ -203,19 +203,8 @@ class DataFrame:
             df = df.insert_column(new_column.rename('a_plus_1'))
             df = df.get_columns_by_name(new_column_names)
 
-        Parameters
-        ----------
-        column : Column
-        """
-        ...
-
-    def insert_columns(self, columns: Sequence[Column[Any]]) -> DataFrame:
-        """
-        Insert columns into DataFrame at rightmost location.
-
-        Like :meth:`insert_column`, but can insert multiple (independent) columns.
-        Some implementations may be able to make use of parallelism in this
-        case. For example instead of:
+        If inserting multiple columns, they must be indepedent.
+        For example, instead of
         
         .. code-block::
 
@@ -241,17 +230,15 @@ class DataFrame:
 
         Parameters
         ----------
-        columns : Sequence[Column]
-            Sequence of `Column`s.
-            Must be independent of each other.
-            Column names must be unique.
-            Column names may not already be present in the
-            dataframe - use :meth:`Column.rename` to rename them
-            beforehand if necessary.
-        
-        Returns
-        -------
-        DataFrame
+        columns : Column | Sequence[Column]
+            Column(s) to insert. Must be independent of each other. For example,
+
+            .. code-block:: python
+                new_column_1 = df.get_column_by_name('a').rename('b')
+                new_column_2 = (new_column_1 + 2).rename('c')
+                df.insert_columns([new_column_1, new_column_2])
+            
+            is not allowed, as `new_column_2` depends on `new_column_1`.
         """
         ...
 
