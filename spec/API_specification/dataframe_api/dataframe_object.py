@@ -204,41 +204,21 @@ class DataFrame:
             df = df.get_columns_by_name(new_column_names)
 
         If inserting multiple columns, they must be indepedent.
-        For example, instead of
-        
-        .. code-block::python
+        For example, 
 
-            new_column = df.get_column_by_name('a') + 1
-            df = df.insert_column(new_column.rename('a_plus_1'))
-            new_column = df.get_column_by_name('b') + 1
-            df = df.insert_column(new_column.rename('b_plus_1'))
-        
-        it would be better to write
+        .. code-block:: python
 
-        .. code-block::python
-
-            new_column_0 = df.get_column_by_name('a') + 1
-            new_column_1 = df.get_column_by_name('b') + 1
-            df = df.insert_columns(
-                [
-                    new_column_0.rename('a_plus_1'),
-                    new_column_1.rename('b_plus_1'),
-                ]
-            )
-        
-        so that insertion can happen in parallel for some implementations.
+            new_column_1 = df.get_column_by_name('a').rename('b')
+            new_column_2 = (new_column_1 + 2).rename('c')
+            df.insert_columns([new_column_1, new_column_2])
+            
+        is not allowed, as `new_column_2` depends on `new_column_1`.
 
         Parameters
         ----------
         columns : Column | Sequence[Column]
-            Column(s) to insert. Must be independent of each other. For example,
-
-            .. code-block::python
-                new_column_1 = df.get_column_by_name('a').rename('b')
-                new_column_2 = (new_column_1 + 2).rename('c')
-                df.insert_columns([new_column_1, new_column_2])
-            
-            is not allowed, as `new_column_2` depends on `new_column_1`.
+            Column(s) to insert. Must be independent of each other, so that insertion
+            can happen in parallel in some implementations.
         """
         ...
 
