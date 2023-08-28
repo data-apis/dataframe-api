@@ -455,6 +455,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.is_null" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.is_null()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.join" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.join()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.max()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.mean" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.mean()</span></code></a>
@@ -618,6 +620,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.is_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.is_nan()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.is_null" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.is_null()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.join" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.join()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.max()</span></code></a>
         </li>
@@ -1226,6 +1230,29 @@ In particular, does not check for <code class="code docutils literal notranslate
 <p>Does <em>not</em> include NaN-like entries.
 May optionally include ‘NaT’ values (if present in an implementation),
 but note that the Standard makes no guarantees about them.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">how</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'inner'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'outer'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_on</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_on</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Join with other dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a>) – Dataframe to join with.</p></li>
+<li><p><strong>how</strong> (<em>str</em>) – Kind of join to perform.
+Must be one of {‘left’, ‘inner’, ‘outer’}.</p></li>
+<li><p><strong>left_on</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>]</em>) – Key(s) from <code class="code docutils literal notranslate"><span class="pre">self</span></code> to perform <code class="code docutils literal notranslate"><span class="pre">join</span></code> on.
+If more than one key is given, it must be
+the same length as <code class="code docutils literal notranslate"><span class="pre">right_on</span></code>.</p></li>
+<li><p><strong>right_on</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>]</em>) – Key(s) from <code class="code docutils literal notranslate"><span class="pre">other</span></code> to perform <code class="code docutils literal notranslate"><span class="pre">join</span></code> on.
+If more than one key is given, it must be
+the same length as <code class="code docutils literal notranslate"><span class="pre">left_on</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.max">
