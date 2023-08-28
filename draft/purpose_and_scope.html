@@ -660,35 +660,60 @@ this specification, consult the Python
 </section>
 <section id="how-to-adopt-this-api">
 <span id="id1"></span><h2 id="how-to-adopt-this-api">How to adopt this API<a class="headerlink" href="#how-to-adopt-this-api" title="Permalink to this heading">¶</a></h2>
-<p>Most (all) existing dataframe libraries will find something in this API standard
-that is incompatible with a current implementation, and that they cannot
-change due to backwards compatibility concerns. Therefore we expect that each
-of those libraries will want to offer a standard-compliant API in a <em>new
-namespace</em>. The question then becomes: how does a user access this namespace?</p>
-<p>The simplest method is: document the import to use to directly access the
-namespace (e.g. <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">package_name.dataframe_api</span></code>). This has two issues
-though:</p>
-<ol class="arabic simple">
-<li><p>Dataframe-consuming libraries that want to support multiple dataframe
-libraries then have to explicitly import each library.</p></li>
-<li><p>It is difficult to <em>version</em> the dataframe API standard implementation (see
-<a class="reference internal" href="future_API_evolution.html#api-versioning"><span class="std std-ref">Versioning</span></a>).</p></li>
-</ol>
-<p>To address both issues, a uniform way must be provided by a conforming
-implementation to access the API namespace, namely a <a class="reference internal" href="API_specification/dataframe_object.html#dataframe_api.DataFrame.__dataframe_namespace__" title="dataframe_api.DataFrame.__dataframe_namespace__"><span class="xref myst py py-meth">method on the dataframe
-object</span></a>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xp</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">__dataframe_namespace__</span><span class="p">()</span>
+<p>Libraries which implement the Standard
+are required to provide the following methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__dataframe_consortium_standard__</span></code>: used for converting a non-compliant dataframe to a compliant one;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__column_consortium_standard__</span></code>: used for converting a non-compliant column to a compliant one.</p></li>
+</ul>
+<p>For example, pandas has <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame.__dataframe_consortium_standard__</span></code> and
+<code class="docutils literal notranslate"><span class="pre">pandas.Series.__column_consortium_standard__</span></code> as of version 2.1.0.</p>
+<p>The signatures should be (note: docstring is optional):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__dataframe_consortium_standard__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">api_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+
+<span class="k">def</span> <span class="nf">__column_consortium_standard__</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">api_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 </pre></div>
 </div>
-<p>The method must take one keyword, <code class="docutils literal notranslate"><span class="pre">api_version=None</span></code>, to make it possible to
-request a specific API version:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xp</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">__dataframe_namespace__</span><span class="p">(</span><span class="n">api_version</span><span class="o">=</span><span class="s1">'2023.04'</span><span class="p">)</span>
+<p><code class="docutils literal notranslate"><span class="pre">api_version</span></code> is
+a string representing the version of the dataframe API specification
+to be returned, in <code class="docutils literal notranslate"><span class="pre">'YYYY.MM'</span></code> form, for example, <code class="docutils literal notranslate"><span class="pre">'2023.04'</span></code>.
+If it is <code class="docutils literal notranslate"><span class="pre">None</span></code>, it should return the namespace corresponding to
+latest version of the dataframe API specification.  If the given
+version is invalid or not implemented for the given module, an
+error should be raised. Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
+
+
+<span class="n">df_pandas</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">'iris.parquet'</span><span class="p">)</span>
+<span class="n">df_polars</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">scan_parquet</span><span class="p">(</span><span class="s1">'iris.parquet'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">my_dataframe_agnostic_function</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">__dataframe_consortium_standard__</span><span class="p">(</span><span class="n">api_version</span><span class="o">=</span><span class="s1">'2023.08-beta'</span><span class="p">)</span>
+
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="s1">'species'</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">'setosa'</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_rows_by_mask</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_names</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">column_name</span> <span class="o">==</span> <span class="s1">'species'</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">new_column</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
+        <span class="n">new_column</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_column</span> <span class="o">-</span> <span class="n">new_column</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">new_column</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">get_column_names</span><span class="p">()),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">column_name</span><span class="si">}</span><span class="s1">_scaled'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">new_column</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">dataframe</span>
+
+<span class="c1">#  Then, either of the following will work as expected:</span>
+<span class="n">my_dataframe_agnostic_function</span><span class="p">(</span><span class="n">df_pandas</span><span class="p">)</span>
+<span class="n">my_dataframe_agnostic_function</span><span class="p">(</span><span class="n">df_polars</span><span class="p">)</span>
+<span class="n">my_dataframe_agnostic_function</span><span class="p">(</span><span class="n">df_any_other_library_with_a_standard_compliant_namespace</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">xp</span></code> namespace must contain all functionality specified in
-<a class="reference internal" href="API_specification/index.html#api-specification"><span class="std std-ref">API specification</span></a>. The namespace may contain other functionality; however,
-including additional functionality is not recommended as doing so may hinder
-portability and inter-operation of dataframe libraries within user code.</p>
+<p>Example:</p>
 <section id="checking-a-dataframe-object-for-compliance">
 <h3 id="checking-a-dataframe-object-for-compliance">Checking a dataframe object for Compliance<a class="headerlink" href="#checking-a-dataframe-object-for-compliance" title="Permalink to this heading">¶</a></h3>
 <p>Dataframe-consuming libraries are likely to want a mechanism for determining
@@ -755,31 +780,6 @@ described in this specification.</p>
 completed such an implementation may, and are encouraged to, provide details on
 the level of (non-)conformance. For details on how to do this, see
 <a class="reference internal" href="verification_test_suite.html"><span class="std std-doc">Verification - measuring conformance</span></a>.</p>
-<p>Libraries which implement the Standard in a separate namespace
-are required to provide the following methods:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">__dataframe_consortium_standard__</span></code>: used for converting a non-compliant dataframe to a compliant one;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">__column_consortium_standard__</span></code>: used for converting a non-compliant column to a compliant one.</p></li>
-</ul>
-<p>For example, pandas would have <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame.__dataframe_consortium_standard__</span></code> and
-<code class="docutils literal notranslate"><span class="pre">pandas.Series.__column_consortium_standard__</span></code>.</p>
-<p>The signatures should be (note: docstring is optional):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__dataframe_consortium_standard__</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">api_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-
-<span class="k">def</span> <span class="nf">__column_consortium_standard__</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">api_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">api_version</span></code> is
-a string representing the version of the dataframe API specification
-to be returned, in <code class="docutils literal notranslate"><span class="pre">'YYYY.MM'</span></code> form, for example, <code class="docutils literal notranslate"><span class="pre">'2023.04'</span></code>.
-If it is <code class="docutils literal notranslate"><span class="pre">None</span></code>, it should return the namespace corresponding to
-latest version of the dataframe API specification.  If the given
-version is invalid or not implemented for the given module, an
-error should be raised. Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </section>
 </section>
 
