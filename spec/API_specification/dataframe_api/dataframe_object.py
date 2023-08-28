@@ -180,7 +180,7 @@ class DataFrame:
         """
         ...
 
-    def update_columns(self, columns: Column[Any] | Sequence[Column[Any]]) -> DataFrame:
+    def update_columns(self, columns: Column[Any] | Sequence[Column[Any]], /) -> DataFrame:
         """
         Update values in existing column(s) from Dataframe.
 
@@ -196,8 +196,8 @@ class DataFrame:
         Parameters
         ----------
         columns : Column | Sequence[Column]
-            Column(s) to update. If updating multiple columns, they must all be
-            different.
+            Column(s) to update. If updating multiple columns, they must all have
+            different names.
 
         Returns
         -------
