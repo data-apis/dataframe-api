@@ -180,23 +180,31 @@ class DataFrame:
         """
         ...
 
-    def insert_column(self, loc: int, column: Column[Any]) -> DataFrame:
+    def insert_column(self, column: Column[Any]) -> DataFrame:
         """
-        Insert column into DataFrame at specified location.
+        Insert column into DataFrame at rightmost location.
 
         The column's name will be used as the label in the resulting dataframe.
         To insert the column with a different name, combine with `Column.rename`,
         e.g.:
 
-        .. code-block :: python
+        .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
-            df = df.insert(0, new_column.rename('a_plus_1'))
+            df = df.insert_column(new_column.rename('a_plus_1'))
+        
+        If you need to insert the column at a different location, combine with
+        :meth:`get_columns_by_name`, e.g.:
+
+        .. code-block:: python
+
+            new_column = df.get_column_by_name('a') + 1
+            new_columns_names = ['a_plus_1'] + df.get_column_names()
+            df = df.insert_column(new_column.rename('a_plus_1'))
+            df = df.get_columns_by_name(new_column_names)
 
         Parameters
         ----------
-        loc : int
-            Insertion index. Must verify 0 <= loc <= len(columns).
         column : Column
         """
         ...
@@ -235,13 +243,13 @@ class DataFrame:
         """
         ...
 
-    def get_column_names(self) -> Sequence[str]:
+    def get_column_names(self) -> list[str]:
         """
         Get column names.
 
         Returns
         -------
-        Sequence[str]
+        list[str]
         """
         ...
     
