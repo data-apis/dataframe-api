@@ -209,6 +209,31 @@ class DataFrame:
         """
         ...
 
+    def update_columns(self, columns: Column[Any] | Sequence[Column[Any]], /) -> DataFrame:
+        """
+        Update values in existing column(s) from Dataframe.
+
+        The column's name will be used to tell which column to update.
+        To update a column with a different name, combine with :meth:`Column.rename`,
+        e.g.:
+
+        .. code-block:: python
+
+            new_column = df.get_column_by_name('a') + 1
+            df = df.update_column(new_column.rename('b'))
+
+        Parameters
+        ----------
+        columns : Column | Sequence[Column]
+            Column(s) to update. If updating multiple columns, they must all have
+            different names.
+
+        Returns
+        -------
+        DataFrame
+        """
+        ...
+
     def drop_column(self, label: str) -> DataFrame:
         """
         Drop the specified column.
