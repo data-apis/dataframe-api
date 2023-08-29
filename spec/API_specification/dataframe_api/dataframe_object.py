@@ -65,13 +65,13 @@ class DataFrame:
         Return number of rows and number of columns.
         """
 
-    def groupby(self, keys: Sequence[str], /) -> GroupBy:
+    def groupby(self, keys: str | list[str], /) -> GroupBy:
         """
         Group the DataFrame by the given columns.
 
         Parameters
         ----------
-        keys : Sequence[str]
+        keys : str | list[str]
 
         Returns
         -------
@@ -180,23 +180,31 @@ class DataFrame:
         """
         ...
 
-    def insert_column(self, loc: int, column: Column[Any]) -> DataFrame:
+    def insert_column(self, column: Column[Any]) -> DataFrame:
         """
-        Insert column into DataFrame at specified location.
+        Insert column into DataFrame at rightmost location.
 
         The column's name will be used as the label in the resulting dataframe.
         To insert the column with a different name, combine with `Column.rename`,
         e.g.:
 
-        .. code-block :: python
+        .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
-            df = df.insert(0, new_column.rename('a_plus_1'))
+            df = df.insert_column(new_column.rename('a_plus_1'))
+        
+        If you need to insert the column at a different location, combine with
+        :meth:`get_columns_by_name`, e.g.:
+
+        .. code-block:: python
+
+            new_column = df.get_column_by_name('a') + 1
+            new_columns_names = ['a_plus_1'] + df.get_column_names()
+            df = df.insert_column(new_column.rename('a_plus_1'))
+            df = df.get_columns_by_name(new_column_names)
 
         Parameters
         ----------
-        loc : int
-            Insertion index. Must verify 0 <= loc <= len(columns).
         column : Column
         """
         ...
@@ -235,19 +243,60 @@ class DataFrame:
         """
         ...
 
-    def get_column_names(self) -> Sequence[str]:
+    def get_column_names(self) -> list[str]:
         """
         Get column names.
 
         Returns
         -------
-        Sequence[str]
+        list[str]
+        """
+        ...
+    
+    def sort(
+        self,
+        keys: str | list[str] | None = None,
+        *,
+        ascending: Sequence[bool] | bool = True,
+        nulls_position: Literal['first', 'last'] = 'last',
+    ) -> DataFrame:
+        """
+        Sort dataframe according to given columns.
+
+        If you only need the indices which would sort the dataframe, use
+        :meth:`sorted_indices`.
+
+        Parameters
+        ----------
+        keys : str | list[str], optional
+            Names of columns to sort by.
+            If `None`, sort by all columns.
+        ascending : Sequence[bool] or bool
+            If `True`, sort by all keys in ascending order.
+            If `False`, sort by all keys in descending order.
+            If a sequence, it must be the same length as `keys`,
+            and determines the direction with which to use each
+            key to sort by.
+        nulls_position : ``{'first', 'last'}``
+            Whether null values should be placed at the beginning
+            or at the end of the result.
+            Note that the position of NaNs is unspecified and may
+            vary based on the implementation.
+
+        Returns
+        -------
+        DataFrame
+    
+        Raises
+        ------
+        ValueError
+            If `keys` and `ascending` are sequences of different lengths.
         """
         ...
 
     def sorted_indices(
         self,
-        keys: Sequence[str] | None = None,
+        keys: str | list[str] | None = None,
         *,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
@@ -255,13 +304,11 @@ class DataFrame:
         """
         Return row numbers which would sort according to given columns.
 
-        If you need to sort the DataFrame, you can simply do::
-
-            df.get_rows(df.sorted_indices(keys))
+        If you need to sort the DataFrame, use :meth:`sort`.
 
         Parameters
         ----------
-        keys : Sequence[str] | None
+        keys : str | list[str], optional
             Names of columns to sort by.
             If `None`, sort by all columns.
         ascending : Sequence[bool] or bool
@@ -754,9 +801,15 @@ class DataFrame:
         """
         ...
 
-    def unique_indices(self, keys: Sequence[str], *, skip_nulls: bool = True) -> Column[int]:
+    def unique_indices(self, keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Column[int]:
         """
         Return indices corresponding to unique values across selected columns.
+
+        Parameters
+        ----------
+        keys : str | list[str], optional
+            Column names to consider when finding unique values.
+            If `None`, all columns are considered.
 
         Returns
         -------
@@ -857,4 +910,36 @@ class DataFrame:
         may choose to return a numpy array (for numpy prior to 2.0), with the
         understanding that consuming libraries would then use the
         ``array-api-compat`` package to convert it to a Standard-compliant array.
+        """
+    
+    def join(
+        self,
+        other: DataFrame,
+        *,
+        how: Literal['left', 'inner', 'outer'],
+        left_on: str | list[str],
+        right_on: str | list[str],
+    ) -> DataFrame:
+        """
+        Join with other dataframe.
+
+        Parameters
+        ----------
+        other : DataFrame
+            Dataframe to join with.
+        how : str
+            Kind of join to perform.
+            Must be one of {'left', 'inner', 'outer'}.
+        left_on : str | list[str]
+            Key(s) from `self` to perform `join` on.
+            If more than one key is given, it must be
+            the same length as `right_on`.
+        right_on : str | list[str]
+            Key(s) from `other` to perform `join` on.
+            If more than one key is given, it must be
+            the same length as `left_on`.
+        
+        Returns
+        -------
+        DataFrame
         """

@@ -141,6 +141,35 @@ class Column(Generic[DType]):
         """
         ...
 
+    def sort(
+        self,
+        *,
+        ascending: bool = True,
+        nulls_position: Literal['first', 'last'] = 'last',
+    ) -> Column[DType]:
+        """
+        Sort column.
+
+        If you need the indices which would sort the column,
+        use :meth:`sorted_indices`.
+
+        Parameters
+        ----------
+        ascending : bool
+            If `True`, sort in ascending order.
+            If `False`, sort in descending order.
+        nulls_position : ``{'first', 'last'}``
+            Whether null values should be placed at the beginning
+            or at the end of the result.
+            Note that the position of NaNs is unspecified and may
+            vary based on the implementation.
+
+        Returns
+        -------
+        Column
+        """
+        ...
+
     def sorted_indices(
         self,
         *,
@@ -150,9 +179,7 @@ class Column(Generic[DType]):
         """
         Return row numbers which would sort column.
 
-        If you need to sort the Column, you can simply do::
-
-            col.get_rows(col.sorted_indices())
+        If you need to sort the Column, use :meth:`sort`.
 
         Parameters
         ----------
