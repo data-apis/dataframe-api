@@ -462,9 +462,17 @@
 <dd><p>Construct DataFrame from map of column names to Columns.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="../column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>]</em>) – Column must be of the corresponding type of the DataFrame.
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="../column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>]</em>) – Column must be of the corresponding type of the DataFrame.
 For example, it is only supported to build a <code class="docutils literal notranslate"><span class="pre">LibraryXDataFrame</span></code> using
-<code class="docutils literal notranslate"><span class="pre">LibraryXColumn</span></code> instances.</p>
+<code class="docutils literal notranslate"><span class="pre">LibraryXColumn</span></code> instances.</p></li>
+<li><p><strong>api_version</strong> (<em>str</em><em> | </em><em>None</em>) – A string representing the version of the dataframe API specification
+in <code class="docutils literal notranslate"><span class="pre">'YYYY.MM'</span></code> form, for example, <code class="docutils literal notranslate"><span class="pre">'2023.04'</span></code>.
+If it is <code class="docutils literal notranslate"><span class="pre">None</span></code>, it should return an object corresponding to
+latest version of the dataframe API specification.  If the given
+version is invalid or not implemented for the given module, an
+error should be raised. Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>DataFrame</strong></p>
