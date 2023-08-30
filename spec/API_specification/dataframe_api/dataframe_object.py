@@ -109,7 +109,7 @@ class DataFrame:
         """
         ...
 
-    def get_columns_by_name(self, names: Sequence[str], /) -> DataFrame:
+    def select(self, names: Sequence[str], /) -> DataFrame:
         """
         Select multiple columns by name.
 
@@ -194,14 +194,14 @@ class DataFrame:
             df = df.insert_column(new_column.rename('a_plus_1'))
         
         If you need to insert the column at a different location, combine with
-        :meth:`get_columns_by_name`, e.g.:
+        :meth:`select`, e.g.:
 
         .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
             new_columns_names = ['a_plus_1'] + df.get_column_names()
             df = df.insert_column(new_column.rename('a_plus_1'))
-            df = df.get_columns_by_name(new_column_names)
+            df = df.select(new_column_names)
 
         Parameters
         ----------
