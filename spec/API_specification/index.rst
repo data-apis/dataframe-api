@@ -16,6 +16,11 @@ of objects and functions in the top-level namespace. The latter are:
    __dataframe_api_version__
    is_null
    null
+   col
+   sorted_indices
+   unique_indices
+   any_rowwise
+   all_rowwise
    Int64
    Int32
    Int16
@@ -28,17 +33,14 @@ of objects and functions in the top-level namespace. The latter are:
    Float32
    Bool
    is_dtype
-   column_from_sequence
-   column_from_1d_array
-   dataframe_from_dict
    dataframe_from_2d_array
 
-The ``DataFrame``, ``Column`` and ``GroupBy`` objects have the following
+The ``DataFrame``, ``Expression`` and ``GroupBy`` objects have the following
 methods and attributes:
 
 .. toctree::
    :maxdepth: 3
 
    dataframe_object
-   column_object
+   expression_object
    groupby_object

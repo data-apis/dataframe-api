@@ -3,9 +3,9 @@ Function stubs and API documentation for the DataFrame API standard.
 """
 from __future__ import annotations
 
-from typing import Mapping, Sequence, Any
+from typing import Mapping, Sequence, Any, Literal
 
-from .column_object import *
+from .expression_object import *
 from .dataframe_object import DataFrame
 from .groupby_object import *
 from ._types import DType
@@ -13,11 +13,10 @@ from ._types import DType
 __all__ = [
     "__dataframe_api_version__",
     "DataFrame",
-    "Column",
-    "column_from_sequence",
-    "column_from_1d_array",
+    "col",
     "concat",
-    "dataframe_from_dict",
+    "sorted_indices",
+    "unique_indices",
     "dataframe_from_2d_array",
     "is_null",
     "null",
@@ -43,6 +42,21 @@ the conforming implementation adheres. Set to a concrete value for a stable
 implementation of the dataframe API standard.
 """
 
+def col(name: str) -> Expression:
+    """
+    Instantiate an Expression which selects given column by name.
+
+    For example, to select column 'species' and then use it to filter
+    a DataFrame, you could do:
+
+    .. code-block::python
+
+        df: DataFrame
+        namespace = df.__dataframe_namespace__()
+        df.get_rows_by_mask(pl.col('species') == 'setosa')
+    """
+    ...
+
 def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     Concatenate DataFrames vertically.
@@ -63,103 +77,115 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '', api_version: str | None = None) -> Column[Any]:
+def any_rowwise(keys: list[str] | None = None, *, skip_nulls: bool = True) -> Expression:
     """
-    Construct Column from sequence of elements.
+    Reduction returns an Expression.
+
+    Differs from ``DataFrame.any`` and that the reduction happens
+    for each row, rather than for each column.
 
     Parameters
     ----------
-    sequence : Sequence[object]
-        Sequence of elements. Each element must be of the specified
-        ``dtype``, the corresponding Python builtin scalar type, or
-        coercible to that Python scalar type.
-    name : str, optional
-        Name of column.
-    dtype : DType
-        Dtype of result. Must be specified.
-    api_version: str | None
-        A string representing the version of the dataframe API specification
-        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return an object corresponding to
-        latest version of the dataframe API specification.  If the given
-        version is invalid or not implemented for the given module, an
-        error should be raised. Default: ``None``.
+    keys : list[str]
+        Column names to consider. If `None`, all columns are considered.
 
-    Returns
-    -------
-    Column
-    """
-    ...
-
-def dataframe_from_dict(data: Mapping[str, Column[Any]], *, api_version: str | None = None) -> DataFrame:
-    """
-    Construct DataFrame from map of column names to Columns.
-
-    Parameters
-    ----------
-    data : Mapping[str, Column]
-        Column must be of the corresponding type of the DataFrame.
-        For example, it is only supported to build a ``LibraryXDataFrame`` using
-        ``LibraryXColumn`` instances.
-    api_version: str | None
-        A string representing the version of the dataframe API specification
-        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return an object corresponding to
-        latest version of the dataframe API specification.  If the given
-        version is invalid or not implemented for the given module, an
-        error should be raised. Default: ``None``.
-
-    Returns
-    -------
-    DataFrame
-    
     Raises
     ------
     ValueError
-        If any of the columns already has a name, and the corresponding key
-        in `data` doesn't match.
-
+        If any of the DataFrame's columns is not boolean.
     """
     ...
 
-
-def column_from_1d_array(array: Any, *, dtype: Any, name: str = '', api_version: str | None = None) -> Column[Any]:
+def all_rowwise(keys: list[str] | None = None, *, skip_nulls: bool = True) -> Expression:
     """
-    Construct Column from 1D array.
+    Reduction returns a Column.
 
-    See `dataframe_from_2d_array` for related 2D function.
-
-    Only Array-API-compliant 1D arrays are supported.
-    Cross-kind casting is undefined and may vary across implementations.
-    Downcasting is disallowed.
+    Differs from ``DataFrame.all`` and that the reduction happens
+    for each row, rather than for each column.
 
     Parameters
     ----------
-    array : array
-        array-API compliant 1D array
-    name : str, optional
-        Name to give columns.
-    dtype : DType
-        Dtype of column.
-    api_version: str | None
-        A string representing the version of the dataframe API specification
-        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return an object corresponding to
-        latest version of the dataframe API specification.  If the given
-        version is invalid or not implemented for the given module, an
-        error should be raised. Default: ``None``.
+    keys : list[str]
+        Column names to consider. If `None`, all columns are considered.
 
-    Returns
-    -------
-    Column
+    Raises
+    ------
+    ValueError
+        If any of the DataFrame's columns is not boolean.
     """
     ...
 
-def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any], api_version: str | None = None) -> DataFrame:
+def sorted_indices(
+    keys: str | list[str] | None = None,
+    *,
+    ascending: Sequence[bool] | bool = True,
+    nulls_position: Literal['first', 'last'] = 'last',
+) -> Expression:
+    """
+    Return row numbers which would sort according to given columns.
+
+    If you need to sort the DataFrame, use :meth:`DataFrame.sort`.
+
+    Parameters
+    ----------
+    keys : str | list[str], optional
+        Names of columns to sort by.
+        If `None`, sort by all columns.
+    ascending : Sequence[bool] or bool
+        If `True`, sort by all keys in ascending order.
+        If `False`, sort by all keys in descending order.
+        If a sequence, it must be the same length as `keys`,
+        and determines the direction with which to use each
+        key to sort by.
+    nulls_position : ``{'first', 'last'}``
+        Whether null values should be placed at the beginning
+        or at the end of the result.
+        Note that the position of NaNs is unspecified and may
+        vary based on the implementation.
+
+    Returns
+    -------
+    Expression
+
+    Raises
+    ------
+    ValueError
+        If `keys` and `ascending` are sequences of different lengths.
+    """
+    ...
+
+
+def unique_indices(keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Expression:
+    """
+    Return indices corresponding to unique values across selected columns.
+
+    Parameters
+    ----------
+    keys : str | list[str], optional
+        Column names to consider when finding unique values.
+        If `None`, all columns are considered.
+
+    Returns
+    -------
+    Expression
+        Indices corresponding to unique values.
+
+    Notes
+    -----
+    There are no ordering guarantees. In particular, if there are multiple
+    indices corresponding to the same unique value(s), there is no guarantee
+    about which one will appear in the result.
+    If the original column(s) contain multiple `'NaN'` values, then
+    only a single index corresponding to those values will be returned.
+    Likewise for null values (if ``skip_nulls=False``).
+    To get the unique values, you can do ``df.get_rows(df.unique_indices(keys))``.
+    """
+    ...
+
+
+def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any]) -> DataFrame:
     """
     Construct DataFrame from 2D array.
-
-    See `column_from_1d_array` for related 1D function.
 
     Only Array-API-compliant 2D arrays are supported.
     Cross-kind casting is undefined and may vary across implementations.

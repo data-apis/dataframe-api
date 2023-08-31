@@ -9,85 +9,76 @@ if TYPE_CHECKING:
     from ._types import NullType, Scalar
 
 
-__all__ = ['Column']
+__all__ = ['Expression']
 
 
-class Column(Generic[DType]):
+class Expression:
     """
-    Column object
+    Expression object, which maps a DataFrame to a column.
 
-    Note that this column object is not meant to be instantiated directly by
-    users of the library implementing the dataframe API standard. Rather, use
-    constructor functions or an already-created dataframe object retrieved via
+    Not meant to be used directly - instead, use :func:`dataframe_api.col`.
 
+    An expression is a function which maps a DataFrame to a column, and can be
+    used within the context of:
+
+    - :meth:`DataFrame.select`
+    - :meth:`DataFrame.insert_column`
+    - :meth:`DataFrame.update_columns`
+    - :meth:`DataFrame.get_rows_by_mask`
+
+    Example:
+
+    .. code-block::python
+
+        df: DataFrame
+        namespace = df.__dataframe_namespace__()
+        col = namespace.col
+        df = df.select(col(['a', 'b']))
+    
+    resolves to (pandas syntax):
+
+    .. code-block::python
+
+        df: pd.DataFrame
+        df = df.loc[:, ['a', 'b']]
+    
+    Multiple column calls can be chained together. For example:
+
+    .. code-block::python
+
+        df: DataFrame
+        namespace = df.__dataframe_namespace__()
+        col = namespace.col
+        new_column = (
+            (col('petal_width') - col('petal_width').mean())
+            .rename('petal_width_centered')
+        )
+        df = df.insert_column(new_column)
+    
+    resolves to (pandas syntax)
+
+    .. code-block::python
+
+        df: pd.DataFrame
+        new_column = (
+            (df['petal_width'] - df['petal_width'].mean())
+            .rename('petal_width_centered')
+        )
+        df[new_column.name] = new_column
     """
 
-    def __column_namespace__(self) -> Any:
-        """
-        Returns an object that has all the Dataframe Standard API functions on it.
-
-        Returns
-        -------
-        namespace: Any
-            An object representing the dataframe API namespace. It should have
-            every top-level function defined in the specification as an
-            attribute. It may contain other public names as well, but it is
-            recommended to only include those names that are part of the
-            specification.
-
-        """
-    
-    @property
-    def column(self) -> Any:
-        """
-        Return underlying (not-necessarily-Standard-compliant) column.
-
-        If a library only implements the Standard, then this can return `self`.
-        """
-        ...
-    
-    @property
-    def name(self) -> str:
-        """Return name of column."""
-
-    def __len__(self) -> int:
+    def __len__(self) -> Expression:
         """
         Return the number of rows.
         """
 
-    def __iter__(self) -> NoReturn:
-        """
-        Iterate over elements.
-
-        This is intentionally "poisoned" to discourage inefficient code patterns.
-
-        Raises
-        ------
-        NotImplementedError
-        """
-        raise NotImplementedError("'__iter__' is intentionally not implemented.")
-
     @property
-    def dtype(self) -> Any:
-        """
-        Return data type of column.
-        """
-
-    def get_rows(self: Column[DType], indices: Column[Any]) -> Column[DType]:
-        """
-        Select a subset of rows, similar to `ndarray.take`.
-
-        Parameters
-        ----------
-        indices : Column[int]
-            Positions of rows to select.
-        """
-        ...
-
+    def name(self) -> str:
+        """Return output name of expression."""
 
     def slice_rows(
-        self: Column[DType], start: int | None, stop: int | None, step: int | None
-    ) -> Column[DType]:
+        self: Expression, start: int | None, stop: int | None, step: int | None
+    ) -> Expression:
         """
         Select a subset of rows corresponding to a slice.
 
@@ -99,32 +90,25 @@ class Column(Generic[DType]):
 
         Returns
         -------
-        Column
+        Expression
         """
         ...
 
-
-    def get_rows_by_mask(self: Column[DType], mask: Column[Bool]) -> Column[DType]:
+    def get_rows_by_mask(self, mask: Expression) -> Expression:
         """
         Select a subset of rows corresponding to a mask.
 
         Parameters
         ----------
-        mask : Column[bool]
+        mask : Expression
 
         Returns
         -------
-        Column
-
-        Notes
-        -----
-        Some participants preferred a weaker type Arraylike[bool] for mask,
-        where 'Arraylike' denotes an object adhering to the Array API standard.
+        Expression
         """
         ...
 
-
-    def get_value(self, row_number: int) -> Scalar:
+    def get_value(self, row_number: int) -> Expression:
         """
         Select the value at a row number, similar to `ndarray.__getitem__(<int>)`.
 
@@ -135,9 +119,7 @@ class Column(Generic[DType]):
         
         Returns
         -------
-        Scalar
-            Depends on the dtype of the Column, and may vary
-            across implementations.
+        Expression
         """
         ...
 
@@ -146,12 +128,12 @@ class Column(Generic[DType]):
         *,
         ascending: bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column[DType]:
+    ) -> Expression:
         """
-        Sort column.
+        Sort expression.
 
-        If you need the indices which would sort the column,
-        use :meth:`sorted_indices`.
+        If you need the indices which would sort the expression,
+        use :func:`sorted_indices`.
 
         Parameters
         ----------
@@ -166,7 +148,7 @@ class Column(Generic[DType]):
 
         Returns
         -------
-        Column
+        Expression
         """
         ...
 
@@ -175,11 +157,11 @@ class Column(Generic[DType]):
         *,
         ascending: bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column[Any]:
+    ) -> Expression:
         """
-        Return row numbers which would sort column.
+        Return row numbers which would sort expression.
 
-        If you need to sort the Column, use :meth:`sort`.
+        If you need to sort the expression, use :meth:`sort`.
 
         Parameters
         ----------
@@ -194,11 +176,11 @@ class Column(Generic[DType]):
 
         Returns
         -------
-        Column[int]
+        Expression
         """
         ...
 
-    def __eq__(self, other: Column[Any] | Scalar) -> Column[Bool]:  # type: ignore[override]
+    def __eq__(self, other: Expression | Scalar) -> Expression:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -206,17 +188,17 @@ class Column(Generic[DType]):
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __ne__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:  # type: ignore[override]
+    def __ne__(self: Expression, other: Expression | Scalar) -> Expression:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -224,94 +206,94 @@ class Column(Generic[DType]):
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __ge__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
+    def __ge__(self: Expression, other: Expression | Scalar) -> Expression:
         """
         Compare for "greater than or equal to" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __gt__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
+    def __gt__(self: Expression, other: Expression | Scalar) -> Expression:
         """
         Compare for "greater than" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __le__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
+    def __le__(self: Expression, other: Expression | Scalar) -> Expression:
         """
         Compare for "less than or equal to" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __lt__(self: Column[DType], other: Column[DType] | Scalar) -> Column[Bool]:
+    def __lt__(self: Expression, other: Expression | Scalar) -> Expression:
         """
         Compare for "less than" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __and__(self: Column[Bool], other: Column[Bool] | bool) -> Column[Bool]:
+    def __and__(self: Expression, other: Expression | bool) -> Expression:
         """
-        Apply logical 'and' to `other` Column (or scalar) and this Column.
+        Apply logical 'and' to `other` expression (or scalar) and this expression.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : Column[bool] or bool
-            If Column, must have same length.
+        other : Expression[bool] or bool
+            If expression, must have same length.
 
         Returns
         -------
-        Column
+        Expression
 
         Raises
         ------
@@ -319,20 +301,20 @@ class Column(Generic[DType]):
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self: Column[Bool], other: Column[Bool] | bool) -> Column[Bool]:
+    def __or__(self: Expression, other: Expression | bool) -> Expression:
         """
-        Apply logical 'or' to `other` Column (or scalar) and this column.
+        Apply logical 'or' to `other` expression (or scalar) and this expression.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : Column[bool] or Scalar
-            If Column, must have same length.
+        other : Expression[bool] or Scalar
+            If expression, must have same length.
 
         Returns
         -------
-        Column[bool]
+        Expression[bool]
 
         Raises
         ------
@@ -340,89 +322,89 @@ class Column(Generic[DType]):
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self: Column[Any], other: Column[Any] | Scalar) -> Column[Any]:
+    def __add__(self: Expression, other: Expression | Scalar) -> Expression:
         """
-        Add `other` column or scalar to this column.
+        Add `other` expression or scalar to this expression.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __sub__(self: Column[Any], other: Column[Any] | Scalar) -> Column[Any]:
+    def __sub__(self: Expression, other: Expression | Scalar) -> Expression:
         """
-        Subtract `other` column or scalar from this column.
+        Subtract `other` expression or scalar from this expression.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __mul__(self, other: Column[Any] | Scalar) -> Column[Any]:
+    def __mul__(self, other: Expression | Scalar) -> Expression:
         """
-        Multiply `other` column or scalar with this column.
+        Multiply `other` expression or scalar with this expression.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __truediv__(self, other: Column[Any] | Scalar) -> Column[Any]:
+    def __truediv__(self, other: Expression | Scalar) -> Expression:
         """
-        Divide this column by `other` column or scalar. True division, returns floats.
+        Divide this expression by `other` expression or scalar. True division, returns floats.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __floordiv__(self, other: Column[Any] | Scalar) -> Column[Any]:
+    def __floordiv__(self, other: Expression | Scalar) -> Expression:
         """
-        Floor-divide `other` column or scalar to this column.
+        Floor-divide `other` expression or scalar to this expression.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __pow__(self, other: Column[Any] | Scalar) -> Column[Any]:
+    def __pow__(self, other: Expression | Scalar) -> Expression:
         """
-        Raise this column to the power of `other`.
+        Raise this expression to the power of `other`.
 
         Integer dtype to the power of non-negative integer dtype is integer dtype.
         Integer dtype to the power of float dtype is float dtype.
@@ -430,104 +412,104 @@ class Column(Generic[DType]):
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __mod__(self, other: Column[Any] | Scalar) -> Column[Any]:
+    def __mod__(self, other: Expression | Scalar) -> Expression:
         """
-        Returns modulus of this column by `other` (`%` operator).
+        Returns modulus of this expression by `other` (`%` operator).
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        Expression
         """
 
-    def __divmod__(self, other: Column[Any] | Scalar) -> tuple[Column[Any], Column[Any]]:
+    def __divmod__(self, other: Expression | Scalar) -> tuple[Expression, Expression]:
         """
         Return quotient and remainder of integer division. See `divmod` builtin function.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If Column, must have same length.
+        other : Expression or Scalar
+            If expression, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        tuple[Expression, Expression]
         """
 
-    def __invert__(self: Column[Bool]) -> Column[Bool]:
+    def __invert__(self: Expression) -> Expression:
         """
         Invert truthiness of (boolean) elements.
 
         Raises
         ------
         ValueError
-            If any of the Column's columns is not boolean.
+            If any of the expression's expressions is not boolean.
         """
 
-    def any(self: Column[Bool], *, skip_nulls: bool = True) -> bool | NullType:
+    def any(self: Expression, *, skip_nulls: bool = True) -> Expression:
         """
         Reduction returns a bool.
 
         Raises
         ------
         ValueError
-            If column is not boolean.
+            If expression is not boolean.
         """
 
-    def all(self: Column[Bool], *, skip_nulls: bool = True) -> bool | NullType:
+    def all(self: Expression, *, skip_nulls: bool = True) -> Expression:
         """
         Reduction returns a bool.
 
         Raises
         ------
         ValueError
-            If column is not boolean.
+            If expression is not boolean.
         """
 
-    def min(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def min(self, *, skip_nulls: bool = True) -> Expression:
         """
         Reduction returns a scalar. Any data type that supports comparisons
-        must be supported. The returned value has the same dtype as the column.
+        must be supported. The returned value has the same dtype as the expression.
         """
 
-    def max(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def max(self, *, skip_nulls: bool = True) -> Expression:
         """
         Reduction returns a scalar. Any data type that supports comparisons
-        must be supported. The returned value has the same dtype as the column.
+        must be supported. The returned value has the same dtype as the expression.
         """
 
-    def sum(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def sum(self, *, skip_nulls: bool = True) -> Expression:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
-        column.
+        expression.
         """
 
-    def prod(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def prod(self, *, skip_nulls: bool = True) -> Expression:
         """
         Reduction returns a scalar. Must be supported for numerical data types.
-        The returned value has the same dtype as the column.
+        The returned value has the same dtype as the expression.
         """
 
-    def median(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def median(self, *, skip_nulls: bool = True) -> Expression:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -535,7 +517,7 @@ class Column(Generic[DType]):
         dtypes.
         """
 
-    def mean(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def mean(self, *, skip_nulls: bool = True) -> Expression:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -543,7 +525,7 @@ class Column(Generic[DType]):
         dtypes.
         """
 
-    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Expression:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -559,17 +541,17 @@ class Column(Generic[DType]):
             where ``N`` corresponds to the total number of elements over which
             the standard deviation is computed. When computing the standard
             deviation of a population, setting this parameter to ``0`` is the
-            standard choice (i.e., the provided column contains data
+            standard choice (i.e., the provided expression contains data
             constituting an entire population). When computing the corrected
             sample standard deviation, setting this parameter to ``1`` is the
-            standard choice (i.e., the provided column contains data sampled
+            standard choice (i.e., the provided expression contains data sampled
             from a larger population; this is commonly referred to as Bessel's
             correction). Fractional (float) values are allowed. Default: ``1``.
         skip_nulls
             Whether to skip null values.
         """
 
-    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Expression:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -581,44 +563,44 @@ class Column(Generic[DType]):
         correction
             Correction to apply to the result. For example, ``0`` for sample
             standard deviation and ``1`` for population standard deviation.
-            See `Column.std` for a more detailed description.
+            See `expression.std` for a more detailed description.
         skip_nulls
             Whether to skip null values.
         """
 
-    def cumulative_max(self: Column[DType]) -> Column[DType]:
+    def cumulative_max(self: Expression) -> Expression:
         """
-        Reduction returns a Column. Any data type that supports comparisons
-        must be supported. The returned value has the same dtype as the column.
-        """
-
-    def cumulative_min(self: Column[DType]) -> Column[DType]:
-        """
-        Reduction returns a Column. Any data type that supports comparisons
-        must be supported. The returned value has the same dtype as the column.
+        Reduction returns a expression. Any data type that supports comparisons
+        must be supported. The returned value has the same dtype as the expression.
         """
 
-    def cumulative_sum(self: Column[DType]) -> Column[DType]:
+    def cumulative_min(self: Expression) -> Expression:
         """
-        Reduction returns a Column. Must be supported for numerical and
+        Reduction returns a expression. Any data type that supports comparisons
+        must be supported. The returned value has the same dtype as the expression.
+        """
+
+    def cumulative_sum(self: Expression) -> Expression:
+        """
+        Reduction returns a expression. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
-        column.
+        expression.
         """
 
-    def cumulative_prod(self: Column[DType]) -> Column[DType]:
+    def cumulative_prod(self: Expression) -> Expression:
         """
-        Reduction returns a Column. Must be supported for numerical and
+        Reduction returns a expression. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
-        column.
+        expression.
         """
 
-    def is_null(self) -> Column[Bool]:
+    def is_null(self) -> Expression:
         """
         Check for 'missing' or 'null' entries.
 
         Returns
         -------
-        Column
+        Expression
 
         See also
         --------
@@ -631,13 +613,13 @@ class Column(Generic[DType]):
         but note that the Standard makes no guarantees about them.
         """
 
-    def is_nan(self) -> Column[Bool]:
+    def is_nan(self) -> Expression:
         """
         Check for nan entries.
 
         Returns
         -------
-        Column
+        Expression
 
         See also
         --------
@@ -650,31 +632,31 @@ class Column(Generic[DType]):
         In particular, does not check for `np.timedelta64('NaT')`.
         """
 
-    def is_in(self: Column[DType], values: Column[DType]) -> Column[Bool]:
+    def is_in(self: Expression, values: Expression) -> Expression:
         """
         Indicate whether the value at each row matches any value in `values`.
 
         Parameters
         ----------
-        values : Column
+        values : Expression
             Contains values to compare against. May include ``float('nan')`` and
             ``null``, in which case ``'nan'`` and ``null`` will
             respectively return ``True`` even though ``float('nan') == float('nan')``
             isn't ``True``.
-            The dtype of ``values`` must match the current column's dtype.
+            The dtype of ``values`` must match the current expression's dtype.
 
         Returns
         -------
-        Column[bool]
+        Expression[bool]
         """
 
-    def unique_indices(self, *, skip_nulls: bool = True) -> Column[Any]:
+    def unique_indices(self, *, skip_nulls: bool = True) -> Expression:
         """
-        Return indices corresponding to unique values in Column.
+        Return indices corresponding to unique values in expression.
 
         Returns
         -------
-        Column[int]
+        Expression[int]
             Indices corresponding to unique values.
 
         Notes
@@ -682,87 +664,52 @@ class Column(Generic[DType]):
         There are no ordering guarantees. In particular, if there are multiple
         indices corresponding to the same unique value, there is no guarantee
         about which one will appear in the result.
-        If the original Column contains multiple `'NaN'` values, then
+        If the original expression contains multiple `'NaN'` values, then
         only a single index corresponding to those values will be returned.
         Likewise for null values (if ``skip_nulls=False``).
         To get the unique values, you can do ``col.get_rows(col.unique_indices())``.
         """
         ...
 
-    def fill_nan(self: Column[DType], value: float | NullType, /) -> Column[DType]:
+    def fill_nan(self: Expression, value: float | NullType, /) -> Expression:
         """
         Fill floating point ``nan`` values with the given fill value.
 
         Parameters
         ----------
         value : float or `null`
-            Value used to replace any ``nan`` in the column with. Must be
-            of the Python scalar type matching the dtype of the column (or
+            Value used to replace any ``nan`` in the expression with. Must be
+            of the Python scalar type matching the dtype of the expression (or
             be `null`).
 
         """
         ...
 
-    def fill_null(self: Column[DType], value: Scalar, /) -> Column[DType]:
+    def fill_null(self: Expression, value: Scalar, /) -> Expression:
         """
         Fill null values with the given fill value.
 
         Parameters
         ----------
         value : Scalar
-            Value used to replace any ``null`` values in the column with.
-            Must be of the Python scalar type matching the dtype of the column.
+            Value used to replace any ``null`` values in the expression with.
+            Must be of the Python scalar type matching the dtype of the expression.
 
         """
         ...
 
-    def to_array_object(self, dtype: Any) -> Any:
+    def rename(self, name: str) -> Expression:
         """
-        Convert to array-API-compliant object.
-
-        Parameters
-        ----------
-        dtype : DType
-            The dtype of the array-API-compliant object to return.
-            Must be one of:
-
-            - Bool()
-            - Int8()
-            - Int16()
-            - Int32()
-            - Int64()
-            - UInt8()
-            - UInt16()
-            - UInt32()
-            - UInt64()
-            - Float32()
-            - Float64()
-        
-        Returns
-        -------
-        Any
-            An array-API-compliant object.
-        
-        Notes
-        -----
-        While numpy arrays are not yet array-API-compliant, implementations
-        may choose to return a numpy array (for numpy prior to 2.0), with the
-        understanding that consuming libraries would then use the
-        ``array-api-compat`` package to convert it to a Standard-compliant array.
-        """
-
-    def rename(self, name: str) -> Column[DType]:
-        """
-        Rename column.
+        Rename expression.
 
         Parameters
         ----------
         name : str
-            New name for column.
+            New name for expression.
         
         Returns
         -------
-        Column
-            New column - this does not operate in-place.
+        Expression
+            New expression - this does not operate in-place.
         """
         ...

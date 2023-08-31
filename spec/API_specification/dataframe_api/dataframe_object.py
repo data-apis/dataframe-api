@@ -4,7 +4,7 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 
 
 if TYPE_CHECKING:
-    from .column_object import Column
+    from .expression_object import Expression
     from .groupby_object import GroupBy
     from . import Bool
     from ._types import NullType, Scalar
@@ -90,28 +90,9 @@ class DataFrame:
         """
         ...
 
-    def get_column_by_name(self, name: str, /) -> Column[Any]:
+    def select(self, names: Sequence[str | Expression], /) -> DataFrame:
         """
-        Select a column by name.
-
-        Parameters
-        ----------
-        name : str
-
-        Returns
-        -------
-        Column
-
-        Raises
-        ------
-        KeyError
-            If the key is not present.
-        """
-        ...
-
-    def get_columns_by_name(self, names: Sequence[str], /) -> DataFrame:
-        """
-        Select multiple columns by name.
+        Select multiple columns, either by name or by expressions.
 
         Parameters
         ----------
@@ -121,6 +102,19 @@ class DataFrame:
         -------
         DataFrame
 
+        Examples
+        --------
+        Select columns 'a' and 'b':
+
+        >>> df: DataFrame
+        >>> df.select(['a', 'b'])
+
+        You can also pass expressions:
+
+        >>> df: DataFrame
+        >>> namespace = df.__dataframe_namespace__()
+        >>> df.select(['a', namespace.col('b')+1])
+
         Raises
         ------
         KeyError
@@ -128,13 +122,13 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Column[Any]) -> DataFrame:
+    def get_rows(self, indices: Expression) -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
         Parameters
         ----------
-        indices : Column[int]
+        indices : Expression
             Positions of rows to select.
 
         Returns
@@ -161,70 +155,85 @@ class DataFrame:
         """
         ...
 
-    def get_rows_by_mask(self, mask: Column[Bool]) -> DataFrame:
+    def get_rows_by_mask(self, mask: Expression) -> DataFrame:
         """
         Select a subset of rows corresponding to a mask.
 
         Parameters
         ----------
-        mask : Column[bool]
+        mask : Expression
 
         Returns
         -------
         DataFrame
 
-        Notes
-        -----
-        Some participants preferred a weaker type Arraylike[bool] for mask,
-        where 'Arraylike' denotes an object adhering to the Array API standard.
+        Examples
+        --------
+        
+        Here is how you could keep rows in a dataframe where the values in
+        column 'a' are greater than 3:
+
+        >>> df: DataFrame
+        >>> namespace = df.__dataframe_namespace__()
+        >>> mask = namespace.col('a') > 3
+        >>> df = df.get_rows_by_mask(mask)
         """
         ...
 
-    def insert_column(self, column: Column[Any]) -> DataFrame:
+    def insert_column(self, column: Expression) -> DataFrame:
         """
         Insert column into DataFrame at rightmost location.
 
         The column's name will be used as the label in the resulting dataframe.
-        To insert the column with a different name, combine with `Column.rename`,
+        To insert the column with a different name, combine with `Expression.rename`,
         e.g.:
 
         .. code-block:: python
 
-            new_column = df.get_column_by_name('a') + 1
+            df: DataFrame
+            namespace = df.__dataframe_namespace__()
+            col = namespace.col
+            new_column = namespace.col('a') + 1
             df = df.insert_column(new_column.rename('a_plus_1'))
         
         If you need to insert the column at a different location, combine with
-        :meth:`get_columns_by_name`, e.g.:
+        :meth:`select`, e.g.:
 
         .. code-block:: python
 
-            new_column = df.get_column_by_name('a') + 1
+            df: DataFrame
+            namespace = df.__dataframe_namespace__()
+            col = namespace.col
+            new_column = namespace.col('a') + 1
             new_columns_names = ['a_plus_1'] + df.get_column_names()
             df = df.insert_column(new_column.rename('a_plus_1'))
-            df = df.get_columns_by_name(new_column_names)
+            df = df.select(new_column_names)
 
         Parameters
         ----------
-        column : Column
+        expression : Expression
         """
         ...
 
-    def update_columns(self, columns: Column[Any] | Sequence[Column[Any]], /) -> DataFrame:
+    def update_columns(self, columns: Expression | Sequence[Expression], /) -> DataFrame:
         """
         Update values in existing column(s) from Dataframe.
 
         The column's name will be used to tell which column to update.
-        To update a column with a different name, combine with :meth:`Column.rename`,
+        To update a column with a different name, combine with :meth:`Expression.rename`,
         e.g.:
 
         .. code-block:: python
 
-            new_column = df.get_column_by_name('a') + 1
-            df = df.update_column(new_column.rename('b'))
+            df: DataFrame
+            namespace = df.__dataframe_namespace__()
+            col = namespace.col
+            new_column = namespace.col('a') + 1
+            df = df.update_columns(new_column.rename('b'))
 
         Parameters
         ----------
-        columns : Column | Sequence[Column]
+        columns : Expression | Sequence[Expression]
             Column(s) to update. If updating multiple columns, they must all have
             different names.
 
@@ -289,7 +298,7 @@ class DataFrame:
         Sort dataframe according to given columns.
 
         If you only need the indices which would sort the dataframe, use
-        :meth:`sorted_indices`.
+        :func:`dataframe_api.sorted_indices`.
 
         Parameters
         ----------
@@ -311,46 +320,6 @@ class DataFrame:
         Returns
         -------
         DataFrame
-    
-        Raises
-        ------
-        ValueError
-            If `keys` and `ascending` are sequences of different lengths.
-        """
-        ...
-
-    def sorted_indices(
-        self,
-        keys: str | list[str] | None = None,
-        *,
-        ascending: Sequence[bool] | bool = True,
-        nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column[Any]:
-        """
-        Return row numbers which would sort according to given columns.
-
-        If you need to sort the DataFrame, use :meth:`sort`.
-
-        Parameters
-        ----------
-        keys : str | list[str], optional
-            Names of columns to sort by.
-            If `None`, sort by all columns.
-        ascending : Sequence[bool] or bool
-            If `True`, sort by all keys in ascending order.
-            If `False`, sort by all keys in descending order.
-            If a sequence, it must be the same length as `keys`,
-            and determines the direction with which to use each
-            key to sort by.
-        nulls_position : ``{'first', 'last'}``
-            Whether null values should be placed at the beginning
-            or at the end of the result.
-            Note that the position of NaNs is unspecified and may
-            vary based on the implementation.
-
-        Returns
-        -------
-        Column[int]
     
         Raises
         ------
@@ -692,34 +661,6 @@ class DataFrame:
         """
         ...
     
-    def any_rowwise(self, *, skip_nulls: bool = True) -> Column[Bool]:
-        """
-        Reduction returns a Column.
-
-        Differs from ``DataFrame.any`` and that the reduction happens
-        for each row, rather than for each column.
-
-        Raises
-        ------
-        ValueError
-            If any of the DataFrame's columns is not boolean.
-        """
-        ...
-
-    def all_rowwise(self, *, skip_nulls: bool = True) -> Column[Bool]:
-        """
-        Reduction returns a Column.
-
-        Differs from ``DataFrame.all`` and that the reduction happens
-        for each row, rather than for each column.
-
-        Raises
-        ------
-        ValueError
-            If any of the DataFrame's columns is not boolean.
-        """
-        ...
-
     def min(self, *, skip_nulls: bool = True) -> DataFrame:
         """
         Reduction returns a 1-row DataFrame.
@@ -823,33 +764,6 @@ class DataFrame:
         This only checks for 'NaN'.
         Does *not* include 'missing' or 'null' entries.
         In particular, does not check for `np.timedelta64('NaT')`.
-        """
-        ...
-
-    def unique_indices(self, keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Column[int]:
-        """
-        Return indices corresponding to unique values across selected columns.
-
-        Parameters
-        ----------
-        keys : str | list[str], optional
-            Column names to consider when finding unique values.
-            If `None`, all columns are considered.
-
-        Returns
-        -------
-        Column[int]
-            Indices corresponding to unique values.
-
-        Notes
-        -----
-        There are no ordering guarantees. In particular, if there are multiple
-        indices corresponding to the same unique value(s), there is no guarantee
-        about which one will appear in the result.
-        If the original column(s) contain multiple `'NaN'` values, then
-        only a single index corresponding to those values will be returned.
-        Likewise for null values (if ``skip_nulls=False``).
-        To get the unique values, you can do ``df.get_rows(df.unique_indices(keys))``.
         """
         ...
 
