@@ -278,6 +278,17 @@ class DataFrame:
         """
         ...
     
+    @property
+    def schema(self) -> dict[str, Any]:
+        """
+        Get dataframe's schema.
+
+        Returns
+        -------
+        dict[str, Any]
+            Mapping from column name to data type.
+        """
+    
     def sort(
         self,
         keys: str | list[str] | None = None,
