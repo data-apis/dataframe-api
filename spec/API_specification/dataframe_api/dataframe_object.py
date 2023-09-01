@@ -359,7 +359,7 @@ class DataFrame:
         """
         ...
 
-    def __eq__(self, other: DataFrame | Scalar) -> DataFrame:  # type: ignore[override]
+    def __eq__(self, other: Scalar) -> DataFrame:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -367,8 +367,7 @@ class DataFrame:
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -378,7 +377,7 @@ class DataFrame:
         """
         ...
 
-    def __ne__(self, other: DataFrame | Scalar) -> DataFrame:  # type: ignore[override]
+    def __ne__(self, other: Scalar) -> DataFrame:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -386,8 +385,7 @@ class DataFrame:
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -397,14 +395,13 @@ class DataFrame:
         """
         ...
 
-    def __ge__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __ge__(self, other: Scalar) -> DataFrame:
         """
         Compare for "greater than or equal to" `other`.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -414,14 +411,13 @@ class DataFrame:
         """
         ...
 
-    def __gt__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __gt__(self, other: Scalar) -> DataFrame:
         """
         Compare for "greater than" `other`.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -431,14 +427,13 @@ class DataFrame:
         """
         ...
 
-    def __le__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __le__(self, other: Scalar) -> DataFrame:
         """
         Compare for "less than or equal to" `other`.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -448,14 +443,13 @@ class DataFrame:
         """
         ...
 
-    def __lt__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __lt__(self, other: Scalar) -> DataFrame:
         """
         Compare for "less than" `other`.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -465,16 +459,15 @@ class DataFrame:
         """
         ...
 
-    def __and__(self, other: DataFrame | bool) -> DataFrame:
+    def __and__(self, other: bool) -> DataFrame:
         """
-        Apply logical 'and' to `other` DataFrame (or scalar) and this dataframe.
+        Apply logical 'and' to `other` scalar and this dataframe.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : DataFrame[bool] or bool
-            If DataFrame, must have same length.
+        other : bool
 
         Returns
         -------
@@ -488,14 +481,13 @@ class DataFrame:
 
     def __or__(self, other: DataFrame | bool) -> DataFrame:
         """
-        Apply logical 'or' to `other` DataFrame (or scalar) and this DataFrame.
+        Apply logical 'or' to `other` scalar and this DataFrame.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : DataFrame[bool] or bool
-            If DataFrame, must have same length.
+        other : bool
 
         Returns
         -------
@@ -507,14 +499,13 @@ class DataFrame:
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __add__(self, other: Scalar) -> DataFrame:
         """
-        Add `other` dataframe or scalar to this dataframe.
+        Add `other` scalar to this dataframe.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -524,14 +515,13 @@ class DataFrame:
         """
         ...
 
-    def __sub__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __sub__(self, other: Scalar) -> DataFrame:
         """
-        Subtract `other` dataframe or scalar from this dataframe.
+        Subtract `other` scalar from this dataframe.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -541,14 +531,13 @@ class DataFrame:
         """
         ...
 
-    def __mul__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __mul__(self, other: Scalar) -> DataFrame:
         """
-        Multiply  `other` dataframe or scalar with this dataframe.
+        Multiply  `other` scalar with this dataframe.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -558,14 +547,13 @@ class DataFrame:
         """
         ...
 
-    def __truediv__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __truediv__(self, other: Scalar) -> DataFrame:
         """
-        Divide  this dataframe by `other` dataframe or scalar. True division, returns floats.
+        Divide  this dataframe by `other` scalar. True division, returns floats.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -575,14 +563,13 @@ class DataFrame:
         """
         ...
 
-    def __floordiv__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __floordiv__(self, other: Scalar) -> DataFrame:
         """
-        Floor-divide (returns integers) this dataframe by `other` dataframe or scalar.
+        Floor-divide (returns integers) this dataframe by `other` scalar.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -592,7 +579,7 @@ class DataFrame:
         """
         ...
 
-    def __pow__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __pow__(self, other: Scalar) -> DataFrame:
         """
         Raise this dataframe to the power of `other`.
 
@@ -602,8 +589,7 @@ class DataFrame:
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -613,14 +599,13 @@ class DataFrame:
         """
         ...
 
-    def __mod__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __mod__(self, other: Scalar) -> DataFrame:
         """
         Return modulus of this dataframe by `other` (`%` operator).
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -630,20 +615,19 @@ class DataFrame:
         """
         ...
 
-    def __divmod__(self, other: DataFrame | Scalar) -> tuple[DataFrame, DataFrame]:
+    def __divmod__(self, other: Scalar) -> tuple[DataFrame, DataFrame]:
         """
         Return quotient and remainder of integer division. See `divmod` builtin function.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        A tuple of two DataFrame's
+        A tuple of two `DataFrame`s
         """
         ...
 
