@@ -694,12 +694,11 @@ object are out-of-place.</p>
 <p><strong>Methods and Attributes</strong></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__add__">
-<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__add__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar to this dataframe.</p>
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__add__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add <code class="code docutils literal notranslate"><span class="pre">other</span></code> scalar to this dataframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -709,12 +708,12 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__and__">
-<span class="sig-name descname"><span class="pre">__and__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__and__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply logical ‘and’ to <code class="code docutils literal notranslate"><span class="pre">other</span></code> DataFrame (or scalar) and this dataframe.</p>
+<span class="sig-name descname"><span class="pre">__and__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__and__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply logical ‘and’ to <code class="code docutils literal notranslate"><span class="pre">other</span></code> scalar and this dataframe.</p>
 <p>Nulls should follow Kleene Logic.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em>[</em><em>bool</em><em>] or </em><em>bool</em>) – If DataFrame, must have same length.</p>
+<dd class="field-odd"><p><strong>other</strong> (<em>bool</em>) – </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>DataFrame[bool]</strong></p>
@@ -740,28 +739,26 @@ specification.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__divmod__">
-<span class="sig-name descname"><span class="pre">__divmod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__divmod__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__divmod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__divmod__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return quotient and remainder of integer division. See <code class="code docutils literal notranslate"><span class="pre">divmod</span></code> builtin function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>A tuple of two DataFrame’s</strong></p>
+<dd class="field-even"><p><strong>A tuple of two `DataFrame`s</strong></p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__eq__">
-<span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__eq__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__eq__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compare for equality.</p>
 <p>Nulls should follow Kleene Logic.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -771,12 +768,11 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__floordiv__">
-<span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__floordiv__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Floor-divide (returns integers) this dataframe by <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar.</p>
+<span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__floordiv__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Floor-divide (returns integers) this dataframe by <code class="code docutils literal notranslate"><span class="pre">other</span></code> scalar.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -786,12 +782,11 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__ge__">
-<span class="sig-name descname"><span class="pre">__ge__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__ge__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__ge__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__ge__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compare for “greater than or equal to” <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -801,12 +796,11 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__gt__">
-<span class="sig-name descname"><span class="pre">__gt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__gt__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__gt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__gt__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compare for “greater than” <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -837,12 +831,11 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__le__">
-<span class="sig-name descname"><span class="pre">__le__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__le__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__le__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__le__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compare for “less than or equal to” <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -852,12 +845,11 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__lt__">
-<span class="sig-name descname"><span class="pre">__lt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__lt__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__lt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__lt__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compare for “less than” <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -867,12 +859,11 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__mod__">
-<span class="sig-name descname"><span class="pre">__mod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__mod__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__mod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__mod__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return modulus of this dataframe by <code class="code docutils literal notranslate"><span class="pre">other</span></code> (<code class="code docutils literal notranslate"><span class="pre">%</span></code> operator).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -882,12 +873,11 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__mul__">
-<span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__mul__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multiply  <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar with this dataframe.</p>
+<span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__mul__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiply  <code class="code docutils literal notranslate"><span class="pre">other</span></code> scalar with this dataframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -897,13 +887,12 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__ne__">
-<span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__ne__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__ne__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compare for non-equality.</p>
 <p>Nulls should follow Kleene Logic.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -914,11 +903,11 @@ for the operation by the underling dtypes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__or__">
 <span class="sig-name descname"><span class="pre">__or__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.dataframe_object.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__or__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply logical ‘or’ to <code class="code docutils literal notranslate"><span class="pre">other</span></code> DataFrame (or scalar) and this DataFrame.</p>
+<dd><p>Apply logical ‘or’ to <code class="code docutils literal notranslate"><span class="pre">other</span></code> scalar and this DataFrame.</p>
 <p>Nulls should follow Kleene Logic.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em>[</em><em>bool</em><em>] or </em><em>bool</em>) – If DataFrame, must have same length.</p>
+<dd class="field-odd"><p><strong>other</strong> (<em>bool</em>) – </p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>DataFrame[bool]</strong></p>
@@ -930,15 +919,14 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__pow__">
-<span class="sig-name descname"><span class="pre">__pow__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__pow__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__pow__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__pow__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raise this dataframe to the power of <code class="code docutils literal notranslate"><span class="pre">other</span></code>.</p>
 <p>Integer dtype to the power of non-negative integer dtype is integer dtype.
 Integer dtype to the power of float dtype is float dtype.
 Float dtype to the power of integer dtype or float dtype is float dtype.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -948,12 +936,11 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__sub__">
-<span class="sig-name descname"><span class="pre">__sub__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__sub__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Subtract <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar from this dataframe.</p>
+<span class="sig-name descname"><span class="pre">__sub__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__sub__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtract <code class="code docutils literal notranslate"><span class="pre">other</span></code> scalar from this dataframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -963,12 +950,11 @@ for the operation by the underling dtypes.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.__truediv__">
-<span class="sig-name descname"><span class="pre">__truediv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__truediv__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Divide  this dataframe by <code class="code docutils literal notranslate"><span class="pre">other</span></code> dataframe or scalar. True division, returns floats.</p>
+<span class="sig-name descname"><span class="pre">__truediv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.__truediv__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divide  this dataframe by <code class="code docutils literal notranslate"><span class="pre">other</span></code> scalar. True division, returns floats.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><em>DataFrame</em></a><em> or </em><em>Scalar</em>) – If DataFrame, must have same length and matching columns.
-“Scalar” here is defined implicitly by what scalar types are allowed
+<dd class="field-odd"><p><strong>other</strong> (<em>Scalar</em>) – “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
