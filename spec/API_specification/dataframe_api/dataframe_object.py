@@ -268,7 +268,8 @@ class DataFrame:
         """
         ...
 
-    def get_column_names(self) -> list[str]:
+    @property
+    def column_names(self) -> list[str]:
         """
         Get column names.
 
