@@ -287,7 +287,7 @@ def my_dataframe_agnostic_function(df):
     df = df.__dataframe_consortium_standard__(api_version='2023.08-beta')
 
     mask = df.get_column_by_name('species') != 'setosa'
-    df = df.get_rows_by_mask(mask)
+    df = df.filter(mask)
 
     for column_name in df.get_column_names():
         if column_name == 'species':

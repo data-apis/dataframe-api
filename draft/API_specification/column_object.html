@@ -454,9 +454,9 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.fill_null" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.fill_null()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows()</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.filter" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.filter()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows_by_mask" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows_by_mask()</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.get_value" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_value()</span></code></a>
         </li>
@@ -615,9 +615,9 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.fill_null" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.fill_null()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows()</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.filter" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.filter()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows_by_mask" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows_by_mask()</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.get_value" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_value()</span></code></a>
         </li>
@@ -1060,18 +1060,8 @@ Must be of the Python scalar type matching the dtype of the column.</p>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.Column.get_rows">
-<span class="sig-name descname"><span class="pre">get_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">DType</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.Column.get_rows" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select a subset of rows, similar to <code class="code docutils literal notranslate"><span class="pre">ndarray.take</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>indices</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>[</em><em>int</em><em>]</em>) – Positions of rows to select.</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.Column.get_rows_by_mask">
-<span class="sig-name descname"><span class="pre">get_rows_by_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">DType</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.Column.get_rows_by_mask" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dataframe_api.Column.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">DType</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.Column.filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select a subset of rows corresponding to a mask.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1084,6 +1074,16 @@ Must be of the Python scalar type matching the dtype of the column.</p>
 <p class="rubric">Notes</p>
 <p>Some participants preferred a weaker type Arraylike[bool] for mask,
 where ‘Arraylike’ denotes an object adhering to the Array API standard.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.get_rows">
+<span class="sig-name descname"><span class="pre">get_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.column_object.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">[</span></span><span class="pre">DType</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.Column.get_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a subset of rows, similar to <code class="code docutils literal notranslate"><span class="pre">ndarray.take</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>indices</strong> (<a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>[</em><em>int</em><em>]</em>) – Positions of rows to select.</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.get_value">
