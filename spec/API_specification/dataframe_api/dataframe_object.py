@@ -199,7 +199,7 @@ class DataFrame:
         .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
-            new_columns_names = ['a_plus_1'] + df.get_column_names()
+            new_columns_names = ['a_plus_1'] + df.column_names
             df = df.insert_column(new_column.rename('a_plus_1'))
             df = df.get_columns_by_name(new_column_names)
 
