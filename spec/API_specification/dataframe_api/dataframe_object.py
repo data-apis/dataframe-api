@@ -90,7 +90,7 @@ class DataFrame:
         """
         ...
 
-    def get_column_by_name(self, name: str, /) -> Column[Any]:
+    def get_column(self, name: str, /) -> Column[Any]:
         """
         Select a column by name.
 
@@ -190,7 +190,7 @@ class DataFrame:
 
         .. code-block:: python
 
-            new_column = df.get_column_by_name('a') + 1
+            new_column = df.get_column('a') + 1
             df = df.insert_column(new_column.rename('a_plus_1'))
         
         If you need to insert the column at a different location, combine with
@@ -198,7 +198,7 @@ class DataFrame:
 
         .. code-block:: python
 
-            new_column = df.get_column_by_name('a') + 1
+            new_column = df.get_column('a') + 1
             new_columns_names = ['a_plus_1'] + df.get_column_names()
             df = df.insert_column(new_column.rename('a_plus_1'))
             df = df.select(new_column_names)
@@ -219,7 +219,7 @@ class DataFrame:
 
         .. code-block:: python
 
-            new_column = df.get_column_by_name('a') + 1
+            new_column = df.get_column('a') + 1
             df = df.update_column(new_column.rename('b'))
 
         Parameters

@@ -14,14 +14,14 @@ the `float` it is documented to return, in combination with the `__gt__` method
 class DataFrame:
     def __gt__(self, other: DataFrame | Scalar) -> DataFrame:
         ...
-    def get_column_by_name(self, name: str, /) -> Column:
+    def get_column(self, name: str, /) -> Column:
         ...
 
 class Column:
     def mean(self, skip_nulls: bool = True) -> float | NullType:
         ...
 
-larger = df2 > df1.get_column_by_name('foo').mean()
+larger = df2 > df1.get_column('foo').mean()
 ```
 
 For a GPU dataframe library, it is desirable for all data to reside on the GPU,
