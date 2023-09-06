@@ -161,7 +161,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows_by_mask(self, mask: Column[Bool]) -> DataFrame:
+    def filter(self, mask: Column[Bool]) -> DataFrame:
         """
         Select a subset of rows corresponding to a mask.
 
