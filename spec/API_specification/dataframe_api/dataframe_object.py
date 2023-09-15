@@ -65,7 +65,7 @@ class DataFrame:
         Return number of rows and number of columns.
         """
 
-    def groupby(self, keys: str | list[str], /) -> GroupBy:
+    def group_by(self, keys: str | list[str], /) -> GroupBy:
         """
         Group the DataFrame by the given columns.
 
