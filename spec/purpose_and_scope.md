@@ -257,7 +257,7 @@ are required to provide the following methods:
 For example, pandas has ``pandas.DataFrame.__dataframe_consortium_standard__`` and
 ``pandas.Series.__column_consortium_standard__`` as of version 2.1.0.
 
-The signatures should be (note: docstring is optional):
+The signatures should be (note: docstring and type hints are optional):
 ```python
 def __dataframe_consortium_standard__(
     self, *, api_version: str | None = None
@@ -270,10 +270,14 @@ def __column_consortium_standard__(
 `api_version` is
 a string representing the version of the dataframe API specification
 to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-If it is ``None``, it should return the namespace corresponding to
+If it is ``None``, it should return an object compliant with the
 latest version of the dataframe API specification.  If the given
 version is invalid or not implemented for the given module, an
 error should be raised. Default: ``None``.
+
+These functions should return two objects:
+- a Standard-compliant `DataFrame` (or `Column`);
+- a Standard-compliant top-level namespace.
 
 Example:
 
@@ -286,7 +290,7 @@ df_pandas = pd.read_parquet('iris.parquet')
 df_polars = pl.scan_parquet('iris.parquet')
 
 def my_dataframe_agnostic_function(df):
-    df = df.__dataframe_consortium_standard__(api_version='2023.09-beta')
+    df, xp = df.__dataframe_consortium_standard__(api_version='2023.09-beta')
 
     mask = df.get_column_by_name('species') != 'setosa'
     df = df.filter(mask)

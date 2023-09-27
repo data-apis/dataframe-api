@@ -50,21 +50,21 @@ aims to develop in the future. When that full API standard is implemented by
 dataframe libraries, the example above can change to:
 
 ```python
-def get_compliant_df(df):
+def get_compliant_df_and_namespace(df) -> tuple[DataFrame, Any]:
     """Utility function to support programming against a dataframe API"""
     if hasattr(df, '__dataframe_namespace__'):
-        # Is already Standard-compliant DataFrame, nothing to do here.
-        pass
-    elif hasattr(df, '__dataframe_standard__'):
+        # Is already Standard-compliant DataFrame, just extract namespace.
+        xp = df.__dataframe__namespace__()
+    elif hasattr(df, '__dataframe_consortium_standard__'):
         # Convert to Standard-compliant DataFrame.
-        df = df.__dataframe_standard__()
+        df, xp = df.__dataframe_consortium_standard__()
     else:
         # Here we can raise an exception if we only want to support compliant dataframes,
         # or convert to our default choice of dataframe if we want to accept (e.g.) dicts
         raise TypeError(
             "Expected Standard-compliant DataFrame, or DataFrame with Standard-compliant implementation"
         )
-    return df
+    return df, xp
 
 
 def somefunc(df, ...):
