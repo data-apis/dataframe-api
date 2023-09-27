@@ -6,7 +6,8 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
-    from ._types import NullType, Scalar, DType
+    from . import Bool
+    from ._types import NullType, Scalar, Namespace, DType
 
 
 __all__ = ["DataFrame"]
@@ -36,7 +37,7 @@ class DataFrame:
     **Methods and Attributes**
 
     """
-    def __dataframe_namespace__(self) -> Any:
+    def __dataframe_namespace__(self) -> Namespace:
         """
         Returns an object that has all the top-level dataframe API functions on it.
 
