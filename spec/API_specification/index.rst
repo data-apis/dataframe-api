@@ -27,13 +27,10 @@ of objects and functions in the top-level namespace. The latter are:
    Float64
    Float32
    Bool
-<<<<<<< HEAD
    Datetime
    Duration
    String
-=======
    is_dtype
->>>>>>> upstream/main
    column_from_sequence
    column_from_1d_array
    dataframe_from_dict
