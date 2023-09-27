@@ -275,36 +275,7 @@ latest version of the dataframe API specification.  If the given
 version is invalid or not implemented for the given module, an
 error should be raised. Default: ``None``.
 
-Example:
-
-```python
-import pandas as pd
-import polars as pl
-
-
-df_pandas = pd.read_parquet('iris.parquet')
-df_polars = pl.scan_parquet('iris.parquet')
-
-def my_dataframe_agnostic_function(df):
-    df = df.__dataframe_consortium_standard__(api_version='2023.09-beta')
-
-    mask = df.get_column_by_name('species') != 'setosa'
-    df = df.filter(mask)
-
-    for column_name in df.column_names
-        if column_name == 'species':
-            continue
-        new_column = df.get_column_by_name(column_name)
-        new_column = (new_column - new_column.mean()) / new_column.std()
-        df = df.insert_column(new_column.rename(f'{column_name}_scaled'))
-
-    return df.dataframe
-
-#  Then, either of the following will work as expected:
-my_dataframe_agnostic_function(df_pandas)
-my_dataframe_agnostic_function(df_polars)
-my_dataframe_agnostic_function(df_any_other_library_with_a_standard_compliant_namespace)
-```
+For some examples, please check https://github.com/data-apis/dataframe-api/tree/main/spec/examples.
 
 ### Checking a dataframe object for Compliance
 
