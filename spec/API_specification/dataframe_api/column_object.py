@@ -47,7 +47,7 @@ class Column(Generic[DType]):
         ...
     
     @property
-    def name(self) -> str | None:
+    def name(self) -> str:
         """Return name of column."""
 
     def __len__(self) -> int:
@@ -104,7 +104,7 @@ class Column(Generic[DType]):
         ...
 
 
-    def get_rows_by_mask(self: Column[DType], mask: Column[Bool]) -> Column[DType]:
+    def filter(self: Column[DType], mask: Column[Bool]) -> Column[DType]:
         """
         Select a subset of rows corresponding to a mask.
 
@@ -141,6 +141,35 @@ class Column(Generic[DType]):
         """
         ...
 
+    def sort(
+        self,
+        *,
+        ascending: bool = True,
+        nulls_position: Literal['first', 'last'] = 'last',
+    ) -> Column[DType]:
+        """
+        Sort column.
+
+        If you need the indices which would sort the column,
+        use :meth:`sorted_indices`.
+
+        Parameters
+        ----------
+        ascending : bool
+            If `True`, sort in ascending order.
+            If `False`, sort in descending order.
+        nulls_position : ``{'first', 'last'}``
+            Whether null values should be placed at the beginning
+            or at the end of the result.
+            Note that the position of NaNs is unspecified and may
+            vary based on the implementation.
+
+        Returns
+        -------
+        Column
+        """
+        ...
+
     def sorted_indices(
         self,
         *,
@@ -150,9 +179,7 @@ class Column(Generic[DType]):
         """
         Return row numbers which would sort column.
 
-        If you need to sort the Column, you can simply do::
-
-            col.get_rows(col.sorted_indices())
+        If you need to sort the Column, use :meth:`sort`.
 
         Parameters
         ----------
@@ -695,8 +722,21 @@ class Column(Generic[DType]):
 
         Parameters
         ----------
-        dtype : Any
+        dtype : DType
             The dtype of the array-API-compliant object to return.
+            Must be one of:
+
+            - Bool()
+            - Int8()
+            - Int16()
+            - Int32()
+            - Int64()
+            - UInt8()
+            - UInt16()
+            - UInt32()
+            - UInt64()
+            - Float32()
+            - Float64()
         
         Returns
         -------
@@ -710,3 +750,19 @@ class Column(Generic[DType]):
         understanding that consuming libraries would then use the
         ``array-api-compat`` package to convert it to a Standard-compliant array.
         """
+
+    def rename(self, name: str) -> Column[DType]:
+        """
+        Rename column.
+
+        Parameters
+        ----------
+        name : str
+            New name for column.
+        
+        Returns
+        -------
+        Column
+            New column - this does not operate in-place.
+        """
+        ...

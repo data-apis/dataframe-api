@@ -32,9 +32,7 @@ __all__ = [
     "Float64",
     "Float32",
     "Bool",
-    "Datetime",
-    "Duration",
-    "String",
+    "is_dtype",
 ]
 
 
@@ -65,7 +63,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Any], *, name: str | None, dtype: Any) -> Column[Any]:
+def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '', api_version: str | None = None) -> Column[Any]:
     """
     Construct Column from sequence of elements.
 
@@ -79,6 +77,13 @@ def column_from_sequence(sequence: Sequence[Any], *, name: str | None, dtype: An
         Name of column.
     dtype : DType
         Dtype of result. Must be specified.
+    api_version: str | None
+        A string representing the version of the dataframe API specification
+        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
+        If it is ``None``, it should return an object corresponding to
+        latest version of the dataframe API specification.  If the given
+        version is invalid or not implemented for the given module, an
+        error should be raised. Default: ``None``.
 
     Returns
     -------
@@ -86,7 +91,7 @@ def column_from_sequence(sequence: Sequence[Any], *, name: str | None, dtype: An
     """
     ...
 
-def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
+def dataframe_from_dict(data: Mapping[str, Column[Any]], *, api_version: str | None = None) -> DataFrame:
     """
     Construct DataFrame from map of column names to Columns.
 
@@ -96,6 +101,13 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
         Column must be of the corresponding type of the DataFrame.
         For example, it is only supported to build a ``LibraryXDataFrame`` using
         ``LibraryXColumn`` instances.
+    api_version: str | None
+        A string representing the version of the dataframe API specification
+        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
+        If it is ``None``, it should return an object corresponding to
+        latest version of the dataframe API specification.  If the given
+        version is invalid or not implemented for the given module, an
+        error should be raised. Default: ``None``.
 
     Returns
     -------
@@ -111,7 +123,7 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
     ...
 
 
-def column_from_1d_array(array: Any, *, name: str, dtype: Any) -> Column[Any]:
+def column_from_1d_array(array: Any, *, dtype: Any, name: str = '', api_version: str | None = None) -> Column[Any]:
     """
     Construct Column from 1D array.
 
@@ -125,10 +137,17 @@ def column_from_1d_array(array: Any, *, name: str, dtype: Any) -> Column[Any]:
     ----------
     array : array
         array-API compliant 1D array
-    name : str
+    name : str, optional
         Name to give columns.
     dtype : DType
         Dtype of column.
+    api_version: str | None
+        A string representing the version of the dataframe API specification
+        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
+        If it is ``None``, it should return an object corresponding to
+        latest version of the dataframe API specification.  If the given
+        version is invalid or not implemented for the given module, an
+        error should be raised. Default: ``None``.
 
     Returns
     -------
@@ -136,7 +155,7 @@ def column_from_1d_array(array: Any, *, name: str, dtype: Any) -> Column[Any]:
     """
     ...
 
-def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any]) -> DataFrame:
+def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any], api_version: str | None = None) -> DataFrame:
     """
     Construct DataFrame from 2D array.
 
@@ -154,6 +173,13 @@ def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping
         Names to give columns. Must be the same length as ``array.shape[1]``.
     dtypes : Mapping[str, DType]
         Dtype of each column. Must be the same length as ``array.shape[1]``.
+    api_version: str | None
+        A string representing the version of the dataframe API specification
+        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
+        If it is ``None``, it should return an object corresponding to
+        latest version of the dataframe API specification.  If the given
+        version is invalid or not implemented for the given module, an
+        error should be raised. Default: ``None``.
 
     Returns
     -------
@@ -249,19 +275,51 @@ class Datetime:
 
     Attributes
     ----------
-    time_unit : Literal['ms', 'us', 'ns']
+    time_unit : Literal['ms', 'us']
         Precision of the datetime type. There is no guarantee that the full
         range of dates available for the specified precision is supported.
     time_zone : str | None
         Time zone of the datetime type. Only IANA time zones are supported.
         `None` indicates time-zone-naive data.
     """
-    time_unit: Literal['ms', 'us', 'ns']
+    time_unit: Literal['ms', 'us']
     time_zone: str | None  # Only IANA time zones are supported
 
 class Duration:
     """Duration type."""
-    time_unit: Literal['ms', 'us', 'ns']
+    time_unit: Literal['ms', 'us']
 
 class String:
     """String type."""
+
+
+def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
+    """
+    Returns a boolean indicating whether a provided dtype is of a specified data type “kind”.
+
+    Parameters
+    ----------
+        dtype: Any
+            The input dtype.
+        kind: str
+            data type kind.
+            The function must return a boolean indicating whether
+            the input dtype is of a specified data type kind.
+            The following dtype kinds must be supported:
+
+            - 'bool': boolean data type (Bool).
+            - 'signed integer': signed integer data types (Int8, Int16, Int32, Int64).
+            - 'unsigned integer': unsigned integer data types (UInt8, UInt16, UInt32, UInt64).
+            - 'floating': floating-point data types (Float32, Float64).
+            - 'integral': integer data types. Shorthand for ('signed integer', 'unsigned integer').
+            - 'numeric': numeric data types. Shorthand for ('integral', 'floating').
+
+            If kind is a tuple, the tuple specifies a union of dtypes and/or kinds,
+            and the function must return a boolean indicating whether the input dtype
+            is either equal to a specified dtype or belongs to at least one specified
+            data type kind.
+
+    Returns
+    -------
+    bool
+    """

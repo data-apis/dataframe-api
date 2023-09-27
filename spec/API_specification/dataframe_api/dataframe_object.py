@@ -65,13 +65,13 @@ class DataFrame:
         Return number of rows and number of columns.
         """
 
-    def groupby(self, keys: Sequence[str], /) -> GroupBy:
+    def group_by(self, keys: str | list[str], /) -> GroupBy:
         """
         Group the DataFrame by the given columns.
 
         Parameters
         ----------
-        keys : Sequence[str]
+        keys : str | list[str]
 
         Returns
         -------
@@ -109,7 +109,7 @@ class DataFrame:
         """
         ...
 
-    def get_columns_by_name(self, names: Sequence[str], /) -> DataFrame:
+    def select(self, names: Sequence[str], /) -> DataFrame:
         """
         Select multiple columns by name.
 
@@ -161,7 +161,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows_by_mask(self, mask: Column[Bool]) -> DataFrame:
+    def filter(self, mask: Column[Bool]) -> DataFrame:
         """
         Select a subset of rows corresponding to a mask.
 
@@ -180,17 +180,57 @@ class DataFrame:
         """
         ...
 
-    def insert(self, loc: int, label: str, value: Column[Any]) -> DataFrame:
+    def insert_column(self, column: Column[Any]) -> DataFrame:
         """
-        Insert column into DataFrame at specified location.
+        Insert column into DataFrame at rightmost location.
+
+        The column's name will be used as the label in the resulting dataframe.
+        To insert the column with a different name, combine with `Column.rename`,
+        e.g.:
+
+        .. code-block:: python
+
+            new_column = df.get_column_by_name('a') + 1
+            df = df.insert_column(new_column.rename('a_plus_1'))
+        
+        If you need to insert the column at a different location, combine with
+        :meth:`select`, e.g.:
+
+        .. code-block:: python
+
+            new_column = df.get_column_by_name('a') + 1
+            new_columns_names = ['a_plus_1'] + df.get_column_names()
+            df = df.insert_column(new_column.rename('a_plus_1'))
+            df = df.select(new_column_names)
 
         Parameters
         ----------
-        loc : int
-            Insertion index. Must verify 0 <= loc <= len(columns).
-        label : str
-            Label of the inserted column.
-        value : Column
+        column : Column
+        """
+        ...
+
+    def update_columns(self, columns: Column[Any] | Sequence[Column[Any]], /) -> DataFrame:
+        """
+        Update values in existing column(s) from Dataframe.
+
+        The column's name will be used to tell which column to update.
+        To update a column with a different name, combine with :meth:`Column.rename`,
+        e.g.:
+
+        .. code-block:: python
+
+            new_column = df.get_column_by_name('a') + 1
+            df = df.update_column(new_column.rename('b'))
+
+        Parameters
+        ----------
+        columns : Column | Sequence[Column]
+            Column(s) to update. If updating multiple columns, they must all have
+            different names.
+
+        Returns
+        -------
+        DataFrame
         """
         ...
 
@@ -228,19 +268,71 @@ class DataFrame:
         """
         ...
 
-    def get_column_names(self) -> Sequence[str]:
+    def get_column_names(self) -> list[str]:
         """
         Get column names.
 
         Returns
         -------
-        Sequence[str]
+        list[str]
+        """
+        ...
+    
+    @property
+    def schema(self) -> dict[str, Any]:
+        """
+        Get dataframe's schema.
+
+        Returns
+        -------
+        dict[str, Any]
+            Mapping from column name to data type.
+        """
+    
+    def sort(
+        self,
+        keys: str | list[str] | None = None,
+        *,
+        ascending: Sequence[bool] | bool = True,
+        nulls_position: Literal['first', 'last'] = 'last',
+    ) -> DataFrame:
+        """
+        Sort dataframe according to given columns.
+
+        If you only need the indices which would sort the dataframe, use
+        :meth:`sorted_indices`.
+
+        Parameters
+        ----------
+        keys : str | list[str], optional
+            Names of columns to sort by.
+            If `None`, sort by all columns.
+        ascending : Sequence[bool] or bool
+            If `True`, sort by all keys in ascending order.
+            If `False`, sort by all keys in descending order.
+            If a sequence, it must be the same length as `keys`,
+            and determines the direction with which to use each
+            key to sort by.
+        nulls_position : ``{'first', 'last'}``
+            Whether null values should be placed at the beginning
+            or at the end of the result.
+            Note that the position of NaNs is unspecified and may
+            vary based on the implementation.
+
+        Returns
+        -------
+        DataFrame
+    
+        Raises
+        ------
+        ValueError
+            If `keys` and `ascending` are sequences of different lengths.
         """
         ...
 
     def sorted_indices(
         self,
-        keys: Sequence[str] | None = None,
+        keys: str | list[str] | None = None,
         *,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
@@ -248,13 +340,11 @@ class DataFrame:
         """
         Return row numbers which would sort according to given columns.
 
-        If you need to sort the DataFrame, you can simply do::
-
-            df.get_rows(df.sorted_indices(keys))
+        If you need to sort the DataFrame, use :meth:`sort`.
 
         Parameters
         ----------
-        keys : Sequence[str] | None
+        keys : str | list[str], optional
             Names of columns to sort by.
             If `None`, sort by all columns.
         ascending : Sequence[bool] or bool
@@ -280,7 +370,7 @@ class DataFrame:
         """
         ...
 
-    def __eq__(self, other: DataFrame | Scalar) -> DataFrame:  # type: ignore[override]
+    def __eq__(self, other: Scalar) -> DataFrame:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -288,8 +378,7 @@ class DataFrame:
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -299,7 +388,7 @@ class DataFrame:
         """
         ...
 
-    def __ne__(self, other: DataFrame | Scalar) -> DataFrame:  # type: ignore[override]
+    def __ne__(self, other: Scalar) -> DataFrame:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -307,8 +396,7 @@ class DataFrame:
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -318,14 +406,13 @@ class DataFrame:
         """
         ...
 
-    def __ge__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __ge__(self, other: Scalar) -> DataFrame:
         """
         Compare for "greater than or equal to" `other`.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -335,14 +422,13 @@ class DataFrame:
         """
         ...
 
-    def __gt__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __gt__(self, other: Scalar) -> DataFrame:
         """
         Compare for "greater than" `other`.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -352,14 +438,13 @@ class DataFrame:
         """
         ...
 
-    def __le__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __le__(self, other: Scalar) -> DataFrame:
         """
         Compare for "less than or equal to" `other`.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -369,14 +454,13 @@ class DataFrame:
         """
         ...
 
-    def __lt__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __lt__(self, other: Scalar) -> DataFrame:
         """
         Compare for "less than" `other`.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -386,16 +470,15 @@ class DataFrame:
         """
         ...
 
-    def __and__(self, other: DataFrame | bool) -> DataFrame:
+    def __and__(self, other: bool) -> DataFrame:
         """
-        Apply logical 'and' to `other` DataFrame (or scalar) and this dataframe.
+        Apply logical 'and' to `other` scalar and this dataframe.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : DataFrame[bool] or bool
-            If DataFrame, must have same length.
+        other : bool
 
         Returns
         -------
@@ -409,14 +492,13 @@ class DataFrame:
 
     def __or__(self, other: DataFrame | bool) -> DataFrame:
         """
-        Apply logical 'or' to `other` DataFrame (or scalar) and this DataFrame.
+        Apply logical 'or' to `other` scalar and this DataFrame.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : DataFrame[bool] or bool
-            If DataFrame, must have same length.
+        other : bool
 
         Returns
         -------
@@ -428,14 +510,13 @@ class DataFrame:
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __add__(self, other: Scalar) -> DataFrame:
         """
-        Add `other` dataframe or scalar to this dataframe.
+        Add `other` scalar to this dataframe.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -445,14 +526,13 @@ class DataFrame:
         """
         ...
 
-    def __sub__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __sub__(self, other: Scalar) -> DataFrame:
         """
-        Subtract `other` dataframe or scalar from this dataframe.
+        Subtract `other` scalar from this dataframe.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -462,14 +542,13 @@ class DataFrame:
         """
         ...
 
-    def __mul__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __mul__(self, other: Scalar) -> DataFrame:
         """
-        Multiply  `other` dataframe or scalar with this dataframe.
+        Multiply  `other` scalar with this dataframe.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -479,14 +558,13 @@ class DataFrame:
         """
         ...
 
-    def __truediv__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __truediv__(self, other: Scalar) -> DataFrame:
         """
-        Divide  this dataframe by `other` dataframe or scalar. True division, returns floats.
+        Divide  this dataframe by `other` scalar. True division, returns floats.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -496,14 +574,13 @@ class DataFrame:
         """
         ...
 
-    def __floordiv__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __floordiv__(self, other: Scalar) -> DataFrame:
         """
-        Floor-divide (returns integers) this dataframe by `other` dataframe or scalar.
+        Floor-divide (returns integers) this dataframe by `other` scalar.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -513,7 +590,7 @@ class DataFrame:
         """
         ...
 
-    def __pow__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __pow__(self, other: Scalar) -> DataFrame:
         """
         Raise this dataframe to the power of `other`.
 
@@ -523,8 +600,7 @@ class DataFrame:
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -534,14 +610,13 @@ class DataFrame:
         """
         ...
 
-    def __mod__(self, other: DataFrame | Scalar) -> DataFrame:
+    def __mod__(self, other: Scalar) -> DataFrame:
         """
         Return modulus of this dataframe by `other` (`%` operator).
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -551,20 +626,19 @@ class DataFrame:
         """
         ...
 
-    def __divmod__(self, other: DataFrame | Scalar) -> tuple[DataFrame, DataFrame]:
+    def __divmod__(self, other: Scalar) -> tuple[DataFrame, DataFrame]:
         """
         Return quotient and remainder of integer division. See `divmod` builtin function.
 
         Parameters
         ----------
-        other : DataFrame or Scalar
-            If DataFrame, must have same length and matching columns.
+        other : Scalar
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        A tuple of two DataFrame's
+        A tuple of two `DataFrame`s
         """
         ...
 
@@ -747,9 +821,15 @@ class DataFrame:
         """
         ...
 
-    def unique_indices(self, keys: Sequence[str], *, skip_nulls: bool = True) -> Column[int]:
+    def unique_indices(self, keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Column[int]:
         """
         Return indices corresponding to unique values across selected columns.
+
+        Parameters
+        ----------
+        keys : str | list[str], optional
+            Column names to consider when finding unique values.
+            If `None`, all columns are considered.
 
         Returns
         -------
@@ -823,8 +903,21 @@ class DataFrame:
 
         Parameters
         ----------
-        dtype : Any
+        dtype : DType
             The dtype of the array-API-compliant object to return.
+            Must be one of:
+
+            - Bool()
+            - Int8()
+            - Int16()
+            - Int32()
+            - Int64()
+            - UInt8()
+            - UInt16()
+            - UInt32()
+            - UInt64()
+            - Float32()
+            - Float64()
         
         Returns
         -------
@@ -837,4 +930,36 @@ class DataFrame:
         may choose to return a numpy array (for numpy prior to 2.0), with the
         understanding that consuming libraries would then use the
         ``array-api-compat`` package to convert it to a Standard-compliant array.
+        """
+    
+    def join(
+        self,
+        other: DataFrame,
+        *,
+        how: Literal['left', 'inner', 'outer'],
+        left_on: str | list[str],
+        right_on: str | list[str],
+    ) -> DataFrame:
+        """
+        Join with other dataframe.
+
+        Parameters
+        ----------
+        other : DataFrame
+            Dataframe to join with.
+        how : str
+            Kind of join to perform.
+            Must be one of {'left', 'inner', 'outer'}.
+        left_on : str | list[str]
+            Key(s) from `self` to perform `join` on.
+            If more than one key is given, it must be
+            the same length as `right_on`.
+        right_on : str | list[str]
+            Key(s) from `other` to perform `join` on.
+            If more than one key is given, it must be
+            the same length as `left_on`.
+        
+        Returns
+        -------
+        DataFrame
         """
