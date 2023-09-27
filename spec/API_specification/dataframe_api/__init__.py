@@ -32,6 +32,10 @@ __all__ = [
     "Float64",
     "Float32",
     "Bool",
+    "Date",
+    "Datetime",
+    "Duration",
+    "String",
     "is_dtype",
 ]
 
@@ -269,7 +273,7 @@ class Float32:
 class Bool:
     """Boolean type."""
 
-class Datetime:
+class Date:
     """
     Date type.
 
