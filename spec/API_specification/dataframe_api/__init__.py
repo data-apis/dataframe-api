@@ -271,6 +271,13 @@ class Bool:
 
 class Datetime:
     """
+    Date type.
+
+    There is no guarantee about the range of dates available.
+    """
+
+class Datetime:
+    """
     Datetime type.
 
     Attributes
