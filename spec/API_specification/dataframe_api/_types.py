@@ -149,6 +149,12 @@ class SupportsDataFrameAPI(Protocol):
     ) -> DataFrameType:
         ...
 
+class SupportsColumnAPI(Protocol):
+    def __column_consortium_standard__(
+        self, *, api_version: str | None = None
+    ) -> ColumnType:
+        ...
+
 
 __all__ = [
     "Any",

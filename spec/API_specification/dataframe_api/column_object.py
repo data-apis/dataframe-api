@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any,NoReturn, TYPE_CHECKING, Literal, Generic
 
 if TYPE_CHECKING:
-    from ._types import NullType, Scalar, DType
+    from ._types import NullType, Scalar, DType, Namespace
 
 
 __all__ = ['Column']
@@ -19,7 +19,7 @@ class Column:
 
     """
 
-    def __column_namespace__(self) -> Any:
+    def __column_namespace__(self) -> Namespace:
         """
         Returns an object that has all the Dataframe Standard API functions on it.
 
