@@ -14,7 +14,7 @@ class GroupBy:
     GroupBy object.
 
     Note that this class is not meant to be constructed by users.
-    It is returned from `DataFrame.groupby`.
+    It is returned from `DataFrame.group_by`.
 
     **Methods**
 

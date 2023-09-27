@@ -104,7 +104,7 @@ class Column(Generic[DType]):
         ...
 
 
-    def get_rows_by_mask(self: Column[DType], mask: Column[Bool]) -> Column[DType]:
+    def filter(self: Column[DType], mask: Column[Bool]) -> Column[DType]:
         """
         Select a subset of rows corresponding to a mask.
 

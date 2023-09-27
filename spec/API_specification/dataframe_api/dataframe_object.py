@@ -65,7 +65,7 @@ class DataFrame:
         Return number of rows and number of columns.
         """
 
-    def groupby(self, keys: str | list[str], /) -> GroupBy:
+    def group_by(self, keys: str | list[str], /) -> GroupBy:
         """
         Group the DataFrame by the given columns.
 
@@ -109,7 +109,7 @@ class DataFrame:
         """
         ...
 
-    def get_columns_by_name(self, names: Sequence[str], /) -> DataFrame:
+    def select(self, names: Sequence[str], /) -> DataFrame:
         """
         Select multiple columns by name.
 
@@ -161,7 +161,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows_by_mask(self, mask: Column[Bool]) -> DataFrame:
+    def filter(self, mask: Column[Bool]) -> DataFrame:
         """
         Select a subset of rows corresponding to a mask.
 
@@ -194,14 +194,14 @@ class DataFrame:
             df = df.insert_column(new_column.rename('a_plus_1'))
         
         If you need to insert the column at a different location, combine with
-        :meth:`get_columns_by_name`, e.g.:
+        :meth:`select`, e.g.:
 
         .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
             new_columns_names = ['a_plus_1'] + df.column_names
             df = df.insert_column(new_column.rename('a_plus_1'))
-            df = df.get_columns_by_name(new_column_names)
+            df = df.select(new_column_names)
 
         Parameters
         ----------
@@ -278,6 +278,17 @@ class DataFrame:
         list[str]
         """
         ...
+    
+    @property
+    def schema(self) -> dict[str, Any]:
+        """
+        Get dataframe's schema.
+
+        Returns
+        -------
+        dict[str, Any]
+            Mapping from column name to data type.
+        """
     
     def sort(
         self,

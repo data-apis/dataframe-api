@@ -275,19 +275,21 @@ latest version of the dataframe API specification.  If the given
 version is invalid or not implemented for the given module, an
 error should be raised. Default: ``None``.
 
+Example:
+
 ```python
 import pandas as pd
 import polars as pl
 
 
-df_pandas = pl.read_parquet('iris.parquet')
+df_pandas = pd.read_parquet('iris.parquet')
 df_polars = pl.scan_parquet('iris.parquet')
 
 def my_dataframe_agnostic_function(df):
-    df = df.__dataframe_consortium_standard__()
+    df = df.__dataframe_consortium_standard__(api_version='2023.09-beta')
 
     mask = df.get_column_by_name('species') != 'setosa'
-    df = df.get_rows_by_mask(mask)
+    df = df.filter(mask)
 
     for column_name in df.column_names
         if column_name == 'species':
@@ -303,8 +305,6 @@ my_dataframe_agnostic_function(df_pandas)
 my_dataframe_agnostic_function(df_polars)
 my_dataframe_agnostic_function(df_any_other_library_with_a_standard_compliant_namespace)
 ```
-
-Example:
 
 ### Checking a dataframe object for Compliance
 
