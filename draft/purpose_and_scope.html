@@ -699,7 +699,7 @@ error should be raised. Default: <code class="docutils literal notranslate"><spa
     <span class="n">mask</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="s1">'species'</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">'setosa'</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_names</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">column_names</span>
         <span class="k">if</span> <span class="n">column_name</span> <span class="o">==</span> <span class="s1">'species'</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="n">new_column</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>

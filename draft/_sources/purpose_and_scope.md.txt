@@ -291,7 +291,7 @@ def my_dataframe_agnostic_function(df):
     mask = df.get_column_by_name('species') != 'setosa'
     df = df.filter(mask)
 
-    for column_name in df.get_column_names():
+    for column_name in df.column_names
         if column_name == 'species':
             continue
         new_column = df.get_column_by_name(column_name)
