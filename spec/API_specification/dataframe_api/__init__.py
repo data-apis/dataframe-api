@@ -63,7 +63,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '', api_version: str | None = None) -> Column[Any]:
+def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '') -> Column[Any]:
     """
     Construct Column from sequence of elements.
 
@@ -77,13 +77,6 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '',
         Name of column.
     dtype : DType
         Dtype of result. Must be specified.
-    api_version: str | None
-        A string representing the version of the dataframe API specification
-        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return an object corresponding to
-        latest version of the dataframe API specification.  If the given
-        version is invalid or not implemented for the given module, an
-        error should be raised. Default: ``None``.
 
     Returns
     -------
@@ -91,7 +84,7 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '',
     """
     ...
 
-def dataframe_from_dict(data: Mapping[str, Column[Any]], *, api_version: str | None = None) -> DataFrame:
+def dataframe_from_dict(data: Mapping[str, Column[Any]]) -> DataFrame:
     """
     Construct DataFrame from map of column names to Columns.
 
@@ -101,13 +94,6 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]], *, api_version: str | N
         Column must be of the corresponding type of the DataFrame.
         For example, it is only supported to build a ``LibraryXDataFrame`` using
         ``LibraryXColumn`` instances.
-    api_version: str | None
-        A string representing the version of the dataframe API specification
-        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return an object corresponding to
-        latest version of the dataframe API specification.  If the given
-        version is invalid or not implemented for the given module, an
-        error should be raised. Default: ``None``.
 
     Returns
     -------
@@ -123,7 +109,7 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]], *, api_version: str | N
     ...
 
 
-def column_from_1d_array(array: Any, *, dtype: Any, name: str = '', api_version: str | None = None) -> Column[Any]:
+def column_from_1d_array(array: Any, *, dtype: Any, name: str = '') -> Column[Any]:
     """
     Construct Column from 1D array.
 
@@ -141,13 +127,6 @@ def column_from_1d_array(array: Any, *, dtype: Any, name: str = '', api_version:
         Name to give columns.
     dtype : DType
         Dtype of column.
-    api_version: str | None
-        A string representing the version of the dataframe API specification
-        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return an object corresponding to
-        latest version of the dataframe API specification.  If the given
-        version is invalid or not implemented for the given module, an
-        error should be raised. Default: ``None``.
 
     Returns
     -------
@@ -155,7 +134,7 @@ def column_from_1d_array(array: Any, *, dtype: Any, name: str = '', api_version:
     """
     ...
 
-def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any], api_version: str | None = None) -> DataFrame:
+def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any]) -> DataFrame:
     """
     Construct DataFrame from 2D array.
 
@@ -173,13 +152,6 @@ def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping
         Names to give columns. Must be the same length as ``array.shape[1]``.
     dtypes : Mapping[str, DType]
         Dtype of each column. Must be the same length as ``array.shape[1]``.
-    api_version: str | None
-        A string representing the version of the dataframe API specification
-        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return an object corresponding to
-        latest version of the dataframe API specification.  If the given
-        version is invalid or not implemented for the given module, an
-        error should be raised. Default: ``None``.
 
     Returns
     -------
