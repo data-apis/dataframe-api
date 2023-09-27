@@ -14,11 +14,11 @@ from typing import (
     Sequence,
     Tuple,
     Union,
-    TYPE_CHECKING,
 )
 
 if TYPE_CHECKING:
-    from .dataframe_object import DataFrame
+    from .dataframe_object import DataFrame as DataFrameType
+    from .column_object import Column as ColumnType
 
 if TYPE_CHECKING:
     from .dtypes import (
@@ -48,47 +48,58 @@ NullType = Any
 class Namespace(Protocol):
     __dataframe_api_version__: str
 
-    class DataFrame:
-        ...
-
-    class Column:
-        ...
-
-    class Int64:
-        ...
-
-    class Int32:
-        ...
-
-    class Int16:
-        ...
-
-    class Int8:
-        ...
-
-    class UInt64:
-        ...
-
-    class UInt32:
-        ...
-
-    class UInt16:
-        ...
-
-    class UInt8:
-        ...
-
-    class Float64:
-        ...
-
-    class Float32:
-        ...
-
-    class Bool:
+    @staticmethod
+    def DataFrame() -> DataFrameType:
         ...
 
     @staticmethod
-    def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
+    def Column() -> ColumnType:
+        ...
+
+    @staticmethod
+    def Int64() -> Int64:...
+    @staticmethod
+    def Int16() -> Int16:...
+
+    @staticmethod
+    def Int32() -> Int32:
+        ...
+
+
+    @staticmethod
+    def Int8() -> Int8:
+        ...
+
+    @staticmethod
+    def UInt64() -> UInt64:
+        ...
+
+    @staticmethod
+    def UInt32() -> UInt32:
+        ...
+
+    @staticmethod
+    def UInt16() -> UInt16:
+        ...
+
+    @staticmethod
+    def UInt8() -> UInt8:
+        ...
+
+    @staticmethod
+    def Float64() -> Float64:
+        ...
+
+    @staticmethod
+    def Float32() -> Float32:
+        ...
+
+    @staticmethod
+    def Bool() -> Bool:
+        ...
+
+    @staticmethod
+    def concat(dataframes: Sequence[DataFrameType]) -> DataFrameType:
         ...
 
     @staticmethod
@@ -98,19 +109,19 @@ class Namespace(Protocol):
         dtype: Any,
         name: str = "",
         api_version: str | None = None,
-    ) -> Column:
+    ) -> ColumnType:
         ...
 
     @staticmethod
     def dataframe_from_dict(
-        data: Mapping[str, Column], *, api_version: str | None = None
-    ) -> DataFrame:
+        data: Mapping[str, ColumnType], *, api_version: str | None = None
+    ) -> DataFrameType:
         ...
 
     @staticmethod
     def column_from_1d_array(
         array: Any, *, dtype: Any, name: str = "", api_version: str | None = None
-    ) -> Column:
+    ) -> ColumnType:
         ...
 
     @staticmethod
@@ -120,7 +131,7 @@ class Namespace(Protocol):
         names: Sequence[str],
         dtypes: Mapping[str, Any],
         api_version: str | None = None,
-    ) -> DataFrame:
+    ) -> DataFrameType:
         ...
 
     @staticmethod
@@ -135,7 +146,7 @@ class Namespace(Protocol):
 class SupportsDataFrameAPI(Protocol):
     def __dataframe_consortium_standard__(
         self, *, api_version: str | None = None
-    ) -> DataFrame:
+    ) -> DataFrameType:
         ...
 
 
