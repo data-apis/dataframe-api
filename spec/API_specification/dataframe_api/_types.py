@@ -33,6 +33,9 @@ if TYPE_CHECKING:
         UInt32,
         UInt16,
         UInt8,
+        Date,
+        Datetime,
+        String,
     )
 
     DType = Union[Bool, Float64, Float32, Int64, Int32, Int16, Int8, UInt64, UInt32, UInt16, UInt8]
@@ -101,15 +104,15 @@ class Namespace(Protocol):
         ...
 
     @staticmethod
-    def Date() -> Bool:
+    def Date() -> Date:
         ...
 
     @staticmethod
-    def Datetime(time_unit: Literal['ms', 'us'], time_zone: str | None) -> Bool:
+    def Datetime(time_unit: Literal['ms', 'us'], time_zone: str | None) -> Datetime:
         ...
 
     @staticmethod
-    def String() -> Bool:
+    def String() -> String:
         ...
 
     @staticmethod
