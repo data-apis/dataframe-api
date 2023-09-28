@@ -6,7 +6,6 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
-    from . import Bool
     from ._types import NullType, Scalar, Namespace, DType
 
 
@@ -944,6 +943,10 @@ class DataFrame:
         """
         Join with other dataframe.
 
+        Other than the joining column name(s), no column name is allowed to appear in
+        both `self` and `other`. Rename columns before calling `join` if necessary
+        using :meth:`rename_columns`.
+
         Parameters
         ----------
         other : DataFrame
@@ -963,4 +966,10 @@ class DataFrame:
         Returns
         -------
         DataFrame
+
+        Raises
+        ------
+        ValueError
+            If, apart from `left_on` and `right_on`, there are any column names
+            present in both `self` and `other`.
         """
