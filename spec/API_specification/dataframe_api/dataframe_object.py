@@ -180,7 +180,7 @@ class DataFrame:
         """
         ...
 
-    def with_columns(self, columns: Column[Any] | Sequence[Column[Any]], /) -> DataFrame:
+    def assign(self, columns: Column[Any] | Sequence[Column[Any]], /) -> DataFrame:
         """
         Insert new column(s), or update values in existing ones.
 
@@ -194,7 +194,7 @@ class DataFrame:
         .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
-            df = df.with_columns(new_column.rename('b'))
+            df = df.assign(new_column.rename('b'))
 
         Parameters
         ----------
