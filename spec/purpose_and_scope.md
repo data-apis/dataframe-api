@@ -296,7 +296,7 @@ def my_dataframe_agnostic_function(df):
             continue
         new_column = df.get_column_by_name(column_name)
         new_column = (new_column - new_column.mean()) / new_column.std()
-        df = df.insert_column(new_column.rename(f'{column_name}_scaled'))
+        df = df.assign(new_column.rename(f'{column_name}_scaled'))
 
     return df.dataframe
 
