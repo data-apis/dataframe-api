@@ -6,8 +6,7 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
-    from . import Bool
-    from ._types import NullType, Scalar
+    from ._types import NullType, Scalar, DType
 
 
 __all__ = ["DataFrame"]
@@ -90,7 +89,7 @@ class DataFrame:
         """
         ...
 
-    def get_column_by_name(self, name: str, /) -> Column[Any]:
+    def get_column_by_name(self, name: str, /) -> Column:
         """
         Select a column by name.
 
@@ -128,13 +127,13 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Column[Any]) -> DataFrame:
+    def get_rows(self, indices: Column) -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
         Parameters
         ----------
-        indices : Column[int]
+        indices : Column
             Positions of rows to select.
 
         Returns
@@ -161,13 +160,13 @@ class DataFrame:
         """
         ...
 
-    def filter(self, mask: Column[Bool]) -> DataFrame:
+    def filter(self, mask: Column) -> DataFrame:
         """
         Select a subset of rows corresponding to a mask.
 
         Parameters
         ----------
-        mask : Column[bool]
+        mask : Column
 
         Returns
         -------
@@ -180,7 +179,7 @@ class DataFrame:
         """
         ...
 
-    def insert_column(self, column: Column[Any]) -> DataFrame:
+    def insert_column(self, column: Column) -> DataFrame:
         """
         Insert column into DataFrame at rightmost location.
 
@@ -209,7 +208,7 @@ class DataFrame:
         """
         ...
 
-    def update_columns(self, columns: Column[Any] | Sequence[Column[Any]], /) -> DataFrame:
+    def update_columns(self, columns: Column | Sequence[Column], /) -> DataFrame:
         """
         Update values in existing column(s) from Dataframe.
 
@@ -337,7 +336,7 @@ class DataFrame:
         *,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column[Any]:
+    ) -> Column:
         """
         Return row numbers which would sort according to given columns.
 
@@ -362,7 +361,7 @@ class DataFrame:
 
         Returns
         -------
-        Column[int]
+        Column
     
         Raises
         ------
@@ -688,7 +687,7 @@ class DataFrame:
         """
         ...
     
-    def any_rowwise(self, *, skip_nulls: bool = True) -> Column[Bool]:
+    def any_rowwise(self, *, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
@@ -702,7 +701,7 @@ class DataFrame:
         """
         ...
 
-    def all_rowwise(self, *, skip_nulls: bool = True) -> Column[Bool]:
+    def all_rowwise(self, *, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
@@ -822,7 +821,7 @@ class DataFrame:
         """
         ...
 
-    def unique_indices(self, keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Column[int]:
+    def unique_indices(self, keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Column:
         """
         Return indices corresponding to unique values across selected columns.
 
@@ -834,7 +833,7 @@ class DataFrame:
 
         Returns
         -------
-        Column[int]
+        Column
             Indices corresponding to unique values.
 
         Notes
@@ -898,7 +897,7 @@ class DataFrame:
         """
         ...
     
-    def to_array_object(self, dtype: Any) -> Any:
+    def to_array_object(self, dtype: DType) -> Any:
         """
         Convert to array-API-compliant object.
 
