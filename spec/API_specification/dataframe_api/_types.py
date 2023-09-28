@@ -3,39 +3,20 @@ Types for type annotations used in the dataframe API standard.
 """
 from __future__ import annotations
 
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    List,
-    Literal,
-    Mapping,
-    Optional,
-    Protocol,
-    Sequence,
-    Tuple,
-    Union,
-)
+from typing import (TYPE_CHECKING, Any, List, Literal, Mapping, Optional,
+                    Protocol, Sequence, Tuple, Union)
 
 if TYPE_CHECKING:
-    from .dataframe_object import DataFrame as DataFrameType
     from .column_object import Column as ColumnType
+    from .dataframe_object import DataFrame as DataFrameType
 
 if TYPE_CHECKING:
-    from .dtypes import (
-        Bool,
-        Float64,
-        Float32,
-        Int64,
-        Int32,
-        Int16,
-        Int8,
-        UInt64,
-        UInt32,
-        UInt16,
-        UInt8,
-    )
+    from .dtypes import (Bool, Float32, Float64, Int8, Int16, Int32, Int64,
+                         UInt8, UInt16, UInt32, UInt64)
 
-    DType = Union[Bool, Float64, Float32, Int64, Int32, Int16, Int8, UInt64, UInt32, UInt16, UInt8]
+    DType = Union[
+        Bool, Float64, Float32, Int64, Int32, Int16, Int8, UInt64, UInt32, UInt16, UInt8
+    ]
 
 # Type alias: Mypy needs Any, but for readability we need to make clear this
 # is a Python scalar (i.e., an instance of `bool`, `int`, `float`, `str`, etc.)
@@ -57,14 +38,16 @@ class Namespace(Protocol):
         ...
 
     @staticmethod
-    def Int64() -> Int64:...
+    def Int64() -> Int64:
+        ...
 
     @staticmethod
     def Int32() -> Int32:
         ...
 
     @staticmethod
-    def Int16() -> Int16:...
+    def Int16() -> Int16:
+        ...
 
     @staticmethod
     def Int8() -> Int8:
