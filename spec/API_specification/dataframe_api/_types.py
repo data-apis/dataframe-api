@@ -3,16 +3,37 @@ Types for type annotations used in the dataframe API standard.
 """
 from __future__ import annotations
 
-from typing import (TYPE_CHECKING, Any, List, Literal, Mapping, Optional,
-                    Protocol, Sequence, Tuple, Union)
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    List,
+    Literal,
+    Mapping,
+    Optional,
+    Protocol,
+    Sequence,
+    Tuple,
+    Union,
+)
 
 if TYPE_CHECKING:
     from .column_object import Column as ColumnType
     from .dataframe_object import DataFrame as DataFrameType
 
 if TYPE_CHECKING:
-    from .dtypes import (Bool, Float32, Float64, Int8, Int16, Int32, Int64,
-                         UInt8, UInt16, UInt32, UInt64)
+    from .dtypes import (
+        Bool,
+        Float32,
+        Float64,
+        Int8,
+        Int16,
+        Int32,
+        Int64,
+        UInt8,
+        UInt16,
+        UInt32,
+        UInt64,
+    )
 
     DType = Union[
         Bool, Float64, Float32, Int64, Int32, Int16, Int8, UInt64, UInt32, UInt16, UInt8
