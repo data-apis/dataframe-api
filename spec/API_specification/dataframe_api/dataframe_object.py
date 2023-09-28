@@ -6,7 +6,6 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
-    from . import Bool
     from ._types import NullType, Scalar, Namespace, DType
 
 
@@ -180,53 +179,27 @@ class DataFrame:
         """
         ...
 
-    def insert_column(self, column: Column) -> DataFrame:
+    def assign(self, columns: Column | Sequence[Column], /) -> DataFrame:
         """
-        Insert column into DataFrame at rightmost location.
+        Insert new column(s), or update values in existing ones.
 
-        The column's name will be used as the label in the resulting dataframe.
-        To insert the column with a different name, combine with `Column.rename`,
-        e.g.:
+        If inserting new columns, the column's names will be used as the labels,
+        and the columns will be inserted at the rightmost location.
+
+        If updating existing columns, their names will be used to tell which columns
+        to update. To update a column with a different name, combine with
+        :meth:`Column.rename`, e.g.:
 
         .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
-            df = df.insert_column(new_column.rename('a_plus_1'))
-        
-        If you need to insert the column at a different location, combine with
-        :meth:`select`, e.g.:
-
-        .. code-block:: python
-
-            new_column = df.get_column_by_name('a') + 1
-            new_columns_names = ['a_plus_1'] + df.column_names
-            df = df.insert_column(new_column.rename('a_plus_1'))
-            df = df.select(new_column_names)
-
-        Parameters
-        ----------
-        column : Column
-        """
-        ...
-
-    def update_columns(self, columns: Column | Sequence[Column], /) -> DataFrame:
-        """
-        Update values in existing column(s) from Dataframe.
-
-        The column's name will be used to tell which column to update.
-        To update a column with a different name, combine with :meth:`Column.rename`,
-        e.g.:
-
-        .. code-block:: python
-
-            new_column = df.get_column_by_name('a') + 1
-            df = df.update_column(new_column.rename('b'))
+            df = df.assign(new_column.rename('b'))
 
         Parameters
         ----------
         columns : Column | Sequence[Column]
-            Column(s) to update. If updating multiple columns, they must all have
-            different names.
+            Column(s) to update/insert. If updating/inserting multiple columns,
+            they must all have different names.
 
         Returns
         -------
@@ -234,13 +207,14 @@ class DataFrame:
         """
         ...
 
-    def drop_column(self, label: str) -> DataFrame:
+    def drop_columns(self, label: str | list[str]) -> DataFrame:
         """
-        Drop the specified column.
+        Drop the specified column(s).
 
         Parameters
         ----------
-        label : str
+        label : str | list[str]
+            Column name(s) to drop.
 
         Returns
         -------
@@ -944,6 +918,10 @@ class DataFrame:
         """
         Join with other dataframe.
 
+        Other than the joining column name(s), no column name is allowed to appear in
+        both `self` and `other`. Rename columns before calling `join` if necessary
+        using :meth:`rename_columns`.
+
         Parameters
         ----------
         other : DataFrame
@@ -963,4 +941,10 @@ class DataFrame:
         Returns
         -------
         DataFrame
+
+        Raises
+        ------
+        ValueError
+            If, apart from `left_on` and `right_on`, there are any column names
+            present in both `self` and `other`.
         """
