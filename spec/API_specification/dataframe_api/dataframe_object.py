@@ -6,8 +6,7 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
-    from . import Bool
-    from ._types import NullType, Scalar
+    from ._types import NullType, Scalar, DType
 
 
 __all__ = ["DataFrame"]
@@ -90,7 +89,7 @@ class DataFrame:
         """
         ...
 
-    def get_column_by_name(self, name: str, /) -> Column[Any]:
+    def get_column_by_name(self, name: str, /) -> Column:
         """
         Select a column by name.
 
@@ -128,13 +127,13 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Column[Any]) -> DataFrame:
+    def get_rows(self, indices: Column) -> DataFrame:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
         Parameters
         ----------
-        indices : Column[int]
+        indices : Column
             Positions of rows to select.
 
         Returns
@@ -161,13 +160,13 @@ class DataFrame:
         """
         ...
 
-    def filter(self, mask: Column[Bool]) -> DataFrame:
+    def filter(self, mask: Column) -> DataFrame:
         """
         Select a subset of rows corresponding to a mask.
 
         Parameters
         ----------
-        mask : Column[bool]
+        mask : Column
 
         Returns
         -------
@@ -180,53 +179,27 @@ class DataFrame:
         """
         ...
 
-    def insert_column(self, column: Column[Any]) -> DataFrame:
+    def assign(self, columns: Column | Sequence[Column], /) -> DataFrame:
         """
-        Insert column into DataFrame at rightmost location.
+        Insert new column(s), or update values in existing ones.
 
-        The column's name will be used as the label in the resulting dataframe.
-        To insert the column with a different name, combine with `Column.rename`,
-        e.g.:
+        If inserting new columns, the column's names will be used as the labels,
+        and the columns will be inserted at the rightmost location.
+
+        If updating existing columns, their names will be used to tell which columns
+        to update. To update a column with a different name, combine with
+        :meth:`Column.rename`, e.g.:
 
         .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
-            df = df.insert_column(new_column.rename('a_plus_1'))
-        
-        If you need to insert the column at a different location, combine with
-        :meth:`select`, e.g.:
-
-        .. code-block:: python
-
-            new_column = df.get_column_by_name('a') + 1
-            new_columns_names = ['a_plus_1'] + df.get_column_names()
-            df = df.insert_column(new_column.rename('a_plus_1'))
-            df = df.select(new_column_names)
-
-        Parameters
-        ----------
-        column : Column
-        """
-        ...
-
-    def update_columns(self, columns: Column[Any] | Sequence[Column[Any]], /) -> DataFrame:
-        """
-        Update values in existing column(s) from Dataframe.
-
-        The column's name will be used to tell which column to update.
-        To update a column with a different name, combine with :meth:`Column.rename`,
-        e.g.:
-
-        .. code-block:: python
-
-            new_column = df.get_column_by_name('a') + 1
-            df = df.update_column(new_column.rename('b'))
+            df = df.assign(new_column.rename('b'))
 
         Parameters
         ----------
         columns : Column | Sequence[Column]
-            Column(s) to update. If updating multiple columns, they must all have
-            different names.
+            Column(s) to update/insert. If updating/inserting multiple columns,
+            they must all have different names.
 
         Returns
         -------
@@ -234,13 +207,14 @@ class DataFrame:
         """
         ...
 
-    def drop_column(self, label: str) -> DataFrame:
+    def drop_columns(self, label: str | list[str]) -> DataFrame:
         """
-        Drop the specified column.
+        Drop the specified column(s).
 
         Parameters
         ----------
-        label : str
+        label : str | list[str]
+            Column name(s) to drop.
 
         Returns
         -------
@@ -268,7 +242,8 @@ class DataFrame:
         """
         ...
 
-    def get_column_names(self) -> list[str]:
+    @property
+    def column_names(self) -> list[str]:
         """
         Get column names.
 
@@ -336,7 +311,7 @@ class DataFrame:
         *,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column[Any]:
+    ) -> Column:
         """
         Return row numbers which would sort according to given columns.
 
@@ -361,7 +336,7 @@ class DataFrame:
 
         Returns
         -------
-        Column[int]
+        Column
     
         Raises
         ------
@@ -687,7 +662,7 @@ class DataFrame:
         """
         ...
     
-    def any_rowwise(self, *, skip_nulls: bool = True) -> Column[Bool]:
+    def any_rowwise(self, *, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
@@ -701,7 +676,7 @@ class DataFrame:
         """
         ...
 
-    def all_rowwise(self, *, skip_nulls: bool = True) -> Column[Bool]:
+    def all_rowwise(self, *, skip_nulls: bool = True) -> Column:
         """
         Reduction returns a Column.
 
@@ -821,7 +796,7 @@ class DataFrame:
         """
         ...
 
-    def unique_indices(self, keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Column[int]:
+    def unique_indices(self, keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Column:
         """
         Return indices corresponding to unique values across selected columns.
 
@@ -833,7 +808,7 @@ class DataFrame:
 
         Returns
         -------
-        Column[int]
+        Column
             Indices corresponding to unique values.
 
         Notes
@@ -897,7 +872,7 @@ class DataFrame:
         """
         ...
     
-    def to_array_object(self, dtype: Any) -> Any:
+    def to_array_object(self, dtype: DType) -> Any:
         """
         Convert to array-API-compliant object.
 
@@ -943,6 +918,10 @@ class DataFrame:
         """
         Join with other dataframe.
 
+        Other than the joining column name(s), no column name is allowed to appear in
+        both `self` and `other`. Rename columns before calling `join` if necessary
+        using :meth:`rename_columns`.
+
         Parameters
         ----------
         other : DataFrame
@@ -962,4 +941,10 @@ class DataFrame:
         Returns
         -------
         DataFrame
+
+        Raises
+        ------
+        ValueError
+            If, apart from `left_on` and `right_on`, there are any column names
+            present in both `self` and `other`.
         """
