@@ -429,6 +429,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.any_rowwise" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.any_rowwise()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.assign" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.assign()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.column_names" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.column_names</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.dataframe" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.dataframe</span></code></a>
@@ -446,8 +448,6 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_rows()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.group_by" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.group_by()</span></code></a>
-        </li>
-        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.insert_column" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.insert_column()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.is_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.is_nan()</span></code></a>
         </li>
@@ -486,8 +486,6 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.to_array_object" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.to_array_object()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.unique_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.unique_indices()</span></code></a>
-        </li>
-        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.update_columns" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.update_columns()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.var" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.var()</span></code></a>
         </li></ul>
@@ -599,6 +597,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.any_rowwise" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.any_rowwise()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.assign" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.assign()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.column_names" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.column_names</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.dataframe" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.dataframe</span></code></a>
@@ -616,8 +616,6 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_rows()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.group_by" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.group_by()</span></code></a>
-        </li>
-        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.insert_column" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.insert_column()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.is_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.is_nan()</span></code></a>
         </li>
@@ -656,8 +654,6 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.to_array_object" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.to_array_object()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.unique_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.unique_indices()</span></code></a>
-        </li>
-        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.update_columns" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.update_columns()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.var" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.var()</span></code></a>
         </li></ul>
@@ -1010,6 +1006,29 @@ for each row, rather than for each column.</p>
 </dd>
 </dl>
 </dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.assign">
+<span class="sig-name descname"><span class="pre">assign</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.assign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert new column(s), or update values in existing ones.</p>
+<p>If inserting new columns, the column’s names will be used as the labels,
+and the columns will be inserted at the rightmost location.</p>
+<p>If updating existing columns, their names will be used to tell which columns
+to update. To update a column with a different name, combine with
+<a class="reference internal" href="column_object.html#dataframe_api.Column.rename" title="dataframe_api.Column.rename"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Column.rename()</span></code></a>, e.g.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_column</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">new_column</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'b'</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>columns</strong> (<a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em> | </em><em>Sequence</em><em>[</em><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>]</em>) – Column(s) to update/insert. If updating/inserting multiple columns,
+they must all have different names.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.column_names">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">column_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#dataframe_api.DataFrame.column_names" title="Permalink to this definition">¶</a></dt>
@@ -1147,31 +1166,6 @@ where ‘Arraylike’ denotes an object adhering to the Array API standard.</p>
 <p>Downstream operations from this function, like aggregations, return
 results for which row order is not guaranteed and is implementation
 defined.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.DataFrame.insert_column">
-<span class="sig-name descname"><span class="pre">insert_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.insert_column" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert column into DataFrame at rightmost location.</p>
-<p>The column’s name will be used as the label in the resulting dataframe.
-To insert the column with a different name, combine with <code class="code docutils literal notranslate"><span class="pre">Column.rename</span></code>,
-e.g.:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_column</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">insert_column</span><span class="p">(</span><span class="n">new_column</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'a_plus_1'</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>If you need to insert the column at a different location, combine with
-<a class="reference internal" href="#dataframe_api.DataFrame.select" title="dataframe_api.DataFrame.select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">select()</span></code></a>, e.g.:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_column</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-<span class="n">new_columns_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a_plus_1'</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">column_names</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">insert_column</span><span class="p">(</span><span class="n">new_column</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'a_plus_1'</span><span class="p">))</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">new_column_names</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>column</strong> (<a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a>) – </p>
-</dd>
-</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.is_nan">
@@ -1458,27 +1452,6 @@ If the original column(s) contain multiple <code class="code docutils literal no
 only a single index corresponding to those values will be returned.
 Likewise for null values (if <code class="docutils literal notranslate"><span class="pre">skip_nulls=False</span></code>).
 To get the unique values, you can do <code class="docutils literal notranslate"><span class="pre">df.get_rows(df.unique_indices(keys))</span></code>.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.DataFrame.update_columns">
-<span class="sig-name descname"><span class="pre">update_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.update_columns" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update values in existing column(s) from Dataframe.</p>
-<p>The column’s name will be used to tell which column to update.
-To update a column with a different name, combine with <a class="reference internal" href="column_object.html#dataframe_api.Column.rename" title="dataframe_api.Column.rename"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Column.rename()</span></code></a>,
-e.g.:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_column</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">get_column_by_name</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">update_column</span><span class="p">(</span><span class="n">new_column</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'b'</span><span class="p">))</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>columns</strong> (<a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em> | </em><em>Sequence</em><em>[</em><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a><em>]</em>) – Column(s) to update. If updating multiple columns, they must all have
-different names.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>DataFrame</strong></p>
-</dd>
-</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.var">
