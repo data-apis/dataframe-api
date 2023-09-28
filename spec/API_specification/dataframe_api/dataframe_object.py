@@ -180,53 +180,27 @@ class DataFrame:
         """
         ...
 
-    def insert_column(self, column: Column[Any]) -> DataFrame:
+    def with_columns(self, columns: Column[Any] | Sequence[Column[Any]], /) -> DataFrame:
         """
-        Insert column into DataFrame at rightmost location.
+        Insert new column(s), or update values in existing ones.
 
-        The column's name will be used as the label in the resulting dataframe.
-        To insert the column with a different name, combine with `Column.rename`,
-        e.g.:
+        If inserting new columns, the column's names will be used as the labels,
+        and the columns will be inserted at the rightmost location.
+
+        If updating existing columns, their names will be used to tell which columns
+        to update. To update a column with a different name, combine with
+        :meth:`Column.rename`, e.g.:
 
         .. code-block:: python
 
             new_column = df.get_column_by_name('a') + 1
-            df = df.insert_column(new_column.rename('a_plus_1'))
-        
-        If you need to insert the column at a different location, combine with
-        :meth:`select`, e.g.:
-
-        .. code-block:: python
-
-            new_column = df.get_column_by_name('a') + 1
-            new_columns_names = ['a_plus_1'] + df.column_names
-            df = df.insert_column(new_column.rename('a_plus_1'))
-            df = df.select(new_column_names)
-
-        Parameters
-        ----------
-        column : Column
-        """
-        ...
-
-    def update_columns(self, columns: Column[Any] | Sequence[Column[Any]], /) -> DataFrame:
-        """
-        Update values in existing column(s) from Dataframe.
-
-        The column's name will be used to tell which column to update.
-        To update a column with a different name, combine with :meth:`Column.rename`,
-        e.g.:
-
-        .. code-block:: python
-
-            new_column = df.get_column_by_name('a') + 1
-            df = df.update_column(new_column.rename('b'))
+            df = df.with_columns(new_column.rename('b'))
 
         Parameters
         ----------
         columns : Column | Sequence[Column]
-            Column(s) to update. If updating multiple columns, they must all have
-            different names.
+            Column(s) to update/insert. If updating/inserting multiple columns,
+            they must all have different names.
 
         Returns
         -------
