@@ -3,12 +3,19 @@ Function stubs and API documentation for the DataFrame API standard.
 """
 from __future__ import annotations
 
+<<<<<<< HEAD
 from typing import Mapping, Sequence, Any, Literal
+=======
+from typing import Mapping, Sequence, Any, TYPE_CHECKING
+>>>>>>> upstream/main
 
 from .column_object import *
 from .dataframe_object import DataFrame
 from .groupby_object import *
-from ._types import DType
+from .dtypes import *
+
+if TYPE_CHECKING:
+    from ._types import DType
 
 __all__ = [
     "__dataframe_api_version__",
@@ -67,7 +74,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '', api_version: str | None = None) -> Column[Any]:
+def column_from_sequence(sequence: Sequence[Any], *, dtype: DType, name: str = '') -> Column:
     """
     Construct Column from sequence of elements.
 
@@ -81,13 +88,6 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '',
         Name of column.
     dtype : DType
         Dtype of result. Must be specified.
-    api_version: str | None
-        A string representing the version of the dataframe API specification
-        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return an object corresponding to
-        latest version of the dataframe API specification.  If the given
-        version is invalid or not implemented for the given module, an
-        error should be raised. Default: ``None``.
 
     Returns
     -------
@@ -95,7 +95,7 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '',
     """
     ...
 
-def dataframe_from_dict(data: Mapping[str, Column[Any]], *, api_version: str | None = None) -> DataFrame:
+def dataframe_from_dict(data: Mapping[str, Column]) -> DataFrame:
     """
     Construct DataFrame from map of column names to Columns.
 
@@ -105,13 +105,6 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]], *, api_version: str | N
         Column must be of the corresponding type of the DataFrame.
         For example, it is only supported to build a ``LibraryXDataFrame`` using
         ``LibraryXColumn`` instances.
-    api_version: str | None
-        A string representing the version of the dataframe API specification
-        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return an object corresponding to
-        latest version of the dataframe API specification.  If the given
-        version is invalid or not implemented for the given module, an
-        error should be raised. Default: ``None``.
 
     Returns
     -------
@@ -127,7 +120,7 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]], *, api_version: str | N
     ...
 
 
-def column_from_1d_array(array: Any, *, dtype: Any, name: str = '', api_version: str | None = None) -> Column[Any]:
+def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> Column:
     """
     Construct Column from 1D array.
 
@@ -145,13 +138,6 @@ def column_from_1d_array(array: Any, *, dtype: Any, name: str = '', api_version:
         Name to give columns.
     dtype : DType
         Dtype of column.
-    api_version: str | None
-        A string representing the version of the dataframe API specification
-        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return an object corresponding to
-        latest version of the dataframe API specification.  If the given
-        version is invalid or not implemented for the given module, an
-        error should be raised. Default: ``None``.
 
     Returns
     -------
@@ -159,7 +145,7 @@ def column_from_1d_array(array: Any, *, dtype: Any, name: str = '', api_version:
     """
     ...
 
-def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any], api_version: str | None = None) -> DataFrame:
+def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any]) -> DataFrame:
     """
     Construct DataFrame from 2D array.
 
@@ -177,13 +163,6 @@ def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping
         Names to give columns. Must be the same length as ``array.shape[1]``.
     dtypes : Mapping[str, DType]
         Dtype of each column. Must be the same length as ``array.shape[1]``.
-    api_version: str | None
-        A string representing the version of the dataframe API specification
-        in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-        If it is ``None``, it should return an object corresponding to
-        latest version of the dataframe API specification.  If the given
-        version is invalid or not implemented for the given module, an
-        error should be raised. Default: ``None``.
 
     Returns
     -------
@@ -236,6 +215,7 @@ def is_null(value: object, /) -> bool:
 
     """
 
+<<<<<<< HEAD
 ##########
 # Dtypes #
 ##########
@@ -305,12 +285,15 @@ class String:
 
 
 def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
+=======
+def is_dtype(dtype: DType, kind: str | tuple[str, ...]) -> bool:
+>>>>>>> upstream/main
     """
     Returns a boolean indicating whether a provided dtype is of a specified data type “kind”.
 
     Parameters
     ----------
-        dtype: Any
+        dtype: DType
             The input dtype.
         kind: str
             data type kind.
