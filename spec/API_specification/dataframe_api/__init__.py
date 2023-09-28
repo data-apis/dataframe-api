@@ -3,12 +3,15 @@ Function stubs and API documentation for the DataFrame API standard.
 """
 from __future__ import annotations
 
-from typing import Mapping, Sequence, Any
+from typing import Mapping, Sequence, Any, TYPE_CHECKING
 
 from .column_object import *
 from .dataframe_object import DataFrame
 from .groupby_object import *
-from ._types import DType
+from .dtypes import *
+
+if TYPE_CHECKING:
+    from ._types import DType
 
 __all__ = [
     "__dataframe_api_version__",
@@ -63,7 +66,7 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '', api_version: str | None = None) -> Column[Any]:
+def column_from_sequence(sequence: Sequence[Any], *, dtype: DType, name: str = '', api_version: str | None = None) -> Column:
     """
     Construct Column from sequence of elements.
 
@@ -91,7 +94,7 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: Any, name: str = '',
     """
     ...
 
-def dataframe_from_dict(data: Mapping[str, Column[Any]], *, api_version: str | None = None) -> DataFrame:
+def dataframe_from_dict(data: Mapping[str, Column], *, api_version: str | None = None) -> DataFrame:
     """
     Construct DataFrame from map of column names to Columns.
 
@@ -123,7 +126,7 @@ def dataframe_from_dict(data: Mapping[str, Column[Any]], *, api_version: str | N
     ...
 
 
-def column_from_1d_array(array: Any, *, dtype: Any, name: str = '', api_version: str | None = None) -> Column[Any]:
+def column_from_1d_array(array: Any, *, dtype: DType, name: str = '', api_version: str | None = None) -> Column:
     """
     Construct Column from 1D array.
 
@@ -232,51 +235,13 @@ def is_null(value: object, /) -> bool:
 
     """
 
-##########
-# Dtypes #
-##########
-
-class Int64:
-    """Integer type with 64 bits of precision."""
-
-class Int32:
-    """Integer type with 32 bits of precision."""
-
-class Int16:
-    """Integer type with 16 bits of precision."""
-
-class Int8:
-    """Integer type with 8 bits of precision."""
-
-class UInt64:
-    """Unsigned integer type with 64 bits of precision."""
-
-class UInt32:
-    """Unsigned integer type with 32 bits of precision."""
-
-class UInt16:
-    """Unsigned integer type with 16 bits of precision."""
-
-class UInt8:
-    """Unsigned integer type with 8 bits of precision."""
-
-class Float64:
-    """Floating point type with 64 bits of precision."""
-
-class Float32:
-    """Floating point type with 32 bits of precision."""
-
-class Bool:
-    """Boolean type with 8 bits of precision."""
-
-
-def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
+def is_dtype(dtype: DType, kind: str | tuple[str, ...]) -> bool:
     """
     Returns a boolean indicating whether a provided dtype is of a specified data type “kind”.
 
     Parameters
     ----------
-        dtype: Any
+        dtype: DType
             The input dtype.
         kind: str
             data type kind.
