@@ -233,13 +233,14 @@ class DataFrame:
         """
         ...
 
-    def drop_column(self, label: str) -> DataFrame:
+    def drop_columns(self, label: str | list[str]) -> DataFrame:
         """
-        Drop the specified column.
+        Drop the specified column(s).
 
         Parameters
         ----------
-        label : str
+        label : str | list[str]
+            Column name(s) to drop.
 
         Returns
         -------
