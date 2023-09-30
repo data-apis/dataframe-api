@@ -1,3 +1,8 @@
+from __future__ import annotations
+
+from typing import Literal
+
+
 class Int64:
     """Integer type with 64 bits of precision."""
 
@@ -31,3 +36,35 @@ class Float32:
 class Bool:
     """Boolean type with 8 bits of precision."""
 
+class Date:
+    """
+    Date type.
+
+    There is no guarantee about the range of dates available.
+    """
+
+class Datetime:
+    """
+    Datetime type.
+
+    Attributes
+    ----------
+    time_unit : Literal['ms', 'us']
+        Precision of the datetime type. There is no guarantee that the full
+        range of dates available for the specified precision is supported.
+    time_zone : str | None
+        Time zone of the datetime type. Only IANA time zones are supported.
+        `None` indicates time-zone-naive data.
+    """
+    def __init__(self, *, time_unit: Literal['ms', 'us'], time_zone: str | None):
+        ...
+
+    time_unit: Literal['ms', 'us']
+    time_zone: str | None  # Only IANA time zones are supported
+
+class Duration:
+    """Duration type."""
+    time_unit: Literal['ms', 'us']
+
+class String:
+    """String type."""

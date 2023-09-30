@@ -3,7 +3,7 @@ Function stubs and API documentation for the DataFrame API standard.
 """
 from __future__ import annotations
 
-from typing import Mapping, Sequence, Any, TYPE_CHECKING
+from typing import Mapping, Sequence, Any, Literal, TYPE_CHECKING
 
 from .column_object import *
 from .dataframe_object import DataFrame
@@ -35,6 +35,10 @@ __all__ = [
     "Float64",
     "Float32",
     "Bool",
+    "Date",
+    "Datetime",
+    "Duration",
+    "String",
     "is_dtype",
 ]
 
