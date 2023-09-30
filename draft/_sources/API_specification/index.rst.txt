@@ -27,6 +27,10 @@ of objects and functions in the top-level namespace. The latter are:
    Float64
    Float32
    Bool
+   Date
+   Datetime
+   Duration
+   String
    is_dtype
    column_from_sequence
    column_from_1d_array
