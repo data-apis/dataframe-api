@@ -2,122 +2,89 @@ from __future__ import annotations
 
 from typing import Any,NoReturn, TYPE_CHECKING, Literal, Generic
 
-
 if TYPE_CHECKING:
-    from ._types import NullType, Scalar
-    from .permissivecolumn_object import PermissiveColumn
+    from . import Bool
+    from ._types import NullType, Scalar, DType, Namespace
+    from .column_object import Column
 
 
-__all__ = ['Column']
+__all__ = ['PermissiveColumn']
 
 
-class Column:
+class PermissiveColumn:
     """
-    Column object, which maps a DataFrame to a column.
+    PermissiveColumn object
 
-    Not meant to be instantiated directly - instead, use one of:
-    
-    - :func:`dataframe_api.col`
-    - :func:`dataframe_api.any_rowwise`
-    - :func:`dataframe_api.all_rowwise`
-    - :func:`dataframe_api.sorted_indices`
-    - :func:`dataframe_api.unique_indices`
-
-    A column is lazy and only takes effect when passed to one of the following:
-
-    - :meth:`DataFrame.select`
-    - :meth:`DataFrame.assign`
-    - :meth:`DataFrame.filter`
-    - :meth:`PermissiveFrame.select`
-    - :meth:`PermissiveFrame.assign`
-    - :meth:`PermissiveFrame.filter`
-
-    For example:
-
-    .. code-block::python
-
-        df: DataFrame
-        col = df.__dataframe_namespace__().col
-        df = df.filter(col('a') > col('b')*2)
-    
-    acts like (pandas syntax):
-
-    .. code-block::python
-
-        df: pd.DataFrame
-        col_a = lambda df: df.loc[:, 'a']
-        col_b = lambda df: df.loc[:, 'b']
-        col_b_doubled = lambda df: col_b(df) * 2
-        mask = lambda df: col_a(df) > col_b_doubled(df)
-        df = df.loc[mask(df)]
-    
-    Notes
-    -----
-    Binary operations between columns require that they resolve to columns of the
-    same length (unless one of them is of length-1, in which case it is broadcast to
-    the same length as the other one).
-    For example, the output column resulting from
-
-    .. code-block::python
-
-        col('a') - col('a').mean()
-    
-    will be the same length as column `'a'` (where its mean will have been subtracted from
-    each element).
+    Instantiate via :meth:`PermissiveFrame.get_column_by_name`.
     """
 
-    def root_names(self) -> list[str]:
+    def __column_namespace__(self) -> Namespace:
         """
-        Subset of column names to consider from original dataframe when building new column.
+        Returns an object that has all the Dataframe Standard API functions on it.
 
         Returns
         -------
-        list[str]
-            Column names
+        namespace: Namespace
+            An object representing the dataframe API namespace. It should have
+            every top-level function defined in the specification as an
+            attribute. It may contain other public names as well, but it is
+            recommended to only include those names that are part of the
+            specification.
 
-        Examples
-        --------
-        >>> col('a').root_names()
-        ['a']
-        >>> ((col('a') + 1) > col('b')).root_names()
-        ['a', 'b']
-        >>> any_rowwise('a', 'b').root_names()
-        ['a', 'b']
+        """
+    
+    @property
+    def column(self) -> Any:
+        """
+        Return underlying (not-necessarily-Standard-compliant) column.
+
+        If a library only implements the Standard, then this can return `self`.
+        """
+        ...
+    
+    @property
+    def name(self) -> str:
+        """Return name of column."""
+
+    def __iter__(self) -> NoReturn:
+        """
+        Iterate over elements.
+
+        This is intentionally "poisoned" to discourage inefficient code patterns.
+
+        Raises
+        ------
+        NotImplementedError
+        """
+        raise NotImplementedError("'__iter__' is intentionally not implemented.")
+
+    @property
+    def dtype(self) -> DType:
+        """
+        Return data type of column.
         """
 
-    def output_name(self) -> str:
-        """
-        Name of resulting column.
-        
-        Examples
-        --------
-        >>> col('a').output_name()
-        'a'
-        >>> col('a').rename('b').output_name()
-        'b'
-        >>> df.select(col('a').rename('b')).column_names
-        ['b']
-        """
-
-    def len(self) -> Column:
+    def len(self) -> int:
         """
         Return the number of rows.
         """
 
-    def get_rows(self, indices: Column | PermissiveColumn) -> Column:
+
+    def get_rows(self: PermissiveColumn, indices: PermissiveColumn) -> PermissiveColumn:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
         Parameters
         ----------
-        indices : Column
+        indices : PermissiveColumn
             Positions of rows to select.
         """
         ...
 
+
     def slice_rows(
-        self, start: int | None, stop: int | None, step: int | None
-    ) -> Column:
+        self: PermissiveColumn, start: int | None, stop: int | None, step: int | None
+    ) -> PermissiveColumn:
         """
         Select a subset of rows corresponding to a slice.
 
@@ -129,25 +96,32 @@ class Column:
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
         ...
 
-    def filter(self, mask: Column | PermissiveColumn) -> Column:
+
+    def filter(self: PermissiveColumn, mask: Column | PermissiveColumn) -> PermissiveColumn:
         """
         Select a subset of rows corresponding to a mask.
 
         Parameters
         ----------
-        mask : Column
+        mask : PermissiveColumn
 
         Returns
         -------
-        Column
+        PermissiveColumn
+
+        Notes
+        -----
+        Some participants preferred a weaker type Arraylike[bool] for mask,
+        where 'Arraylike' denotes an object adhering to the Array API standard.
         """
         ...
 
-    def get_value(self, row_number: int) -> Column:
+
+    def get_value(self, row_number: int) -> Scalar:
         """
         Select the value at a row number, similar to `ndarray.__getitem__(<int>)`.
 
@@ -158,7 +132,9 @@ class Column:
         
         Returns
         -------
-        Column
+        Scalar
+            Depends on the dtype of the PermissiveColumn, and may vary
+            across implementations.
         """
         ...
 
@@ -167,12 +143,12 @@ class Column:
         *,
         ascending: bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column:
+    ) -> PermissiveColumn:
         """
         Sort column.
 
         If you need the indices which would sort the column,
-        use :func:`sorted_indices`.
+        use :meth:`sorted_indices`.
 
         Parameters
         ----------
@@ -187,7 +163,7 @@ class Column:
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
         ...
 
@@ -196,11 +172,11 @@ class Column:
         *,
         ascending: bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column:
+    ) -> PermissiveColumn:
         """
         Return row numbers which would sort column.
 
-        If you need to sort the column, use :meth:`sort`.
+        If you need to sort the PermissiveColumn, use :meth:`sort`.
 
         Parameters
         ----------
@@ -215,11 +191,11 @@ class Column:
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
         ...
 
-    def __eq__(self, other: Column | Scalar) -> Column:  # type: ignore[override]
+    def __eq__(self, other: PermissiveColumn | Scalar) -> PermissiveColumn:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -227,17 +203,17 @@ class Column:
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __ne__(self, other: Column | Scalar) -> Column:  # type: ignore[override]
+    def __ne__(self: PermissiveColumn, other: PermissiveColumn | Scalar) -> PermissiveColumn:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -245,94 +221,94 @@ class Column:
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __ge__(self, other: Column | Scalar) -> Column:
+    def __ge__(self: PermissiveColumn, other: PermissiveColumn | Scalar) -> PermissiveColumn:
         """
         Compare for "greater than or equal to" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __gt__(self, other: Column | Scalar) -> Column:
+    def __gt__(self: PermissiveColumn, other: PermissiveColumn | Scalar) -> PermissiveColumn:
         """
         Compare for "greater than" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __le__(self, other: Column | Scalar) -> Column:
+    def __le__(self: PermissiveColumn, other: PermissiveColumn | Scalar) -> PermissiveColumn:
         """
         Compare for "less than or equal to" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __lt__(self, other: Column | Scalar) -> Column:
+    def __lt__(self: PermissiveColumn, other: PermissiveColumn | Scalar) -> PermissiveColumn:
         """
         Compare for "less than" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __and__(self, other: Column | bool) -> Column:
+    def __and__(self: PermissiveColumn, other: PermissiveColumn | bool) -> PermissiveColumn:
         """
-        Apply logical 'and' to `other` column (or scalar) and this column.
+        Apply logical 'and' to `other` PermissiveColumn (or scalar) and this PermissiveColumn.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : Column[bool] or bool
-            If column, must have same length.
+        other : PermissiveColumn or bool
+            If PermissiveColumn, must have same length.
 
         Returns
         -------
-        Column
+        PermissiveColumn
 
         Raises
         ------
@@ -340,20 +316,20 @@ class Column:
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self, other: Column | bool) -> Column:
+    def __or__(self: PermissiveColumn, other: PermissiveColumn | bool) -> PermissiveColumn:
         """
-        Apply logical 'or' to `other` column (or scalar) and this column.
+        Apply logical 'or' to `other` PermissiveColumn (or scalar) and this column.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : Column[bool] or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
 
         Returns
         -------
-        Column[bool]
+        PermissiveColumn
 
         Raises
         ------
@@ -361,87 +337,87 @@ class Column:
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self, other: Column | Scalar) -> Column:
+    def __add__(self: PermissiveColumn, other: PermissiveColumn | Scalar) -> PermissiveColumn:
         """
         Add `other` column or scalar to this column.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __sub__(self, other: Column | Scalar) -> Column:
+    def __sub__(self: PermissiveColumn, other: PermissiveColumn | Scalar) -> PermissiveColumn:
         """
         Subtract `other` column or scalar from this column.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __mul__(self, other: Column | Scalar) -> Column:
+    def __mul__(self, other: PermissiveColumn | Scalar) -> PermissiveColumn:
         """
         Multiply `other` column or scalar with this column.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __truediv__(self, other: Column | Scalar) -> Column:
+    def __truediv__(self, other: PermissiveColumn | Scalar) -> PermissiveColumn:
         """
         Divide this column by `other` column or scalar. True division, returns floats.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __floordiv__(self, other: Column | Scalar) -> Column:
+    def __floordiv__(self, other: PermissiveColumn | Scalar) -> PermissiveColumn:
         """
         Floor-divide `other` column or scalar to this column.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __pow__(self, other: Column | Scalar) -> Column:
+    def __pow__(self, other: PermissiveColumn | Scalar) -> PermissiveColumn:
         """
         Raise this column to the power of `other`.
 
@@ -451,59 +427,59 @@ class Column:
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __mod__(self, other: Column | Scalar) -> Column:
+    def __mod__(self, other: PermissiveColumn | Scalar) -> PermissiveColumn:
         """
         Returns modulus of this column by `other` (`%` operator).
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        Column
+        PermissiveColumn
         """
 
-    def __divmod__(self, other: Column | Scalar) -> tuple[Column, Column]:
+    def __divmod__(self, other: PermissiveColumn | Scalar) -> tuple[PermissiveColumn, PermissiveColumn]:
         """
         Return quotient and remainder of integer division. See `divmod` builtin function.
 
         Parameters
         ----------
-        other : Column or Scalar
-            If column, must have same length.
+        other : PermissiveColumn or Scalar
+            If PermissiveColumn, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
         Returns
         -------
-        tuple[Column, Column]
+        PermissiveColumn
         """
 
-    def __invert__(self) -> Column:
+    def __invert__(self: PermissiveColumn) -> PermissiveColumn:
         """
         Invert truthiness of (boolean) elements.
 
         Raises
         ------
         ValueError
-            If any of the column's columns is not boolean.
+            If any of the PermissiveColumn's columns is not boolean.
         """
 
-    def any(self, *, skip_nulls: bool = True) -> Column:
+    def any(self: PermissiveColumn, *, skip_nulls: bool = True) -> bool | NullType:
         """
         Reduction returns a bool.
 
@@ -513,7 +489,7 @@ class Column:
             If column is not boolean.
         """
 
-    def all(self, *, skip_nulls: bool = True) -> Column:
+    def all(self: PermissiveColumn, *, skip_nulls: bool = True) -> bool | NullType:
         """
         Reduction returns a bool.
 
@@ -523,32 +499,32 @@ class Column:
             If column is not boolean.
         """
 
-    def min(self, *, skip_nulls: bool = True) -> Column:
+    def min(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def max(self, *, skip_nulls: bool = True) -> Column:
+    def max(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def sum(self, *, skip_nulls: bool = True) -> Column:
+    def sum(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def prod(self, *, skip_nulls: bool = True) -> Column:
+    def prod(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical data types.
         The returned value has the same dtype as the column.
         """
 
-    def median(self, *, skip_nulls: bool = True) -> Column:
+    def median(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -556,7 +532,7 @@ class Column:
         dtypes.
         """
 
-    def mean(self, *, skip_nulls: bool = True) -> Column:
+    def mean(self, *, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -564,7 +540,7 @@ class Column:
         dtypes.
         """
 
-    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Column:
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -590,7 +566,7 @@ class Column:
             Whether to skip null values.
         """
 
-    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Column:
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
         """
         Reduction returns a scalar. Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
@@ -607,39 +583,39 @@ class Column:
             Whether to skip null values.
         """
 
-    def cumulative_max(self) -> Column:
+    def cumulative_max(self: PermissiveColumn) -> PermissiveColumn:
         """
-        Reduction returns a column. Any data type that supports comparisons
+        Reduction returns a PermissiveColumn. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def cumulative_min(self) -> Column:
+    def cumulative_min(self: PermissiveColumn) -> PermissiveColumn:
         """
-        Reduction returns a column. Any data type that supports comparisons
+        Reduction returns a PermissiveColumn. Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
 
-    def cumulative_sum(self) -> Column:
+    def cumulative_sum(self: PermissiveColumn) -> PermissiveColumn:
         """
-        Reduction returns a column. Must be supported for numerical and
+        Reduction returns a PermissiveColumn. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def cumulative_prod(self) -> Column:
+    def cumulative_prod(self: PermissiveColumn) -> PermissiveColumn:
         """
-        Reduction returns a column. Must be supported for numerical and
+        Reduction returns a PermissiveColumn. Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
 
-    def is_null(self) -> Column:
+    def is_null(self) -> PermissiveColumn:
         """
         Check for 'missing' or 'null' entries.
 
         Returns
         -------
-        Column
+        PermissiveColumn
 
         See also
         --------
@@ -652,13 +628,13 @@ class Column:
         but note that the Standard makes no guarantees about them.
         """
 
-    def is_nan(self) -> Column:
+    def is_nan(self) -> PermissiveColumn:
         """
         Check for nan entries.
 
         Returns
         -------
-        Column
+        PermissiveColumn
 
         See also
         --------
@@ -671,13 +647,13 @@ class Column:
         In particular, does not check for `np.timedelta64('NaT')`.
         """
 
-    def is_in(self, values: Column | PermissiveColumn) -> Column:
+    def is_in(self: PermissiveColumn, values: PermissiveColumn) -> PermissiveColumn:
         """
         Indicate whether the value at each row matches any value in `values`.
 
         Parameters
         ----------
-        values : Column
+        values : PermissiveColumn
             Contains values to compare against. May include ``float('nan')`` and
             ``null``, in which case ``'nan'`` and ``null`` will
             respectively return ``True`` even though ``float('nan') == float('nan')``
@@ -686,16 +662,16 @@ class Column:
 
         Returns
         -------
-        Column[bool]
+        PermissiveColumn
         """
 
-    def unique_indices(self, *, skip_nulls: bool = True) -> Column:
+    def unique_indices(self, *, skip_nulls: bool = True) -> PermissiveColumn:
         """
-        Return indices corresponding to unique values in column.
+        Return indices corresponding to unique values in PermissiveColumn.
 
         Returns
         -------
-        Column[int]
+        PermissiveColumn
             Indices corresponding to unique values.
 
         Notes
@@ -703,14 +679,14 @@ class Column:
         There are no ordering guarantees. In particular, if there are multiple
         indices corresponding to the same unique value, there is no guarantee
         about which one will appear in the result.
-        If the original column contains multiple `'NaN'` values, then
+        If the original PermissiveColumn contains multiple `'NaN'` values, then
         only a single index corresponding to those values will be returned.
         Likewise for null values (if ``skip_nulls=False``).
         To get the unique values, you can do ``col.get_rows(col.unique_indices())``.
         """
         ...
 
-    def fill_nan(self, value: float | NullType, /) -> Column:
+    def fill_nan(self: PermissiveColumn, value: float | NullType, /) -> PermissiveColumn:
         """
         Fill floating point ``nan`` values with the given fill value.
 
@@ -724,7 +700,7 @@ class Column:
         """
         ...
 
-    def fill_null(self, value: Scalar, /) -> Column:
+    def fill_null(self: PermissiveColumn, value: Scalar, /) -> PermissiveColumn:
         """
         Fill null values with the given fill value.
 
@@ -733,11 +709,45 @@ class Column:
         value : Scalar
             Value used to replace any ``null`` values in the column with.
             Must be of the Python scalar type matching the dtype of the column.
-
         """
         ...
 
-    def rename(self, name: str) -> Column:
+    def to_array_object(self, dtype: DType) -> Any:
+        """
+        Convert to array-API-compliant object.
+
+        Parameters
+        ----------
+        dtype : DType
+            The dtype of the array-API-compliant object to return.
+            Must be one of:
+
+            - Bool()
+            - Int8()
+            - Int16()
+            - Int32()
+            - Int64()
+            - UInt8()
+            - UInt16()
+            - UInt32()
+            - UInt64()
+            - Float32()
+            - Float64()
+        
+        Returns
+        -------
+        Any
+            An array-API-compliant object.
+        
+        Notes
+        -----
+        While numpy arrays are not yet array-API-compliant, implementations
+        may choose to return a numpy array (for numpy prior to 2.0), with the
+        understanding that consuming libraries would then use the
+        ``array-api-compat`` package to convert it to a Standard-compliant array.
+        """
+
+    def rename(self, name: str) -> PermissiveColumn:
         """
         Rename column.
 
@@ -748,7 +758,7 @@ class Column:
         
         Returns
         -------
-        Column
+        PermissiveColumn
             New column - this does not operate in-place.
         """
         ...

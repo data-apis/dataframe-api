@@ -17,7 +17,7 @@ def group_by_and_plot(
 
     df = namespace.dataframe_from_dict({"x": x, "y": y, "color": color})
 
-    agg = df.group_by("color").mean()
+    agg = df.group_by("color").mean().collect()
     x = agg.get_column_by_name("x").to_array_object(namespace.Float64())
     y = agg.get_column_by_name("y").to_array_object(namespace.Float64())
 

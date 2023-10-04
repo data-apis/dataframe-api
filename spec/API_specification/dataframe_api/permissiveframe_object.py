@@ -4,44 +4,26 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 
 
 if TYPE_CHECKING:
-    from .column_object import Column
-    from .permissiveframe_object import PermissiveFrame
     from .permissivecolumn_object import PermissiveColumn
+    from .column_object import Column
+    from .dataframe_object import DataFrame
     from .groupby_object import GroupBy
     from ._types import NullType, Scalar, Namespace, DType
 
 
-__all__ = ["DataFrame"]
+__all__ = ["PermissiveFrame"]
 
 
-
-class DataFrame:
+class PermissiveFrame:
     """
-    DataFrame object
+    PermissiveFrame object. Like :class:`DataFrame`, but must support some extra methods.
 
-    Instantiate via any of the following:
+    In particular, it must support methods which require eager evaluation, such as
+    :meth:`to_array_object`.
 
-    - ``df_non_standard.__dataframe_consortium_standard__()``
-    - :func:`dataframe_api.dataframe_from_2d_array`
-    - :func:`dataframe_api.dataframe_from_dict`
+    Instatiate from a :class:`DataFrame` using :meth:`DataFrame.collect()`.
 
-    No assumptions should be made about the underlying execution engine. In particular,
-    any method which leads to materialisation (such as converting to ndarray)
-    is not supported. See :class:`dataframe_api.PermissiveFrame` for a counterpart
-    which supports materialisation.
-    
-    **Python operator support**
-
-    All arithmetic operators defined by the Python language, except for
-    ``__matmul__``, ``__neg__`` and ``__pos__``, must be supported for
-    numerical data types.
-
-    All comparison operators defined by the Python language must be supported
-    by the dataframe object for all data types for which those comparisons are
-    supported by the builtin scalar types corresponding to a data type.
-
-    In-place operators must not be supported. All operations on the dataframe
-    object are out-of-place.
+    Convert back to `:class:`DataFrame` using `:meth:`relax()`.
     """
     def __dataframe_namespace__(self) -> Namespace:
         """
@@ -65,7 +47,7 @@ class DataFrame:
         If a library only implements the Standard, then this can return `self`.
         """
         ...
-    
+
     @property
     def schema(self) -> dict[str, DType]:
         """
@@ -77,7 +59,7 @@ class DataFrame:
             Mapping from column name to data type.
         """
     
-    def group_by(self, *keys: Column | str) -> GroupBy:
+    def group_by(self, *keys: str) -> GroupBy:
         """
         Group the DataFrame by the given columns.
 
@@ -102,9 +84,28 @@ class DataFrame:
         """
         ...
 
-    def select(self, *columns: str | Column) -> DataFrame:
+    def get_column_by_name(self, name: str, /) -> PermissiveColumn:
         """
-        Select multiple columns, either by name or by columns.
+        Select a column by name.
+
+        Parameters
+        ----------
+        name : str
+
+        Returns
+        -------
+        PermissiveColumn
+
+        Raises
+        ------
+        KeyError
+            If the key is not present.
+        """
+        ...
+
+    def select(self, *columns: str | Column) -> PermissiveFrame:
+        """
+        Select multiple columns by name.
 
         Parameters
         ----------
@@ -113,47 +114,39 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
-
+        PermissiveFrame
+    
         Examples
         --------
-        >>> df: DataFrame
+        >>> df: PermissiveFrame
         >>> col = df.__dataframe_namespace__().col
         >>> df = df.select('a', col('b'), (col('c')+col('d')+1).rename('e'))
-
-        Notes
-        -----
-        Columns should all be the same length, apart from possibly some
-        length-1 columns (which should be broadcast to be the same length as the others).
-        For example, if ``df`` is a dataframe of length 150, then we have:
-
-        .. code-block::python
-
-            df: DataFrame
-            
-            # This returns a length-1 dataframe
-            df.select(col('a').mean(), col('b').mean())
-
-            # This returns a length-150 dataframe
-            df.select(col('a').mean(), col('b'))
-
-            # and so does this
-            df.select(col('a'), col('b').mean())
-
-            # and so does this
-            df.select(col('a'), col('b'))
 
         Raises
         ------
         KeyError
-            If the any requested key is not present.
+            If any requested key is not present.
         """
         ...
 
+    def get_rows(self, indices: Column | PermissiveColumn) -> PermissiveFrame:
+        """
+        Select a subset of rows, similar to `ndarray.take`.
+
+        Parameters
+        ----------
+        indices : Column
+            Positions of rows to select.
+
+        Returns
+        -------
+        PermissiveFrame
+        """
+        ...
 
     def slice_rows(
         self, start: int | None, stop: int | None, step: int | None
-    ) -> DataFrame:
+    ) -> PermissiveFrame:
         """
         Select a subset of rows corresponding to a slice.
 
@@ -165,36 +158,26 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def filter(self, mask: Column | PermissiveColumn) -> DataFrame:
+    def filter(self, mask: Column | PermissiveColumn) -> PermissiveFrame:
         """
         Select a subset of rows corresponding to a mask.
 
         Parameters
         ----------
         mask : Column or PermissiveColumn
+            Keep rows where `mask` is `True`.
 
         Returns
         -------
-        DataFrame
-
-        Examples
-        --------
-        
-        Here is how you could keep rows in a dataframe where the values in
-        column 'a' are greater than 3:
-
-        >>> df: DataFrame
-        >>> namespace = df.__dataframe_namespace__()
-        >>> mask = namespace.col('a') > 3
-        >>> df = df.filter(mask)
+        PermissiveFrame
         """
         ...
 
-    def assign(self, *columns: Column | PermissiveColumn) -> DataFrame:
+    def assign(self, *columns: Column | PermissiveColumn) -> PermissiveFrame:
         """
         Insert new column(s), or update values in existing ones.
 
@@ -222,27 +205,26 @@ class DataFrame:
         """
         ...
 
-    def drop_columns(self, *labels: str) -> DataFrame:
+    def drop_columns(self, *labels: str) -> PermissiveFrame:
         """
         Drop the specified column(s).
 
         Parameters
         ----------
         labels : str
-            Column name(s) to drop.
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
 
         Raises
         ------
         KeyError
-            If the label is not present.
+            If a label is not present.
         """
         ...
 
-    def rename_columns(self, mapping: Mapping[str, str]) -> DataFrame:
+    def rename_columns(self, mapping: Mapping[str, str]) -> PermissiveFrame:
         """
         Rename columns.
 
@@ -253,7 +235,7 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
@@ -273,12 +255,12 @@ class DataFrame:
         *keys: str | Column | PermissiveColumn,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> DataFrame:
+    ) -> PermissiveFrame:
         """
         Sort dataframe according to given columns.
 
         If you only need the indices which would sort the dataframe, use
-        :func:`dataframe_api.sorted_indices`.
+        :meth:`sorted_indices`.
 
         Parameters
         ----------
@@ -299,7 +281,7 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
     
         Raises
         ------
@@ -308,7 +290,8 @@ class DataFrame:
         """
         ...
 
-    def __eq__(self, other: Scalar) -> DataFrame:  # type: ignore[override]
+
+    def __eq__(self, other: Scalar) -> PermissiveFrame:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -322,11 +305,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __ne__(self, other: Scalar) -> DataFrame:  # type: ignore[override]
+    def __ne__(self, other: Scalar) -> PermissiveFrame:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -340,11 +323,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __ge__(self, other: Scalar) -> DataFrame:
+    def __ge__(self, other: Scalar) -> PermissiveFrame:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -356,11 +339,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __gt__(self, other: Scalar) -> DataFrame:
+    def __gt__(self, other: Scalar) -> PermissiveFrame:
         """
         Compare for "greater than" `other`.
 
@@ -372,11 +355,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __le__(self, other: Scalar) -> DataFrame:
+    def __le__(self, other: Scalar) -> PermissiveFrame:
         """
         Compare for "less than or equal to" `other`.
 
@@ -388,11 +371,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __lt__(self, other: Scalar) -> DataFrame:
+    def __lt__(self, other: Scalar) -> PermissiveFrame:
         """
         Compare for "less than" `other`.
 
@@ -404,11 +387,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __and__(self, other: bool) -> DataFrame:
+    def __and__(self, other: bool) -> PermissiveFrame:
         """
         Apply logical 'and' to `other` scalar and this dataframe.
 
@@ -420,7 +403,7 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame[bool]
+        PermissiveFrame[bool]
 
         Raises
         ------
@@ -428,7 +411,7 @@ class DataFrame:
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self, other: DataFrame | bool) -> DataFrame:
+    def __or__(self, other: PermissiveFrame | bool) -> PermissiveFrame:
         """
         Apply logical 'or' to `other` scalar and this DataFrame.
 
@@ -440,7 +423,7 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame[bool]
+        PermissiveFrame[bool]
 
         Raises
         ------
@@ -448,7 +431,7 @@ class DataFrame:
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self, other: Scalar) -> DataFrame:
+    def __add__(self, other: Scalar) -> PermissiveFrame:
         """
         Add `other` scalar to this dataframe.
 
@@ -460,11 +443,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __sub__(self, other: Scalar) -> DataFrame:
+    def __sub__(self, other: Scalar) -> PermissiveFrame:
         """
         Subtract `other` scalar from this dataframe.
 
@@ -476,11 +459,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __mul__(self, other: Scalar) -> DataFrame:
+    def __mul__(self, other: Scalar) -> PermissiveFrame:
         """
         Multiply  `other` scalar with this dataframe.
 
@@ -492,11 +475,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __truediv__(self, other: Scalar) -> DataFrame:
+    def __truediv__(self, other: Scalar) -> PermissiveFrame:
         """
         Divide  this dataframe by `other` scalar. True division, returns floats.
 
@@ -508,11 +491,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __floordiv__(self, other: Scalar) -> DataFrame:
+    def __floordiv__(self, other: Scalar) -> PermissiveFrame:
         """
         Floor-divide (returns integers) this dataframe by `other` scalar.
 
@@ -524,11 +507,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __pow__(self, other: Scalar) -> DataFrame:
+    def __pow__(self, other: Scalar) -> PermissiveFrame:
         """
         Raise this dataframe to the power of `other`.
 
@@ -544,11 +527,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __mod__(self, other: Scalar) -> DataFrame:
+    def __mod__(self, other: Scalar) -> PermissiveFrame:
         """
         Return modulus of this dataframe by `other` (`%` operator).
 
@@ -560,11 +543,11 @@ class DataFrame:
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
         """
         ...
 
-    def __divmod__(self, other: Scalar) -> tuple[DataFrame, DataFrame]:
+    def __divmod__(self, other: Scalar) -> tuple[PermissiveFrame, PermissiveFrame]:
         """
         Return quotient and remainder of integer division. See `divmod` builtin function.
 
@@ -580,7 +563,7 @@ class DataFrame:
         """
         ...
 
-    def __invert__(self) -> DataFrame:
+    def __invert__(self) -> PermissiveFrame:
         """
         Invert truthiness of (boolean) elements.
 
@@ -603,7 +586,7 @@ class DataFrame:
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
-    def any(self, *, skip_nulls: bool = True) -> DataFrame:
+    def any(self, *, skip_nulls: bool = True) -> PermissiveFrame:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -614,7 +597,7 @@ class DataFrame:
         """
         ...
 
-    def all(self, *, skip_nulls: bool = True) -> DataFrame:
+    def all(self, *, skip_nulls: bool = True) -> PermissiveFrame:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -625,58 +608,43 @@ class DataFrame:
         """
         ...
     
-    def min(self, *, skip_nulls: bool = True) -> DataFrame:
+    def min(self, *, skip_nulls: bool = True) -> PermissiveFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def max(self, *, skip_nulls: bool = True) -> DataFrame:
+    def max(self, *, skip_nulls: bool = True) -> PermissiveFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def sum(self, *, skip_nulls: bool = True) -> DataFrame:
+    def sum(self, *, skip_nulls: bool = True) -> PermissiveFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def prod(self, *, skip_nulls: bool = True) -> DataFrame:
+    def prod(self, *, skip_nulls: bool = True) -> PermissiveFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def median(self, *, skip_nulls: bool = True) -> DataFrame:
+    def median(self, *, skip_nulls: bool = True) -> PermissiveFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def mean(self, *, skip_nulls: bool = True) -> DataFrame:
+    def mean(self, *, skip_nulls: bool = True) -> PermissiveFrame:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DataFrame:
-        """
-        Reduction returns a 1-row DataFrame.
-
-        Parameters
-        ----------
-        correction
-            Correction to apply to the result. For example, ``0`` for sample
-            standard deviation and ``1`` for population standard deviation.
-            See :meth:`Column.std` for a more detailed description.
-        skip_nulls
-            Whether to skip null values.
-        """
-        ...
-
-    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DataFrame:
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> PermissiveFrame:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -685,19 +653,34 @@ class DataFrame:
         correction
             Correction to apply to the result. For example, ``0`` for sample
             standard deviation and ``1`` for population standard deviation.
-            See :meth:`Column.std` for a more detailed description.
+            See :meth`Column.std` for a more detailed description.
         skip_nulls
             Whether to skip null values.
         """
         ...
 
-    def is_null(self) -> DataFrame:
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> PermissiveFrame:
+        """
+        Reduction returns a 1-row DataFrame.
+
+        Parameters
+        ----------
+        correction
+            Correction to apply to the result. For example, ``0`` for sample
+            standard deviation and ``1`` for population standard deviation.
+            See :meth`Column.std` for a more detailed description.
+        skip_nulls
+            Whether to skip null values.
+        """
+        ...
+
+    def is_null(self) -> PermissiveFrame:
         """
         Check for 'missing' or 'null' entries.
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
 
         See also
         --------
@@ -711,13 +694,13 @@ class DataFrame:
         """
         ...
 
-    def is_nan(self) -> DataFrame:
+    def is_nan(self) -> PermissiveFrame:
         """
         Check for nan entries.
 
         Returns
         -------
-        DataFrame
+        PermissiveFrame
 
         See also
         --------
@@ -731,7 +714,7 @@ class DataFrame:
         """
         ...
 
-    def fill_nan(self, value: float | NullType, /) -> DataFrame:
+    def fill_nan(self, value: float | NullType, /) -> PermissiveFrame:
         """
         Fill ``nan`` values with the given fill value.
 
@@ -750,7 +733,7 @@ class DataFrame:
 
     def fill_null(
         self, value: Scalar, /, *, column_names : list[str] | None = None
-    ) -> DataFrame:
+    ) -> PermissiveFrame:
         """
         Fill null values with the given fill value.
 
@@ -779,20 +762,51 @@ class DataFrame:
         """
         ...
 
+    def to_array_object(self, dtype: DType) -> Any:
+        """
+        Convert to array-API-compliant object.
+
+        Parameters
+        ----------
+        dtype : DType
+            The dtype of the array-API-compliant object to return.
+            Must be one of:
+
+            - Bool()
+            - Int8()
+            - Int16()
+            - Int32()
+            - Int64()
+            - UInt8()
+            - UInt16()
+            - UInt32()
+            - UInt64()
+            - Float32()
+            - Float64()
+        
+        Returns
+        -------
+        Any
+            An array-API-compliant object.
+        
+        Notes
+        -----
+        While numpy arrays are not yet array-API-compliant, implementations
+        may choose to return a numpy array (for numpy prior to 2.0), with the
+        understanding that consuming libraries would then use the
+        ``array-api-compat`` package to convert it to a Standard-compliant array.
+        """
+    
     def join(
         self,
-        other: DataFrame,
+        other: PermissiveFrame,
         *,
         how: Literal['left', 'inner', 'outer'],
         left_on: str | list[str],
         right_on: str | list[str],
-    ) -> DataFrame:
+    ) -> PermissiveFrame:
         """
         Join with other dataframe.
-
-        Other than the joining column name(s), no column name is allowed to appear in
-        both `self` and `other`. Rename columns before calling `join` if necessary
-        using :meth:`rename_columns`.
 
         Parameters
         ----------
@@ -812,39 +826,13 @@ class DataFrame:
         
         Returns
         -------
-        DataFrame
-
-        Raises
-        ------
-        ValueError
-            If, apart from `left_on` and `right_on`, there are any column names
-            present in both `self` and `other`.
+        PermissiveFrame
         """
-    
-    def collect(self) -> PermissiveFrame:
+
+    def relax(self) -> DataFrame:
         """
-        Transform dataframe into object which supports eager evaluation.
+        Return DataFrame.
 
-        .. warning::
-
-            This method may trigger compute and so can be extremely expensive.
-            If possible, don't use it at all. If you really need to materialise
-            data (for example, to convert it to an array object), then you should
-            call `collect` as late as possible - ideally, no more than once.
-
-            The exact point in the code where to place the `collect` call may vary
-            depending on implementations and on use-cases. However, if you follow
-            the maxim of using it as late as possible and ideally only once, then
-            we expect this to be close to optimal performance in most cases.
-
-            A pattern we recommend is
-
-            .. code-block::python
-
-                df: DataFrame
-                df_permissive = df.collect()
-                del def
-
-            to avoid accidentally calling `collect` twice on the same dataframe.
+        As :class:`DataFrame` is agnostic to execution details, some implementations
+        may choose to make the backing object lazy.
         """
-        ...

@@ -125,7 +125,8 @@ See the [use cases](use_cases.md) section for details on the exact use cases con
 Implementation details of the dataframes and execution of operations. This includes:
 
 - How data is represented and stored (whether the data is in memory, disk, distributed)
-- Expectations on when the execution is happening (in an eager or lazy way)
+- Expectations on when the execution is happening (in an eager or lazy way). Exceptions
+  are clearly demarcated, such as `PermissiveFrame` and `PermissiveColumn`.
 - Other execution details
 
 **Rationale:** The API defined in this document needs to be used by libraries as diverse as Ibis,

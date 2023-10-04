@@ -5,7 +5,9 @@ from __future__ import annotations
 
 from typing import Mapping, Sequence, Any, Literal, TYPE_CHECKING
 
-from .column_object import *
+from .permissivecolumn_object import PermissiveColumn
+from .permissiveframe_object import PermissiveFrame
+from .column_object import Column
 from .dataframe_object import DataFrame
 from .groupby_object import *
 from .dtypes import *
@@ -16,11 +18,17 @@ if TYPE_CHECKING:
 __all__ = [
     "__dataframe_api_version__",
     "DataFrame",
+    "PermissiveFrame",
+    "PermissiveColumn",
     "Column",
+    "GroupBy",
     "column_from_sequence",
     "column_from_1d_array",
+    "col",
     "concat",
     "dataframe_from_dict",
+    "sorted_indices",
+    "unique_indices",
     "dataframe_from_2d_array",
     "is_null",
     "null",
@@ -40,6 +48,8 @@ __all__ = [
     "Duration",
     "String",
     "is_dtype",
+    "any_rowwise",
+    "all_rowwise",
 ]
 
 
@@ -49,6 +59,21 @@ String representing the version of the DataFrame API specification to which
 the conforming implementation adheres. Set to a concrete value for a stable
 implementation of the dataframe API standard.
 """
+
+def col(name: str) -> Column:
+    """
+    Instantiate an Column which selects given column by name.
+
+    For example, to select column 'species' and then use it to filter
+    a DataFrame, you could do:
+
+    .. code-block::python
+
+        df: DataFrame
+        namespace = df.__dataframe_namespace__()
+        df.filter(pl.col('species') == 'setosa')
+    """
+    ...
 
 def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
@@ -70,9 +95,9 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Any], *, dtype: DType, name: str = '') -> Column:
+def column_from_sequence(sequence: Sequence[Any], *, dtype: DType, name: str = '') -> PermissiveColumn:
     """
-    Construct Column from sequence of elements.
+    Construct PermissiveColumn from sequence of elements.
 
     Parameters
     ----------
@@ -87,18 +112,18 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: DType, name: str = '
 
     Returns
     -------
-    Column
+    PermissiveColumn
     """
     ...
 
-def dataframe_from_dict(data: Mapping[str, Column]) -> DataFrame:
+def dataframe_from_dict(data: Mapping[str, PermissiveColumn]) -> DataFrame:
     """
-    Construct DataFrame from map of column names to Columns.
+    Construct DataFrame from map of column names to PermissiveColumns.
 
     Parameters
     ----------
-    data : Mapping[str, Column]
-        Column must be of the corresponding type of the DataFrame.
+    data : Mapping[str, PermissiveColumn]
+        PermissiveColumn must be of the corresponding type of the DataFrame.
         For example, it is only supported to build a ``LibraryXDataFrame`` using
         ``LibraryXColumn`` instances.
 
@@ -116,9 +141,9 @@ def dataframe_from_dict(data: Mapping[str, Column]) -> DataFrame:
     ...
 
 
-def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> Column:
+def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> PermissiveColumn:
     """
-    Construct Column from 1D array.
+    Construct PermissiveColumn from 1D array.
 
     See `dataframe_from_2d_array` for related 2D function.
 
@@ -137,7 +162,7 @@ def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> Column:
 
     Returns
     -------
-    Column
+    PermissiveColumn
     """
     ...
 
@@ -166,11 +191,117 @@ def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping
     """
     ...
 
+def any_rowwise(*columns: str | Column | PermissiveColumn, skip_nulls: bool = True) -> Column:
+    """
+    Reduction returns an Column.
+
+    Differs from ``DataFrame.any`` and that the reduction happens
+    for each row, rather than for each column.
+
+    Parameters
+    ----------
+    columns : str | Column | PermissiveColumn
+        Columns to consider.
+
+    Raises
+    ------
+    ValueError
+        If any of the DataFrame's columns is not boolean.
+    """
+    ...
+
+def all_rowwise(*columns: str | Column | PermissiveColumn, skip_nulls: bool = True) -> Column:
+    """
+    Reduction returns an Column.
+
+    Differs from ``DataFrame.all`` and that the reduction happens
+    for each row, rather than for each column.
+
+    Parameters
+    ----------
+    columns : str | Column | PermissiveColumn
+        Columns to consider.
+
+    Raises
+    ------
+    ValueError
+        If any of the DataFrame's columns is not boolean.
+    """
+    ...
+
+def sorted_indices(
+    *columns: str | Column | PermissiveColumn,
+    ascending: Sequence[bool] | bool = True,
+    nulls_position: Literal['first', 'last'] = 'last',
+) -> Column:
+    """
+    Return row numbers which would sort according to given columns.
+
+    If you need to sort the DataFrame, use :meth:`DataFrame.sort`.
+
+    Parameters
+    ----------
+    columns : str | Column | PermissiveColumn
+        Column(s) to sort by.
+    ascending : Sequence[bool] or bool
+        If `True`, sort by all keys in ascending order.
+        If `False`, sort by all keys in descending order.
+        If a sequence, it must be the same length as `keys`,
+        and determines the direction with which to use each
+        key to sort by.
+    nulls_position : ``{'first', 'last'}``
+        Whether null values should be placed at the beginning
+        or at the end of the result.
+        Note that the position of NaNs is unspecified and may
+        vary based on the implementation.
+
+    Returns
+    -------
+    Column
+
+    Raises
+    ------
+    ValueError
+        If `keys` and `ascending` are sequences of different lengths.
+    """
+    ...
+
+
+def unique_indices(
+        *columns: str | Column | PermissiveColumn,
+        skip_nulls: bool = True,
+    ) -> Column:
+    """
+    Return indices corresponding to unique values across selected columns.
+
+    Parameters
+    ----------
+    columns : str | Column | PermissiveColumn
+        Columns to consider when finding unique values.
+
+    Returns
+    -------
+    Column
+        Indices corresponding to unique values.
+
+    Notes
+    -----
+    There are no ordering guarantees. In particular, if there are multiple
+    indices corresponding to the same unique value(s), there is no guarantee
+    about which one will appear in the result.
+    If the original column(s) contain multiple `'NaN'` values, then
+    only a single index corresponding to those values will be returned.
+    Likewise for null values (if ``skip_nulls=False``).
+    """
+    ...
+
+
+
 class null:
     """
     A `null` object to represent missing data.
 
-    ``null`` is a scalar, and may be used when constructing a `Column` from a
+    ``null`` is a scalar, and may be used when constructing a  `PermissiveColumn` from a
     Python sequence with `column_from_sequence`. It does not support ``is``,
     ``==`` or ``bool``.
 

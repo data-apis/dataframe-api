@@ -73,7 +73,6 @@ nitpicky = True
 # them don't actually refer to anything that we have a document for.
 nitpick_ignore = [
     ('py:class', 'array'),
-    ('py:class', 'DataFrame'),
     ('py:class', 'device'),
     ('py:class', 'DType'),
     ('py:class', 'NestedSequence'),
@@ -85,6 +84,7 @@ nitpick_ignore = [
     ('py:class', 'Bool'),
     ('py:class', 'optional'),
     ('py:class', 'NullType'),
+    ('py:class', 'GroupBy'),
     ('py:class', 'Namespace'),
 ]
 # NOTE: this alias handling isn't used yet - added in anticipation of future

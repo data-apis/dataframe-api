@@ -18,7 +18,9 @@ from typing import (
 
 if TYPE_CHECKING:
     from .dataframe_object import DataFrame as DataFrameType
+    from .permissivecolumn_object import PermissiveColumn as PermissiveColumnType
     from .column_object import Column as ColumnType
+    from .permissiveframe_object import PermissiveFrame as PermissiveFrameType
 
 if TYPE_CHECKING:
     from .dtypes import (
@@ -52,11 +54,18 @@ class Namespace(Protocol):
     __dataframe_api_version__: str
 
     @staticmethod
+    def col(name: str) -> ColumnType: ...
+
+    @staticmethod
     def DataFrame() -> DataFrameType:
         ...
 
     @staticmethod
-    def Column() -> ColumnType:
+    def PermissiveFrame() -> DataFrameType:
+        ...
+
+    @staticmethod
+    def PermissiveColumn() -> PermissiveColumnType:
         ...
 
     @staticmethod
@@ -123,22 +132,22 @@ class Namespace(Protocol):
     def column_from_sequence(
         sequence: Sequence[Any],
         *,
-        dtype: Any,
+        dtype: DType,
         name: str = "",
         api_version: str | None = None,
-    ) -> ColumnType:
+    ) -> PermissiveColumnType:
         ...
 
     @staticmethod
     def dataframe_from_dict(
-        data: Mapping[str, ColumnType], *, api_version: str | None = None
+        data: Mapping[str, PermissiveColumnType], *, api_version: str | None = None
     ) -> DataFrameType:
         ...
 
     @staticmethod
     def column_from_1d_array(
-        array: Any, *, dtype: Any, name: str = "", api_version: str | None = None
-    ) -> ColumnType:
+        array: Any, *, dtype: DType, name: str = "", api_version: str | None = None
+    ) -> PermissiveColumnType:
         ...
 
     @staticmethod
@@ -146,7 +155,7 @@ class Namespace(Protocol):
         array: Any,
         *,
         names: Sequence[str],
-        dtypes: Mapping[str, Any],
+        dtypes: Mapping[str, DType],
         api_version: str | None = None,
     ) -> DataFrameType:
         ...
@@ -156,7 +165,7 @@ class Namespace(Protocol):
         ...
 
     @staticmethod
-    def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
+    def is_dtype(dtype: DType, kind: str | tuple[str, ...]) -> bool:
         ...
 
 
@@ -169,7 +178,7 @@ class SupportsDataFrameAPI(Protocol):
 class SupportsColumnAPI(Protocol):
     def __column_consortium_standard__(
         self, *, api_version: str | None = None
-    ) -> ColumnType:
+    ) -> PermissiveColumnType:
         ...
 
 

@@ -11,13 +11,13 @@ the `float` it is documented to return, in combination with the `__gt__` method
 (i.e., the `>` operator) on the dataframe:
 
 ```python
-class DataFrame:
-    def __gt__(self, other: DataFrame | Scalar) -> DataFrame:
+class PermissiveFrame:
+    def __gt__(self, other: Scalar) -> PermissiveFrame:
         ...
-    def get_column_by_name(self, name: str, /) -> Column:
+    def get_column_by_name(self, name: str, /) -> PermissiveColumn:
         ...
 
-class Column:
+class PermissiveColumn:
     def mean(self, skip_nulls: bool = True) -> float | NullType:
         ...
 
