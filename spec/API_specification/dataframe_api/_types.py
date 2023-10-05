@@ -61,6 +61,10 @@ class Namespace(Protocol):
         ...
 
     @staticmethod
+    def Column() -> ColumnType:
+        ...
+
+    @staticmethod
     def PermissiveFrame() -> DataFrameType:
         ...
 
@@ -134,19 +138,18 @@ class Namespace(Protocol):
         *,
         dtype: DType,
         name: str = "",
-        api_version: str | None = None,
     ) -> PermissiveColumnType:
         ...
 
     @staticmethod
     def dataframe_from_dict(
-        data: Mapping[str, PermissiveColumnType], *, api_version: str | None = None
+        data: Mapping[str, PermissiveColumnType]
     ) -> DataFrameType:
         ...
 
     @staticmethod
     def column_from_1d_array(
-        array: Any, *, dtype: DType, name: str = "", api_version: str | None = None
+        array: Any, *, dtype: DType, name: str = ""
     ) -> PermissiveColumnType:
         ...
 
@@ -156,7 +159,6 @@ class Namespace(Protocol):
         *,
         names: Sequence[str],
         dtypes: Mapping[str, DType],
-        api_version: str | None = None,
     ) -> DataFrameType:
         ...
 
