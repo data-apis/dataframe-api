@@ -13,7 +13,7 @@ __all__ = ['Column']
 
 class Column:
     """
-    Column object, which maps a DataFrame to a column.
+    Column object, which maps a DataFrame to a column derived from it.
 
     Not meant to be instantiated directly - instead, use one of:
     
@@ -228,7 +228,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -246,7 +246,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -262,7 +262,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -278,7 +278,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -294,7 +294,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -310,7 +310,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -328,7 +328,7 @@ class Column:
         Parameters
         ----------
         other : Column[bool] or bool
-            If column, must have same length.
+            if Column, must have same length.
 
         Returns
         -------
@@ -349,7 +349,7 @@ class Column:
         Parameters
         ----------
         other : Column[bool] or Scalar
-            If column, must have same length.
+            if Column, must have same length.
 
         Returns
         -------
@@ -368,7 +368,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -384,7 +384,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -400,7 +400,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -416,7 +416,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -432,7 +432,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -452,7 +452,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -468,7 +468,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -484,7 +484,7 @@ class Column:
         Parameters
         ----------
         other : Column or Scalar
-            If column, must have same length.
+            if Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
 
@@ -510,7 +510,7 @@ class Column:
         Raises
         ------
         ValueError
-            If column is not boolean.
+            if Column is not boolean.
         """
 
     def all(self, *, skip_nulls: bool = True) -> Column:
@@ -520,7 +520,7 @@ class Column:
         Raises
         ------
         ValueError
-            If column is not boolean.
+            if Column is not boolean.
         """
 
     def min(self, *, skip_nulls: bool = True) -> Column:
