@@ -71,7 +71,7 @@ def col(name: str) -> Column:
 
         df: DataFrame
         namespace = df.__dataframe_namespace__()
-        df.filter(pl.col('species') == 'setosa')
+        df.filter(namespace.col('species') == 'setosa')
     """
     ...
 
