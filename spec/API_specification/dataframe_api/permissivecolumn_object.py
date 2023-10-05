@@ -486,7 +486,7 @@ class PermissiveColumn:
         Raises
         ------
         ValueError
-            if Column is not boolean.
+            If Column is not boolean.
         """
 
     def all(self: PermissiveColumn, *, skip_nulls: bool = True) -> bool | NullType:
@@ -496,7 +496,7 @@ class PermissiveColumn:
         Raises
         ------
         ValueError
-            if Column is not boolean.
+            If Column is not boolean.
         """
 
     def min(self, *, skip_nulls: bool = True) -> Scalar | NullType:
