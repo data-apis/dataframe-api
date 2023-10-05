@@ -342,7 +342,7 @@ class Column:
 
         Parameters
         ----------
-        other : Column[bool] or bool
+        other : Column or bool
             If Column, must have same length or have length 1.
 
         Returns
@@ -363,12 +363,12 @@ class Column:
 
         Parameters
         ----------
-        other : Column[bool] or Scalar
+        other : Column or Scalar
             If Column, must have same length or have length 1.
 
         Returns
         -------
-        Column[bool]
+        Column
 
         Raises
         ------
@@ -515,7 +515,7 @@ class Column:
         Raises
         ------
         ValueError
-            If any of the column's columns is not boolean.
+            If the column is not boolean.
         """
 
     def any(self, *, skip_nulls: bool = True) -> Column:
@@ -701,7 +701,7 @@ class Column:
 
         Returns
         -------
-        Column[bool]
+        Column
         """
 
     def unique_indices(self, *, skip_nulls: bool = True) -> Column:
@@ -710,7 +710,7 @@ class Column:
 
         Returns
         -------
-        Column[int]
+        Column
             Indices corresponding to unique values.
 
         Notes
