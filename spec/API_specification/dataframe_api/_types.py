@@ -125,19 +125,16 @@ class Namespace(Protocol):
         *,
         dtype: Any,
         name: str = "",
-        api_version: str | None = None,
     ) -> ColumnType:
         ...
 
     @staticmethod
-    def dataframe_from_dict(
-        data: Mapping[str, ColumnType], *, api_version: str | None = None
-    ) -> DataFrameType:
+    def dataframe_from_columns(*columns: ColumnType) -> DataFrameType:
         ...
 
     @staticmethod
     def column_from_1d_array(
-        array: Any, *, dtype: Any, name: str = "", api_version: str | None = None
+        array: Any, *, dtype: Any, name: str = ""
     ) -> ColumnType:
         ...
 
@@ -147,7 +144,6 @@ class Namespace(Protocol):
         *,
         names: Sequence[str],
         dtypes: Mapping[str, Any],
-        api_version: str | None = None,
     ) -> DataFrameType:
         ...
 
