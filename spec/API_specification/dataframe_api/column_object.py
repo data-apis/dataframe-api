@@ -901,3 +901,38 @@ class Column(Protocol):
         """
         ...
 
+    def floor(self, frequency: str) -> Column:
+        """
+        Return floor of each element according to the specified frequency.
+
+        Flooring is done according to local time. For example,
+        for a ``Datetime('us', 'Europe/London')`` column,
+        ``"2020-10-25T00:30:00 BST"`` floored by ``"1day"`` gives
+        ``"2020-10-25T00:00:00 BST"``.
+        Behaviours in the face of ambiguous and non-existent times are
+        currently unspecified and may vary across implementations.
+
+        Flooring by non-fixed durations (e.g. calendar month) are not supported.
+        Note that flooring by ``timedelta(days=1)`` is equivalent to flooring
+        by ``timedelta(hours=24)``.
+
+        Parameters
+        ----------
+        freq : str
+            Frequency to floor by. Can be constructed using the following string
+            language:
+
+            - "1day"
+            - "1hour"
+            - "1minute"
+            - "1second"
+            - "1millisecond"
+            - "1microsecond"
+
+        Examples
+        --------
+        Roll each datetime back to the beginning of the day:
+
+        >>> column: Column
+        >>> column.dt.floor("1day")
+        """
