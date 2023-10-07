@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from ._types import NullType, Scalar, DType, Namespace
 
 
-__all__ = ['Column']
+__all__ = ['Column', 'DatetimeAccessor']
 
 
 class Column:
@@ -767,7 +767,7 @@ class Column:
         ...
 
     @property
-    def dt(self) -> DatetimeAccessor:
+    def dt(self) -> "DatetimeAccessor":
         """
         Return accessor with functions which work on temporal dtypes.
         """
