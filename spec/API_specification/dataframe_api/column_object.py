@@ -827,28 +827,6 @@ class DatetimeAccessor:
         For example, return 123456 for 1981-01-02T12:34:56.123456.
         """
     
-    def floor(self, frequency: timedelta) -> Column:
-        """
-        Return floor of each element according to the specified frequency.
-
-        Flooring is done according to local time. For example,
-        for a ``Datetime('us', 'Europe/London')`` column,
-        ``"2020-10-25T00:30:00 BST"`` floored by ``"1day"`` gives
-        ``"2020-10-25T00:00:00 BST"``.
-
-        Behaviours in the face of ambiguous and non-existent times are
-        currently unspecified and may vary across implementations.
-
-        Flooring by non-fixed durations (e.g. calendar month) are not supported.
-        Note that flooring by ``timedelta(days=1)`` is equivalent to flooring
-        by ``timedelta(hours=24)``.
-
-        Parameters
-        ----------
-        freq : timedelta
-            Frequency to floor by.
-        """
-
     def iso_weekday(self) -> Column:
         """
         Return ISO weekday for each element.
@@ -856,15 +834,3 @@ class DatetimeAccessor:
         Note that Monday=1, ..., Sunday=7.
         """
 
-    def timestamp(self) -> Column:
-        """
-        Return number of units since UNIX epoch (1970-01-01).
-
-        Units depend on the dtype of the column:
-
-        - For a :class:`Date` column, ``1970-01-02`` should return `1`;
-        - For a :class:`Datetime('ms', '*')` column, ``1970-01-02``
-          should return `86_400_000`;
-        - For a :class:`Datetime('us', '*')` column, ``1970-01-02``
-          should return `86_400_000_000`;
-        """
