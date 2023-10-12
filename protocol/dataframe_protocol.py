@@ -179,20 +179,6 @@ class Column(ABC):
     and an offsets buffer (if variable-size binary; e.g., variable-length
     strings).
 
-    TBD: Arrow has a separate "null" dtype, and has no separate mask concept.
-         Instead, it seems to use "children" for both columns with a bit mask,
-         and for nested dtypes. Unclear whether this is elegant or confusing.
-         This design requires checking the null representation explicitly.
-
-         The Arrow design requires checking:
-         1. the ARROW_FLAG_NULLABLE (for sentinel values)
-         2. if a column has two children, combined with one of those children
-            having a null dtype.
-
-         Making the mask concept explicit seems useful. One null dtype would
-         not be enough to cover both bit and byte masks, so that would mean
-         even more checking if we did it the Arrow way.
-
     TBD: there's also the "chunk" concept here, which is implicit in Arrow as
          multiple buffers per array (= column here). Semantically it may make
          sense to have both: chunks were meant for example for lazy evaluation
