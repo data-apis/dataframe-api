@@ -766,71 +766,76 @@ class Column:
         """
         ...
 
-    @property
-    def dt(self) -> "DatetimeAccessor":
-        """
-        Return accessor with functions which work on temporal dtypes.
-        """
-        ...
-
-class DatetimeAccessor:
-    """
-    Method which operate on temporal Columns.
-    """
 
     def year(self) -> Column:
         """
-        Return 'year' component of each element.
+        Return 'year' component of each element of `Date` and `Datetime` columns.
         
         For example, return 1981 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of (signed) integer dtype.
         """
 
     def month(self) -> Column:
         """
-        Return 'month' component of each element.
+        Return 'month' component of each element of `Date` and `Datetime` columns.
         
         For example, return 1 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of integer dtype (signed or unsigned).
         """
 
     def day(self) -> Column:
         """
-        Return 'day' component of each element.
+        Return 'day' component of each element of `Date` and `Datetime` columns.
         
         For example, return 2 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of integer dtype (signed or unsigned).
         """
 
     def hour(self) -> Column:
         """
-        Return 'hour' component of each element.
+        Return 'hour' component of each element of `Date` and `Datetime` columns.
         
         For example, return 12 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of integer dtype (signed or unsigned).
         """
 
     def minute(self) -> Column:
         """
-        Return 'minute' component of each element.
+        Return 'minute' component of each element of `Date` and `Datetime` columns.
         
         For example, return 34 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of integer dtype (signed or unsigned).
         """
 
     def second(self) -> Column:
         """
-        Return 'second' component of each element.
+        Return 'second' component of each element of `Date` and `Datetime` columns.
         
         For example, return 56 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of integer dtype (signed or unsigned).
         """
 
     def microsecond(self) -> Column:
         """
-        Return number of microseconds since last second, for each element.
+        Return number of microseconds since last second, for each element of `Date` and `Datetime` columns.
 
         For example, return 123456 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of integer dtype (signed or unsigned).
         """
     
     def iso_weekday(self) -> Column:
         """
-        Return ISO weekday for each element.
+        Return ISO weekday for each element of `Date` and `Datetime` columns.
 
         Note that Monday=1, ..., Sunday=7.
+
+        Return column should be of integer dtype (signed or unsigned).
         """
 
