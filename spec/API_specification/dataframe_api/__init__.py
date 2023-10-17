@@ -14,32 +14,33 @@ if TYPE_CHECKING:
     from .typing import DType
 
 __all__ = [
-    "__dataframe_api_version__",
-    "DataFrame",
-    "Column",
-    "column_from_sequence",
-    "column_from_1d_array",
-    "concat",
-    "dataframe_from_dict",
-    "dataframe_from_2d_array",
-    "is_null",
-    "null",
-    "Int64",
-    "Int32",
-    "Int16",
-    "Int8",
-    "UInt64",
-    "UInt32",
-    "UInt16",
-    "UInt8",
-    "Float64",
-    "Float32",
     "Bool",
+    "Column",
+    "DataFrame",
     "Date",
     "Datetime",
     "Duration",
+    "Float32",
+    "Float64",
+    "Int16",
+    "Int32",
+    "Int64",
+    "Int8",
     "String",
+    "UInt16",
+    "UInt32",
+    "UInt64",
+    "UInt8",
+    "__dataframe_api_version__",
+    "column_from_1d_array",
+    "column_from_sequence",
+    "concat",
+    "dataframe_from_2d_array",
+    "dataframe_from_dict",
+    "date",
     "is_dtype",
+    "is_null",
+    "null",
 ]
 
 
@@ -241,3 +242,19 @@ def is_dtype(dtype: DType, kind: str | tuple[str, ...]) -> bool:
     -------
     bool
     """
+
+def date(year: int, month: int, day: int) -> Any:
+    """
+    Create date object which can be used for filtering.
+
+    Examples
+    --------
+    >>> df: DataFrame
+    >>> namespace = df.__dataframe_namespace__()
+    >>> mask = (
+    ...     (df.get_column_by_name('date') >= namespace.date(2020, 1, 1))
+    ...     (df.get_column_by_name('date') < namespace.date(2021, 1, 1))
+    ... )
+    >>> df.filter(mask)
+    """
+
