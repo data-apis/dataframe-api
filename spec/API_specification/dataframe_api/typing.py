@@ -6,19 +6,17 @@ from __future__ import annotations
 from typing import (
     TYPE_CHECKING,
     Any,
-    List,
     Literal,
     Mapping,
-    Optional,
     Protocol,
     Sequence,
-    Tuple,
     Union,
 )
 
-if TYPE_CHECKING:
-    from .dataframe_object import DataFrame as DataFrameType
-    from .column_object import Column as ColumnType
+from dataframe_api import column_object, dataframe_object
+from dataframe_api.column_object import Column
+from dataframe_api.dataframe_object import DataFrame
+from dataframe_api.groupby_object import GroupBy
 
 if TYPE_CHECKING:
     from .dtypes import (
@@ -52,11 +50,11 @@ class Namespace(Protocol):
     __dataframe_api_version__: str
 
     @staticmethod
-    def DataFrame() -> DataFrameType:
+    def DataFrame() -> dataframe_object.DataFrame:
         ...
 
     @staticmethod
-    def Column() -> ColumnType:
+    def Column() -> column_object.Column:
         ...
 
     @staticmethod
@@ -116,7 +114,7 @@ class Namespace(Protocol):
         ...
 
     @staticmethod
-    def concat(dataframes: Sequence[DataFrameType]) -> DataFrameType:
+    def concat(dataframes: Sequence[dataframe_object.DataFrame]) -> dataframe_object.DataFrame:
         ...
 
     @staticmethod
@@ -126,19 +124,19 @@ class Namespace(Protocol):
         dtype: Any,
         name: str = "",
         api_version: str | None = None,
-    ) -> ColumnType:
+    ) -> column_object.Column:
         ...
 
     @staticmethod
     def dataframe_from_dict(
-        data: Mapping[str, ColumnType], *, api_version: str | None = None
-    ) -> DataFrameType:
+        data: Mapping[str, column_object.Column], *, api_version: str | None = None
+    ) -> dataframe_object.DataFrame:
         ...
 
     @staticmethod
     def column_from_1d_array(
         array: Any, *, dtype: Any, name: str = "", api_version: str | None = None
-    ) -> ColumnType:
+    ) -> column_object.Column:
         ...
 
     @staticmethod
@@ -148,7 +146,7 @@ class Namespace(Protocol):
         names: Sequence[str],
         dtypes: Mapping[str, Any],
         api_version: str | None = None,
-    ) -> DataFrameType:
+    ) -> dataframe_object.DataFrame:
         ...
 
     @staticmethod
@@ -163,31 +161,25 @@ class Namespace(Protocol):
 class SupportsDataFrameAPI(Protocol):
     def __dataframe_consortium_standard__(
         self, *, api_version: str | None = None
-    ) -> DataFrameType:
+    ) -> dataframe_object.DataFrame:
         ...
 
 class SupportsColumnAPI(Protocol):
     def __column_consortium_standard__(
         self, *, api_version: str | None = None
-    ) -> ColumnType:
+    ) -> column_object.Column:
         ...
 
 
 __all__ = [
-    "Any",
+    "Column",
     "DataFrame",
-    "List",
-    "Literal",
-    "NestedSequence",
-    "Optional",
-    "PyCapsule",
-    "SupportsBufferProtocol",
-    "SupportsDLPack",
-    "Tuple",
-    "Union",
-    "Sequence",
-    "array",
-    "device",
     "DType",
-    "ellipsis",
+    "GroupBy",
+    "Namespace",
+    "NullType",
+    "Scalar",
+    "SupportsColumnAPI",
+    "SupportsDataFrameAPI",
+    "Scalar",
 ]
