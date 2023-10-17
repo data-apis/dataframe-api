@@ -13,7 +13,6 @@ from typing import (
     Union,
 )
 
-from dataframe_api import column_object, dataframe_object
 from dataframe_api.column_object import Column
 from dataframe_api.dataframe_object import DataFrame
 from dataframe_api.groupby_object import GroupBy
@@ -48,14 +47,6 @@ NullType = Any
 
 class Namespace(Protocol):
     __dataframe_api_version__: str
-
-    @staticmethod
-    def DataFrame() -> dataframe_object.DataFrame:
-        ...
-
-    @staticmethod
-    def Column() -> column_object.Column:
-        ...
 
     @staticmethod
     def Int64() -> Int64:
@@ -114,7 +105,7 @@ class Namespace(Protocol):
         ...
 
     @staticmethod
-    def concat(dataframes: Sequence[dataframe_object.DataFrame]) -> dataframe_object.DataFrame:
+    def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
         ...
 
     @staticmethod
@@ -124,19 +115,19 @@ class Namespace(Protocol):
         dtype: Any,
         name: str = "",
         api_version: str | None = None,
-    ) -> column_object.Column:
+    ) -> Column:
         ...
 
     @staticmethod
     def dataframe_from_dict(
-        data: Mapping[str, column_object.Column], *, api_version: str | None = None
-    ) -> dataframe_object.DataFrame:
+        data: Mapping[str, Column], *, api_version: str | None = None
+    ) -> DataFrame:
         ...
 
     @staticmethod
     def column_from_1d_array(
         array: Any, *, dtype: Any, name: str = "", api_version: str | None = None
-    ) -> column_object.Column:
+    ) -> Column:
         ...
 
     @staticmethod
@@ -146,7 +137,7 @@ class Namespace(Protocol):
         names: Sequence[str],
         dtypes: Mapping[str, Any],
         api_version: str | None = None,
-    ) -> dataframe_object.DataFrame:
+    ) -> DataFrame:
         ...
 
     @staticmethod
@@ -161,13 +152,13 @@ class Namespace(Protocol):
 class SupportsDataFrameAPI(Protocol):
     def __dataframe_consortium_standard__(
         self, *, api_version: str | None = None
-    ) -> dataframe_object.DataFrame:
+    ) -> DataFrame:
         ...
 
 class SupportsColumnAPI(Protocol):
     def __column_consortium_standard__(
         self, *, api_version: str | None = None
-    ) -> column_object.Column:
+    ) -> Column:
         ...
 
 
