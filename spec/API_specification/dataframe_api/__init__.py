@@ -11,7 +11,7 @@ from .groupby_object import *
 from .dtypes import *
 
 if TYPE_CHECKING:
-    from .typing import DType
+    from .typing import DType, Scalar
 
 __all__ = [
     "Bool",
@@ -243,7 +243,7 @@ def is_dtype(dtype: DType, kind: str | tuple[str, ...]) -> bool:
     bool
     """
 
-def date(year: int, month: int, day: int) -> Any:
+def date(year: int, month: int, day: int) -> Scalar:
     """
     Create date object which can be used for filtering.
 
@@ -253,7 +253,7 @@ def date(year: int, month: int, day: int) -> Any:
     >>> namespace = df.__dataframe_namespace__()
     >>> mask = (
     ...     (df.get_column_by_name('date') >= namespace.date(2020, 1, 1))
-    ...     (df.get_column_by_name('date') < namespace.date(2021, 1, 1))
+    ...     & (df.get_column_by_name('date') < namespace.date(2021, 1, 1))
     ... )
     >>> df.filter(mask)
     """
