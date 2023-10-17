@@ -48,7 +48,8 @@ def query(
 
     new_column = (
         result.get_column_by_name("l_extendedprice")
-        * (result.get_column_by_name("l_discount") * -1 + 1)
+        # need the "add right operations first"
+        * (1 - result.get_column_by_name("l_discount"))  # type: ignore
     ).rename("revenue")
     result = result.assign(new_column)
     result = result.select(["revenue", "n_name"])
