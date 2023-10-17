@@ -794,7 +794,7 @@ class DataFrame:
         """
         ...
 
-    def unique_indices(self, *keys: str, *, skip_nulls: bool = True) -> Column:
+    def unique_indices(self, *keys: str, skip_nulls: bool = True) -> Column:
         """
         Return indices corresponding to unique values across selected columns.
 
