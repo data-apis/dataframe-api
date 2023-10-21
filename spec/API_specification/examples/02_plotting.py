@@ -1,8 +1,13 @@
-from typing import Callable, Any
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from dataframe_api.typing import SupportsColumnAPI
+    from typing import Callable, Any
 
 my_plotting_function: Callable[[Any, Any], Any]
 
-from dataframe_api._types import SupportsColumnAPI
 
 def group_by_and_plot(
     x_any: SupportsColumnAPI,

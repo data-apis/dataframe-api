@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any,NoReturn, TYPE_CHECKING, Literal, Generic
 
 if TYPE_CHECKING:
-    from ._types import NullType, Scalar, DType, Namespace
+    from .typing import NullType, Scalar, DType, Namespace
 
 
 __all__ = ['Column']

@@ -6,7 +6,7 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
-    from ._types import NullType, Scalar, Namespace, DType
+    from .typing import NullType, Scalar, Namespace, DType
 
 
 __all__ = ["DataFrame"]

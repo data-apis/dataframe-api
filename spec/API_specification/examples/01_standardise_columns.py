@@ -1,6 +1,9 @@
-from typing import Any
+from __future__ import annotations
 
-from dataframe_api._types import SupportsDataFrameAPI
+from typing import Any, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from dataframe_api.typing import SupportsDataFrameAPI
 
 def my_dataframe_agnostic_function(df_non_standard: SupportsDataFrameAPI) -> Any:
     df = df_non_standard.__dataframe_consortium_standard__(api_version='2023.09-beta')
