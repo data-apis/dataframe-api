@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
-    from dataframe_api.typing import DataFrame, SupportsDataFrameAPI
+    from dataframe_api.typing import SupportsDataFrameAPI
 
 
 def query(
@@ -13,7 +13,7 @@ def query(
     supplier_raw: SupportsDataFrameAPI,
     nation_raw: SupportsDataFrameAPI,
     region_raw: SupportsDataFrameAPI,
-) -> Any:
+) -> SupportsDataFrameAPI:
     customer = customer_raw.__dataframe_consortium_standard__()
     orders = orders_raw.__dataframe_consortium_standard__()
     lineitem = lineitem_raw.__dataframe_consortium_standard__()
@@ -48,8 +48,7 @@ def query(
 
     new_column = (
         result.get_column_by_name("l_extendedprice")
-        # need the "add right operations first"
-        * (1 - result.get_column_by_name("l_discount"))  # type: ignore
+        * (1 - result.get_column_by_name("l_discount"))
     ).rename("revenue")
     result = result.assign(new_column)
     result = result.select(["revenue", "n_name"])

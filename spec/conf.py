@@ -86,6 +86,7 @@ nitpick_ignore = [
     ('py:class', 'optional'),
     ('py:class', 'NullType'),
     ('py:class', 'Namespace'),
+    ('py:class', 'SupportsDataFrameAPI'),
 ]
 # NOTE: this alias handling isn't used yet - added in anticipation of future
 #       need based on dataframe API aliases.
