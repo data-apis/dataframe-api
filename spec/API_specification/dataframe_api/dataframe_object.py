@@ -891,7 +891,7 @@ class DataFrame:
         """
         ...
     
-    def to_array_object(self, dtype: DType) -> Any:
+    def to_array(self, dtype: DType) -> Any:
         """
         Convert to array-API-compliant object.
 
