@@ -1,3 +1,4 @@
+# mypy: disable-error-code="empty-body"
 """
 Function stubs and API documentation for the DataFrame API standard.
 """

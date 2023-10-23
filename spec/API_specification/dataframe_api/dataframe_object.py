@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoReturn
+from typing import Any, Literal, Mapping, Sequence, TYPE_CHECKING, NoReturn, Protocol
 
 
 if TYPE_CHECKING:
@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 __all__ = ["DataFrame"]
 
 
-class DataFrame:
+class DataFrame(Protocol):
     """
     DataFrame object
 
