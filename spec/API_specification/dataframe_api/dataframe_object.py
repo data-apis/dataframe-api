@@ -89,7 +89,7 @@ class DataFrame:
         """
         ...
 
-    def get_column_by_name(self, name: str, /) -> Column:
+    def col(self, name: str, /) -> Column:
         """
         Select a column by name.
 
@@ -192,7 +192,7 @@ class DataFrame:
 
         .. code-block:: python
 
-            new_column = df.get_column_by_name('a') + 1
+            new_column = df.col('a') + 1
             df = df.assign(new_column.rename('b'))
 
         Parameters
