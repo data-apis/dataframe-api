@@ -75,7 +75,11 @@ class GroupBy:
 
 class Aggregation(Protocol):
     def rename(self, name: str) -> Aggregation:
-        """Assign given name to output of aggregation. """
+        """
+        Assign given name to output of aggregation.
+
+        If not called, the column's name will be used as the output name.
+        """
         ...
 
     @classmethod
