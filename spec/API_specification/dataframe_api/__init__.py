@@ -40,6 +40,7 @@ __all__ = [
     "Duration",
     "String",
     "is_dtype",
+    "Aggregation",
 ]
 
 

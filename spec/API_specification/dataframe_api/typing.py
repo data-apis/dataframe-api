@@ -15,7 +15,7 @@ from typing import (
 
 from dataframe_api.column_object import Column
 from dataframe_api.dataframe_object import DataFrame
-from dataframe_api.groupby_object import GroupBy
+from dataframe_api.groupby_object import GroupBy, Aggregation as AggregationT
 
 if TYPE_CHECKING:
     from .dtypes import (
@@ -147,7 +147,9 @@ class Namespace(Protocol):
     @staticmethod
     def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
         ...
-
+    
+    class Aggregation(AggregationT):
+        ...
 
 class SupportsDataFrameAPI(Protocol):
     def __dataframe_consortium_standard__(
@@ -163,6 +165,7 @@ class SupportsColumnAPI(Protocol):
 
 
 __all__ = [
+    "Aggregation",
     "Column",
     "DataFrame",
     "DType",
