@@ -6,7 +6,7 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
-    from .typing import NullType, Scalar, Namespace, DType
+    from .typing import NullType, Scalar, Namespace, DType, SupportsDataFrameAPI
 
 
 __all__ = ["DataFrame"]
@@ -51,7 +51,7 @@ class DataFrame:
         """
 
     @property
-    def dataframe(self) -> object:
+    def dataframe(self) -> SupportsDataFrameAPI:
         """
         Return underlying (not-necessarily-Standard-compliant) DataFrame.
 
