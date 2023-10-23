@@ -65,7 +65,7 @@ def query(
 
     new_column = (
         result.get_column_by_name("l_extendedprice")
-        * (result.get_column_by_name("l_discount") * -1 + 1)
+        * (1 - result.get_column_by_name("l_discount"))
     ).rename("revenue")
     result = result.assign(new_column)
     result = result.group_by("n_name").aggregate(namespace.Aggregation.sum("revenue"))
