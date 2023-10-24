@@ -260,20 +260,19 @@ For example, pandas has ``pandas.DataFrame.__dataframe_consortium_standard__`` a
 The signatures should be (note: docstring is optional):
 ```python
 def __dataframe_consortium_standard__(
-    self, *, api_version: str | None = None
+    self, *, api_version: str
 ) -> Any:
 
 def __column_consortium_standard__(
-    self, *, api_version: str | None = None
+    self, *, api_version: str
 ) -> Any:
 ```
 `api_version` is
 a string representing the version of the dataframe API specification
 to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-If it is ``None``, it should return the namespace corresponding to
-latest version of the dataframe API specification.  If the given
-version is invalid or not implemented for the given module, an
-error should be raised. Default: ``None``.
+If the given version is invalid or not implemented for the given module,
+an error should be raised. It is suggested to use the earliest API
+version required for maximum compatibility.
 
 For some examples, please check https://github.com/data-apis/dataframe-api/tree/main/spec/examples.
 

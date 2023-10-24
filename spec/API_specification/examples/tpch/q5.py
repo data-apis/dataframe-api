@@ -31,12 +31,12 @@ def query(
     nation_raw: SupportsDataFrameAPI,
     region_raw: SupportsDataFrameAPI,
 ) -> SupportsDataFrameAPI:
-    customer = customer_raw.__dataframe_consortium_standard__()
-    orders = orders_raw.__dataframe_consortium_standard__()
-    lineitem = lineitem_raw.__dataframe_consortium_standard__()
-    supplier = supplier_raw.__dataframe_consortium_standard__()
-    nation = nation_raw.__dataframe_consortium_standard__()
-    region = region_raw.__dataframe_consortium_standard__()
+    customer = customer_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
+    orders = orders_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
+    lineitem = lineitem_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
+    supplier = supplier_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
+    nation = nation_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
+    region = region_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
 
     namespace = customer.__dataframe_namespace__()
 

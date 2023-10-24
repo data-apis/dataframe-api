@@ -14,9 +14,9 @@ def group_by_and_plot(
     y_any: SupportsColumnAPI,
     color_any: SupportsColumnAPI,
 ) -> None:
-    x = x_any.__column_consortium_standard__()
-    y = y_any.__column_consortium_standard__()
-    color = color_any.__column_consortium_standard__()
+    x = x_any.__column_consortium_standard__(api_version='2023-10.beta')
+    y = y_any.__column_consortium_standard__(api_version='2023-10.beta')
+    color = color_any.__column_consortium_standard__(api_version='2023-10.beta')
 
     namespace = x.__column_namespace__()
 
