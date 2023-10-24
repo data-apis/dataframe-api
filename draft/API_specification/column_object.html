@@ -532,7 +532,7 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sum()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.to_array_object" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.to_array_object()</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.to_array" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.to_array()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.unique_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.unique_indices()</span></code></a>
         </li>
@@ -707,7 +707,7 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sum()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.to_array_object" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.to_array_object()</span></code></a>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.to_array" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.to_array()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.unique_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.unique_indices()</span></code></a>
         </li>
@@ -1384,30 +1384,28 @@ datetime data types. The returned value has the same dtype as the
 column.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.Column.to_array_object">
-<span class="sig-name descname"><span class="pre">to_array_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DType</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#dataframe_api.Column.to_array_object" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="dataframe_api.Column.to_array">
+<span class="sig-name descname"><span class="pre">to_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#dataframe_api.Column.to_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert to array-API-compliant object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dtype</strong> (<em>DType</em>) – <p>The dtype of the array-API-compliant object to return.
-Must be one of:</p>
+<p>The resulting array will have the corresponding dtype from the
+Array API:</p>
 <ul class="simple">
-<li><p>Bool()</p></li>
-<li><p>Int8()</p></li>
-<li><p>Int16()</p></li>
-<li><p>Int32()</p></li>
-<li><p>Int64()</p></li>
-<li><p>UInt8()</p></li>
-<li><p>UInt16()</p></li>
-<li><p>UInt32()</p></li>
-<li><p>UInt64()</p></li>
-<li><p>Float32()</p></li>
-<li><p>Float64()</p></li>
+<li><p>Bool() -&gt; ‘bool’</p></li>
+<li><p>Int8() -&gt; ‘int8’</p></li>
+<li><p>Int16() -&gt; ‘int16’</p></li>
+<li><p>Int32() -&gt; ‘int32’</p></li>
+<li><p>Int64() -&gt; ‘int64’</p></li>
+<li><p>UInt8() -&gt; ‘uint8’</p></li>
+<li><p>UInt16() -&gt; ‘uint16’</p></li>
+<li><p>UInt32() -&gt; ‘uint32’</p></li>
+<li><p>UInt64() -&gt; ‘uint64’</p></li>
+<li><p>Float32() -&gt; ‘float32’</p></li>
+<li><p>Float64() -&gt; ‘float64’</p></li>
 </ul>
-</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>Any</strong> – An array-API-compliant object.</p>
+<p>Null values are not supported and must be filled prior to conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Any</strong> – An array-API-compliant object.</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
