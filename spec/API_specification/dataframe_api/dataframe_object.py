@@ -65,13 +65,13 @@ class DataFrame:
         Return number of rows and number of columns.
         """
 
-    def group_by(self, keys: str | list[str], /) -> GroupBy:
+    def group_by(self, *keys: str) -> GroupBy:
         """
         Group the DataFrame by the given columns.
 
         Parameters
         ----------
-        keys : str | list[str]
+        *keys : str
 
         Returns
         -------
@@ -180,7 +180,7 @@ class DataFrame:
         """
         ...
 
-    def assign(self, columns: Column | Sequence[Column], /) -> Self:
+    def assign(self, *columns: Column) -> Self:
         """
         Insert new column(s), or update values in existing ones.
 
@@ -198,7 +198,7 @@ class DataFrame:
 
         Parameters
         ----------
-        columns : Column | Sequence[Column]
+        *columns : Column
             Column(s) to update/insert. If updating/inserting multiple columns,
             they must all have different names.
 
@@ -208,13 +208,13 @@ class DataFrame:
         """
         ...
 
-    def drop_columns(self, label: str | list[str]) -> Self:
+    def drop_columns(self, *labels: str) -> Self:
         """
         Drop the specified column(s).
 
         Parameters
         ----------
-        label : str | list[str]
+        *label : str
             Column name(s) to drop.
 
         Returns
@@ -267,8 +267,7 @@ class DataFrame:
     
     def sort(
         self,
-        keys: str | list[str] | None = None,
-        *,
+        *keys: str,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
     ) -> Self:
@@ -280,9 +279,9 @@ class DataFrame:
 
         Parameters
         ----------
-        keys : str | list[str], optional
+        *keys : str
             Names of columns to sort by.
-            If `None`, sort by all columns.
+            If not specified, sort by all columns.
         ascending : Sequence[bool] or bool
             If `True`, sort by all keys in ascending order.
             If `False`, sort by all keys in descending order.
@@ -308,8 +307,7 @@ class DataFrame:
 
     def sorted_indices(
         self,
-        keys: str | list[str] | None = None,
-        *,
+        *keys: str,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
     ) -> Column:
@@ -320,9 +318,9 @@ class DataFrame:
 
         Parameters
         ----------
-        keys : str | list[str], optional
+        *keys : str
             Names of columns to sort by.
-            If `None`, sort by all columns.
+            If not specified, sort by all columns.
         ascending : Sequence[bool] or bool
             If `True`, sort by all keys in ascending order.
             If `False`, sort by all keys in descending order.
@@ -816,15 +814,15 @@ class DataFrame:
         """
         ...
 
-    def unique_indices(self, keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Column:
+    def unique_indices(self, *keys: str, skip_nulls: bool = True) -> Column:
         """
         Return indices corresponding to unique values across selected columns.
 
         Parameters
         ----------
-        keys : str | list[str], optional
+        *keys : str
             Column names to consider when finding unique values.
-            If `None`, all columns are considered.
+            If not specified, all columns are considered.
 
         Returns
         -------
