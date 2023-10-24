@@ -211,6 +211,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __ne__(self: Column, other: Column | Scalar) -> Column:  # type: ignore[override]
@@ -229,6 +235,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __ge__(self: Column, other: Column | Scalar) -> Column:
@@ -245,6 +257,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __gt__(self: Column, other: Column | Scalar) -> Column:
@@ -261,6 +279,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __le__(self: Column, other: Column | Scalar) -> Column:
@@ -277,6 +301,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __lt__(self: Column, other: Column | Scalar) -> Column:
@@ -293,6 +323,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __and__(self: Column, other: Column | bool) -> Column:
@@ -314,6 +350,12 @@ class Column:
         ------
         ValueError
             If `self` or `other` is not boolean.
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __or__(self: Column, other: Column | bool) -> Column:
@@ -335,6 +377,12 @@ class Column:
         ------
         ValueError
             If `self` or `other` is not boolean.
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __add__(self: Column, other: Column | Scalar) -> Column:
@@ -351,6 +399,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __sub__(self: Column, other: Column | Scalar) -> Column:
@@ -367,6 +421,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __mul__(self, other: Column | Scalar) -> Column:
@@ -383,6 +443,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __truediv__(self, other: Column | Scalar) -> Column:
@@ -399,6 +465,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __floordiv__(self, other: Column | Scalar) -> Column:
@@ -415,6 +487,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __pow__(self, other: Column | Scalar) -> Column:
@@ -435,6 +513,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __mod__(self, other: Column | Scalar) -> Column:
@@ -451,6 +535,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __divmod__(self, other: Column | Scalar) -> tuple[Column, Column]:
@@ -467,6 +557,12 @@ class Column:
         Returns
         -------
         Column
+
+        Notes
+        -----
+        If `other` is a `Column`, then the Standard only supports the case when `other`
+        and `self` originated from the same dataframe. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
 
     def __radd__(self: Column, other: Column | Scalar) -> Column:

@@ -139,6 +139,12 @@ class DataFrame:
         Returns
         -------
         DataFrame
+
+        Notes
+        -----
+        The Standard only supports the case when `indices`
+        originated from `self`. If it didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
         ...
 
@@ -174,8 +180,9 @@ class DataFrame:
 
         Notes
         -----
-        Some participants preferred a weaker type Arraylike[bool] for mask,
-        where 'Arraylike' denotes an object adhering to the Array API standard.
+        The Standard only supports the case when `mask`
+        originated from `self`. If it didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
         ...
 
@@ -204,6 +211,12 @@ class DataFrame:
         Returns
         -------
         DataFrame
+
+        Notes
+        -----
+        The Standard only supports the case when `columns`
+        originated from `self`. If they didn't, then behaviour
+        is unspecified and may vary across implementations.
         """
         ...
 
