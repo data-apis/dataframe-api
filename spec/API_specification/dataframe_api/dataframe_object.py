@@ -6,7 +6,7 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
-    from ._types import NullType, Scalar, Namespace, DType
+    from .typing import NullType, Scalar, Namespace, DType, SupportsDataFrameAPI
 
 
 __all__ = ["DataFrame"]
@@ -51,7 +51,7 @@ class DataFrame:
         """
 
     @property
-    def dataframe(self) -> object:
+    def dataframe(self) -> SupportsDataFrameAPI:
         """
         Return underlying (not-necessarily-Standard-compliant) DataFrame.
 
@@ -64,13 +64,13 @@ class DataFrame:
         Return number of rows and number of columns.
         """
 
-    def group_by(self, keys: str | list[str], /) -> GroupBy:
+    def group_by(self, *keys: str) -> GroupBy:
         """
         Group the DataFrame by the given columns.
 
         Parameters
         ----------
-        keys : str | list[str]
+        *keys : str
 
         Returns
         -------
@@ -179,7 +179,7 @@ class DataFrame:
         """
         ...
 
-    def assign(self, columns: Column | Sequence[Column], /) -> DataFrame:
+    def assign(self, *columns: Column) -> DataFrame:
         """
         Insert new column(s), or update values in existing ones.
 
@@ -197,7 +197,7 @@ class DataFrame:
 
         Parameters
         ----------
-        columns : Column | Sequence[Column]
+        *columns : Column
             Column(s) to update/insert. If updating/inserting multiple columns,
             they must all have different names.
 
@@ -207,13 +207,13 @@ class DataFrame:
         """
         ...
 
-    def drop_columns(self, label: str | list[str]) -> DataFrame:
+    def drop_columns(self, *labels: str) -> DataFrame:
         """
         Drop the specified column(s).
 
         Parameters
         ----------
-        label : str | list[str]
+        *label : str
             Column name(s) to drop.
 
         Returns
@@ -266,8 +266,7 @@ class DataFrame:
     
     def sort(
         self,
-        keys: str | list[str] | None = None,
-        *,
+        *keys: str,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
     ) -> DataFrame:
@@ -279,9 +278,9 @@ class DataFrame:
 
         Parameters
         ----------
-        keys : str | list[str], optional
+        *keys : str
             Names of columns to sort by.
-            If `None`, sort by all columns.
+            If not specified, sort by all columns.
         ascending : Sequence[bool] or bool
             If `True`, sort by all keys in ascending order.
             If `False`, sort by all keys in descending order.
@@ -307,8 +306,7 @@ class DataFrame:
 
     def sorted_indices(
         self,
-        keys: str | list[str] | None = None,
-        *,
+        *keys: str,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
     ) -> Column:
@@ -319,9 +317,9 @@ class DataFrame:
 
         Parameters
         ----------
-        keys : str | list[str], optional
+        *keys : str
             Names of columns to sort by.
-            If `None`, sort by all columns.
+            If not specified, sort by all columns.
         ascending : Sequence[bool] or bool
             If `True`, sort by all keys in ascending order.
             If `False`, sort by all keys in descending order.
@@ -617,6 +615,25 @@ class DataFrame:
         """
         ...
 
+    def __radd__(self, other: Scalar) -> DataFrame:
+        ...
+    def __rsub__(self, other: Scalar) -> DataFrame:
+        ...
+    def __rmul__(self, other: Scalar) -> DataFrame:
+        ...
+    def __rtruediv__(self, other: Scalar) -> DataFrame:
+        ...
+    def __rand__(self, other: Scalar) -> DataFrame:
+        ...
+    def __ror__(self, other: Scalar) -> DataFrame:
+        ...
+    def __rfloordiv__(self, other: Scalar) -> DataFrame:
+        ...
+    def __rpow__(self, other: Scalar) -> DataFrame:
+        ...
+    def __rmod__(self, other: Scalar) -> DataFrame:
+        ...
+
     def __invert__(self) -> DataFrame:
         """
         Invert truthiness of (boolean) elements.
@@ -796,15 +813,15 @@ class DataFrame:
         """
         ...
 
-    def unique_indices(self, keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Column:
+    def unique_indices(self, *keys: str, skip_nulls: bool = True) -> Column:
         """
         Return indices corresponding to unique values across selected columns.
 
         Parameters
         ----------
-        keys : str | list[str], optional
+        *keys : str
             Column names to consider when finding unique values.
-            If `None`, all columns are considered.
+            If not specified, all columns are considered.
 
         Returns
         -------

@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any,NoReturn, TYPE_CHECKING, Literal, Generic
 
 if TYPE_CHECKING:
-    from ._types import NullType, Scalar, DType, Namespace
+    from .typing import NullType, Scalar, DType, Namespace
 
 
 __all__ = ['Column']
@@ -468,6 +468,25 @@ class Column:
         -------
         Column
         """
+
+    def __radd__(self: Column, other: Column | Scalar) -> Column:
+        ...
+    def __rsub__(self: Column, other: Column | Scalar) -> Column:
+        ...
+    def __rmul__(self, other: Column | Scalar) -> Column:
+        ...
+    def __rtruediv__(self, other: Column | Scalar) -> Column:
+        ...
+    def __rand__(self: Column, other: Column | bool) -> Column:
+        ...
+    def __ror__(self: Column, other: Column | bool) -> Column:
+        ...
+    def __rfloordiv__(self, other: Column | Scalar) -> Column:
+        ...
+    def __rpow__(self, other: Column | Scalar) -> Column:
+        ...
+    def __rmod__(self, other: Column | Scalar) -> Column:
+        ...
 
     def __invert__(self: Column) -> Column:
         """

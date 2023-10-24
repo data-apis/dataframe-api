@@ -11,7 +11,7 @@ from .groupby_object import *
 from .dtypes import *
 
 if TYPE_CHECKING:
-    from ._types import DType
+    from .typing import DType
 
 __all__ = [
     "__dataframe_api_version__",

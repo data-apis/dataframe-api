@@ -1,0 +1,18 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dataframe_api"
+version = "2023.10-beta"
+description = "Dataframe API specification"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/data-apis/dataframe-api"
+"Bug Tracker" = "https://github.com/data-apis/dataframe-api"
