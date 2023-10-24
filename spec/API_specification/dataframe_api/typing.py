@@ -118,9 +118,7 @@ class Namespace(Protocol):
         ...
 
     @staticmethod
-    def dataframe_from_dict(
-        data: Mapping[str, Column]
-    ) -> DataFrame:
+    def dataframe_from_columns(*columns: Column) -> DataFrame:
         ...
 
     @staticmethod
