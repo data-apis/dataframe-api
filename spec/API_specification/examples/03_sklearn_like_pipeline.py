@@ -15,9 +15,6 @@ from typing import Any, TYPE_CHECKING, Self
 
 from dataframe_api.dataframe_object import DataFrame
 
-#: Dummy type alias for a standard compliant array object
-Array = Any
-
 
 class Scaler:
     """Apply a standardization scaling factor to `column_names`."""    
@@ -31,11 +28,16 @@ class Scaler:
 
         Calling this function requires collecting values.
         """
-        self.scalings_ = {}
-        for column_name in df.column_names:
-            if not column_name in self.column_names:
-                continue
-            self.scalings_[column_name] = df.get_column_by_name(column_name).std()
+        scalings = df.select(self.column_names).std()
+        if hasattr(scalings, 'collect'):
+            scalings = scalings.collect()
+
+        self.scalings_ = {
+            # Clarify: Should the return type of `get_value` (lazy /
+            # eager scalar) depend on a previous call to `collect`?
+            column_name: scalings.get_column_by_name(column_name).get_value(0)
+            for column_name in self.column_names
+        }
 
         return self
 
@@ -44,12 +46,12 @@ class Scaler:
 
         This function is guaranteed to not collect values.
         """
-        df = copy_df(df)
         for column_name in df.column_names:
             if not column_name in self.column_names:
                 continue
             column = df.get_column_by_name(column_name) / self.scalings_[column_name]
-            df.assign(column)
+            # Note: `assign` is not in-place
+            df = df.assign(column)
 
         return df
 
@@ -69,7 +71,7 @@ class FeatureSelector:
 
         This function is guaranteed to not collect values.
         """
-        # FIXME: Does this ensure column order?
+        # Note: This assumes that select ensures the column order.
         return df.select(self.columns_)
 
 
@@ -80,7 +82,7 @@ class Pipeline:
         self.steps = steps
     
     def fit(self, df: DataFrame) -> Self:
-        """Call filt on the steps of the pipeline subsequently.
+        """Call fit on the steps of the pipeline subsequently.
 
         Calling this function may trigger a collection.
         """
@@ -100,28 +102,3 @@ class Pipeline:
 
         return df
 
-
-def copy_df(df: DataFrame):
-    """Create a copy of `df`.
-
-    This is done by converting a data frame into standard-arrays and
-    assembling them back into a new data frame.
-    """
-    dfx = df.__dataframe_namespace__()
-
-    dct = dataframe_to_dict_of_arrays(df)
-    return dfx.dataframe_from_dict(
-        # FIXME: This would require some kind of dtype mapping?
-        {column_name: dfx.column_from_1d_array(arr, dtype=arr.dtype) for column_name, arr in dct.items()}
-    )
-
-
-def dataframe_to_dict_of_arrays(df: DataFrame) -> dict[str, Array]:
-    """Convert the given data frame into an dictionary of standard arrays. """
-    dct = {}
-    dfx = df.__dataframe_namespace__()
-    for column_name in df.column_names:
-        column = df.get_column_by_name(column_name)
-        dct[column_name] = column.to_array_object(column.dtype)
-
-    return dct
