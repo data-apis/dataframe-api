@@ -58,8 +58,8 @@ def query(
             == result.get_column_by_name("s_nationkey")
         )
         & (result.get_column_by_name("r_name") == "ASIA")
-        & (result.get_column_by_name("o_orderdate") >= namespace.date(1994, 1, 1))  # type: ignore
-        & (result.get_column_by_name("o_orderdate") < namespace.date(1995, 1, 1))  # type: ignore
+        & (result.get_column_by_name("o_orderdate") >= namespace.date(1994, 1, 1))
+        & (result.get_column_by_name("o_orderdate") < namespace.date(1995, 1, 1))
     )
     result = result.filter(mask)
 
