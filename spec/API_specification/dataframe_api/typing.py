@@ -32,10 +32,27 @@ if TYPE_CHECKING:
         UInt8,
         Date,
         Datetime,
+        Duration,
         String,
     )
 
-    DType = Union[Bool, Float64, Float32, Int64, Int32, Int16, Int8, UInt64, UInt32, UInt16, UInt8]
+    DType = Union[
+        Bool,
+        Float64,
+        Float32,
+        Int64,
+        Int32,
+        Int16,
+        Int8,
+        UInt64,
+        UInt32,
+        UInt16,
+        UInt8,
+        String,
+        Date,
+        Datetime,
+        Duration,
+    ]
 
 # Type alias: Mypy needs Any, but for readability we need to make clear this
 # is a Python scalar (i.e., an instance of `bool`, `int`, `float`, `str`, etc.)
