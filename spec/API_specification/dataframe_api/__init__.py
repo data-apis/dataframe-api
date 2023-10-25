@@ -20,7 +20,7 @@ __all__ = [
     "column_from_sequence",
     "column_from_1d_array",
     "concat",
-    "dataframe_from_dict",
+    "dataframe_from_columns",
     "dataframe_from_2d_array",
     "is_null",
     "null",
@@ -91,27 +91,20 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: DType, name: str = '
     """
     ...
 
-def dataframe_from_dict(data: Mapping[str, Column]) -> DataFrame:
+def dataframe_from_columns(*columns: Column) -> DataFrame:
     """
-    Construct DataFrame from map of column names to Columns.
+    Construct DataFrame from sequence of Columns.
 
     Parameters
     ----------
-    data : Mapping[str, Column]
-        Column must be of the corresponding type of the DataFrame.
+    columns : Column
+        Column(s) must be of the corresponding type of the DataFrame.
         For example, it is only supported to build a ``LibraryXDataFrame`` using
         ``LibraryXColumn`` instances.
 
     Returns
     -------
     DataFrame
-    
-    Raises
-    ------
-    ValueError
-        If any of the columns already has a name, and the corresponding key
-        in `data` doesn't match.
-
     """
     ...
 
