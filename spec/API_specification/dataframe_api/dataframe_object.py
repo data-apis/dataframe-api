@@ -109,13 +109,13 @@ class DataFrame:
         """
         ...
 
-    def select(self, names: Sequence[str], /) -> Self:
+    def select(self, *names: str) -> Self:
         """
         Select multiple columns by name.
 
         Parameters
         ----------
-        names : Sequence[str]
+        *names : str
 
         Returns
         -------
