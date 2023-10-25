@@ -64,7 +64,7 @@ def query(
         result.col("l_extendedprice") * (1 - result.col("l_discount"))
     ).rename("revenue")
     result = result.assign(new_column)
-    result = result.select(["revenue", "n_name"])
+    result = result.select("revenue", "n_name")
     result = result.group_by("n_name").sum()
 
     return result.dataframe
