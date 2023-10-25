@@ -6,7 +6,8 @@ from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoRetu
 if TYPE_CHECKING:
     from .column_object import Column
     from .groupby_object import GroupBy
-    from .typing import NullType, Scalar, Namespace, DType
+    from .typing import NullType, Scalar, Namespace, DType, SupportsDataFrameAPI
+    from typing_extensions import Self
 
 
 __all__ = ["DataFrame"]
@@ -51,7 +52,7 @@ class DataFrame:
         """
 
     @property
-    def dataframe(self) -> object:
+    def dataframe(self) -> SupportsDataFrameAPI:
         """
         Return underlying (not-necessarily-Standard-compliant) DataFrame.
 
@@ -64,13 +65,13 @@ class DataFrame:
         Return number of rows and number of columns.
         """
 
-    def group_by(self, keys: str | list[str], /) -> GroupBy:
+    def group_by(self, *keys: str) -> GroupBy:
         """
         Group the DataFrame by the given columns.
 
         Parameters
         ----------
-        keys : str | list[str]
+        *keys : str
 
         Returns
         -------
@@ -108,7 +109,7 @@ class DataFrame:
         """
         ...
 
-    def select(self, names: Sequence[str], /) -> DataFrame:
+    def select(self, names: Sequence[str], /) -> Self:
         """
         Select multiple columns by name.
 
@@ -127,7 +128,7 @@ class DataFrame:
         """
         ...
 
-    def get_rows(self, indices: Column) -> DataFrame:
+    def get_rows(self, indices: Column) -> Self:
         """
         Select a subset of rows, similar to `ndarray.take`.
 
@@ -144,7 +145,7 @@ class DataFrame:
 
     def slice_rows(
         self, start: int | None, stop: int | None, step: int | None
-    ) -> DataFrame:
+    ) -> Self:
         """
         Select a subset of rows corresponding to a slice.
 
@@ -160,7 +161,7 @@ class DataFrame:
         """
         ...
 
-    def filter(self, mask: Column) -> DataFrame:
+    def filter(self, mask: Column) -> Self:
         """
         Select a subset of rows corresponding to a mask.
 
@@ -179,7 +180,7 @@ class DataFrame:
         """
         ...
 
-    def assign(self, columns: Column | Sequence[Column], /) -> DataFrame:
+    def assign(self, *columns: Column) -> Self:
         """
         Insert new column(s), or update values in existing ones.
 
@@ -197,7 +198,7 @@ class DataFrame:
 
         Parameters
         ----------
-        columns : Column | Sequence[Column]
+        *columns : Column
             Column(s) to update/insert. If updating/inserting multiple columns,
             they must all have different names.
 
@@ -207,13 +208,13 @@ class DataFrame:
         """
         ...
 
-    def drop_columns(self, label: str | list[str]) -> DataFrame:
+    def drop_columns(self, *labels: str) -> Self:
         """
         Drop the specified column(s).
 
         Parameters
         ----------
-        label : str | list[str]
+        *label : str
             Column name(s) to drop.
 
         Returns
@@ -227,7 +228,7 @@ class DataFrame:
         """
         ...
 
-    def rename_columns(self, mapping: Mapping[str, str]) -> DataFrame:
+    def rename_columns(self, mapping: Mapping[str, str]) -> Self:
         """
         Rename columns.
 
@@ -266,11 +267,10 @@ class DataFrame:
     
     def sort(
         self,
-        keys: str | list[str] | None = None,
-        *,
+        *keys: str,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
-    ) -> DataFrame:
+    ) -> Self:
         """
         Sort dataframe according to given columns.
 
@@ -279,9 +279,9 @@ class DataFrame:
 
         Parameters
         ----------
-        keys : str | list[str], optional
+        *keys : str
             Names of columns to sort by.
-            If `None`, sort by all columns.
+            If not specified, sort by all columns.
         ascending : Sequence[bool] or bool
             If `True`, sort by all keys in ascending order.
             If `False`, sort by all keys in descending order.
@@ -307,8 +307,7 @@ class DataFrame:
 
     def sorted_indices(
         self,
-        keys: str | list[str] | None = None,
-        *,
+        *keys: str,
         ascending: Sequence[bool] | bool = True,
         nulls_position: Literal['first', 'last'] = 'last',
     ) -> Column:
@@ -319,9 +318,9 @@ class DataFrame:
 
         Parameters
         ----------
-        keys : str | list[str], optional
+        *keys : str
             Names of columns to sort by.
-            If `None`, sort by all columns.
+            If not specified, sort by all columns.
         ascending : Sequence[bool] or bool
             If `True`, sort by all keys in ascending order.
             If `False`, sort by all keys in descending order.
@@ -345,7 +344,7 @@ class DataFrame:
         """
         ...
 
-    def __eq__(self, other: Scalar) -> DataFrame:  # type: ignore[override]
+    def __eq__(self, other: Scalar) -> Self:  # type: ignore[override]
         """
         Compare for equality.
 
@@ -363,7 +362,7 @@ class DataFrame:
         """
         ...
 
-    def __ne__(self, other: Scalar) -> DataFrame:  # type: ignore[override]
+    def __ne__(self, other: Scalar) -> Self:  # type: ignore[override]
         """
         Compare for non-equality.
 
@@ -381,7 +380,7 @@ class DataFrame:
         """
         ...
 
-    def __ge__(self, other: Scalar) -> DataFrame:
+    def __ge__(self, other: Scalar) -> Self:
         """
         Compare for "greater than or equal to" `other`.
 
@@ -397,7 +396,7 @@ class DataFrame:
         """
         ...
 
-    def __gt__(self, other: Scalar) -> DataFrame:
+    def __gt__(self, other: Scalar) -> Self:
         """
         Compare for "greater than" `other`.
 
@@ -413,7 +412,7 @@ class DataFrame:
         """
         ...
 
-    def __le__(self, other: Scalar) -> DataFrame:
+    def __le__(self, other: Scalar) -> Self:
         """
         Compare for "less than or equal to" `other`.
 
@@ -429,7 +428,7 @@ class DataFrame:
         """
         ...
 
-    def __lt__(self, other: Scalar) -> DataFrame:
+    def __lt__(self, other: Scalar) -> Self:
         """
         Compare for "less than" `other`.
 
@@ -445,7 +444,7 @@ class DataFrame:
         """
         ...
 
-    def __and__(self, other: bool) -> DataFrame:
+    def __and__(self, other: bool) -> Self:
         """
         Apply logical 'and' to `other` scalar and this dataframe.
 
@@ -465,7 +464,7 @@ class DataFrame:
             If `self` or `other` is not boolean.
         """
 
-    def __or__(self, other: DataFrame | bool) -> DataFrame:
+    def __or__(self, other: bool) -> Self:
         """
         Apply logical 'or' to `other` scalar and this DataFrame.
 
@@ -485,7 +484,7 @@ class DataFrame:
             If `self` or `other` is not boolean.
         """
 
-    def __add__(self, other: Scalar) -> DataFrame:
+    def __add__(self, other: Scalar) -> Self:
         """
         Add `other` scalar to this dataframe.
 
@@ -501,7 +500,7 @@ class DataFrame:
         """
         ...
 
-    def __sub__(self, other: Scalar) -> DataFrame:
+    def __sub__(self, other: Scalar) -> Self:
         """
         Subtract `other` scalar from this dataframe.
 
@@ -517,7 +516,7 @@ class DataFrame:
         """
         ...
 
-    def __mul__(self, other: Scalar) -> DataFrame:
+    def __mul__(self, other: Scalar) -> Self:
         """
         Multiply  `other` scalar with this dataframe.
 
@@ -533,7 +532,7 @@ class DataFrame:
         """
         ...
 
-    def __truediv__(self, other: Scalar) -> DataFrame:
+    def __truediv__(self, other: Scalar) -> Self:
         """
         Divide  this dataframe by `other` scalar. True division, returns floats.
 
@@ -549,7 +548,7 @@ class DataFrame:
         """
         ...
 
-    def __floordiv__(self, other: Scalar) -> DataFrame:
+    def __floordiv__(self, other: Scalar) -> Self:
         """
         Floor-divide (returns integers) this dataframe by `other` scalar.
 
@@ -565,7 +564,7 @@ class DataFrame:
         """
         ...
 
-    def __pow__(self, other: Scalar) -> DataFrame:
+    def __pow__(self, other: Scalar) -> Self:
         """
         Raise this dataframe to the power of `other`.
 
@@ -585,7 +584,7 @@ class DataFrame:
         """
         ...
 
-    def __mod__(self, other: Scalar) -> DataFrame:
+    def __mod__(self, other: Scalar) -> Self:
         """
         Return modulus of this dataframe by `other` (`%` operator).
 
@@ -617,26 +616,26 @@ class DataFrame:
         """
         ...
 
-    def __radd__(self, other: Scalar) -> DataFrame:
+    def __radd__(self, other: Scalar) -> Self:
         ...
-    def __rsub__(self, other: Scalar) -> DataFrame:
+    def __rsub__(self, other: Scalar) -> Self:
         ...
-    def __rmul__(self, other: Scalar) -> DataFrame:
+    def __rmul__(self, other: Scalar) -> Self:
         ...
-    def __rtruediv__(self, other: Scalar) -> DataFrame:
+    def __rtruediv__(self, other: Scalar) -> Self:
         ...
-    def __rand__(self, other: Scalar) -> DataFrame:
+    def __rand__(self, other: Scalar) -> Self:
         ...
-    def __ror__(self, other: Scalar) -> DataFrame:
+    def __ror__(self, other: Scalar) -> Self:
         ...
-    def __rfloordiv__(self, other: Scalar) -> DataFrame:
+    def __rfloordiv__(self, other: Scalar) -> Self:
         ...
-    def __rpow__(self, other: Scalar) -> DataFrame:
+    def __rpow__(self, other: Scalar) -> Self:
         ...
-    def __rmod__(self, other: Scalar) -> DataFrame:
+    def __rmod__(self, other: Scalar) -> Self:
         ...
 
-    def __invert__(self) -> DataFrame:
+    def __invert__(self) -> Self:
         """
         Invert truthiness of (boolean) elements.
 
@@ -659,7 +658,7 @@ class DataFrame:
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
-    def any(self, *, skip_nulls: bool = True) -> DataFrame:
+    def any(self, *, skip_nulls: bool = True) -> Self:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -670,7 +669,7 @@ class DataFrame:
         """
         ...
 
-    def all(self, *, skip_nulls: bool = True) -> DataFrame:
+    def all(self, *, skip_nulls: bool = True) -> Self:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -709,58 +708,43 @@ class DataFrame:
         """
         ...
 
-    def min(self, *, skip_nulls: bool = True) -> DataFrame:
+    def min(self, *, skip_nulls: bool = True) -> Self:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def max(self, *, skip_nulls: bool = True) -> DataFrame:
+    def max(self, *, skip_nulls: bool = True) -> Self:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def sum(self, *, skip_nulls: bool = True) -> DataFrame:
+    def sum(self, *, skip_nulls: bool = True) -> Self:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def prod(self, *, skip_nulls: bool = True) -> DataFrame:
+    def prod(self, *, skip_nulls: bool = True) -> Self:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def median(self, *, skip_nulls: bool = True) -> DataFrame:
+    def median(self, *, skip_nulls: bool = True) -> Self:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def mean(self, *, skip_nulls: bool = True) -> DataFrame:
+    def mean(self, *, skip_nulls: bool = True) -> Self:
         """
         Reduction returns a 1-row DataFrame.
         """
         ...
 
-    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DataFrame:
-        """
-        Reduction returns a 1-row DataFrame.
-
-        Parameters
-        ----------
-        correction
-            Correction to apply to the result. For example, ``0`` for sample
-            standard deviation and ``1`` for population standard deviation.
-            See `Column.std` for a more detailed description.
-        skip_nulls
-            Whether to skip null values.
-        """
-        ...
-
-    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DataFrame:
+    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Self:
         """
         Reduction returns a 1-row DataFrame.
 
@@ -775,7 +759,22 @@ class DataFrame:
         """
         ...
 
-    def is_null(self) -> DataFrame:
+    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Self:
+        """
+        Reduction returns a 1-row DataFrame.
+
+        Parameters
+        ----------
+        correction
+            Correction to apply to the result. For example, ``0`` for sample
+            standard deviation and ``1`` for population standard deviation.
+            See `Column.std` for a more detailed description.
+        skip_nulls
+            Whether to skip null values.
+        """
+        ...
+
+    def is_null(self) -> Self:
         """
         Check for 'missing' or 'null' entries.
 
@@ -795,7 +794,7 @@ class DataFrame:
         """
         ...
 
-    def is_nan(self) -> DataFrame:
+    def is_nan(self) -> Self:
         """
         Check for nan entries.
 
@@ -815,15 +814,15 @@ class DataFrame:
         """
         ...
 
-    def unique_indices(self, keys: str | list[str] | None = None, *, skip_nulls: bool = True) -> Column:
+    def unique_indices(self, *keys: str, skip_nulls: bool = True) -> Column:
         """
         Return indices corresponding to unique values across selected columns.
 
         Parameters
         ----------
-        keys : str | list[str], optional
+        *keys : str
             Column names to consider when finding unique values.
-            If `None`, all columns are considered.
+            If not specified, all columns are considered.
 
         Returns
         -------
@@ -842,7 +841,7 @@ class DataFrame:
         """
         ...
 
-    def fill_nan(self, value: float | NullType, /) -> DataFrame:
+    def fill_nan(self, value: float | NullType, /) -> Self:
         """
         Fill ``nan`` values with the given fill value.
 
@@ -861,7 +860,7 @@ class DataFrame:
 
     def fill_null(
         self, value: Scalar, /, *, column_names : list[str] | None = None
-    ) -> DataFrame:
+    ) -> Self:
         """
         Fill null values with the given fill value.
 
@@ -891,7 +890,7 @@ class DataFrame:
         """
         ...
     
-    def to_array_object(self, dtype: DType) -> Any:
+    def to_array(self, dtype: DType) -> Any:
         """
         Convert to array-API-compliant object.
 
@@ -928,12 +927,12 @@ class DataFrame:
     
     def join(
         self,
-        other: DataFrame,
+        other: Self,
         *,
         how: Literal['left', 'inner', 'outer'],
         left_on: str | list[str],
         right_on: str | list[str],
-    ) -> DataFrame:
+    ) -> Self:
         """
         Join with other dataframe.
 
@@ -943,7 +942,7 @@ class DataFrame:
 
         Parameters
         ----------
-        other : DataFrame
+        other : Self
             Dataframe to join with.
         how : str
             Kind of join to perform.
