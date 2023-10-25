@@ -240,7 +240,7 @@ def date(year: int, month: int, day: int) -> Scalar:
     """
     Create date object which can be used for filtering.
 
-    The full 32-bit signed integer range of dates should be supported.
+    The full 32-bit signed integer range of days since epoch should be supported (between -5877641-06-23 and 5881580-07-11 inclusive).
 
     Examples
     --------
