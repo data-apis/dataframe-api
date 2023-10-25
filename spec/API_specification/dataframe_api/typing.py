@@ -161,6 +161,9 @@ class Namespace(Protocol):
     def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
         ...
 
+    @staticmethod
+    def date(year: int, month: int, day: int) -> Scalar:
+        ...
 
 class SupportsDataFrameAPI(Protocol):
     def __dataframe_consortium_standard__(
