@@ -240,6 +240,8 @@ def date(year: int, month: int, day: int) -> Scalar:
     """
     Create date object which can be used for filtering.
 
+    The full 32-bit signed integer range of dates should be supported.
+
     Examples
     --------
     >>> df: DataFrame
