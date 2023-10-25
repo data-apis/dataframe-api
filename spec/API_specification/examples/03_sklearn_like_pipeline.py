@@ -33,8 +33,8 @@ class Scaler:
             scalings = scalings.collect()
 
         self.scalings_ = {
-            # Clarify: Should the return type of `get_value` (lazy /
-            # eager scalar) depend on a previous call to `collect`?
+            # Note: `get_value` returns an implemenation-defined,
+            # duck-typed scalar which may be lazy.
             column_name: scalings.get_column_by_name(column_name).get_value(0)
             for column_name in self.column_names
         }
