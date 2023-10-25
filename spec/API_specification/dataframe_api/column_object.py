@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any,NoReturn, TYPE_CHECKING, Literal, Generic
+from typing import Any,NoReturn, TYPE_CHECKING, Literal, Protocol
 
 if TYPE_CHECKING:
     from .typing import NullType, Scalar, DType, Namespace
@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 __all__ = ['Column']
 
 
-class Column:
+class Column(Protocol):
     """
     Column object
 
