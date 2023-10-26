@@ -10,5 +10,3 @@ behavior.
 .. currentmodule:: dataframe_api
 
 .. autoclass:: Column
-
-.. autoclass:: DatetimeAccessor

@@ -901,7 +901,7 @@ class Column(Protocol):
         """
         ...
 
-    def floor(self, frequency: str) -> Column:
+    def floor(self, frequency: str) -> Self:
         """
         Return floor of each element according to the specified frequency.
 
@@ -922,12 +922,22 @@ class Column(Protocol):
             Frequency to floor by. Can be constructed using the following string
             language:
 
+            - "<n>day(s)"
+            - "<n>hour(s)"
+            - "<n>minute(s)"
+            - "<n>second(s)"
+            - "<n>millisecond(s)"
+            - "<n>microsecond(s)"
+
+            where ``<n>`` is a positive integer and the trailing (s) is
+            optional.
+            Multiple frequencies can be specified, separated by blank spaces.
+
+            Examples of valid inputs are:
+
             - "1day"
-            - "1hour"
-            - "1minute"
-            - "1second"
-            - "1millisecond"
-            - "1microsecond"
+            - "1day 1hour"
+            - "1day 2hours 3minutes 4seconds 5milliseconds 6microseconds"
 
         Examples
         --------
@@ -936,3 +946,4 @@ class Column(Protocol):
         >>> column: Column
         >>> column.dt.floor("1day")
         """
+        ...
