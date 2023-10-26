@@ -135,7 +135,7 @@ def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> Column:
     """
     ...
 
-def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any]) -> DataFrame:
+def dataframe_from_2d_array(array: Any, *, dtypes: Mapping[str, Any]) -> DataFrame:
     """
     Construct DataFrame from 2D array.
 
@@ -149,10 +149,9 @@ def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping
     ----------
     array : array
         array-API compliant 2D array
-    names : Sequence[str]
-        Names to give columns. Must be the same length as ``array.shape[1]``.
     dtypes : Mapping[str, DType]
         Dtype of each column. Must be the same length as ``array.shape[1]``.
+        Keys determine column names.
 
     Returns
     -------
