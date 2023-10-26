@@ -112,8 +112,7 @@ class Namespace(Protocol):
     class String():
         ...
 
-    class Aggregation:
-        ...
+    Aggregation: AggregationT
 
     def concat(self, dataframes: Sequence[DataFrame]) -> DataFrame:
         ...
