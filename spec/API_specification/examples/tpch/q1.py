@@ -8,16 +8,16 @@ def query(lineitem_raw: SupportsDataFrameAPI) -> Any:
     lineitem = lineitem_raw.__dataframe_consortium_standard__()
     namespace = lineitem.__dataframe_namespace__()
 
-    mask = lineitem.get_column_by_name("l_shipdate") <= namespace.date(1998, 9, 2)
+    mask = lineitem.col("l_shipdate") <= namespace.date(1998, 9, 2)
     lineitem = lineitem.assign(
         (
-            lineitem.get_column_by_name("l_extended_price")
-            * (1 - lineitem.get_column_by_name("l_discount"))
+            lineitem.col("l_extended_price")
+            * (1 - lineitem.col("l_discount"))
         ).rename("l_disc_price"),
         (
-            lineitem.get_column_by_name("l_extended_price")
-            * (1 - lineitem.get_column_by_name("l_discount"))
-            * (1 + lineitem.get_column_by_name("l_tax"))
+            lineitem.col("l_extended_price")
+            * (1 - lineitem.col("l_discount"))
+            * (1 + lineitem.col("l_tax"))
         ).rename("l_charge"),
     )
     result = (

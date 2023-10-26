@@ -25,7 +25,7 @@ def group_by_and_plot(
     )
 
     agg = df.group_by("color").mean().fill_null(float('nan'))
-    x = agg.get_column_by_name("x").to_array()
-    y = agg.get_column_by_name("y").to_array()
+    x = agg.col("x").to_array()
+    y = agg.col("y").to_array()
 
     my_plotting_function(x, y)

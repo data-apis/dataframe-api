@@ -53,19 +53,15 @@ def query(
         )
     )
     mask = (
-        (
-            result.get_column_by_name("c_nationkey")
-            == result.get_column_by_name("s_nationkey")
-        )
-        & (result.get_column_by_name("r_name") == "ASIA")
-        & (result.get_column_by_name("o_orderdate") >= namespace.date(1994, 1, 1))
-        & (result.get_column_by_name("o_orderdate") < namespace.date(1995, 1, 1))
+        (result.col("c_nationkey") == result.col("s_nationkey"))
+        & (result.col("r_name") == "ASIA")
+        & (result.col("o_orderdate") >= namespace.date(1994, 1, 1))
+        & (result.col("o_orderdate") < namespace.date(1995, 1, 1))
     )
     result = result.filter(mask)
 
     new_column = (
-        result.get_column_by_name("l_extendedprice")
-        * (1 - result.get_column_by_name("l_discount"))
+        result.col("l_extendedprice") * (1 - result.col("l_discount"))
     ).rename("revenue")
     result = result.assign(new_column)
     result = result.group_by("n_name").aggregate(namespace.Aggregation.sum("revenue"))
