@@ -1,3 +1,4 @@
+# mypy: disable-error-code="empty-body"
 """
 Function stubs and API documentation for the DataFrame API standard.
 """
@@ -11,36 +12,37 @@ from .groupby_object import *
 from .dtypes import *
 
 if TYPE_CHECKING:
-    from ._types import DType
+    from .typing import DType, Scalar
 
 __all__ = [
-    "__dataframe_api_version__",
-    "DataFrame",
-    "Column",
-    "column_from_sequence",
-    "column_from_1d_array",
-    "concat",
-    "dataframe_from_dict",
-    "dataframe_from_2d_array",
-    "is_null",
-    "null",
-    "Int64",
-    "Int32",
-    "Int16",
-    "Int8",
-    "UInt64",
-    "UInt32",
-    "UInt16",
-    "UInt8",
-    "Float64",
-    "Float32",
+    "Aggregation",
     "Bool",
+    "Column",
+    "DataFrame",
     "Date",
     "Datetime",
     "Duration",
+    "Float32",
+    "Float64",
+    "Int16",
+    "Int32",
+    "Int64",
+    "Int8",
     "String",
+    "UInt16",
+    "UInt32",
+    "UInt64",
+    "UInt8",
+    "__dataframe_api_version__",
+    "column_from_1d_array",
+    "column_from_sequence",
+    "concat",
+    "dataframe_from_2d_array",
+    "dataframe_from_columns",
+    "date",
     "is_dtype",
-    "DatetimeAccessor",
+    "is_null",
+    "null",
 ]
 
 
@@ -92,27 +94,20 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: DType, name: str = '
     """
     ...
 
-def dataframe_from_dict(data: Mapping[str, Column]) -> DataFrame:
+def dataframe_from_columns(*columns: Column) -> DataFrame:
     """
-    Construct DataFrame from map of column names to Columns.
+    Construct DataFrame from sequence of Columns.
 
     Parameters
     ----------
-    data : Mapping[str, Column]
-        Column must be of the corresponding type of the DataFrame.
+    columns : Column
+        Column(s) must be of the corresponding type of the DataFrame.
         For example, it is only supported to build a ``LibraryXDataFrame`` using
         ``LibraryXColumn`` instances.
 
     Returns
     -------
     DataFrame
-    
-    Raises
-    ------
-    ValueError
-        If any of the columns already has a name, and the corresponding key
-        in `data` doesn't match.
-
     """
     ...
 
@@ -242,3 +237,21 @@ def is_dtype(dtype: DType, kind: str | tuple[str, ...]) -> bool:
     -------
     bool
     """
+
+def date(year: int, month: int, day: int) -> Scalar:
+    """
+    Create date object which can be used for filtering.
+
+    The full 32-bit signed integer range of days since epoch should be supported (between -5877641-06-23 and 5881580-07-11 inclusive).
+
+    Examples
+    --------
+    >>> df: DataFrame
+    >>> namespace = df.__dataframe_namespace__()
+    >>> mask = (
+    ...     (df.get_column_by_name('date') >= namespace.date(2020, 1, 1))
+    ...     & (df.get_column_by_name('date') < namespace.date(2021, 1, 1))
+    ... )
+    >>> df.filter(mask)
+    """
+

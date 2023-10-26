@@ -1,8 +1,13 @@
-from typing import Callable, Any
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from dataframe_api.typing import SupportsColumnAPI
+    from typing import Callable, Any
 
 my_plotting_function: Callable[[Any, Any], Any]
 
-from dataframe_api._types import SupportsColumnAPI
 
 def group_by_and_plot(
     x_any: SupportsColumnAPI,
@@ -15,10 +20,12 @@ def group_by_and_plot(
 
     namespace = x.__column_namespace__()
 
-    df = namespace.dataframe_from_dict({"x": x, "y": y, "color": color})
+    df = namespace.dataframe_from_columns(
+        x.rename('x'), y.rename('y'), color.rename('color')
+    )
 
-    agg = df.group_by("color").mean()
-    x = agg.get_column_by_name("x").to_array_object(namespace.Float64())
-    y = agg.get_column_by_name("y").to_array_object(namespace.Float64())
+    agg = df.group_by("color").mean().fill_null(float('nan'))
+    x = agg.get_column_by_name("x").to_array()
+    y = agg.get_column_by_name("y").to_array()
 
     my_plotting_function(x, y)
