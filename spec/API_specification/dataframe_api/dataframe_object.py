@@ -64,6 +64,7 @@ class DataFrame(Protocol):
         """
         Return number of rows and number of columns.
         """
+        ...
 
     def group_by(self, *keys: str) -> GroupBy:
         """
@@ -463,6 +464,7 @@ class DataFrame(Protocol):
         ValueError
             If `self` or `other` is not boolean.
         """
+        ...
 
     def __or__(self, other: bool) -> Self:
         """
@@ -483,6 +485,7 @@ class DataFrame(Protocol):
         ValueError
             If `self` or `other` is not boolean.
         """
+        ...
 
     def __add__(self, other: Scalar) -> Self:
         """
