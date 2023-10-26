@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from .typing import DType, Scalar
 
 __all__ = [
+    "Aggregation",
     "Bool",
     "Column",
     "DataFrame",
