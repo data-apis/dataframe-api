@@ -12,7 +12,7 @@ __all__ = [
 ]
 
 
-class GroupBy:
+class GroupBy(Protocol):
     """
     GroupBy object.
 
