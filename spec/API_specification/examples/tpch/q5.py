@@ -55,8 +55,8 @@ def query(
     mask = (
         (result.col("c_nationkey") == result.col("s_nationkey"))
         & (result.col("r_name") == "ASIA")
-        & (result.col("o_orderdate") >= namespace.date(1994, 1, 1))  # type: ignore
-        & (result.col("o_orderdate") < namespace.date(1995, 1, 1))  # type: ignore
+        & (result.col("o_orderdate") >= namespace.date(1994, 1, 1))
+        & (result.col("o_orderdate") < namespace.date(1995, 1, 1))
     )
     result = result.filter(mask)
 
