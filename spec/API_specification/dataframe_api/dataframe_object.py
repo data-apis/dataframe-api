@@ -50,6 +50,7 @@ class DataFrame(Protocol):
             recommended to only include those names that are part of the
             specification.
         """
+        ...
 
     @property
     def dataframe(self) -> SupportsDataFrameAPI:
@@ -256,7 +257,7 @@ class DataFrame(Protocol):
         ...
     
     @property
-    def schema(self) -> dict[str, Any]:
+    def schema(self) -> dict[str, DType]:
         """
         Get dataframe's schema.
 
@@ -265,6 +266,7 @@ class DataFrame(Protocol):
         dict[str, Any]
             Mapping from column name to data type.
         """
+        ...
     
     def sort(
         self,
@@ -969,3 +971,4 @@ class DataFrame(Protocol):
             If, apart from `left_on` and `right_on`, there are any column names
             present in both `self` and `other`.
         """
+        ...
