@@ -154,13 +154,13 @@ class Namespace(Protocol):
 
 class SupportsDataFrameAPI(Protocol):
     def __dataframe_consortium_standard__(
-        self, *, api_version: str | None = None
+        self, *, api_version: str
     ) -> DataFrame:
         ...
 
 class SupportsColumnAPI(Protocol):
     def __column_consortium_standard__(
-        self, *, api_version: str | None = None
+        self, *, api_version: str
     ) -> Column:
         ...
 
