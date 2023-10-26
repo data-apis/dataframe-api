@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
     from .dataframe_object import DataFrame
@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 __all__ = ['GroupBy']
 
 
-class GroupBy:
+class GroupBy(Protocol):
     """
     GroupBy object.
 
