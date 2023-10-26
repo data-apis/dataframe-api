@@ -670,21 +670,20 @@ are required to provide the following methods:</p>
 <code class="docutils literal notranslate"><span class="pre">pandas.Series.__column_consortium_standard__</span></code> as of version 2.1.0.</p>
 <p>The signatures should be (note: docstring is optional):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__dataframe_consortium_standard__</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">api_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">api_version</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 
 <span class="k">def</span> <span class="nf">__column_consortium_standard__</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">api_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">api_version</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">api_version</span></code> is
 a string representing the version of the dataframe API specification
 to be returned, in <code class="docutils literal notranslate"><span class="pre">'YYYY.MM'</span></code> form, for example, <code class="docutils literal notranslate"><span class="pre">'2023.04'</span></code>.
-If it is <code class="docutils literal notranslate"><span class="pre">None</span></code>, it should return the namespace corresponding to
-latest version of the dataframe API specification.  If the given
-version is invalid or not implemented for the given module, an
-error should be raised. Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+If the given version is invalid or not implemented for the given module,
+an error should be raised. It is suggested to use the earliest API
+version required for maximum compatibility.</p>
 <p>For some examples, please check https://github.com/data-apis/dataframe-api/tree/main/spec/examples.</p>
 <section id="checking-a-dataframe-object-for-compliance">
 <h3 id="checking-a-dataframe-object-for-compliance">Checking a dataframe object for Compliance<a class="headerlink" href="#checking-a-dataframe-object-for-compliance" title="Permalink to this heading">¶</a></h3>
