@@ -14,9 +14,9 @@ def group_by_and_plot(
     y_any: SupportsColumnAPI,
     color_any: SupportsColumnAPI,
 ) -> None:
-    x = x_any.__column_consortium_standard__()
-    y = y_any.__column_consortium_standard__()
-    color = color_any.__column_consortium_standard__()
+    x = x_any.__column_consortium_standard__(api_version='2023-10.beta')
+    y = y_any.__column_consortium_standard__(api_version='2023-10.beta')
+    color = color_any.__column_consortium_standard__(api_version='2023-10.beta')
 
     namespace = x.__column_namespace__()
 
@@ -25,7 +25,7 @@ def group_by_and_plot(
     )
 
     agg = df.group_by("color").mean().fill_null(float('nan'))
-    x = agg.get_column_by_name("x").to_array()
-    y = agg.get_column_by_name("y").to_array()
+    x = agg.col("x").to_array()
+    y = agg.col("y").to_array()
 
     my_plotting_function(x, y)

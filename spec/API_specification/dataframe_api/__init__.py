@@ -1,3 +1,4 @@
+# mypy: disable-error-code="empty-body"
 """
 Function stubs and API documentation for the DataFrame API standard.
 """
@@ -14,6 +15,7 @@ if TYPE_CHECKING:
     from .typing import DType, Scalar
 
 __all__ = [
+    "Aggregation",
     "Bool",
     "Column",
     "DataFrame",

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Literal, Mapping, Sequence, Union, TYPE_CHECKING, NoReturn
+from typing import Any, Literal, Mapping, Sequence, TYPE_CHECKING, NoReturn, Protocol
 
 
 if TYPE_CHECKING:
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 __all__ = ["DataFrame"]
 
 
-class DataFrame:
+class DataFrame(Protocol):
     """
     DataFrame object
 
@@ -50,6 +50,7 @@ class DataFrame:
             recommended to only include those names that are part of the
             specification.
         """
+        ...
 
     @property
     def dataframe(self) -> SupportsDataFrameAPI:
@@ -64,6 +65,7 @@ class DataFrame:
         """
         Return number of rows and number of columns.
         """
+        ...
 
     def group_by(self, *keys: str) -> GroupBy:
         """
@@ -90,7 +92,7 @@ class DataFrame:
         """
         ...
 
-    def get_column_by_name(self, name: str, /) -> Column:
+    def col(self, name: str, /) -> Column:
         """
         Select a column by name.
 
@@ -193,7 +195,7 @@ class DataFrame:
 
         .. code-block:: python
 
-            new_column = df.get_column_by_name('a') + 1
+            new_column = df.col('a') + 1
             df = df.assign(new_column.rename('b'))
 
         Parameters
@@ -255,7 +257,7 @@ class DataFrame:
         ...
     
     @property
-    def schema(self) -> dict[str, Any]:
+    def schema(self) -> dict[str, DType]:
         """
         Get dataframe's schema.
 
@@ -264,6 +266,7 @@ class DataFrame:
         dict[str, Any]
             Mapping from column name to data type.
         """
+        ...
     
     def sort(
         self,
@@ -463,6 +466,7 @@ class DataFrame:
         ValueError
             If `self` or `other` is not boolean.
         """
+        ...
 
     def __or__(self, other: bool) -> Self:
         """
@@ -483,6 +487,7 @@ class DataFrame:
         ValueError
             If `self` or `other` is not boolean.
         """
+        ...
 
     def __add__(self, other: Scalar) -> Self:
         """
@@ -966,3 +971,4 @@ class DataFrame:
             If, apart from `left_on` and `right_on`, there are any column names
             present in both `self` and `other`.
         """
+        ...

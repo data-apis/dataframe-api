@@ -15,7 +15,7 @@ from typing import (
 
 from dataframe_api.column_object import Column
 from dataframe_api.dataframe_object import DataFrame
-from dataframe_api.groupby_object import GroupBy
+from dataframe_api.groupby_object import GroupBy, Aggregation as AggregationT
 
 if TYPE_CHECKING:
     from .dtypes import (
@@ -65,68 +65,60 @@ NullType = Any
 class Namespace(Protocol):
     __dataframe_api_version__: str
 
-    @staticmethod
-    def Int64() -> Int64:
+    class Int64():
         ...
 
-    @staticmethod
-    def Int32() -> Int32:
+    class Int32():
         ...
 
-    @staticmethod
-    def Int16() -> Int16:
+    class Int16():
         ...
 
-    @staticmethod
-    def Int8() -> Int8:
+    class Int8():
         ...
 
-    @staticmethod
-    def UInt64() -> UInt64:
+    class UInt64():
         ...
 
-    @staticmethod
-    def UInt32() -> UInt32:
+    class UInt32():
         ...
 
-    @staticmethod
-    def UInt16() -> UInt16:
+    class UInt16():
         ...
 
-    @staticmethod
-    def UInt8() -> UInt8:
+    class UInt8():
         ...
 
-    @staticmethod
-    def Float64() -> Float64:
+    class Float64():
         ...
 
-    @staticmethod
-    def Float32() -> Float32:
+    class Float32():
         ...
 
-    @staticmethod
-    def Bool() -> Bool:
+    class Bool():
         ...
 
-    @staticmethod
-    def Date() -> Date:
+    class Date():
         ...
 
-    @staticmethod
-    def Datetime(time_unit: Literal['ms', 'us'], time_zone: str | None) -> Datetime:
+    class Datetime():
+        def __init__(
+            self,
+            time_unit: Literal['ms', 'us'],
+            time_zone: str | None,
+        ):
+            ...
+
+    class String():
         ...
 
-    @staticmethod
-    def String() -> String:
+    Aggregation: AggregationT
+
+    def concat(self, dataframes: Sequence[DataFrame]) -> DataFrame:
         ...
 
-    @staticmethod
-    def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
-        ...
-
-    @staticmethod
     def column_from_sequence(
+        self,
         sequence: Sequence[Any],
         *,
         dtype: Any,
@@ -134,18 +126,16 @@ class Namespace(Protocol):
     ) -> Column:
         ...
 
-    @staticmethod
-    def dataframe_from_columns(*columns: Column) -> DataFrame:
+    def dataframe_from_columns(self, *columns: Column) -> DataFrame:
         ...
 
-    @staticmethod
     def column_from_1d_array(
-        array: Any, *, dtype: Any, name: str = ""
+        self, array: Any, *, dtype: Any, name: str = ""
     ) -> Column:
         ...
 
-    @staticmethod
     def dataframe_from_2d_array(
+        self,
         array: Any,
         *,
         names: Sequence[str],
@@ -153,32 +143,30 @@ class Namespace(Protocol):
     ) -> DataFrame:
         ...
 
-    @staticmethod
-    def is_null(value: object, /) -> bool:
+    def is_null(self, value: object, /) -> bool:
         ...
 
-    @staticmethod
-    def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
+    def is_dtype(self, dtype: Any, kind: str | tuple[str, ...]) -> bool:
         ...
-
-    @staticmethod
-    def date(year: int, month: int, day: int) -> Scalar:
+    
+    def date(self, year: int, month: int, day: int) -> Scalar:
         ...
 
 class SupportsDataFrameAPI(Protocol):
     def __dataframe_consortium_standard__(
-        self, *, api_version: str | None = None
+        self, *, api_version: str
     ) -> DataFrame:
         ...
 
 class SupportsColumnAPI(Protocol):
     def __column_consortium_standard__(
-        self, *, api_version: str | None = None
+        self, *, api_version: str
     ) -> Column:
         ...
 
 
 __all__ = [
+    "Aggregation",
     "Column",
     "DataFrame",
     "DType",
