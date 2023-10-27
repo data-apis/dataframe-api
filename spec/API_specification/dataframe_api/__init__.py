@@ -137,7 +137,7 @@ def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> Column:
     """
     ...
 
-def dataframe_from_2d_array(array: Any, *, dtypes: Dict[str, Any]) -> DataFrame:
+def dataframe_from_2d_array(array: Any, *, schema: Dict[str, DType]) -> DataFrame:
     """
     Construct DataFrame from 2D array.
 

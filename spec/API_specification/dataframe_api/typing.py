@@ -121,7 +121,7 @@ class Namespace(Protocol):
         self,
         sequence: Sequence[Any],
         *,
-        dtype: Any,
+        dtype: DType,
         name: str = "",
     ) -> Column:
         ...
@@ -130,7 +130,7 @@ class Namespace(Protocol):
         ...
 
     def column_from_1d_array(
-        self, array: Any, *, dtype: Any, name: str = ""
+        self, array: Any, *, dtype: DType, name: str = ""
     ) -> Column:
         ...
 
@@ -139,14 +139,14 @@ class Namespace(Protocol):
         array: Any,
         *,
         names: Sequence[str],
-        dtypes: Mapping[str, Any],
+        schema: Mapping[str, DType],
     ) -> DataFrame:
         ...
 
     def is_null(self, value: object, /) -> bool:
         ...
 
-    def is_dtype(self, dtype: Any, kind: str | tuple[str, ...]) -> bool:
+    def is_dtype(self, dtype: DType, kind: str | tuple[str, ...]) -> bool:
         ...
     
     def date(self, year: int, month: int, day: int) -> Scalar:
