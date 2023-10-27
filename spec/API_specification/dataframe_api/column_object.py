@@ -47,6 +47,7 @@ class Column(Protocol):
     @property
     def name(self) -> str:
         """Return name of column."""
+        ...
 
     def __len__(self) -> int:
         """
