@@ -4,7 +4,7 @@ Function stubs and API documentation for the DataFrame API standard.
 """
 from __future__ import annotations
 
-from typing import Mapping, Sequence, Any, Literal, TYPE_CHECKING
+from typing import Dict, Sequence, Any, TYPE_CHECKING
 
 from .column_object import *
 from .dataframe_object import DataFrame
@@ -137,7 +137,7 @@ def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> Column:
     """
     ...
 
-def dataframe_from_2d_array(array: Any, *, dtypes: Mapping[str, Any]) -> DataFrame:
+def dataframe_from_2d_array(array: Any, *, dtypes: Dict[str, Any]) -> DataFrame:
     """
     Construct DataFrame from 2D array.
 
@@ -203,8 +203,8 @@ def is_null(value: object, /) -> bool:
     bool
         True if the input is a `null` object from the same library which
         implements the dataframe API standard, False otherwise.
-
     """
+    ...
 
 def is_dtype(dtype: DType, kind: str | tuple[str, ...]) -> bool:
     """
@@ -236,6 +236,7 @@ def is_dtype(dtype: DType, kind: str | tuple[str, ...]) -> bool:
     -------
     bool
     """
+    ...
 
 def date(year: int, month: int, day: int) -> Scalar:
     """
