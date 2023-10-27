@@ -5,7 +5,7 @@ if TYPE_CHECKING:
 
 
 def query(lineitem_raw: SupportsDataFrameAPI) -> Any:
-    lineitem = lineitem_raw.__dataframe_consortium_standard__()
+    lineitem = lineitem_raw.__dataframe_consortium_standard__(api_version='2023.10-beta')
     namespace = lineitem.__dataframe_namespace__()
 
     mask = lineitem.col("l_shipdate") <= namespace.date(1998, 9, 2)
