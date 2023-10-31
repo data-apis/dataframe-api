@@ -57,8 +57,6 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     Concatenate DataFrames vertically.
 
-    To concatenate horizontally, please use :meth:`DataFrame.assign`.
-
     Parameters
     ----------
     dataframes : Sequence[DataFrame]
