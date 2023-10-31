@@ -64,6 +64,11 @@ class DataFrame(Protocol):
     def shape(self) -> tuple[int, int]:
         """
         Return number of rows and number of columns.
+
+        Notes
+        -----
+        To be guaranteed to run across all implementations, :meth:`may_execute` should
+        be executed at some point before calling this method.
         """
         ...
 
@@ -928,6 +933,9 @@ class DataFrame(Protocol):
         may choose to return a numpy array (for numpy prior to 2.0), with the
         understanding that consuming libraries would then use the
         ``array-api-compat`` package to convert it to a Standard-compliant array.
+
+        To be guaranteed to run across all implementations, :meth:`may_execute` should
+        be executed at some point before calling this method.
         """
     
     def join(
@@ -970,5 +978,20 @@ class DataFrame(Protocol):
         ValueError
             If, apart from `left_on` and `right_on`, there are any column names
             present in both `self` and `other`.
+        """
+        ...
+    
+    def may_execute(self) -> Self:
+        """
+        Hint that execution may be triggered, depending on the implementation.
+
+        This is intended as a hint, rather than as a directive. Implementations
+        which do not separate lazy vs eager execution may ignore this method and
+        treat it as a no-op. Likewise for implementations which support automated
+        execution.
+
+        .. note::
+            This method may force execution. If necessary, it should be called
+            at most once per dataframe, and as late as possible in the pipeline.
         """
         ...
