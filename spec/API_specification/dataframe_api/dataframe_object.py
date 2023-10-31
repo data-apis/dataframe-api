@@ -981,7 +981,7 @@ class DataFrame(Protocol):
         """
         ...
     
-    def may_execute(self) -> Self:
+    def maybe_execute(self) -> Self:
         """
         Hint that execution may be triggered, depending on the implementation.
 

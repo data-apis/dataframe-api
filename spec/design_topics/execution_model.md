@@ -38,40 +38,13 @@ for such an operation to be executed:
      ...:     print('scalar is positive')
      ...:
   ---------------------------------------------------------------------------
-  TypeError                                 Traceback (most recent call last)
-  Cell In[5], line 1
-  ----> 1 if scalar:
-        2     print('scalar is positive')
-  
-  File ~/tmp/.venv/lib/python3.10/site-packages/dask/dataframe/core.py:312, in Scalar.__bool__(self)
-      311 def __bool__(self):
-  --> 312     raise TypeError(
-      313         f"Trying to convert {self} to a boolean value. Because Dask objects are "
-      314         "lazily evaluated, they cannot be converted to a boolean value or used "
-      315         "in boolean conditions like if statements. Try calling .compute() to "
-      316         "force computation prior to converting to a boolean value or using in "
-      317         "a conditional statement."
-      318     )
+  [...]
   
   TypeError: Trying to convert dd.Scalar<gt-bbc3..., dtype=bool> to a boolean value. Because Dask objects are lazily evaluated, they cannot be converted to a boolean value or used in boolean conditions like if statements. Try calling .compute() to force computation prior to converting to a boolean value or using in a conditional statement.
   ```
 
-Exactly which methods require computation may vary across implementations. Some may
-implicitly do it for users under-the-hood for certain methods, whereas others require
-the user to explicitly trigger it.
-
-Therefore, the Dataframe API has a `Dataframe.maybe_evaluate` method. This is to be
-interpreted as a hint, rather than as a directive - the implementation itself may decide
-whether to force execution at this step, or whether to defer it to later.
-
-Operations which require `DataFrame.may_execute` to have been called at some prior
-point are:
-- `DataFrame.to_array`
-- `DataFrame.shape`
-- `Column.to_array`
-- calling `bool`, `int`, or `float` on a scalar 
-
-Therefore, the Standard-compliant way to write the code above is:
+The Dataframe API has a `DataFrame.maybe_evaluate` for addressing the above. We can use it to rewrite the code above
+as follows:
 ```python
 df: DataFrame
 df = df.may_execute()
@@ -81,6 +54,20 @@ for column_name in df.column_names:
         features.append(column_name)
 return features
 ```
+
+Note that `maybe_evaluate` is to be interpreted as a hint, rather than as a directive -
+the implementation itself may decide
+whether to force execution at this step, or whether to defer it to later.
+For example, a dataframe which can convert to a lazy array could decide to ignore
+`maybe_evaluate` when evaluting `DataFrame.to_array` but to respect it when evaluating
+`float(Column.std())`.
+
+Operations which require `DataFrame.may_execute` to have been called at some prior
+point are:
+- `DataFrame.to_array`
+- `DataFrame.shape`
+- `Column.to_array`
+- calling `bool`, `int`, or `float` on a scalar 
 
 Note now `DataFrame.may_execute` is called only once, and as late as possible.
 Conversely, the "wrong" way to execute the above would be:
