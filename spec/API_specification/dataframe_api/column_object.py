@@ -802,11 +802,6 @@ class Column(Protocol):
         may choose to return a numpy array (for numpy prior to 2.0), with the
         understanding that consuming libraries would then use the
         ``array-api-compat`` package to convert it to a Standard-compliant array.
-
-        Notes
-        -----
-        To be guaranteed to run across all implementations, :meth:`may_execute` should
-        be executed at some point before calling this method.
         """
         ...
 

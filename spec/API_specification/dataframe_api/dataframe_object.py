@@ -67,7 +67,7 @@ class DataFrame(Protocol):
 
         Notes
         -----
-        To be guaranteed to run across all implementations, :meth:`may_execute` should
+        To be guaranteed to run across all implementations, :meth:`maybe_execute` should
         be executed at some point before calling this method.
         """
         ...
@@ -934,7 +934,7 @@ class DataFrame(Protocol):
         understanding that consuming libraries would then use the
         ``array-api-compat`` package to convert it to a Standard-compliant array.
 
-        To be guaranteed to run across all implementations, :meth:`may_execute` should
+        To be guaranteed to run across all implementations, :meth:`maybe_execute` should
         be executed at some point before calling this method.
         """
     

@@ -47,7 +47,7 @@ The Dataframe API has a `DataFrame.maybe_evaluate` for addressing the above. We 
 as follows:
 ```python
 df: DataFrame
-df = df.may_execute()
+df = df.maybe_execute()
 features = []
 for column_name in df.column_names:
     if df.col(column_name).std() > 0:
@@ -62,14 +62,13 @@ For example, a dataframe which can convert to a lazy array could decide to ignor
 `maybe_evaluate` when evaluting `DataFrame.to_array` but to respect it when evaluating
 `float(Column.std())`.
 
-Operations which require `DataFrame.may_execute` to have been called at some prior
+Operations which require `DataFrame.maybe_execute` to have been called at some prior
 point are:
 - `DataFrame.to_array`
 - `DataFrame.shape`
-- `Column.to_array`
 - calling `bool`, `int`, or `float` on a scalar 
 
-Note now `DataFrame.may_execute` is called only once, and as late as possible.
+Note now `DataFrame.maybe_execute` is called only once, and as late as possible.
 Conversely, the "wrong" way to execute the above would be:
 
 ```python
@@ -77,7 +76,7 @@ df: DataFrame
 features = []
 for column_name in df.column_names:
     # Do NOT do this!
-    if df.may_execute().col(column_name).std() > 0:
+    if df.maybe_execute().col(column_name).std() > 0:
         features.append(column_name)
 return features
 ```
