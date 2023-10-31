@@ -5,6 +5,7 @@ from typing import Any,NoReturn, TYPE_CHECKING, Literal, Protocol
 if TYPE_CHECKING:
     from .typing import NullType, Scalar, DType, Namespace
     from typing_extensions import Self
+    from dataframe_api.dataframe_object import DataFrame
 
 
 __all__ = ['Column']
@@ -17,8 +18,30 @@ class Column(Protocol):
     Note that this column object is not meant to be instantiated directly by
     users of the library implementing the dataframe API standard. Rather, use
     constructor functions or an already-created dataframe object retrieved via
-
+    :meth:`DataFrame.col`.
     """
+    @property
+    def dataframe(self) -> DataFrame | None:
+        """
+        Return parent DataFrame, if present.
+
+        For example, if we have the following
+
+        .. code-block:: python
+
+            df: DataFrame
+            column = df.col('a')
+        
+        then `column.dataframe` should return `df`.
+
+        On the other hand, if we had:
+
+        .. code-block:: python
+
+            column = column_from_1d_array(...)
+        
+        then `column.dataframe` should return `None`.
+        """
 
     def __column_namespace__(self) -> Namespace:
         """
