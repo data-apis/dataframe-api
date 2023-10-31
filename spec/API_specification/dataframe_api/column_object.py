@@ -238,6 +238,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -257,6 +262,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -274,6 +284,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -291,6 +306,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -308,6 +328,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -325,6 +350,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -342,6 +372,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
 
         Raises
         ------
@@ -365,6 +400,11 @@ class Column(Protocol):
         -------
         Column
 
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
+
         Raises
         ------
         ValueError
@@ -382,6 +422,11 @@ class Column(Protocol):
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
+ 
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
 
         Returns
         -------
@@ -403,6 +448,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -420,6 +470,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -437,6 +492,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -454,6 +514,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -475,6 +540,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -492,6 +562,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -509,6 +584,11 @@ class Column(Protocol):
         Returns
         -------
         Column
+
+        Notes
+        -----
+        `other`'s parent DataFrame must be the same as `self`'s - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
