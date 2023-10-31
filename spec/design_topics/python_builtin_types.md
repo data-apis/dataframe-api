@@ -30,8 +30,8 @@ builtin types to CPU. In the above example, the `.mean()` call returns a
 `float`. It is likely beneficial though to implement this as a library-specific
 scalar object which duck types with `float`. This means that it should (a) have
 the same semantics as a builtin `float` when used within a library, and (b)
-support usage as a `float` outside of the library (i.e., implement
-`__float__`). Duck typing is usually not perfect, for example `isinstance`
+support usage as a `float` outside of the library (see below).
+Duck typing is usually not perfect, for example `isinstance`
 usage on the float-like duck type will behave differently. Such explicit "type
 of object" checks don't have to be supported.
 
@@ -39,3 +39,33 @@ The following design rule applies everywhere builtin Python types are used
 within this API standard: _where a Python builtin type is specified, an
 implementation may always replace it by an equivalent library-specific type
 that duck types with the Python builtin type._
+
+## Required methods
+
+A ducktyped float scalar is required to implement all the methods which `float` implements,
+but note that those which require returning a Python scalar may raise
+(depending on the implementation).
+
+For example, if a library implements `FancyFloat` and `FancyBool` scalars,
+then the following should all be supported:
+```python
+df: DataFrame
+column_1: Column = df.col('a')
+column_2: Column = df.col('b')
+
+scalar: FancyFloat = column_1.std()
+result_1: Column = column_2 - column_1.std()
+result_2: FancyBool = column_2.std() > column_1.std()
+```
+The following, however, may raise, dependening on the
+implementation:
+```python
+df: DataFrame
+column = df.col('a')
+
+if column.std() > 0:  # this line may raise!
+    print('std is positive')
+```
+This is because `if column.std() > 0` will call `(column.std() > 0).__bool__()`,
+which must produce a Python scalar. Therefore, a purely lazy dataframe library
+may choose to raise here.
