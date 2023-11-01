@@ -492,12 +492,26 @@
 <p>Only Array-API-compliant 1D arrays are supported.
 Cross-kind casting is undefined and may vary across implementations.
 Downcasting is disallowed.</p>
+<p>The resulting column will have the dtype to the
+Array API one:</p>
+<ul class="simple">
+<li><p>‘bool’ -&gt; Bool()</p></li>
+<li><p>‘int8’ -&gt; Int8()</p></li>
+<li><p>‘int16’ -&gt; Int16()</p></li>
+<li><p>‘int32’ -&gt; Int32()</p></li>
+<li><p>‘int64’ -&gt; Int64()</p></li>
+<li><p>‘uint8’ -&gt; UInt8()</p></li>
+<li><p>‘uint16’ -&gt; UInt16()</p></li>
+<li><p>‘uint32’ -&gt; UInt32()</p></li>
+<li><p>‘uint64’ -&gt; UInt64()</p></li>
+<li><p>‘float32’ -&gt; Float32()</p></li>
+<li><p>‘float64’ -&gt; Float64()</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>array</strong> (<em>array</em>) – array-API compliant 1D array</p></li>
 <li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name to give columns.</p></li>
-<li><p><strong>dtype</strong> (<em>DType</em>) – Dtype of column.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
