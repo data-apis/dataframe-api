@@ -19,6 +19,19 @@ class Column(Protocol):
     users of the library implementing the dataframe API standard. Rather, use
     constructor functions or an already-created dataframe object retrieved via
     :meth:`DataFrame.col`.
+
+    The parent dataframe (which can be retrieved via the :meth:`dataframe` property)
+    plays a key role here:
+
+    - If two columns were retrieved from the same dataframe,
+      then they can be combined and compared at will. 
+    - If two columns were retrieved from different dataframes,
+      then there is no guarantee about how or whether they can be combined and
+      compared, this may vary across implementations.
+    - If two columns are both "free-standing" (i.e. not retrieved from a dataframe
+      but constructed directly from a 1D array or sequence), then they can be
+      combined and compared with each other. Note, however, that they still can't
+      be compared or combined with columns retrieved from a dataframe.
     """
     @property
     def dataframe(self) -> DataFrame | None:
