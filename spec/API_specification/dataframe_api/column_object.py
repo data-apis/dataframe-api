@@ -902,3 +902,24 @@ class Column(Protocol):
         """
         ...
 
+
+    def unix_timestamp(self, *, time_unit: Literal['s', 'ms', 'us'] = 's') -> Self:
+        """
+        Return the number of seconds (or milliseconds or microseconds) since the Unix epoch.
+
+        The Unix epoch is 00:00:00 UTC on 1 January 1970.
+
+        Parameters
+        ----------
+        time_unit
+            Time unit to use. Must be one of 's', 'ms', or 'us'.
+        
+        Returns
+        -------
+        Column
+            Integer data type. For example, if the date is 1970-01-02T00:00:00.123456,
+            and the time_unit is ``'s'``, then the result should be 86400, and not
+            86400.123456. Information smaller than the given time unit should be
+            discarded.
+        """
+        ...
