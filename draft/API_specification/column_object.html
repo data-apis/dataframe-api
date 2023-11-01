@@ -558,6 +558,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.unique_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.unique_indices()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.unix_timestamp" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.unix_timestamp()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.var" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.var()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.year" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.year()</span></code></a>
@@ -756,6 +758,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.to_array" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.to_array()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.unique_indices" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.unique_indices()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.unix_timestamp" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.unix_timestamp()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.var" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.var()</span></code></a>
         </li>
@@ -1549,6 +1553,23 @@ If the original Column contains multiple <code class="code docutils literal notr
 only a single index corresponding to those values will be returned.
 Likewise for null values (if <code class="docutils literal notranslate"><span class="pre">skip_nulls=False</span></code>).
 To get the unique values, you can do <code class="docutils literal notranslate"><span class="pre">col.get_rows(col.unique_indices())</span></code>.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.unix_timestamp">
+<span class="sig-name descname"><span class="pre">unix_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'s'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ms'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'us'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'s'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.unix_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of seconds (or milliseconds or microseconds) since the Unix epoch.</p>
+<p>The Unix epoch is 00:00:00 UTC on 1 January 1970.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>time_unit</strong> – Time unit to use. Must be one of ‘s’, ‘ms’, or ‘us’.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Column</strong> – Integer data type. For example, if the date is 1970-01-02T00:00:00.123456,
+and the time_unit is <code class="docutils literal notranslate"><span class="pre">'s'</span></code>, then the result should be 86400, and not
+86400.123456. Information smaller than the given time unit should be
+discarded.</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.var">
