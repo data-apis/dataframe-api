@@ -57,8 +57,6 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     Concatenate DataFrames vertically.
 
-    To concatenate horizontally, please use ``insert``.
-
     Parameters
     ----------
     dataframes : Sequence[DataFrame]
@@ -112,7 +110,7 @@ def dataframe_from_columns(*columns: Column) -> DataFrame:
     ...
 
 
-def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> Column:
+def column_from_1d_array(array: Any, *, name: str = '') -> Column:
     """
     Construct Column from 1D array.
 
@@ -122,14 +120,27 @@ def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> Column:
     Cross-kind casting is undefined and may vary across implementations.
     Downcasting is disallowed.
 
+    The resulting column will have the dtype to the
+    Array API one:
+
+    -  'bool' -> Bool()
+    -  'int8' -> Int8()
+    -  'int16' -> Int16()
+    -  'int32' -> Int32()
+    -  'int64' -> Int64()
+    -  'uint8' -> UInt8()
+    -  'uint16' -> UInt16()
+    -  'uint32' -> UInt32()
+    -  'uint64' -> UInt64()
+    -  'float32' -> Float32()
+    -  'float64' -> Float64()
+
     Parameters
     ----------
     array : array
         array-API compliant 1D array
     name : str, optional
         Name to give columns.
-    dtype : DType
-        Dtype of column.
 
     Returns
     -------
