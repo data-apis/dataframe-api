@@ -43,11 +43,11 @@ for such an operation to be executed:
   TypeError: Trying to convert dd.Scalar<gt-bbc3..., dtype=bool> to a boolean value. Because Dask objects are lazily evaluated, they cannot be converted to a boolean value or used in boolean conditions like if statements. Try calling .compute() to force computation prior to converting to a boolean value or using in a conditional statement.
   ```
 
-The Dataframe API has a `DataFrame.maybe_evaluate` for addressing the above. We can use it to rewrite the code above
+The Dataframe API has a `DataFrame.may_execute` for addressing the above. We can use it to rewrite the code above
 as follows:
 ```python
 df: DataFrame
-df = df.maybe_execute()
+df = df.may_execute()
 features = []
 for column_name in df.column_names:
     if df.col(column_name).std() > 0:
@@ -55,20 +55,17 @@ for column_name in df.column_names:
 return features
 ```
 
-Note that `maybe_evaluate` is to be interpreted as a hint, rather than as a directive -
+Note that `may_execute` is to be interpreted as a hint, rather than as a directive -
 the implementation itself may decide
 whether to force execution at this step, or whether to defer it to later.
-For example, a dataframe which can convert to a lazy array could decide to ignore
-`maybe_evaluate` when evaluting `DataFrame.to_array` but to respect it when evaluating
-`float(Column.std())`.
 
-Operations which require `DataFrame.maybe_execute` to have been called at some prior
+Operations which require `DataFrame.may_execute` to have been called at some prior
 point are:
-- `DataFrame.to_array`
 - `DataFrame.shape`
 - calling `bool`, `int`, or `float` on a scalar 
 
-Note now `DataFrame.maybe_execute` is called only once, and as late as possible.
+Note how in the above example, `DataFrame.may_execute` was called only once,
+and as late as possible.
 Conversely, the "wrong" way to execute the above would be:
 
 ```python
@@ -76,7 +73,7 @@ df: DataFrame
 features = []
 for column_name in df.column_names:
     # Do NOT do this!
-    if df.maybe_execute().col(column_name).std() > 0:
+    if df.may_execute().col(column_name).std() > 0:
         features.append(column_name)
 return features
 ```

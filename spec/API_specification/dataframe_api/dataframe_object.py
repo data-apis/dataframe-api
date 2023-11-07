@@ -67,7 +67,7 @@ class DataFrame(Protocol):
 
         Notes
         -----
-        To be guaranteed to run across all implementations, :meth:`maybe_execute` should
+        To be guaranteed to run across all implementations, :meth:`may_execute` should
         be executed at some point before calling this method.
         """
         ...
@@ -933,9 +933,6 @@ class DataFrame(Protocol):
         may choose to return a numpy array (for numpy prior to 2.0), with the
         understanding that consuming libraries would then use the
         ``array-api-compat`` package to convert it to a Standard-compliant array.
-
-        To be guaranteed to run across all implementations, :meth:`maybe_execute` should
-        be executed at some point before calling this method.
         """
     
     def join(
@@ -981,7 +978,7 @@ class DataFrame(Protocol):
         """
         ...
     
-    def maybe_execute(self) -> Self:
+    def may_execute(self) -> Self:
         """
         Hint that execution may be triggered, depending on the implementation.
 
