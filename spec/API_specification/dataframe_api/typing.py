@@ -7,7 +7,7 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Literal,
-    Mapping,
+    Dict,
     Protocol,
     Sequence,
     Union,
@@ -138,8 +138,7 @@ class Namespace(Protocol):
         self,
         array: Any,
         *,
-        names: Sequence[str],
-        schema: Mapping[str, DType],
+        schema: Dict[str, DType],
     ) -> DataFrame:
         ...
 
