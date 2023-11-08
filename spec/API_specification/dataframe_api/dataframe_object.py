@@ -62,9 +62,7 @@ class DataFrame(Protocol):
         ...
 
     def shape(self) -> tuple[int, int]:
-        """
-        Return number of rows and number of columns.
-        """
+        """Return number of rows and number of columns."""
         ...
 
     def group_by(self, *keys: str) -> GroupBy:
@@ -931,10 +929,9 @@ class DataFrame(Protocol):
             present in both `self` and `other`.
         """
         ...
-    
+
     def persist(self) -> Self:
-        """
-        Hint to that computation prior to this point should not be repeated.
+        """Hint to that computation prior to this point should not be repeated.
 
         This is intended as a hint, rather than as a directive. Implementations
         which do not separate lazy vs eager execution may ignore this method and
