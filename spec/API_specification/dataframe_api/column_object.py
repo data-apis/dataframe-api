@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-from typing import Any,NoReturn, TYPE_CHECKING, Literal, Protocol
+from typing import TYPE_CHECKING, Any, Literal, NoReturn, Protocol
 
 if TYPE_CHECKING:
-    from .typing import NullType, Scalar, DType, Namespace
     from typing_extensions import Self
+
+    from .scalar_object import Scalar
+    from .typing import DType, Namespace, NullType
 
 
 __all__ = ['Column']

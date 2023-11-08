@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-from typing import Any, Literal, Mapping, Sequence, TYPE_CHECKING, NoReturn, Protocol
-
+from typing import TYPE_CHECKING, Any, Literal, Mapping, NoReturn, Protocol, Sequence
 
 if TYPE_CHECKING:
+    from typing_extensions import Self
+
     from .column_object import Column
     from .groupby_object import GroupBy
-    from .typing import NullType, Scalar, Namespace, DType, SupportsDataFrameAPI
-    from typing_extensions import Self
+    from .scalar_object import Scalar
+    from .typing import DType, Namespace, NullType, SupportsDataFrameAPI
 
 
 __all__ = ["DataFrame"]

@@ -3,38 +3,32 @@ Types for type annotations used in the dataframe API standard.
 """
 from __future__ import annotations
 
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Literal,
-    Dict,
-    Protocol,
-    Sequence,
-    Union,
-)
+from typing import TYPE_CHECKING, Any, Dict, Literal, Protocol, Sequence, Union
 
 from dataframe_api.column_object import Column
 from dataframe_api.dataframe_object import DataFrame
-from dataframe_api.groupby_object import GroupBy, Aggregation as AggregationT
+from dataframe_api.groupby_object import Aggregation as AggregationT
+from dataframe_api.groupby_object import GroupBy
 
 if TYPE_CHECKING:
     from .dtypes import (
         Bool,
-        Float64,
-        Float32,
-        Int64,
-        Int32,
-        Int16,
-        Int8,
-        UInt64,
-        UInt32,
-        UInt16,
-        UInt8,
         Date,
         Datetime,
         Duration,
+        Float32,
+        Float64,
+        Int8,
+        Int16,
+        Int32,
+        Int64,
         String,
+        UInt8,
+        UInt16,
+        UInt32,
+        UInt64,
     )
+    from .scalar_object import Scalar
 
     DType = Union[
         Bool,
@@ -54,9 +48,6 @@ if TYPE_CHECKING:
         Duration,
     ]
 
-# Type alias: Mypy needs Any, but for readability we need to make clear this
-# is a Python scalar (i.e., an instance of `bool`, `int`, `float`, `str`, etc.)
-Scalar = Any
 # null is a special object which represents a missing value.
 # It is not valid as a type.
 NullType = Any

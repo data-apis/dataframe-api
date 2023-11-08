@@ -4,12 +4,12 @@ Function stubs and API documentation for the DataFrame API standard.
 """
 from __future__ import annotations
 
-from typing import Dict, Sequence, Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, Sequence
 
 from .column_object import *
 from .dataframe_object import DataFrame
-from .groupby_object import *
 from .dtypes import *
+from .groupby_object import *
 
 if TYPE_CHECKING:
     from .typing import DType, Scalar
