@@ -16,3 +16,36 @@ classifiers = [
 [project.urls]
 "Homepage" = "https://github.com/data-apis/dataframe-api"
 "Bug Tracker" = "https://github.com/data-apis/dataframe-api"
+
+[tool.ruff]
+line-length = 90
+fix = true
+target-version = "py39"
+
+select = [
+  "ALL",
+]
+ignore = [
+    "A003",  # builtin-attribute-shadowing
+    "ARG001",  # unused-function-argument
+    "ANN101",  # missing-type-function-argument
+    "ANN102",  # missing-type-cls
+    "ANN401",  # any-type
+    "D100",  # undocumented-public-module
+    "D101",  # undocumented-public-class
+    "D102",  # undocumented-public-method
+    "D103",  # undocumented-public-function
+    "D104",  # undocumented-public-function
+    "D105",  # undocumented-magic-method
+    "D106",  # undocumented-public-nested-class
+    "D107",  # undocumented-public-init
+    "D203",  # one-blank-line-before-class
+    "D213",  # multi-line-summary-second-line
+    "D417",  # undocumented-param
+    "EM101",  # raw-string-in-exception
+    "F821", # undefined-name
+    "N999", # invalid-module-name
+    "PD901", # pandas-df-variable-name
+    "PLR0913",   # too-many-arguments
+    "PYI041",  # redundant-numeric-union
+]

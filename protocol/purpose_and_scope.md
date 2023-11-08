@@ -271,6 +271,7 @@ could adopt this protocol include:
 
 - [PySpark](https://spark.apache.org/docs/latest/api/python/)
 - [Turi Create](https://github.com/apple/turicreate)
+- [Polars](https://www.pola.rs/)
 
 Other relevant projects that provide "infrastructure" for dataframe libraries
 to build on, include:
