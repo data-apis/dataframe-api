@@ -42,9 +42,36 @@ that duck types with the Python builtin type._
 
 ## Required methods
 
-A ducktyped float scalar is required to implement all the methods which `float` implements,
-but note that those which require returning a Python scalar may raise
-(depending on the implementation).
+If a library doesn't use the Python built-in scalars, then its scalars must implement
+at least the following operations which return scalars:
+- `__lt__`
+- `__le__`
+- `__eq__`
+- `__ne__`
+- `__gt__`
+- `__ge__`
+- `__add__`
+- `__radd__`
+- `__sub__`
+- `__rsub__`
+- `__mul__`
+- `__rmul__`
+- `__mod__`
+- `__rmod__`
+- `__pow__`
+- `__rpow__`
+- `__floordiv__`
+- `__rfloordiv__`
+- `__truediv__`
+- `__rtruediv__`
+- `__neg__`
+- `__abs__`
+
+Furthermore, unless the library exclusively allows for lazy execution,
+it must also implement the following unary operations which return Python scalars:
+- `__int__`
+- `__float__`
+- `__bool__`
 
 For example, if a library implements `FancyFloat` and `FancyBool` scalars,
 then the following should all be supported:
@@ -68,4 +95,5 @@ if column.std() > 0:  # this line may raise!
 ```
 This is because `if column.std() > 0` will call `(column.std() > 0).__bool__()`,
 which must produce a Python scalar. Therefore, a purely lazy dataframe library
-may choose to raise here.
+may choose to raise here, whereas as one which allows for eager execution may return
+a Python bool.
