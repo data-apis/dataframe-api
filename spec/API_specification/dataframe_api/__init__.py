@@ -6,6 +6,24 @@ from typing import TYPE_CHECKING, Any
 
 from .column_object import Column
 from .dataframe_object import DataFrame
+from .dtypes import (
+    Bool,
+    Date,
+    Datetime,
+    Duration,
+    Float32,
+    Float64,
+    Int8,
+    Int16,
+    Int32,
+    Int64,
+    String,
+    UInt8,
+    UInt16,
+    UInt32,
+    UInt64,
+)
+from .groupby_object import Aggregation, GroupBy
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -13,6 +31,23 @@ if TYPE_CHECKING:
     from .typing import DType, Scalar
 
 __all__ = [
+    "GroupBy",
+    "Aggregation",
+    "Bool",
+    "Date",
+    "Datetime",
+    "Duration",
+    "Float32",
+    "Float64",
+    "Int16",
+    "Int32",
+    "Int64",
+    "Int8",
+    "String",
+    "UInt16",
+    "UInt32",
+    "UInt64",
+    "UInt8",
     "Column",
     "DataFrame",
     "__dataframe_api_version__",
