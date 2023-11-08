@@ -18,7 +18,7 @@ class DataFrame:
         ...
 
 class Column:
-    def mean(self, skip_nulls: bool = True) -> float | NullType:
+    def mean(self, skip_nulls: bool = True) -> Scalar | NullType:
         ...
 
 larger = df2 > df1.col('foo').mean()
@@ -27,51 +27,11 @@ larger = df2 > df1.col('foo').mean()
 For a GPU dataframe library, it is desirable for all data to reside on the GPU,
 and not incur a performance penalty from synchronizing instances of Python
 builtin types to CPU. In the above example, the `.mean()` call returns a
-`float`. It is likely beneficial though to implement this as a library-specific
-scalar object which duck types with `float`. This means that it should (a) have
-the same semantics as a builtin `float` when used within a library, and (b)
-support usage as a `float` outside of the library (see below).
-Duck typing is usually not perfect, for example `isinstance`
-usage on the float-like duck type will behave differently. Such explicit "type
-of object" checks don't have to be supported.
+`Scalar`. It is likely beneficial though to implement this as a library-specific
+scalar object which (partially) duck types with `float`. The required methods it
+must implement are listed in `:class:Scalar`.
 
-The following design rule applies everywhere builtin Python types are used
-within this API standard: _where a Python builtin type is specified, an
-implementation may always replace it by an equivalent library-specific type
-that duck types with the Python builtin type._
-
-## Required methods
-
-If a library doesn't use the Python built-in scalars, then its scalars must implement
-at least the following operations which return scalars:
-- `__lt__`
-- `__le__`
-- `__eq__`
-- `__ne__`
-- `__gt__`
-- `__ge__`
-- `__add__`
-- `__radd__`
-- `__sub__`
-- `__rsub__`
-- `__mul__`
-- `__rmul__`
-- `__mod__`
-- `__rmod__`
-- `__pow__`
-- `__rpow__`
-- `__floordiv__`
-- `__rfloordiv__`
-- `__truediv__`
-- `__rtruediv__`
-- `__neg__`
-- `__abs__`
-
-Furthermore, unless the library exclusively allows for lazy execution,
-it must also implement the following unary operations which return Python scalars:
-- `__int__`
-- `__float__`
-- `__bool__`
+### Example
 
 For example, if a library implements `FancyFloat` and `FancyBool` scalars,
 then the following should all be supported:
@@ -84,6 +44,10 @@ scalar: FancyFloat = column_1.std()
 result_1: Column = column_2 - column_1.std()
 result_2: FancyBool = column_2.std() > column_1.std()
 ```
+
+Note that the scalars above are library-specific ones - they may be used to keep
+data on GPU, or to keep data lazy.
+
 The following, however, may raise, dependening on the
 implementation:
 ```python
@@ -94,6 +58,6 @@ if column.std() > 0:  # this line may raise!
     print('std is positive')
 ```
 This is because `if column.std() > 0` will call `(column.std() > 0).__bool__()`,
-which must produce a Python scalar. Therefore, a purely lazy dataframe library
-may choose to raise here, whereas as one which allows for eager execution may return
-a Python bool.
+which is required by Python to produce a Python scalar.
+Therefore, a purely lazy dataframe library may choose to raise here, whereas as
+one which allows for eager execution may return a Python bool.
