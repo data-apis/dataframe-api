@@ -819,6 +819,14 @@ class Column(Protocol):
         - `.shift(1)` will return `[null, 1, 4]`,
         - `.shift(-1)` will return `[4, 2, null]`,
         - `.shift(1, fill_value=999)` will return `[999, 1, 4]`,
+    
+        Parameters
+        ----------
+            offset
+                How many positions to shift by.
+            fill_value 
+                Value to use for filling missing values. Must be of the Python
+                scalar type matching the dtype of the column.
         """
         ...
 
