@@ -31,7 +31,7 @@ builtin types to CPU. In the above example, the `.mean()` call returns a
 scalar object which (partially) duck types with `float`. The required methods it
 must implement are listed in `:class:Scalar`.
 
-### Example
+## Example
 
 For example, if a library implements `FancyFloat` and `FancyBool` scalars,
 then the following should all be supported:
