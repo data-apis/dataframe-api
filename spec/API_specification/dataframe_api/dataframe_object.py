@@ -980,15 +980,36 @@ class DataFrame(Protocol):
     
     def persist(self) -> Self:
         """
-        Hint that execution may be triggered, depending on the implementation.
+        Hint to that computation prior to this point should not be repeated.
 
         This is intended as a hint, rather than as a directive. Implementations
         which do not separate lazy vs eager execution may ignore this method and
-        treat it as a no-op. Likewise for implementations which support automated
-        execution.
+        treat it as a no-op.
 
         .. note::
-            This method may force execution. If necessary, it should be called
+            This method may trigger execution. If necessary, it should be called
             at most once per dataframe, and as late as possible in the pipeline.
+
+            For example, do this
+
+            .. code-block:: python
+
+                df: DataFrame
+                df = df.persist()
+                features = []
+                for column_name in df.column_names:
+                    if df.col(column_name).std() > 0:
+                        features.append(column_name)
+
+            instead of this:
+
+            .. code-block:: python
+
+                df: DataFrame
+                features = []
+                for column_name in df.column_names:
+                    # Do NOT do this!
+                    if df.persist().col(column_name).std() > 0:
+                        features.append(column_name)
         """
         ...

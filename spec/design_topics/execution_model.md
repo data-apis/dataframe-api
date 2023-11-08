@@ -83,16 +83,3 @@ for column_name in df.column_names:
 return features
 ```
 as that will potentially re-trigger the same execution multiple times.
-
-## Propagation
-
-Propagation of "persistedness" is outside the scope of the Standard. Nonetheless,
-some implementations may choose to disallow patterns such as
-```python
-df_raw: SupportDataFrameAPI
-df = df_raw.__dataframe_consortium_standard__(api_version='2023.09-beta')
-if df.col('a').mean() > 0:  # raises, call `.persist` beforehand
-    do_something()
-```
-and instead "force" users to call `.persist` at some point between `__dataframe_consortium_standard__`
-and an operation which requires execution.
