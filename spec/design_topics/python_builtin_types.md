@@ -29,7 +29,7 @@ and not incur a performance penalty from synchronizing instances of Python
 builtin types to CPU. In the above example, the `.mean()` call returns a
 `Scalar`. It is likely beneficial though to implement this as a library-specific
 scalar object which (partially) duck types with `float`. The required methods it
-must implement are listed in `:class:Scalar`.
+must implement are listed in the spec for class `Scalar`.
 
 ## Example
 
