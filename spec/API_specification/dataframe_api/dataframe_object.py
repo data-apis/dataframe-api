@@ -67,7 +67,7 @@ class DataFrame(Protocol):
 
         Notes
         -----
-        To be guaranteed to run across all implementations, :meth:`may_execute` should
+        To be guaranteed to run across all implementations, :meth:`persist` should
         be executed at some point before calling this method.
         """
         ...
@@ -978,7 +978,7 @@ class DataFrame(Protocol):
         """
         ...
     
-    def may_execute(self) -> Self:
+    def persist(self) -> Self:
         """
         Hint that execution may be triggered, depending on the implementation.
 
