@@ -1,9 +1,13 @@
-"""
-Types for type annotations used in the dataframe API standard.
-"""
+"""Types for type annotations used in the dataframe API standard."""
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Dict, Literal, Protocol, Sequence, Union
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Literal,
+    Protocol,
+    Union,
+)
 
 from dataframe_api.column_object import Column
 from dataframe_api.dataframe_object import DataFrame
@@ -11,6 +15,8 @@ from dataframe_api.groupby_object import Aggregation as AggregationT
 from dataframe_api.groupby_object import GroupBy
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
     from .dtypes import (
         Bool,
         Date,
@@ -56,51 +62,51 @@ NullType = Any
 class Namespace(Protocol):
     __dataframe_api_version__: str
 
-    class Int64():
+    class Int64:
         ...
 
-    class Int32():
+    class Int32:
         ...
 
-    class Int16():
+    class Int16:
         ...
 
-    class Int8():
+    class Int8:
         ...
 
-    class UInt64():
+    class UInt64:
         ...
 
-    class UInt32():
+    class UInt32:
         ...
 
-    class UInt16():
+    class UInt16:
         ...
 
-    class UInt8():
+    class UInt8:
         ...
 
-    class Float64():
+    class Float64:
         ...
 
-    class Float32():
+    class Float32:
         ...
 
-    class Bool():
+    class Bool:
         ...
 
-    class Date():
+    class Date:
         ...
 
-    class Datetime():
-        def __init__(
+    class Datetime:
+        def __init__(  # noqa: ANN204
             self,
-            time_unit: Literal['ms', 'us'],
+            time_unit: Literal["ms", "us"],
             time_zone: str | None,
         ):
             ...
 
-    class String():
+    class String:
         ...
 
     Aggregation: AggregationT
@@ -121,7 +127,11 @@ class Namespace(Protocol):
         ...
 
     def column_from_1d_array(
-        self, array: Any, *, dtype: DType, name: str = ""
+        self,
+        array: Any,
+        *,
+        dtype: DType,
+        name: str = "",
     ) -> Column:
         ...
 
@@ -129,7 +139,7 @@ class Namespace(Protocol):
         self,
         array: Any,
         *,
-        schema: Dict[str, DType],
+        schema: dict[str, DType],
     ) -> DataFrame:
         ...
 
@@ -138,25 +148,30 @@ class Namespace(Protocol):
 
     def is_dtype(self, dtype: DType, kind: str | tuple[str, ...]) -> bool:
         ...
-    
+
     def date(self, year: int, month: int, day: int) -> Scalar:
         ...
 
+
 class SupportsDataFrameAPI(Protocol):
     def __dataframe_consortium_standard__(
-        self, *, api_version: str
+        self,
+        *,
+        api_version: str,
     ) -> DataFrame:
         ...
 
+
 class SupportsColumnAPI(Protocol):
     def __column_consortium_standard__(
-        self, *, api_version: str
+        self,
+        *,
+        api_version: str,
     ) -> Column:
         ...
 
 
 __all__ = [
-    "Aggregation",
     "Column",
     "DataFrame",
     "DType",

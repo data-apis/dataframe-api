@@ -2,27 +2,27 @@ from __future__ import annotations
 
 from typing import Any, Protocol
 
-__all__ = ['Scalar']
+__all__ = ["Scalar"]
 
 
 class Scalar(Protocol):
-    """
-    Scalar object
+    """Scalar object
 
     Not meant to be instantiated directly, but rather created via
     `:meth:Column.get_value` or one of the column reductions such
     as `:meth:`Column.sum`.
     """
+
     def __lt__(self, other: Any) -> Scalar:
         ...
 
     def __le__(self, other: Any) -> Scalar:
         ...
 
-    def __eq__(self, other: Any) -> Scalar:  # type: ignore[override]
+    def __eq__(self, other: object) -> Scalar:  # type: ignore[override]
         ...
 
-    def __ne__(self, other: Any) -> Scalar:  # type: ignore[override]
+    def __ne__(self, other: object) -> Scalar:  # type: ignore[override]
         ...
 
     def __gt__(self, other: Any) -> Scalar:
@@ -80,8 +80,7 @@ class Scalar(Protocol):
         ...
 
     def __bool__(self) -> bool:
-        """
-        Note that this return a Python scalar.
+        """Note that this return a Python scalar.
 
         Depending on the implementation, this may raise or trigger computation.
         """

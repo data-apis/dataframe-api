@@ -1,4 +1,5 @@
-"""
+"""Q5, rewritten to use the DataFrame API.
+
 Original query:
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
@@ -31,12 +32,12 @@ def query(
     nation_raw: SupportsDataFrameAPI,
     region_raw: SupportsDataFrameAPI,
 ) -> SupportsDataFrameAPI:
-    customer = customer_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
-    orders = orders_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
-    lineitem = lineitem_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
-    supplier = supplier_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
-    nation = nation_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
-    region = region_raw.__dataframe_consortium_standard__(api_version='2023-10.beta')
+    customer = customer_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
+    orders = orders_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
+    lineitem = lineitem_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
+    supplier = supplier_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
+    nation = nation_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
+    region = region_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
 
     namespace = customer.__dataframe_namespace__()
 
@@ -60,9 +61,9 @@ def query(
     )
     result = result.filter(mask)
 
-    new_column = (
-        result.col("l_extendedprice") * (1 - result.col("l_discount"))
-    ).rename("revenue")
+    new_column = (result.col("l_extendedprice") * (1 - result.col("l_discount"))).rename(
+        "revenue",
+    )
     result = result.assign(new_column)
     result = result.group_by("n_name").aggregate(namespace.Aggregation.sum("revenue"))
 

@@ -13,8 +13,7 @@ __all__ = [
 
 
 class GroupBy(Protocol):
-    """
-    GroupBy object.
+    """GroupBy object.
 
     Note that this class is not meant to be constructed by users.
     It is returned from `DataFrame.group_by`.
@@ -22,6 +21,7 @@ class GroupBy(Protocol):
     **Methods**
 
     """
+
     def any(self, *, skip_nulls: bool = True) -> DataFrame:
         ...
 
@@ -56,8 +56,7 @@ class GroupBy(Protocol):
         ...
 
     def aggregate(self, *aggregation: Aggregation) -> DataFrame:
-        """
-        Aggregate columns according to given aggregation function.
+        """Aggregate columns according to given aggregation function.
 
         Examples
         --------
@@ -73,10 +72,10 @@ class GroupBy(Protocol):
         """
         ...
 
+
 class Aggregation(Protocol):
     def rename(self, name: str) -> Aggregation:
-        """
-        Assign given name to output of aggregation.
+        """Assign given name to output of aggregation.
 
         If not called, the column's name will be used as the output name.
         """
@@ -111,18 +110,29 @@ class Aggregation(Protocol):
         ...
 
     @classmethod
-    def mean(cls, column: str, *, skip_nulls: bool=True) -> Aggregation:
+    def mean(cls, column: str, *, skip_nulls: bool = True) -> Aggregation:
         ...
 
     @classmethod
-    def std(cls, column: str, *, correction: int|float=1, skip_nulls: bool=True) -> Aggregation:
+    def std(
+        cls,
+        column: str,
+        *,
+        correction: int | float = 1,
+        skip_nulls: bool = True,
+    ) -> Aggregation:
         ...
 
     @classmethod
-    def var(cls, column: str, *, correction: int|float=1, skip_nulls: bool=True) -> Aggregation:
+    def var(
+        cls,
+        column: str,
+        *,
+        correction: int | float = 1,
+        skip_nulls: bool = True,
+    ) -> Aggregation:
         ...
 
     @classmethod
     def size(cls) -> Aggregation:
         ...
-

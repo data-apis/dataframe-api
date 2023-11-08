@@ -8,13 +8,14 @@ if TYPE_CHECKING:
     from .scalar_object import Scalar
     from .typing import DType, Namespace, NullType
 
+    from .typing import DType, Namespace, NullType, Scalar
 
-__all__ = ['Column']
+
+__all__ = ["Column"]
 
 
 class Column(Protocol):
-    """
-    Column object
+    """Column object.
 
     Note that this column object is not meant to be instantiated directly by
     users of the library implementing the dataframe API standard. Rather, use
@@ -23,8 +24,7 @@ class Column(Protocol):
     """
 
     def __column_namespace__(self) -> Namespace:
-        """
-        Returns an object that has all the Dataframe Standard API functions on it.
+        """Return an object that has all the Dataframe Standard API functions on it.
 
         Returns
         -------
@@ -36,30 +36,26 @@ class Column(Protocol):
             specification.
         """
         ...
-    
+
     @property
     def column(self) -> Any:
-        """
-        Return underlying (not-necessarily-Standard-compliant) column.
+        """Return underlying (not-necessarily-Standard-compliant) column.
 
         If a library only implements the Standard, then this can return `self`.
         """
         ...
-    
+
     @property
     def name(self) -> str:
         """Return name of column."""
         ...
 
     def __len__(self) -> int:
-        """
-        Return the number of rows.
-        """
+        """Return the number of rows."""
         ...
 
     def __iter__(self) -> NoReturn:
-        """
-        Iterate over elements.
+        """Iterate over elements.
 
         This is intentionally "poisoned" to discourage inefficient code patterns.
 
@@ -71,14 +67,11 @@ class Column(Protocol):
 
     @property
     def dtype(self) -> DType:
-        """
-        Return data type of column.
-        """
+        """Return data type of column."""
         ...
 
     def get_rows(self, indices: Self) -> Self:
-        """
-        Select a subset of rows, similar to `ndarray.take`.
+        """Select a subset of rows, similar to `ndarray.take`.
 
         Parameters
         ----------
@@ -87,12 +80,13 @@ class Column(Protocol):
         """
         ...
 
-
     def slice_rows(
-        self, start: int | None, stop: int | None, step: int | None
+        self,
+        start: int | None,
+        stop: int | None,
+        step: int | None,
     ) -> Self:
-        """
-        Select a subset of rows corresponding to a slice.
+        """Select a subset of rows corresponding to a slice.
 
         Parameters
         ----------
@@ -106,10 +100,8 @@ class Column(Protocol):
         """
         ...
 
-
     def filter(self, mask: Self) -> Self:
-        """
-        Select a subset of rows corresponding to a mask.
+        """Select a subset of rows corresponding to a mask.
 
         Parameters
         ----------
@@ -126,16 +118,14 @@ class Column(Protocol):
         """
         ...
 
-
     def get_value(self, row_number: int) -> Scalar:
-        """
-        Select the value at a row number, similar to `ndarray.__getitem__(<int>)`.
+        """Select the value at a row number, similar to `ndarray.__getitem__(<int>)`.
 
         Parameters
         ----------
         row_number : int
             Row number of value to return.
-        
+
         Returns
         -------
         Scalar
@@ -148,10 +138,9 @@ class Column(Protocol):
         self,
         *,
         ascending: bool = True,
-        nulls_position: Literal['first', 'last'] = 'last',
+        nulls_position: Literal["first", "last"] = "last",
     ) -> Self:
-        """
-        Sort column.
+        """Sort column.
 
         If you need the indices which would sort the column,
         use :meth:`sorted_indices`.
@@ -177,10 +166,9 @@ class Column(Protocol):
         self,
         *,
         ascending: bool = True,
-        nulls_position: Literal['first', 'last'] = 'last',
+        nulls_position: Literal["first", "last"] = "last",
     ) -> Self:
-        """
-        Return row numbers which would sort column.
+        """Return row numbers which would sort column.
 
         If you need to sort the Column, use :meth:`sort`.
 
@@ -202,8 +190,7 @@ class Column(Protocol):
         ...
 
     def __eq__(self, other: Self | Scalar) -> Self:  # type: ignore[override]
-        """
-        Compare for equality.
+        """Compare for equality.
 
         Nulls should follow Kleene Logic.
 
@@ -221,8 +208,7 @@ class Column(Protocol):
         ...
 
     def __ne__(self, other: Self | Scalar) -> Self:  # type: ignore[override]
-        """
-        Compare for non-equality.
+        """Compare for non-equality.
 
         Nulls should follow Kleene Logic.
 
@@ -240,8 +226,7 @@ class Column(Protocol):
         ...
 
     def __ge__(self, other: Self | Scalar) -> Self:
-        """
-        Compare for "greater than or equal to" `other`.
+        """Compare for "greater than or equal to" `other`.
 
         Parameters
         ----------
@@ -257,8 +242,7 @@ class Column(Protocol):
         ...
 
     def __gt__(self, other: Self | Scalar) -> Self:
-        """
-        Compare for "greater than" `other`.
+        """Compare for "greater than" `other`.
 
         Parameters
         ----------
@@ -274,8 +258,7 @@ class Column(Protocol):
         ...
 
     def __le__(self, other: Self | Scalar) -> Self:
-        """
-        Compare for "less than or equal to" `other`.
+        """Compare for "less than or equal to" `other`.
 
         Parameters
         ----------
@@ -291,8 +274,7 @@ class Column(Protocol):
         ...
 
     def __lt__(self, other: Self | Scalar) -> Self:
-        """
-        Compare for "less than" `other`.
+        """Compare for "less than" `other`.
 
         Parameters
         ----------
@@ -308,8 +290,7 @@ class Column(Protocol):
         ...
 
     def __and__(self, other: Self | bool) -> Self:
-        """
-        Apply logical 'and' to `other` Column (or scalar) and this Column.
+        """Apply logical 'and' to `other` Column (or scalar) and this Column.
 
         Nulls should follow Kleene Logic.
 
@@ -330,8 +311,7 @@ class Column(Protocol):
         ...
 
     def __or__(self, other: Self | bool) -> Self:
-        """
-        Apply logical 'or' to `other` Column (or scalar) and this column.
+        """Apply logical 'or' to `other` Column (or scalar) and this column.
 
         Nulls should follow Kleene Logic.
 
@@ -352,8 +332,7 @@ class Column(Protocol):
         ...
 
     def __add__(self, other: Self | Scalar) -> Self:
-        """
-        Add `other` column or scalar to this column.
+        """Add `other` column or scalar to this column.
 
         Parameters
         ----------
@@ -369,8 +348,7 @@ class Column(Protocol):
         ...
 
     def __sub__(self, other: Self | Scalar) -> Self:
-        """
-        Subtract `other` column or scalar from this column.
+        """Subtract `other` column or scalar from this column.
 
         Parameters
         ----------
@@ -386,8 +364,7 @@ class Column(Protocol):
         ...
 
     def __mul__(self, other: Self | Scalar) -> Self:
-        """
-        Multiply `other` column or scalar with this column.
+        """Multiply `other` column or scalar with this column.
 
         Parameters
         ----------
@@ -403,8 +380,7 @@ class Column(Protocol):
         ...
 
     def __truediv__(self, other: Self | Scalar) -> Self:
-        """
-        Divide this column by `other` column or scalar. True division, returns floats.
+        """Divide this column by `other` column or scalar. True division, returns floats.
 
         Parameters
         ----------
@@ -420,8 +396,7 @@ class Column(Protocol):
         ...
 
     def __floordiv__(self, other: Self | Scalar) -> Self:
-        """
-        Floor-divide `other` column or scalar to this column.
+        """Floor-divide `other` column or scalar to this column.
 
         Parameters
         ----------
@@ -437,8 +412,7 @@ class Column(Protocol):
         ...
 
     def __pow__(self, other: Self | Scalar) -> Self:
-        """
-        Raise this column to the power of `other`.
+        """Raise this column to the power of `other`.
 
         Integer dtype to the power of non-negative integer dtype is integer dtype.
         Integer dtype to the power of float dtype is float dtype.
@@ -458,8 +432,7 @@ class Column(Protocol):
         ...
 
     def __mod__(self, other: Self | Scalar) -> Self:
-        """
-        Returns modulus of this column by `other` (`%` operator).
+        """Return modulus of this column by `other` (`%` operator).
 
         Parameters
         ----------
@@ -475,8 +448,7 @@ class Column(Protocol):
         ...
 
     def __divmod__(self, other: Self | Scalar) -> tuple[Column, Column]:
-        """
-        Return quotient and remainder of integer division. See `divmod` builtin function.
+        """Return quotient and remainder of integer division. See `divmod` builtin.
 
         Parameters
         ----------
@@ -493,26 +465,33 @@ class Column(Protocol):
 
     def __radd__(self, other: Self | Scalar) -> Self:
         ...
+
     def __rsub__(self, other: Self | Scalar) -> Self:
         ...
+
     def __rmul__(self, other: Self | Scalar) -> Self:
         ...
+
     def __rtruediv__(self, other: Self | Scalar) -> Self:
         ...
+
     def __rand__(self, other: Self | bool) -> Self:
         ...
+
     def __ror__(self, other: Self | bool) -> Self:
         ...
+
     def __rfloordiv__(self, other: Self | Scalar) -> Self:
         ...
+
     def __rpow__(self, other: Self | Scalar) -> Self:
         ...
+
     def __rmod__(self, other: Self | Scalar) -> Self:
         ...
 
     def __invert__(self) -> Self:
-        """
-        Invert truthiness of (boolean) elements.
+        """Invert truthiness of (boolean) elements.
 
         Raises
         ------
@@ -522,8 +501,7 @@ class Column(Protocol):
         ...
 
     def any(self, *, skip_nulls: bool = True) -> bool | NullType:
-        """
-        Reduction returns a bool.
+        """Reduction returns a bool.
 
         Raises
         ------
@@ -533,8 +511,7 @@ class Column(Protocol):
         ...
 
     def all(self, *, skip_nulls: bool = True) -> bool | NullType:
-        """
-        Reduction returns a bool.
+        """Reduction returns a bool.
 
         Raises
         ------
@@ -544,37 +521,42 @@ class Column(Protocol):
         ...
 
     def min(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Any data type that supports comparisons
+        """Reduction returns a scalar.
+
+        Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
         ...
 
     def max(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Any data type that supports comparisons
+        """Reduction returns a scalar.
+
+        Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
         ...
 
     def sum(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical and
+        """Reduction returns a scalar.
+
+        Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
         ...
 
     def prod(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical data types.
+        """Reduction returns a scalar.
+
+        Must be supported for numerical data types.
         The returned value has the same dtype as the column.
         """
         ...
 
     def median(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical and
+        """Reduction returns a scalar.
+
+        Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
@@ -582,17 +564,24 @@ class Column(Protocol):
         ...
 
     def mean(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical and
+        """Reduction returns a scalar.
+
+        Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
         """
         ...
 
-    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical and
+    def std(
+        self,
+        *,
+        correction: int | float = 1,
+        skip_nulls: bool = True,
+    ) -> Scalar | NullType:
+        """Reduction returns a scalar.
+
+        Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
@@ -617,9 +606,15 @@ class Column(Protocol):
         """
         ...
 
-    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical and
+    def var(
+        self,
+        *,
+        correction: int | float = 1,
+        skip_nulls: bool = True,
+    ) -> Scalar | NullType:
+        """Reduction returns a scalar.
+
+        Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
@@ -636,44 +631,47 @@ class Column(Protocol):
         ...
 
     def cumulative_max(self) -> Self:
-        """
-        Reduction returns a Column. Any data type that supports comparisons
+        """Reduction returns a Column.
+
+        Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
         ...
 
     def cumulative_min(self) -> Self:
-        """
-        Reduction returns a Column. Any data type that supports comparisons
+        """Reduction returns a Column.
+
+        Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
         ...
 
     def cumulative_sum(self) -> Self:
-        """
-        Reduction returns a Column. Must be supported for numerical and
+        """Reduction returns a Column.
+
+        Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
         ...
 
     def cumulative_prod(self) -> Self:
-        """
-        Reduction returns a Column. Must be supported for numerical and
+        """Reduction returns a Column.
+
+        Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
         ...
 
     def is_null(self) -> Self:
-        """
-        Check for 'missing' or 'null' entries.
+        """Check for 'missing' or 'null' entries.
 
         Returns
         -------
         Column
 
-        See also
+        See Also
         --------
         is_nan
 
@@ -686,14 +684,13 @@ class Column(Protocol):
         ...
 
     def is_nan(self) -> Self:
-        """
-        Check for nan entries.
+        """Check for nan entries.
 
         Returns
         -------
         Column
 
-        See also
+        See Also
         --------
         is_null
 
@@ -706,8 +703,7 @@ class Column(Protocol):
         ...
 
     def is_in(self, values: Self) -> Self:
-        """
-        Indicate whether the value at each row matches any value in `values`.
+        """Indicate whether the value at each row matches any value in `values`.
 
         Parameters
         ----------
@@ -725,8 +721,7 @@ class Column(Protocol):
         ...
 
     def unique_indices(self, *, skip_nulls: bool = True) -> Self:
-        """
-        Return indices corresponding to unique values in Column.
+        """Return indices corresponding to unique values in Column.
 
         Returns
         -------
@@ -746,8 +741,7 @@ class Column(Protocol):
         ...
 
     def fill_nan(self, value: float | NullType, /) -> Self:
-        """
-        Fill floating point ``nan`` values with the given fill value.
+        """Fill floating point ``nan`` values with the given fill value.
 
         Parameters
         ----------
@@ -760,8 +754,7 @@ class Column(Protocol):
         ...
 
     def fill_null(self, value: Scalar, /) -> Self:
-        """
-        Fill null values with the given fill value.
+        """Fill null values with the given fill value.
 
         Parameters
         ----------
@@ -773,8 +766,7 @@ class Column(Protocol):
         ...
 
     def to_array(self) -> Any:
-        """
-        Convert to array-API-compliant object.
+        """Convert to array-API-compliant object.
 
         The resulting array will have the corresponding dtype from the
         Array API:
@@ -790,14 +782,14 @@ class Column(Protocol):
         - UInt64() -> 'uint64'
         - Float32() -> 'float32'
         - Float64() -> 'float64'
-    
+
         Null values are not supported and must be filled prior to conversion.
-        
+
         Returns
         -------
         Any
             An array-API-compliant object.
-        
+
         Notes
         -----
         While numpy arrays are not yet array-API-compliant, implementations
@@ -808,14 +800,13 @@ class Column(Protocol):
         ...
 
     def rename(self, name: str) -> Self:
-        """
-        Rename column.
+        """Rename column.
 
         Parameters
         ----------
         name : str
             New name for column.
-        
+
         Returns
         -------
         Column
@@ -823,11 +814,9 @@ class Column(Protocol):
         """
         ...
 
-
     def year(self) -> Self:
-        """
-        Return 'year' component of each element of `Date` and `Datetime` columns.
-        
+        """Return 'year' component of each element of `Date` and `Datetime` columns.
+
         For example, return 1981 for 1981-01-02T12:34:56.123456.
 
         Return column should be of (signed) integer dtype.
@@ -835,9 +824,8 @@ class Column(Protocol):
         ...
 
     def month(self) -> Self:
-        """
-        Return 'month' component of each element of `Date` and `Datetime` columns.
-        
+        """Return 'month' component of each element of `Date` and `Datetime` columns.
+
         For example, return 1 for 1981-01-02T12:34:56.123456.
 
         Return column should be of integer dtype (signed or unsigned).
@@ -845,9 +833,8 @@ class Column(Protocol):
         ...
 
     def day(self) -> Self:
-        """
-        Return 'day' component of each element of `Date` and `Datetime` columns.
-        
+        """Return 'day' component of each element of `Date` and `Datetime` columns.
+
         For example, return 2 for 1981-01-02T12:34:56.123456.
 
         Return column should be of integer dtype (signed or unsigned).
@@ -855,9 +842,8 @@ class Column(Protocol):
         ...
 
     def hour(self) -> Self:
-        """
-        Return 'hour' component of each element of `Date` and `Datetime` columns.
-        
+        """Return 'hour' component of each element of `Date` and `Datetime` columns.
+
         For example, return 12 for 1981-01-02T12:34:56.123456.
 
         Return column should be of integer dtype (signed or unsigned).
@@ -865,9 +851,8 @@ class Column(Protocol):
         ...
 
     def minute(self) -> Self:
-        """
-        Return 'minute' component of each element of `Date` and `Datetime` columns.
-        
+        """Return 'minute' component of each element of `Date` and `Datetime` columns.
+
         For example, return 34 for 1981-01-02T12:34:56.123456.
 
         Return column should be of integer dtype (signed or unsigned).
@@ -875,28 +860,27 @@ class Column(Protocol):
         ...
 
     def second(self) -> Self:
-        """
-        Return 'second' component of each element of `Date` and `Datetime` columns.
-        
+        """Return 'second' component of each element.
+
         For example, return 56 for 1981-01-02T12:34:56.123456.
 
+        Only supported for `Date` and `Datetime` columns.
         Return column should be of integer dtype (signed or unsigned).
         """
         ...
 
     def microsecond(self) -> Self:
-        """
-        Return number of microseconds since last second, for each element of `Date` and `Datetime` columns.
+        """Return number of microseconds since last second.
 
         For example, return 123456 for 1981-01-02T12:34:56.123456.
 
+        Only supported for `Date` and `Datetime` columns.
         Return column should be of integer dtype (signed or unsigned).
         """
         ...
-    
+
     def iso_weekday(self) -> Self:
-        """
-        Return ISO weekday for each element of `Date` and `Datetime` columns.
+        """Return ISO weekday for each element of `Date` and `Datetime` columns.
 
         Note that Monday=1, ..., Sunday=7.
 
@@ -904,10 +888,8 @@ class Column(Protocol):
         """
         ...
 
-
-    def unix_timestamp(self, *, time_unit: Literal['s', 'ms', 'us'] = 's') -> Self:
-        """
-        Return the number of seconds (or milliseconds or microseconds) since the Unix epoch.
+    def unix_timestamp(self, *, time_unit: Literal["s", "ms", "us"] = "s") -> Self:
+        """Return number of seconds / milliseconds / microseconds since the Unix epoch.
 
         The Unix epoch is 00:00:00 UTC on 1 January 1970.
 
@@ -915,7 +897,7 @@ class Column(Protocol):
         ----------
         time_unit
             Time unit to use. Must be one of 's', 'ms', or 'us'.
-        
+
         Returns
         -------
         Column

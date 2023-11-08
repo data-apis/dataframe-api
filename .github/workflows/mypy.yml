@@ -27,6 +27,8 @@ jobs:
             ~\AppData\Local\pip\Cache
           key: ${{ runner.os }}-build-${{ matrix.python-version }}
       - name: install-reqs
-        run: python -m pip install --upgrade mypy==1.4.0 typing-extensions
+        run: python -m pip install --upgrade mypy typing-extensions ruff
       - name: run mypy
         run: cd spec/API_specification && mypy dataframe_api && mypy examples
+      - name: run ruff
+        run: cd spec/API_specification && ruff format dataframe_api examples && ruff dataframe_api examples
