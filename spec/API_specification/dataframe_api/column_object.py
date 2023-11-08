@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Any, Literal, NoReturn, Protocol
 
 if TYPE_CHECKING:
     from typing_extensions import Self
+
     from dataframe_api.dataframe_object import DataFrame
 
     from .typing import DType, Namespace, NullType, Scalar
@@ -24,7 +25,7 @@ class Column(Protocol):
     plays a key role here:
 
     - If two columns were retrieved from the same dataframe,
-      then they can be combined and compared at will. 
+      then they can be combined and compared at will.
     - If two columns were retrieved from different dataframes,
       then there is no guarantee about how or whether they can be combined and
       compared, this may vary across implementations.
@@ -33,10 +34,10 @@ class Column(Protocol):
       combined and compared with each other. Note, however, that they still can't
       be compared or combined with columns retrieved from a dataframe.
     """
+
     @property
     def dataframe(self) -> DataFrame | None:
-        """
-        Return parent DataFrame, if present.
+        """Return parent DataFrame, if present.
 
         For example, if we have the following
 
@@ -44,7 +45,7 @@ class Column(Protocol):
 
             df: DataFrame
             column = df.col('a')
-        
+
         then `column.dataframe` should return `df`.
 
         On the other hand, if we had:
@@ -52,7 +53,7 @@ class Column(Protocol):
         .. code-block:: python
 
             column = column_from_1d_array(...)
-        
+
         then `column.dataframe` should return `None`.
         """
 
@@ -413,7 +414,7 @@ class Column(Protocol):
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
- 
+
         Notes
         -----
         `other`'s parent DataFrame must be the same as `self`'s - else,
