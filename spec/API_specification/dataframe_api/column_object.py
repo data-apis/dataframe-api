@@ -1,17 +1,18 @@
 from __future__ import annotations
 
-from typing import Any,NoReturn, TYPE_CHECKING, Literal, Generic
+from typing import TYPE_CHECKING, Any, Literal, NoReturn, Protocol
 
 if TYPE_CHECKING:
-    from .typing import NullType, Scalar, DType, Namespace
+    from typing_extensions import Self
+
+    from .typing import DType, Namespace, NullType, Scalar
 
 
-__all__ = ['Column']
+__all__ = ["Column"]
 
 
-class Column:
-    """
-    Column object
+class Column(Protocol):
+    """Column object.
 
     Note that this column object is not meant to be instantiated directly by
     users of the library implementing the dataframe API standard. Rather, use
@@ -20,8 +21,7 @@ class Column:
     """
 
     def __column_namespace__(self) -> Namespace:
-        """
-        Returns an object that has all the Dataframe Standard API functions on it.
+        """Return an object that has all the Dataframe Standard API functions on it.
 
         Returns
         -------
@@ -31,30 +31,28 @@ class Column:
             attribute. It may contain other public names as well, but it is
             recommended to only include those names that are part of the
             specification.
-
         """
-    
+        ...
+
     @property
     def column(self) -> Any:
-        """
-        Return underlying (not-necessarily-Standard-compliant) column.
+        """Return underlying (not-necessarily-Standard-compliant) column.
 
         If a library only implements the Standard, then this can return `self`.
         """
         ...
-    
+
     @property
     def name(self) -> str:
         """Return name of column."""
+        ...
 
     def __len__(self) -> int:
-        """
-        Return the number of rows.
-        """
+        """Return the number of rows."""
+        ...
 
     def __iter__(self) -> NoReturn:
-        """
-        Iterate over elements.
+        """Iterate over elements.
 
         This is intentionally "poisoned" to discourage inefficient code patterns.
 
@@ -65,28 +63,27 @@ class Column:
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
     @property
-    def dtype(self) -> Any:
-        """
-        Return data type of column.
-        """
+    def dtype(self) -> DType:
+        """Return data type of column."""
+        ...
 
-    def get_rows(self: Column, indices: Column) -> Column:
-        """
-        Select a subset of rows, similar to `ndarray.take`.
+    def get_rows(self, indices: Self) -> Self:
+        """Select a subset of rows, similar to `ndarray.take`.
 
         Parameters
         ----------
-        indices : Column
+        indices
             Positions of rows to select.
         """
         ...
 
-
     def slice_rows(
-        self: Column, start: int | None, stop: int | None, step: int | None
-    ) -> Column:
-        """
-        Select a subset of rows corresponding to a slice.
+        self,
+        start: int | None,
+        stop: int | None,
+        step: int | None,
+    ) -> Self:
+        """Select a subset of rows corresponding to a slice.
 
         Parameters
         ----------
@@ -100,14 +97,12 @@ class Column:
         """
         ...
 
-
-    def filter(self: Column, mask: Column) -> Column:
-        """
-        Select a subset of rows corresponding to a mask.
+    def filter(self, mask: Self) -> Self:
+        """Select a subset of rows corresponding to a mask.
 
         Parameters
         ----------
-        mask : Column
+        mask : Self
 
         Returns
         -------
@@ -120,16 +115,14 @@ class Column:
         """
         ...
 
-
     def get_value(self, row_number: int) -> Scalar:
-        """
-        Select the value at a row number, similar to `ndarray.__getitem__(<int>)`.
+        """Select the value at a row number, similar to `ndarray.__getitem__(<int>)`.
 
         Parameters
         ----------
         row_number : int
             Row number of value to return.
-        
+
         Returns
         -------
         Scalar
@@ -142,10 +135,9 @@ class Column:
         self,
         *,
         ascending: bool = True,
-        nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column:
-        """
-        Sort column.
+        nulls_position: Literal["first", "last"] = "last",
+    ) -> Self:
+        """Sort column.
 
         If you need the indices which would sort the column,
         use :meth:`sorted_indices`.
@@ -171,10 +163,9 @@ class Column:
         self,
         *,
         ascending: bool = True,
-        nulls_position: Literal['first', 'last'] = 'last',
-    ) -> Column:
-        """
-        Return row numbers which would sort column.
+        nulls_position: Literal["first", "last"] = "last",
+    ) -> Self:
+        """Return row numbers which would sort column.
 
         If you need to sort the Column, use :meth:`sort`.
 
@@ -195,15 +186,14 @@ class Column:
         """
         ...
 
-    def __eq__(self, other: Column | Scalar) -> Column:  # type: ignore[override]
-        """
-        Compare for equality.
+    def __eq__(self, other: Self | Scalar) -> Self:  # type: ignore[override]
+        """Compare for equality.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -218,16 +208,16 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __ne__(self: Column, other: Column | Scalar) -> Column:  # type: ignore[override]
-        """
-        Compare for non-equality.
+    def __ne__(self, other: Self | Scalar) -> Self:  # type: ignore[override]
+        """Compare for non-equality.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -242,14 +232,14 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __ge__(self: Column, other: Column | Scalar) -> Column:
-        """
-        Compare for "greater than or equal to" `other`.
+    def __ge__(self, other: Self | Scalar) -> Self:
+        """Compare for "greater than or equal to" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -264,14 +254,14 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __gt__(self: Column, other: Column | Scalar) -> Column:
-        """
-        Compare for "greater than" `other`.
+    def __gt__(self, other: Self | Scalar) -> Self:
+        """Compare for "greater than" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -286,14 +276,14 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __le__(self: Column, other: Column | Scalar) -> Column:
-        """
-        Compare for "less than or equal to" `other`.
+    def __le__(self, other: Self | Scalar) -> Self:
+        """Compare for "less than or equal to" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -308,14 +298,14 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __lt__(self: Column, other: Column | Scalar) -> Column:
-        """
-        Compare for "less than" `other`.
+    def __lt__(self, other: Self | Scalar) -> Self:
+        """Compare for "less than" `other`.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -330,16 +320,16 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __and__(self: Column, other: Column | bool) -> Column:
-        """
-        Apply logical 'and' to `other` Column (or scalar) and this Column.
+    def __and__(self, other: Self | bool) -> Self:
+        """Apply logical 'and' to `other` Column (or scalar) and this Column.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : Column or bool
+        other : Self or bool
             If Column, must have same length.
 
         Returns
@@ -357,16 +347,16 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __or__(self: Column, other: Column | bool) -> Column:
-        """
-        Apply logical 'or' to `other` Column (or scalar) and this column.
+    def __or__(self, other: Self | bool) -> Self:
+        """Apply logical 'or' to `other` Column (or scalar) and this column.
 
         Nulls should follow Kleene Logic.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
 
         Returns
@@ -384,14 +374,14 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __add__(self: Column, other: Column | Scalar) -> Column:
-        """
-        Add `other` column or scalar to this column.
+    def __add__(self, other: Self | Scalar) -> Self:
+        """Add `other` column or scalar to this column.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -406,14 +396,14 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __sub__(self: Column, other: Column | Scalar) -> Column:
-        """
-        Subtract `other` column or scalar from this column.
+    def __sub__(self, other: Self | Scalar) -> Self:
+        """Subtract `other` column or scalar from this column.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -428,14 +418,14 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __mul__(self, other: Column | Scalar) -> Column:
-        """
-        Multiply `other` column or scalar with this column.
+    def __mul__(self, other: Self | Scalar) -> Self:
+        """Multiply `other` column or scalar with this column.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -450,14 +440,14 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __truediv__(self, other: Column | Scalar) -> Column:
-        """
-        Divide this column by `other` column or scalar. True division, returns floats.
+    def __truediv__(self, other: Self | Scalar) -> Self:
+        """Divide this column by `other` column or scalar. True division, returns floats.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -472,14 +462,14 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __floordiv__(self, other: Column | Scalar) -> Column:
-        """
-        Floor-divide `other` column or scalar to this column.
+    def __floordiv__(self, other: Self | Scalar) -> Self:
+        """Floor-divide `other` column or scalar to this column.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -494,10 +484,10 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __pow__(self, other: Column | Scalar) -> Column:
-        """
-        Raise this column to the power of `other`.
+    def __pow__(self, other: Self | Scalar) -> Self:
+        """Raise this column to the power of `other`.
 
         Integer dtype to the power of non-negative integer dtype is integer dtype.
         Integer dtype to the power of float dtype is float dtype.
@@ -505,7 +495,7 @@ class Column:
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -520,14 +510,14 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __mod__(self, other: Column | Scalar) -> Column:
-        """
-        Returns modulus of this column by `other` (`%` operator).
+    def __mod__(self, other: Self | Scalar) -> Self:
+        """Return modulus of this column by `other` (`%` operator).
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -542,14 +532,14 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
+        ...
 
-    def __divmod__(self, other: Column | Scalar) -> tuple[Column, Column]:
-        """
-        Return quotient and remainder of integer division. See `divmod` builtin function.
+    def __divmod__(self, other: Self | Scalar) -> tuple[Column, Column]:
+        """Return quotient and remainder of integer division. See `divmod` builtin.
 
         Parameters
         ----------
-        other : Column or Scalar
+        other : Self or Scalar
             If Column, must have same length.
             "Scalar" here is defined implicitly by what scalar types are allowed
             for the operation by the underling dtypes.
@@ -564,100 +554,127 @@ class Column:
         and `self` originated from the same dataframe. If they didn't, then behaviour
         is unspecified and may vary across implementations.
         """
-
-    def __radd__(self: Column, other: Column | Scalar) -> Column:
-        ...
-    def __rsub__(self: Column, other: Column | Scalar) -> Column:
-        ...
-    def __rmul__(self, other: Column | Scalar) -> Column:
-        ...
-    def __rtruediv__(self, other: Column | Scalar) -> Column:
-        ...
-    def __rand__(self: Column, other: Column | bool) -> Column:
-        ...
-    def __ror__(self: Column, other: Column | bool) -> Column:
-        ...
-    def __rfloordiv__(self, other: Column | Scalar) -> Column:
-        ...
-    def __rpow__(self, other: Column | Scalar) -> Column:
-        ...
-    def __rmod__(self, other: Column | Scalar) -> Column:
         ...
 
-    def __invert__(self: Column) -> Column:
-        """
-        Invert truthiness of (boolean) elements.
+    def __radd__(self, other: Self | Scalar) -> Self:
+        ...
+
+    def __rsub__(self, other: Self | Scalar) -> Self:
+        ...
+
+    def __rmul__(self, other: Self | Scalar) -> Self:
+        ...
+
+    def __rtruediv__(self, other: Self | Scalar) -> Self:
+        ...
+
+    def __rand__(self, other: Self | bool) -> Self:
+        ...
+
+    def __ror__(self, other: Self | bool) -> Self:
+        ...
+
+    def __rfloordiv__(self, other: Self | Scalar) -> Self:
+        ...
+
+    def __rpow__(self, other: Self | Scalar) -> Self:
+        ...
+
+    def __rmod__(self, other: Self | Scalar) -> Self:
+        ...
+
+    def __invert__(self) -> Self:
+        """Invert truthiness of (boolean) elements.
 
         Raises
         ------
         ValueError
             If any of the Column's columns is not boolean.
         """
+        ...
 
-    def any(self: Column, *, skip_nulls: bool = True) -> bool | NullType:
-        """
-        Reduction returns a bool.
-
-        Raises
-        ------
-        ValueError
-            If column is not boolean.
-        """
-
-    def all(self: Column, *, skip_nulls: bool = True) -> bool | NullType:
-        """
-        Reduction returns a bool.
+    def any(self, *, skip_nulls: bool = True) -> bool | NullType:
+        """Reduction returns a bool.
 
         Raises
         ------
         ValueError
             If column is not boolean.
         """
+        ...
+
+    def all(self, *, skip_nulls: bool = True) -> bool | NullType:
+        """Reduction returns a bool.
+
+        Raises
+        ------
+        ValueError
+            If column is not boolean.
+        """
+        ...
 
     def min(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Any data type that supports comparisons
+        """Reduction returns a scalar.
+
+        Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
+        ...
 
     def max(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Any data type that supports comparisons
+        """Reduction returns a scalar.
+
+        Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
+        ...
 
     def sum(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical and
+        """Reduction returns a scalar.
+
+        Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
+        ...
 
     def prod(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical data types.
+        """Reduction returns a scalar.
+
+        Must be supported for numerical data types.
         The returned value has the same dtype as the column.
         """
+        ...
 
     def median(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical and
+        """Reduction returns a scalar.
+
+        Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
         """
+        ...
 
     def mean(self, *, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical and
+        """Reduction returns a scalar.
+
+        Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
         """
+        ...
 
-    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical and
+    def std(
+        self,
+        *,
+        correction: int | float = 1,
+        skip_nulls: bool = True,
+    ) -> Scalar | NullType:
+        """Reduction returns a scalar.
+
+        Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
@@ -680,10 +697,17 @@ class Column:
         skip_nulls
             Whether to skip null values.
         """
+        ...
 
-    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Scalar | NullType:
-        """
-        Reduction returns a scalar. Must be supported for numerical and
+    def var(
+        self,
+        *,
+        correction: int | float = 1,
+        skip_nulls: bool = True,
+    ) -> Scalar | NullType:
+        """Reduction returns a scalar.
+
+        Must be supported for numerical and
         datetime data types. Returns a float for numerical data types, and
         datetime (with the appropriate timedelta format string) for datetime
         dtypes.
@@ -697,42 +721,50 @@ class Column:
         skip_nulls
             Whether to skip null values.
         """
+        ...
 
-    def cumulative_max(self: Column) -> Column:
-        """
-        Reduction returns a Column. Any data type that supports comparisons
+    def cumulative_max(self) -> Self:
+        """Reduction returns a Column.
+
+        Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
+        ...
 
-    def cumulative_min(self: Column) -> Column:
-        """
-        Reduction returns a Column. Any data type that supports comparisons
+    def cumulative_min(self) -> Self:
+        """Reduction returns a Column.
+
+        Any data type that supports comparisons
         must be supported. The returned value has the same dtype as the column.
         """
+        ...
 
-    def cumulative_sum(self: Column) -> Column:
-        """
-        Reduction returns a Column. Must be supported for numerical and
+    def cumulative_sum(self) -> Self:
+        """Reduction returns a Column.
+
+        Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
+        ...
 
-    def cumulative_prod(self: Column) -> Column:
-        """
-        Reduction returns a Column. Must be supported for numerical and
+    def cumulative_prod(self) -> Self:
+        """Reduction returns a Column.
+
+        Must be supported for numerical and
         datetime data types. The returned value has the same dtype as the
         column.
         """
+        ...
 
-    def is_null(self) -> Column:
-        """
-        Check for 'missing' or 'null' entries.
+    def is_null(self) -> Self:
+        """Check for 'missing' or 'null' entries.
 
         Returns
         -------
         Column
 
-        See also
+        See Also
         --------
         is_nan
 
@@ -742,16 +774,16 @@ class Column:
         May optionally include 'NaT' values (if present in an implementation),
         but note that the Standard makes no guarantees about them.
         """
+        ...
 
-    def is_nan(self) -> Column:
-        """
-        Check for nan entries.
+    def is_nan(self) -> Self:
+        """Check for nan entries.
 
         Returns
         -------
         Column
 
-        See also
+        See Also
         --------
         is_null
 
@@ -761,14 +793,14 @@ class Column:
         Does *not* include 'missing' or 'null' entries.
         In particular, does not check for `np.timedelta64('NaT')`.
         """
+        ...
 
-    def is_in(self: Column, values: Column) -> Column:
-        """
-        Indicate whether the value at each row matches any value in `values`.
+    def is_in(self, values: Self) -> Self:
+        """Indicate whether the value at each row matches any value in `values`.
 
         Parameters
         ----------
-        values : Column
+        values : Self
             Contains values to compare against. May include ``float('nan')`` and
             ``null``, in which case ``'nan'`` and ``null`` will
             respectively return ``True`` even though ``float('nan') == float('nan')``
@@ -779,10 +811,10 @@ class Column:
         -------
         Column
         """
+        ...
 
-    def unique_indices(self, *, skip_nulls: bool = True) -> Column:
-        """
-        Return indices corresponding to unique values in Column.
+    def unique_indices(self, *, skip_nulls: bool = True) -> Self:
+        """Return indices corresponding to unique values in Column.
 
         Returns
         -------
@@ -801,9 +833,8 @@ class Column:
         """
         ...
 
-    def fill_nan(self: Column, value: float | NullType, /) -> Column:
-        """
-        Fill floating point ``nan`` values with the given fill value.
+    def fill_nan(self, value: float | NullType, /) -> Self:
+        """Fill floating point ``nan`` values with the given fill value.
 
         Parameters
         ----------
@@ -815,9 +846,8 @@ class Column:
         """
         ...
 
-    def fill_null(self: Column, value: Scalar, /) -> Column:
-        """
-        Fill null values with the given fill value.
+    def fill_null(self, value: Scalar, /) -> Self:
+        """Fill null values with the given fill value.
 
         Parameters
         ----------
@@ -828,33 +858,31 @@ class Column:
         """
         ...
 
-    def to_array_object(self, dtype: DType) -> Any:
-        """
-        Convert to array-API-compliant object.
+    def to_array(self) -> Any:
+        """Convert to array-API-compliant object.
 
-        Parameters
-        ----------
-        dtype : DType
-            The dtype of the array-API-compliant object to return.
-            Must be one of:
+        The resulting array will have the corresponding dtype from the
+        Array API:
 
-            - Bool()
-            - Int8()
-            - Int16()
-            - Int32()
-            - Int64()
-            - UInt8()
-            - UInt16()
-            - UInt32()
-            - UInt64()
-            - Float32()
-            - Float64()
-        
+        - Bool() -> 'bool'
+        - Int8() -> 'int8'
+        - Int16() -> 'int16'
+        - Int32() -> 'int32'
+        - Int64() -> 'int64'
+        - UInt8() -> 'uint8'
+        - UInt16() -> 'uint16'
+        - UInt32() -> 'uint32'
+        - UInt64() -> 'uint64'
+        - Float32() -> 'float32'
+        - Float64() -> 'float64'
+
+        Null values are not supported and must be filled prior to conversion.
+
         Returns
         -------
         Any
             An array-API-compliant object.
-        
+
         Notes
         -----
         While numpy arrays are not yet array-API-compliant, implementations
@@ -862,19 +890,113 @@ class Column:
         understanding that consuming libraries would then use the
         ``array-api-compat`` package to convert it to a Standard-compliant array.
         """
+        ...
 
-    def rename(self, name: str) -> Column:
-        """
-        Rename column.
+    def rename(self, name: str) -> Self:
+        """Rename column.
 
         Parameters
         ----------
         name : str
             New name for column.
-        
+
         Returns
         -------
         Column
             New column - this does not operate in-place.
+        """
+        ...
+
+    def year(self) -> Self:
+        """Return 'year' component of each element of `Date` and `Datetime` columns.
+
+        For example, return 1981 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of (signed) integer dtype.
+        """
+        ...
+
+    def month(self) -> Self:
+        """Return 'month' component of each element of `Date` and `Datetime` columns.
+
+        For example, return 1 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of integer dtype (signed or unsigned).
+        """
+        ...
+
+    def day(self) -> Self:
+        """Return 'day' component of each element of `Date` and `Datetime` columns.
+
+        For example, return 2 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of integer dtype (signed or unsigned).
+        """
+        ...
+
+    def hour(self) -> Self:
+        """Return 'hour' component of each element of `Date` and `Datetime` columns.
+
+        For example, return 12 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of integer dtype (signed or unsigned).
+        """
+        ...
+
+    def minute(self) -> Self:
+        """Return 'minute' component of each element of `Date` and `Datetime` columns.
+
+        For example, return 34 for 1981-01-02T12:34:56.123456.
+
+        Return column should be of integer dtype (signed or unsigned).
+        """
+        ...
+
+    def second(self) -> Self:
+        """Return 'second' component of each element.
+
+        For example, return 56 for 1981-01-02T12:34:56.123456.
+
+        Only supported for `Date` and `Datetime` columns.
+        Return column should be of integer dtype (signed or unsigned).
+        """
+        ...
+
+    def microsecond(self) -> Self:
+        """Return number of microseconds since last second.
+
+        For example, return 123456 for 1981-01-02T12:34:56.123456.
+
+        Only supported for `Date` and `Datetime` columns.
+        Return column should be of integer dtype (signed or unsigned).
+        """
+        ...
+
+    def iso_weekday(self) -> Self:
+        """Return ISO weekday for each element of `Date` and `Datetime` columns.
+
+        Note that Monday=1, ..., Sunday=7.
+
+        Return column should be of integer dtype (signed or unsigned).
+        """
+        ...
+
+    def unix_timestamp(self, *, time_unit: Literal["s", "ms", "us"] = "s") -> Self:
+        """Return number of seconds / milliseconds / microseconds since the Unix epoch.
+
+        The Unix epoch is 00:00:00 UTC on 1 January 1970.
+
+        Parameters
+        ----------
+        time_unit
+            Time unit to use. Must be one of 's', 'ms', or 'us'.
+
+        Returns
+        -------
+        Column
+            Integer data type. For example, if the date is 1970-01-02T00:00:00.123456,
+            and the time_unit is ``'s'``, then the result should be 86400, and not
+            86400.123456. Information smaller than the given time unit should be
+            discarded.
         """
         ...
