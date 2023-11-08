@@ -811,6 +811,19 @@ class Column(Protocol):
         """
         ...
 
+    def shift(self, offset: int, *, fill_value: Scalar | NullType) -> Self:
+        """Shift values by `offset` positions, filling missing values with `fill_value`.
+
+        For example, if the original column contains values `[1, 4, 2]`, then:
+
+        - `.shift(1)` will return `[null, 1, 4]`,
+        - `.shift(-1)` will return `[4, 2, null]`,
+        - `.shift(1, fill_value=999)` will return `[999, 1, 4]`,
+        """
+        ...
+
+    # --- temporal methods ---
+
     def year(self) -> Self:
         """Return 'year' component of each element of `Date` and `Datetime` columns.
 
