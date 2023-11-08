@@ -6,7 +6,7 @@ __all__ = ["Scalar"]
 
 
 class Scalar(Protocol):
-    """Scalar object
+    """Scalar object.
 
     Not meant to be instantiated directly, but rather created via
     `:meth:Column.get_value` or one of the column reductions such

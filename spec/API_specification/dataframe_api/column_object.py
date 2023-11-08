@@ -8,8 +8,6 @@ if TYPE_CHECKING:
     from .scalar_object import Scalar
     from .typing import DType, Namespace, NullType
 
-    from .typing import DType, Namespace, NullType, Scalar
-
 
 __all__ = ["Column"]
 

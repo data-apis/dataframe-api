@@ -14,6 +14,8 @@ from dataframe_api.dataframe_object import DataFrame
 from dataframe_api.groupby_object import Aggregation as AggregationT
 from dataframe_api.groupby_object import GroupBy
 
+from .scalar_object import Scalar
+
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
@@ -34,7 +36,6 @@ if TYPE_CHECKING:
         UInt32,
         UInt64,
     )
-    from .scalar_object import Scalar
 
     DType = Union[
         Bool,
@@ -181,5 +182,4 @@ __all__ = [
     "Scalar",
     "SupportsColumnAPI",
     "SupportsDataFrameAPI",
-    "Scalar",
 ]
