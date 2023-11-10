@@ -125,7 +125,7 @@ See the [use cases](use_cases.md) section for details on the exact use cases con
 Implementation details of the dataframes and execution of operations. This includes:
 
 - How data is represented and stored (whether the data is in memory, disk, distributed)
-- Expectations on when the execution is happening (in an eager or lazy way), other than `DataFrame.persist`
+- Expectations on when the execution is happening (in an eager or lazy way) (see `execution model` for some caveats)
 - Other execution details
 
 
