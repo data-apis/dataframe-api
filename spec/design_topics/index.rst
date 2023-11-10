@@ -8,3 +8,4 @@ Design topics & constraints
    backwards_compatibility
    data_interchange
    python_builtin_types
+   execution_model
