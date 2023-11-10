@@ -487,7 +487,7 @@
 <dl class="py data">
 <dt class="sig sig-object py" id="dataframe_api.is_dtype">
 <span class="sig-name descname"><span class="pre">is_dtype</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;function</span> <span class="pre">is_dtype&gt;</span></em><a class="headerlink" href="#dataframe_api.is_dtype" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a boolean indicating whether a provided dtype is of a specified data type “kind”.</p>
+<dd><p>Indicate whether a provided dtype is of a specified data type “kind”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -499,9 +499,11 @@ The following dtype kinds must be supported:</p>
 <ul>
 <li><p>’bool’: boolean data type (Bool).</p></li>
 <li><p>’signed integer’: signed integer data types (Int8, Int16, Int32, Int64).</p></li>
-<li><p>’unsigned integer’: unsigned integer data types (UInt8, UInt16, UInt32, UInt64).</p></li>
+<li><p>’unsigned integer’: unsigned integer data types
+(UInt8, UInt16, UInt32, UInt64).</p></li>
 <li><p>’floating’: floating-point data types (Float32, Float64).</p></li>
-<li><p>’integral’: integer data types. Shorthand for (‘signed integer’, ‘unsigned integer’).</p></li>
+<li><p>’integral’: integer data types. Shorthand for
+(‘signed integer’, ‘unsigned integer’).</p></li>
 <li><p>’numeric’: numeric data types. Shorthand for (‘integral’, ‘floating’).</p></li>
 </ul>
 <p>If kind is a tuple, the tuple specifies a union of dtypes and/or kinds,

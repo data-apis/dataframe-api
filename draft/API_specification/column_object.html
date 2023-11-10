@@ -786,7 +786,7 @@ behavior.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="dataframe_api.Column">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dataframe_api.Column" title="Permalink to this definition">¶</a></dt>
-<dd><p>Column object</p>
+<dd><p>Column object.</p>
 <p>Note that this column object is not meant to be instantiated directly by
 users of the library implementing the dataframe API standard. Rather, use
 constructor functions or an already-created dataframe object retrieved via</p>
@@ -829,7 +829,7 @@ for the operation by the underling dtypes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__column_namespace__">
 <span class="sig-name descname"><span class="pre">__column_namespace__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Namespace</span></span></span><a class="headerlink" href="#dataframe_api.Column.__column_namespace__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns an object that has all the Dataframe Standard API functions on it.</p>
+<dd><p>Return an object that has all the Dataframe Standard API functions on it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>namespace</strong> (<em>Any</em>) – An object representing the dataframe API namespace. It should have
@@ -843,7 +843,7 @@ specification.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__divmod__">
 <span class="sig-name descname"><span class="pre">__divmod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Self</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.Column.__divmod__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return quotient and remainder of integer division. See <code class="code docutils literal notranslate"><span class="pre">divmod</span></code> builtin function.</p>
+<dd><p>Return quotient and remainder of integer division. See <code class="code docutils literal notranslate"><span class="pre">divmod</span></code> builtin.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<em>Self</em><em> or </em><em>Scalar</em>) – If Column, must have same length.
@@ -979,7 +979,7 @@ for the operation by the underling dtypes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__mod__">
 <span class="sig-name descname"><span class="pre">__mod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Self</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.__mod__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns modulus of this column by <code class="code docutils literal notranslate"><span class="pre">other</span></code> (<code class="code docutils literal notranslate"><span class="pre">%</span></code> operator).</p>
+<dd><p>Return modulus of this column by <code class="code docutils literal notranslate"><span class="pre">other</span></code> (<code class="code docutils literal notranslate"><span class="pre">%</span></code> operator).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>other</strong> (<em>Self</em><em> or </em><em>Scalar</em>) – If Column, must have same length.
@@ -1166,26 +1166,30 @@ for the operation by the underling dtypes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.cumulative_max">
 <span class="sig-name descname"><span class="pre">cumulative_max</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.cumulative_max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a Column. Any data type that supports comparisons
+<dd><p>Reduction returns a Column.</p>
+<p>Any data type that supports comparisons
 must be supported. The returned value has the same dtype as the column.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.cumulative_min">
 <span class="sig-name descname"><span class="pre">cumulative_min</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.cumulative_min" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a Column. Any data type that supports comparisons
+<dd><p>Reduction returns a Column.</p>
+<p>Any data type that supports comparisons
 must be supported. The returned value has the same dtype as the column.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.cumulative_prod">
 <span class="sig-name descname"><span class="pre">cumulative_prod</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.cumulative_prod" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a Column. Must be supported for numerical and
+<dd><p>Reduction returns a Column.</p>
+<p>Must be supported for numerical and
 datetime data types. The returned value has the same dtype as the
 column.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.cumulative_sum">
 <span class="sig-name descname"><span class="pre">cumulative_sum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.cumulative_sum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a Column. Must be supported for numerical and
+<dd><p>Reduction returns a Column.</p>
+<p>Must be supported for numerical and
 datetime data types. The returned value has the same dtype as the
 column.</p>
 </dd></dl>
@@ -1334,13 +1338,15 @@ but note that the Standard makes no guarantees about them.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.max">
 <span class="sig-name descname"><span class="pre">max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NullType</span></span></span><a class="headerlink" href="#dataframe_api.Column.max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a scalar. Any data type that supports comparisons
+<dd><p>Reduction returns a scalar.</p>
+<p>Any data type that supports comparisons
 must be supported. The returned value has the same dtype as the column.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.mean">
 <span class="sig-name descname"><span class="pre">mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NullType</span></span></span><a class="headerlink" href="#dataframe_api.Column.mean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a scalar. Must be supported for numerical and
+<dd><p>Reduction returns a scalar.</p>
+<p>Must be supported for numerical and
 datetime data types. Returns a float for numerical data types, and
 datetime (with the appropriate timedelta format string) for datetime
 dtypes.</p>
@@ -1348,7 +1354,8 @@ dtypes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.median">
 <span class="sig-name descname"><span class="pre">median</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NullType</span></span></span><a class="headerlink" href="#dataframe_api.Column.median" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a scalar. Must be supported for numerical and
+<dd><p>Reduction returns a scalar.</p>
+<p>Must be supported for numerical and
 datetime data types. Returns a float for numerical data types, and
 datetime (with the appropriate timedelta format string) for datetime
 dtypes.</p>
@@ -1356,14 +1363,16 @@ dtypes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.microsecond">
 <span class="sig-name descname"><span class="pre">microsecond</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.microsecond" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return number of microseconds since last second, for each element of <code class="code docutils literal notranslate"><span class="pre">Date</span></code> and <code class="code docutils literal notranslate"><span class="pre">Datetime</span></code> columns.</p>
+<dd><p>Return number of microseconds since last second.</p>
 <p>For example, return 123456 for 1981-01-02T12:34:56.123456.</p>
-<p>Return column should be of integer dtype (signed or unsigned).</p>
+<p>Only supported for <code class="code docutils literal notranslate"><span class="pre">Date</span></code> and <code class="code docutils literal notranslate"><span class="pre">Datetime</span></code> columns.
+Return column should be of integer dtype (signed or unsigned).</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.min">
 <span class="sig-name descname"><span class="pre">min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NullType</span></span></span><a class="headerlink" href="#dataframe_api.Column.min" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a scalar. Any data type that supports comparisons
+<dd><p>Reduction returns a scalar.</p>
+<p>Any data type that supports comparisons
 must be supported. The returned value has the same dtype as the column.</p>
 </dd></dl>
 <dl class="py method">
@@ -1388,7 +1397,8 @@ must be supported. The returned value has the same dtype as the column.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.prod">
 <span class="sig-name descname"><span class="pre">prod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NullType</span></span></span><a class="headerlink" href="#dataframe_api.Column.prod" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a scalar. Must be supported for numerical data types.
+<dd><p>Reduction returns a scalar.</p>
+<p>Must be supported for numerical data types.
 The returned value has the same dtype as the column.</p>
 </dd></dl>
 <dl class="py method">
@@ -1407,9 +1417,10 @@ The returned value has the same dtype as the column.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.second">
 <span class="sig-name descname"><span class="pre">second</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.second" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return ‘second’ component of each element of <code class="code docutils literal notranslate"><span class="pre">Date</span></code> and <code class="code docutils literal notranslate"><span class="pre">Datetime</span></code> columns.</p>
+<dd><p>Return ‘second’ component of each element.</p>
 <p>For example, return 56 for 1981-01-02T12:34:56.123456.</p>
-<p>Return column should be of integer dtype (signed or unsigned).</p>
+<p>Only supported for <code class="code docutils literal notranslate"><span class="pre">Date</span></code> and <code class="code docutils literal notranslate"><span class="pre">Datetime</span></code> columns.
+Return column should be of integer dtype (signed or unsigned).</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.slice_rows">
@@ -1474,7 +1485,8 @@ vary based on the implementation.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.std">
 <span class="sig-name descname"><span class="pre">std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NullType</span></span></span><a class="headerlink" href="#dataframe_api.Column.std" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a scalar. Must be supported for numerical and
+<dd><p>Reduction returns a scalar.</p>
+<p>Must be supported for numerical and
 datetime data types. Returns a float for numerical data types, and
 datetime (with the appropriate timedelta format string) for datetime
 dtypes.</p>
@@ -1501,7 +1513,8 @@ correction). Fractional (float) values are allowed. Default: <code class="docuti
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.sum">
 <span class="sig-name descname"><span class="pre">sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NullType</span></span></span><a class="headerlink" href="#dataframe_api.Column.sum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a scalar. Must be supported for numerical and
+<dd><p>Reduction returns a scalar.</p>
+<p>Must be supported for numerical and
 datetime data types. The returned value has the same dtype as the
 column.</p>
 </dd></dl>
@@ -1557,7 +1570,7 @@ To get the unique values, you can do <code class="docutils literal notranslate">
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.unix_timestamp">
 <span class="sig-name descname"><span class="pre">unix_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_unit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'s'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'ms'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'us'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'s'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.unix_timestamp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the number of seconds (or milliseconds or microseconds) since the Unix epoch.</p>
+<dd><p>Return number of seconds / milliseconds / microseconds since the Unix epoch.</p>
 <p>The Unix epoch is 00:00:00 UTC on 1 January 1970.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1574,7 +1587,8 @@ discarded.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.var">
 <span class="sig-name descname"><span class="pre">var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NullType</span></span></span><a class="headerlink" href="#dataframe_api.Column.var" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reduction returns a scalar. Must be supported for numerical and
+<dd><p>Reduction returns a scalar.</p>
+<p>Must be supported for numerical and
 datetime data types. Returns a float for numerical data types, and
 datetime (with the appropriate timedelta format string) for datetime
 dtypes.</p>
