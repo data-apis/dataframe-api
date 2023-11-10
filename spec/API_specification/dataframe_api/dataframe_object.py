@@ -931,7 +931,7 @@ class DataFrame(Protocol):
         ...
 
     def persist(self) -> Self:
-        """Hint to that computation prior to this point should not be repeated.
+        """Hint that computation prior to this point should not be repeated.
 
         This is intended as a hint, rather than as a directive. Implementations
         which do not separate lazy vs eager execution may ignore this method and
