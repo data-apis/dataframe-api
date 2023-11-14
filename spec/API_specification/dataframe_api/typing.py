@@ -58,7 +58,6 @@ if TYPE_CHECKING:
 Scalar = Any
 # null is a special object which represents a missing value.
 # It is not valid as a type.
-NullType = Any
 
 
 class Namespace(Protocol):
@@ -99,6 +98,11 @@ class Namespace(Protocol):
 
     class Date:
         ...
+
+    class NullType:
+        ...
+
+    null: NullType
 
     class Datetime:
         def __init__(  # noqa: ANN204
@@ -153,6 +157,9 @@ class Namespace(Protocol):
 
     def date(self, year: int, month: int, day: int) -> Scalar:
         ...
+
+
+NullType = Namespace.NullType
 
 
 class SupportsDataFrameAPI(Protocol):
