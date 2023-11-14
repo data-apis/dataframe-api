@@ -19,45 +19,9 @@ from .scalar_object import Scalar
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from .dtypes import (
-        Bool,
-        Date,
-        Datetime,
-        Duration,
-        Float32,
-        Float64,
-        Int8,
-        Int16,
-        Int32,
-        Int64,
-        String,
-        UInt8,
-        UInt16,
-        UInt32,
-        UInt64,
-    )
-
-    DType = Union[
-        Bool,
-        Float64,
-        Float32,
-        Int64,
-        Int32,
-        Int16,
-        Int8,
-        UInt64,
-        UInt32,
-        UInt16,
-        UInt8,
-        String,
-        Date,
-        Datetime,
-        Duration,
-    ]
 
 # null is a special object which represents a missing value.
 # It is not valid as a type.
-NullType = Any
 
 
 class Namespace(Protocol):
@@ -99,11 +63,23 @@ class Namespace(Protocol):
     class Date:
         ...
 
+    class NullType:
+        ...
+
+    null: NullType
+
     class Datetime:
         def __init__(  # noqa: ANN204
             self,
             time_unit: Literal["ms", "us"],
-            time_zone: str | None,
+            time_zone: str | None = None,
+        ):
+            ...
+
+    class Duration:
+        def __init__(  # noqa: ANN204
+            self,
+            time_unit: Literal["ms", "us"],
         ):
             ...
 
@@ -152,6 +128,26 @@ class Namespace(Protocol):
 
     def date(self, year: int, month: int, day: int) -> Scalar:
         ...
+
+
+NullType = Namespace.NullType
+DType = Union[
+    Namespace.Bool,
+    Namespace.Float64,
+    Namespace.Float32,
+    Namespace.Int64,
+    Namespace.Int32,
+    Namespace.Int16,
+    Namespace.Int8,
+    Namespace.UInt64,
+    Namespace.UInt32,
+    Namespace.UInt16,
+    Namespace.UInt8,
+    Namespace.String,
+    Namespace.Date,
+    Namespace.Datetime,
+    Namespace.Duration,
+]
 
 
 class SupportsDataFrameAPI(Protocol):

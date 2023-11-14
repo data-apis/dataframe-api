@@ -197,8 +197,10 @@ def dataframe_from_2d_array(array: Any, *, schema: dict[str, DType]) -> DataFram
 class null:  # noqa: N801
     """A `null` object to represent missing data.
 
+    Not meant to be instantiated, use ``null`` directly.
+
     ``null`` is a scalar, and may be used when constructing a `Column` from a
-    Python sequence with `column_from_sequence`. It does not support ``is``,
+    Python sequence with :func:`column_from_sequence`. It does not support ``is``,
     ``==`` or ``bool``.
 
     Raises

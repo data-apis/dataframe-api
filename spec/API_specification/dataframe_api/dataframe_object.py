@@ -854,6 +854,28 @@ class DataFrame(Protocol):
         """
         ...
 
+    def drop_nulls(
+        self,
+        *,
+        column_names: list[str] | None = None,
+    ) -> Self:
+        """Drop rows containing null values.
+
+        Parameters
+        ----------
+        column_names : list[str] | None
+            A list of column names to consider when dropping nulls.
+            If ``None``, all columns will be considered.
+
+        Raises
+        ------
+        KeyError
+            If ``column_names`` contains a column name that is not present in
+            the dataframe.
+
+        """
+        ...
+
     def to_array(self, dtype: DType) -> Any:
         """Convert to array-API-compliant object.
 
@@ -927,5 +949,40 @@ class DataFrame(Protocol):
         ValueError
             If, apart from `left_on` and `right_on`, there are any column names
             present in both `self` and `other`.
+        """
+        ...
+
+    def persist(self) -> Self:
+        """Hint that computation prior to this point should not be repeated.
+
+        This is intended as a hint, rather than as a directive. Implementations
+        which do not separate lazy vs eager execution may ignore this method and
+        treat it as a no-op.
+
+        .. note::
+            This method may trigger execution. If necessary, it should be called
+            at most once per dataframe, and as late as possible in the pipeline.
+
+            For example, do this
+
+            .. code-block:: python
+
+                df: DataFrame
+                df = df.persist()
+                features = []
+                for column_name in df.column_names:
+                    if df.col(column_name).std() > 0:
+                        features.append(column_name)
+
+            instead of this:
+
+            .. code-block:: python
+
+                df: DataFrame
+                features = []
+                for column_name in df.column_names:
+                    # Do NOT do this!
+                    if df.persist().col(column_name).std() > 0:
+                        features.append(column_name)
         """
         ...
