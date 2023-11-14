@@ -518,7 +518,7 @@ class Column(Protocol):
         """
         ...
 
-    def min(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def min(self, *, skip_nulls: bool = True) -> Scalar:
         """Reduction returns a scalar.
 
         Any data type that supports comparisons
@@ -526,7 +526,7 @@ class Column(Protocol):
         """
         ...
 
-    def max(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def max(self, *, skip_nulls: bool = True) -> Scalar:
         """Reduction returns a scalar.
 
         Any data type that supports comparisons
@@ -534,7 +534,7 @@ class Column(Protocol):
         """
         ...
 
-    def sum(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def sum(self, *, skip_nulls: bool = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -543,7 +543,7 @@ class Column(Protocol):
         """
         ...
 
-    def prod(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def prod(self, *, skip_nulls: bool = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical data types.
@@ -551,7 +551,7 @@ class Column(Protocol):
         """
         ...
 
-    def median(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def median(self, *, skip_nulls: bool = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -561,7 +561,7 @@ class Column(Protocol):
         """
         ...
 
-    def mean(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def mean(self, *, skip_nulls: bool = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -576,7 +576,7 @@ class Column(Protocol):
         *,
         correction: int | float = 1,
         skip_nulls: bool = True,
-    ) -> Scalar | NullType:
+    ) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -609,7 +609,7 @@ class Column(Protocol):
         *,
         correction: int | float = 1,
         skip_nulls: bool = True,
-    ) -> Scalar | NullType:
+    ) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -738,7 +738,7 @@ class Column(Protocol):
         """
         ...
 
-    def fill_nan(self, value: float | NullType, /) -> Self:
+    def fill_nan(self, value: Scalar, /) -> Self:
         """Fill floating point ``nan`` values with the given fill value.
 
         Parameters
