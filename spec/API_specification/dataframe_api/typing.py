@@ -63,10 +63,7 @@ class Namespace(Protocol):
     class Date:
         ...
 
-    class NullType:
-        ...
-
-    null: NullType
+    null: Scalar
 
     class Datetime:
         def __init__(  # noqa: ANN204
@@ -130,7 +127,6 @@ class Namespace(Protocol):
         ...
 
 
-NullType = Namespace.NullType
 DType = Union[
     Namespace.Bool,
     Namespace.Float64,
@@ -174,7 +170,6 @@ __all__ = [
     "DType",
     "GroupBy",
     "Namespace",
-    "NullType",
     "Scalar",
     "SupportsColumnAPI",
     "SupportsDataFrameAPI",

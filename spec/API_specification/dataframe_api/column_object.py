@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from typing_extensions import Self
 
     from .scalar_object import Scalar
-    from .typing import DType, Namespace, NullType
+    from .typing import DType, Namespace
 
 
 __all__ = ["Column"]
@@ -498,7 +498,7 @@ class Column(Protocol):
         """
         ...
 
-    def any(self, *, skip_nulls: bool = True) -> bool | NullType:
+    def any(self, *, skip_nulls: bool = True) -> Scalar:
         """Reduction returns a bool.
 
         Raises
@@ -508,7 +508,7 @@ class Column(Protocol):
         """
         ...
 
-    def all(self, *, skip_nulls: bool = True) -> bool | NullType:
+    def all(self, *, skip_nulls: bool = True) -> Scalar:
         """Reduction returns a bool.
 
         Raises
