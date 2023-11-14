@@ -811,22 +811,18 @@ class Column(Protocol):
         """
         ...
 
-    def shift(self, offset: int, *, fill_value: Scalar | NullType) -> Self:
-        """Shift values by `offset` positions, filling missing values with `fill_value`.
+    def shift(self, offset: int) -> Self:
+        """Shift values by `offset` positions, filling missing values with `null`.
 
         For example, if the original column contains values `[1, 4, 2]`, then:
 
         - `.shift(1)` will return `[null, 1, 4]`,
         - `.shift(-1)` will return `[4, 2, null]`,
-        - `.shift(1, fill_value=999)` will return `[999, 1, 4]`,
     
         Parameters
         ----------
-            offset
-                How many positions to shift by.
-            fill_value 
-                Value to use for filling missing values. Must be of the Python
-                scalar type matching the dtype of the column.
+        offset
+            How many positions to shift by.
         """
         ...
 
