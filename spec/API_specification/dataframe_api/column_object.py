@@ -14,6 +14,7 @@ if TYPE_CHECKING:
         IntScalar,
         Namespace,
         NullType,
+        NumericScalar,
         StringScalar,
     )
 
@@ -583,7 +584,7 @@ class Column(Protocol):
     def std(
         self,
         *,
-        correction: int | float = 1,
+        correction: float = 1,
         skip_nulls: BoolScalar = True,
     ) -> Scalar:
         """Reduction returns a scalar.
@@ -616,7 +617,7 @@ class Column(Protocol):
     def var(
         self,
         *,
-        correction: int | float = 1,
+        correction: NumericScalar = 1,
         skip_nulls: BoolScalar = True,
     ) -> Scalar:
         """Reduction returns a scalar.
@@ -912,7 +913,7 @@ class Column(Protocol):
         """
         ...
 
-    def unix_timestamp(self, *, time_unit: AnyScalar = "s") -> Self:
+    def unix_timestamp(self, *, time_unit: StringScalar = "s") -> Self:
         """Return number of seconds / milliseconds / microseconds since the Unix epoch.
 
         The Unix epoch is 00:00:00 UTC on 1 January 1970.

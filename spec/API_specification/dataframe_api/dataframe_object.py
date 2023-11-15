@@ -16,6 +16,7 @@ if TYPE_CHECKING:
         FloatScalar,
         Namespace,
         NullType,
+        NumericScalar,
         SupportsDataFrameAPI,
     )
 
@@ -719,7 +720,9 @@ class DataFrame(Protocol):
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def std(self, *, correction: int | float = 1, skip_nulls: BoolScalar = True) -> Self:
+    def std(
+        self, *, correction: NumericScalar = 1, skip_nulls: BoolScalar = True,
+    ) -> Self:
         """Reduction returns a 1-row DataFrame.
 
         Parameters
@@ -733,7 +736,9 @@ class DataFrame(Protocol):
         """
         ...
 
-    def var(self, *, correction: int | float = 1, skip_nulls: BoolScalar = True) -> Self:
+    def var(
+        self, *, correction: NumericScalar = 1, skip_nulls: BoolScalar = True,
+    ) -> Self:
         """Reduction returns a 1-row DataFrame.
 
         Parameters

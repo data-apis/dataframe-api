@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
     from .dataframe_object import DataFrame
-    from .typing import BoolScalar, StringScalar
+    from .typing import BoolScalar, NumericScalar, StringScalar
 
 
 __all__ = [
@@ -50,7 +50,7 @@ class GroupBy(Protocol):
     def std(
         self,
         *,
-        correction: int | float = 1,
+        correction: NumericScalar = 1,
         skip_nulls: BoolScalar = True,
     ) -> DataFrame:
         ...
@@ -58,7 +58,7 @@ class GroupBy(Protocol):
     def var(
         self,
         *,
-        correction: int | float = 1,
+        correction: NumericScalar = 1,
         skip_nulls: BoolScalar = True,
     ) -> DataFrame:
         ...
@@ -129,7 +129,7 @@ class Aggregation(Protocol):
         cls,
         column: str,
         *,
-        correction: int | float = 1,
+        correction: NumericScalar = 1,
         skip_nulls: BoolScalar = True,
     ) -> Aggregation:
         ...
@@ -139,7 +139,7 @@ class Aggregation(Protocol):
         cls,
         column: str,
         *,
-        correction: int | float = 1,
+        correction: NumericScalar = 1,
         skip_nulls: BoolScalar = True,
     ) -> Aggregation:
         ...
