@@ -11,12 +11,10 @@ if TYPE_CHECKING:
     from .groupby_object import GroupBy
     from .typing import (
         AnyScalar,
-        BoolScalar,
         DType,
-        FloatScalar,
         Namespace,
         NullType,
-        NumericScalar,
+        Scalar,
         SupportsDataFrameAPI,
     )
 
@@ -650,7 +648,7 @@ class DataFrame(Protocol):
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
-    def any(self, *, skip_nulls: BoolScalar = True) -> Self:
+    def any(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Reduction returns a 1-row DataFrame.
 
         Raises
@@ -660,7 +658,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def all(self, *, skip_nulls: BoolScalar = True) -> Self:
+    def all(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Reduction returns a 1-row DataFrame.
 
         Raises
@@ -670,7 +668,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def any_rowwise(self, *, skip_nulls: BoolScalar = True) -> Column:
+    def any_rowwise(self, *, skip_nulls: bool | Scalar = True) -> Column:
         """Reduction returns a Column.
 
         Differs from ``DataFrame.any`` and that the reduction happens
@@ -683,7 +681,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def all_rowwise(self, *, skip_nulls: BoolScalar = True) -> Column:
+    def all_rowwise(self, *, skip_nulls: bool | Scalar = True) -> Column:
         """Reduction returns a Column.
 
         Differs from ``DataFrame.all`` and that the reduction happens
@@ -696,32 +694,35 @@ class DataFrame(Protocol):
         """
         ...
 
-    def min(self, *, skip_nulls: BoolScalar = True) -> Self:
+    def min(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def max(self, *, skip_nulls: BoolScalar = True) -> Self:
+    def max(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def sum(self, *, skip_nulls: BoolScalar = True) -> Self:
+    def sum(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def prod(self, *, skip_nulls: BoolScalar = True) -> Self:
+    def prod(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def median(self, *, skip_nulls: BoolScalar = True) -> Self:
+    def median(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def mean(self, *, skip_nulls: BoolScalar = True) -> Self:
+    def mean(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
     def std(
-        self, *, correction: NumericScalar = 1, skip_nulls: BoolScalar = True,
+        self,
+        *,
+        correction: float | Scalar = 1,
+        skip_nulls: bool | Scalar = True,
     ) -> Self:
         """Reduction returns a 1-row DataFrame.
 
@@ -737,7 +738,10 @@ class DataFrame(Protocol):
         ...
 
     def var(
-        self, *, correction: NumericScalar = 1, skip_nulls: BoolScalar = True,
+        self,
+        *,
+        correction: float | Scalar = 1,
+        skip_nulls: bool | Scalar = True,
     ) -> Self:
         """Reduction returns a 1-row DataFrame.
 
@@ -790,7 +794,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def unique_indices(self, *keys: str, skip_nulls: BoolScalar = True) -> Column:
+    def unique_indices(self, *keys: str, skip_nulls: bool | Scalar = True) -> Column:
         """Return indices corresponding to unique values across selected columns.
 
         Parameters
@@ -816,7 +820,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def fill_nan(self, value: FloatScalar | NullType, /) -> Self:
+    def fill_nan(self, value: float | NullType | Scalar, /) -> Self:
         """Fill ``nan`` values with the given fill value.
 
         The fill operation will apply to all columns with a floating-point

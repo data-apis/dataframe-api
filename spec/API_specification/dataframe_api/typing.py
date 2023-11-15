@@ -168,11 +168,6 @@ class SupportsColumnAPI(Protocol):
 
 
 PythonScalar = Union[str, int, float, bool]
-BoolScalar = Union[bool, Scalar]
-FloatScalar = Union[float, Scalar]
-IntScalar = Union[int, Scalar]
-NumericScalar = Union[FloatScalar, IntScalar]
-StringScalar = Union[str, Scalar]
 AnyScalar = Union[PythonScalar, Scalar]
 NullType = Namespace.NullType
 
@@ -183,14 +178,8 @@ __all__ = [
     "DType",
     "GroupBy",
     "Namespace",
+    "AnyScalar",
     "Scalar",
-    "PythonScalar",
-    "FloatScalar",
-    "IntScalar",
-    "BoolScalar",
-    "StringScalar",
-    "IntScalar",
-    "NumericScalar",
     "NullType",
     "SupportsColumnAPI",
     "SupportsDataFrameAPI",

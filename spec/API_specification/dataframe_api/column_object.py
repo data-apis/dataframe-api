@@ -8,14 +8,9 @@ if TYPE_CHECKING:
     from .scalar_object import Scalar
     from .typing import (
         AnyScalar,
-        BoolScalar,
         DType,
-        FloatScalar,
-        IntScalar,
         Namespace,
         NullType,
-        NumericScalar,
-        StringScalar,
     )
 
 
@@ -297,7 +292,7 @@ class Column(Protocol):
         """
         ...
 
-    def __and__(self, other: Self | BoolScalar) -> Self:
+    def __and__(self, other: Self | bool | Scalar) -> Self:
         """Apply logical 'and' to `other` Column (or scalar) and this Column.
 
         Nulls should follow Kleene Logic.
@@ -318,7 +313,7 @@ class Column(Protocol):
         """
         ...
 
-    def __or__(self, other: Self | BoolScalar) -> Self:
+    def __or__(self, other: Self | bool | Scalar) -> Self:
         """Apply logical 'or' to `other` Column (or scalar) and this column.
 
         Nulls should follow Kleene Logic.
@@ -508,7 +503,7 @@ class Column(Protocol):
         """
         ...
 
-    def any(self, *, skip_nulls: BoolScalar = True) -> Scalar:
+    def any(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a bool.
 
         Raises
@@ -518,7 +513,7 @@ class Column(Protocol):
         """
         ...
 
-    def all(self, *, skip_nulls: BoolScalar = True) -> Scalar:
+    def all(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a bool.
 
         Raises
@@ -528,7 +523,7 @@ class Column(Protocol):
         """
         ...
 
-    def min(self, *, skip_nulls: BoolScalar = True) -> Scalar:
+    def min(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Any data type that supports comparisons
@@ -536,7 +531,7 @@ class Column(Protocol):
         """
         ...
 
-    def max(self, *, skip_nulls: BoolScalar = True) -> Scalar:
+    def max(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Any data type that supports comparisons
@@ -544,7 +539,7 @@ class Column(Protocol):
         """
         ...
 
-    def sum(self, *, skip_nulls: BoolScalar = True) -> Scalar:
+    def sum(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -553,7 +548,7 @@ class Column(Protocol):
         """
         ...
 
-    def prod(self, *, skip_nulls: BoolScalar = True) -> Scalar:
+    def prod(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical data types.
@@ -561,7 +556,7 @@ class Column(Protocol):
         """
         ...
 
-    def median(self, *, skip_nulls: BoolScalar = True) -> Scalar:
+    def median(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -571,7 +566,7 @@ class Column(Protocol):
         """
         ...
 
-    def mean(self, *, skip_nulls: BoolScalar = True) -> Scalar:
+    def mean(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -585,7 +580,7 @@ class Column(Protocol):
         self,
         *,
         correction: float = 1,
-        skip_nulls: BoolScalar = True,
+        skip_nulls: bool | Scalar = True,
     ) -> Scalar:
         """Reduction returns a scalar.
 
@@ -617,8 +612,8 @@ class Column(Protocol):
     def var(
         self,
         *,
-        correction: NumericScalar = 1,
-        skip_nulls: BoolScalar = True,
+        correction: float | Scalar = 1,
+        skip_nulls: bool | Scalar = True,
     ) -> Scalar:
         """Reduction returns a scalar.
 
@@ -728,7 +723,7 @@ class Column(Protocol):
         """
         ...
 
-    def unique_indices(self, *, skip_nulls: BoolScalar = True) -> Self:
+    def unique_indices(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Return indices corresponding to unique values in Column.
 
         Returns
@@ -748,7 +743,7 @@ class Column(Protocol):
         """
         ...
 
-    def fill_nan(self, value: FloatScalar | NullType, /) -> Self:
+    def fill_nan(self, value: float | NullType | Scalar, /) -> Self:
         """Fill floating point ``nan`` values with the given fill value.
 
         Parameters
@@ -807,7 +802,7 @@ class Column(Protocol):
         """
         ...
 
-    def rename(self, name: StringScalar) -> Self:
+    def rename(self, name: str | Scalar) -> Self:
         """Rename column.
 
         Parameters
@@ -822,7 +817,7 @@ class Column(Protocol):
         """
         ...
 
-    def shift(self, offset: IntScalar) -> Self:
+    def shift(self, offset: int | Scalar) -> Self:
         """Shift values by `offset` positions, filling missing values with `null`.
 
         For example, if the original column contains values `[1, 4, 2]`, then:
@@ -913,7 +908,7 @@ class Column(Protocol):
         """
         ...
 
-    def unix_timestamp(self, *, time_unit: StringScalar = "s") -> Self:
+    def unix_timestamp(self, *, time_unit: str | Scalar = "s") -> Self:
         """Return number of seconds / milliseconds / microseconds since the Unix epoch.
 
         The Unix epoch is 00:00:00 UTC on 1 January 1970.

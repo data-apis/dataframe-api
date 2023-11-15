@@ -93,7 +93,7 @@ class Scalar(Protocol):
 
     @property
     def dtype(self) -> DType:
-        """Return data type of column."""
+        """Return data type of scalar."""
         ...
 
     def persist(self) -> object:
