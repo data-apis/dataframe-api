@@ -14,6 +14,14 @@ class Scalar(Protocol):
     Not meant to be instantiated directly, but rather created via
     `:meth:Column.get_value` or one of the column reductions such
     as `:meth:`Column.sum`.
+
+    Note that, just like how `:class:Column`s can hold null values,
+    a `Scalar` can also be backed by a null value. Given that `Scalar`s
+    aren't instantiated directly, but rather derived from existing
+    `Column`s, `Scalar.dtype` is determined by the parent `Column`.
+    For example, if `column` is `Column` of dtype `Int64`, then
+    `column.get_value(0)` will return a `Scalar` of dtype `Int64`
+    (even if it is backed by a null value).
     """
 
     def __lt__(self, other: AnyScalar) -> Scalar:

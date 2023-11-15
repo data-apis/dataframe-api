@@ -6,9 +6,9 @@ it is also potentially problematic when trying to write performant dataframe
 library code or supporting devices other than CPU.
 
 This standard specifies the use of Python types in quite a few places, and uses
-them as type annotations. As a concrete example, consider the `mean` method and
-the `float` it is documented to return, in combination with the `__gt__` method
-(i.e., the `>` operator) on the dataframe:
+them as type annotations. As a concrete example, consider the `mean` method,
+the `bool | Scalar` argument it takes, and the `Scalar` it is documented to return,
+in combination with the `__gt__` method (i.e., the `>` operator) on the dataframe:
 
 ```python
 class DataFrame:
@@ -21,15 +21,17 @@ class Column:
     def mean(self, skip_nulls: bool | Scalar = True) -> Scalar:
         ...
 
-larger = df2 > df1.col('foo').mean()
+larger = df2 > df1.col('foo', skip_nulls = True).mean()
 ```
 
-For a GPU dataframe library, it is desirable for all data to reside on the GPU,
-and not incur a performance penalty from synchronizing instances of Python
-builtin types to CPU. In the above example, the `.mean()` call returns a
-`Scalar`. It is likely beneficial though to implement this as a library-specific
-scalar object which (partially) duck types with `float`. The required methods it
-must implement are listed in the spec for class `Scalar`.
+Let's go through these arguments:
+- `skip_nulls: bool | Scalar`. This means we can either pass a Python `bool`, or
+  a `Scalar` object backed by a boolean;
+- the return value of `.mean()` is a `Scalar`
+- the return value of `__gt__` is also a `Scalar`.
+
+This allows scalars to reside on different devices (e.g. GPU), or to stay lazy
+(if a library allows that).
 
 ## Example
 
