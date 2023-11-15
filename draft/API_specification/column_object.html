@@ -544,6 +544,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.second" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.second()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.shift" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.shift()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.slice_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.slice_rows()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.sort" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sort()</span></code></a>
@@ -744,6 +746,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.rename" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.rename()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.second" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.second()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.shift" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.shift()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.slice_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.slice_rows()</span></code></a>
         </li>
@@ -1421,6 +1425,21 @@ The returned value has the same dtype as the column.</p>
 <p>For example, return 56 for 1981-01-02T12:34:56.123456.</p>
 <p>Only supported for <code class="code docutils literal notranslate"><span class="pre">Date</span></code> and <code class="code docutils literal notranslate"><span class="pre">Datetime</span></code> columns.
 Return column should be of integer dtype (signed or unsigned).</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.shift">
+<span class="sig-name descname"><span class="pre">shift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.shift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shift values by <code class="code docutils literal notranslate"><span class="pre">offset</span></code> positions, filling missing values with <code class="code docutils literal notranslate"><span class="pre">null</span></code>.</p>
+<p>For example, if the original column contains values <code class="code docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">4,</span> <span class="pre">2]</span></code>, then:</p>
+<ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">.shift(1)</span></code> will return <code class="code docutils literal notranslate"><span class="pre">[null,</span> <span class="pre">1,</span> <span class="pre">4]</span></code>,</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">.shift(-1)</span></code> will return <code class="code docutils literal notranslate"><span class="pre">[4,</span> <span class="pre">2,</span> <span class="pre">null]</span></code>,</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>offset</strong> – How many positions to shift by.</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.slice_rows">
