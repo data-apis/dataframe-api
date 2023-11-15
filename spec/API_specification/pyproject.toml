@@ -47,5 +47,4 @@ ignore = [
     "N999", # invalid-module-name
     "PD901", # pandas-df-variable-name
     "PLR0913",   # too-many-arguments
-    "PYI041",  # redundant-numeric-union
 ]

@@ -28,10 +28,13 @@ Let's go through these arguments:
 - `skip_nulls: bool | Scalar`. This means we can either pass a Python `bool`, or
   a `Scalar` object backed by a boolean;
 - the return value of `.mean()` is a `Scalar`
-- the return value of `__gt__` is also a `Scalar`.
+- the argument `other` of `__gt__` is typed as `AnyScalar`, meaning that we can
+  compare a `DataFrame` with a Python scalar (e.g. `df > 3`) or with a `Scalar`
+  (e.g. `df > df.col('a').mean()`)
+- the return value of `__gt__` is a `Scalar`
 
-This allows scalars to reside on different devices (e.g. GPU), or to stay lazy
-(if a library allows that).
+Returning values as `Scalar` allows scalars to reside on different devices (e.g. GPU),
+or to stay lazy (if a library allows it).
 
 ## Example
 
