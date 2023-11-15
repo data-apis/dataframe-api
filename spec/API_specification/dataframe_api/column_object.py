@@ -812,7 +812,7 @@ class Column(Protocol):
         """
         ...
 
-    def shift(self, offset: int) -> Self:
+    def shift(self, offset: AnyScalar) -> Self:
         """Shift values by `offset` positions, filling missing values with `null`.
 
         For example, if the original column contains values `[1, 4, 2]`, then:
@@ -822,7 +822,7 @@ class Column(Protocol):
     
         Parameters
         ----------
-        offset
+        offset : int
             How many positions to shift by.
         """
         ...
