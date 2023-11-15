@@ -936,7 +936,7 @@ class Column(Protocol):
 
         - `.shift(1)` will return `[null, 1, 4]`,
         - `.shift(-1)` will return `[4, 2, null]`,
-    
+
         Parameters
         ----------
         offset
