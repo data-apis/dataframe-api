@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from typing_extensions import Self
 
     from .scalar_object import Scalar
-    from .typing import AnyScalar, BoolScalar, DType, Namespace
+    from .typing import AnyScalar, BoolScalar, DType, FloatScalar, Namespace, NullType
 
 
 __all__ = ["Column"]
@@ -738,7 +738,7 @@ class Column(Protocol):
         """
         ...
 
-    def fill_nan(self, value: AnyScalar, /) -> Self:
+    def fill_nan(self, value: FloatScalar | NullType, /) -> Self:
         """Fill floating point ``nan`` values with the given fill value.
 
         Parameters

@@ -9,7 +9,15 @@ if TYPE_CHECKING:
 
     from .column_object import Column
     from .groupby_object import GroupBy
-    from .typing import AnyScalar, BoolScalar, DType, Namespace, SupportsDataFrameAPI
+    from .typing import (
+        AnyScalar,
+        BoolScalar,
+        DType,
+        FloatScalar,
+        Namespace,
+        NullType,
+        SupportsDataFrameAPI,
+    )
 
 
 __all__ = ["DataFrame"]
@@ -803,7 +811,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def fill_nan(self, value: AnyScalar, /) -> Self:
+    def fill_nan(self, value: FloatScalar | NullType, /) -> Self:
         """Fill ``nan`` values with the given fill value.
 
         The fill operation will apply to all columns with a floating-point
