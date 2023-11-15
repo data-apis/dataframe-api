@@ -5,11 +5,9 @@ from typing import TYPE_CHECKING, Any, Literal, NoReturn, Protocol
 if TYPE_CHECKING:
     from typing_extensions import Self
 
-    from dataframe_api.dataframe_object import DataFrame
-
-    from .scalar_object import Scalar
     from .typing import (
         AnyScalar,
+        DataFrame,
         DType,
         Namespace,
         NullType,
