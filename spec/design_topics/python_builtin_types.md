@@ -18,7 +18,7 @@ class DataFrame:
         ...
 
 class Column:
-    def mean(self, skip_nulls: bool = True) -> Scalar:
+    def mean(self, skip_nulls: BoolScalar = True) -> Scalar:
         ...
 
 larger = df2 > df1.col('foo').mean()

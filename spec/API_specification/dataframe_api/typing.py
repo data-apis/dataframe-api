@@ -164,7 +164,11 @@ class SupportsColumnAPI(Protocol):
         ...
 
 
-PythonScalar = Union[str, int, float]
+PythonScalar = Union[str, int, float, bool]
+BoolScalar = Union[bool, Scalar]
+FloatScalar = Union[float, Scalar]
+IntScalar = Union[int, Scalar]
+StringScalar = Union[str, Scalar]
 AnyScalar = Union[PythonScalar, Scalar]
 
 
@@ -176,6 +180,10 @@ __all__ = [
     "Namespace",
     "Scalar",
     "PythonScalar",
+    "FloatScalar",
+    "IntScalar",
+    "BoolScalar",
+    "StringScalar",
     "AnyScalar",
     "SupportsColumnAPI",
     "SupportsDataFrameAPI",

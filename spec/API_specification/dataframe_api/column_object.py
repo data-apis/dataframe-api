@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from typing_extensions import Self
 
     from .scalar_object import Scalar
-    from .typing import AnyScalar, DType, Namespace
+    from .typing import AnyScalar, BoolScalar, DType, Namespace
 
 
 __all__ = ["Column"]
@@ -287,7 +287,7 @@ class Column(Protocol):
         """
         ...
 
-    def __and__(self, other: Self | AnyScalar) -> Self:
+    def __and__(self, other: Self | BoolScalar) -> Self:
         """Apply logical 'and' to `other` Column (or scalar) and this Column.
 
         Nulls should follow Kleene Logic.
@@ -308,7 +308,7 @@ class Column(Protocol):
         """
         ...
 
-    def __or__(self, other: Self | AnyScalar) -> Self:
+    def __or__(self, other: Self | BoolScalar) -> Self:
         """Apply logical 'or' to `other` Column (or scalar) and this column.
 
         Nulls should follow Kleene Logic.
@@ -498,7 +498,7 @@ class Column(Protocol):
         """
         ...
 
-    def any(self, *, skip_nulls: bool = True) -> Scalar:
+    def any(self, *, skip_nulls: BoolScalar = True) -> Scalar:
         """Reduction returns a bool.
 
         Raises
@@ -508,7 +508,7 @@ class Column(Protocol):
         """
         ...
 
-    def all(self, *, skip_nulls: bool = True) -> Scalar:
+    def all(self, *, skip_nulls: BoolScalar = True) -> Scalar:
         """Reduction returns a bool.
 
         Raises
@@ -518,7 +518,7 @@ class Column(Protocol):
         """
         ...
 
-    def min(self, *, skip_nulls: bool = True) -> Scalar:
+    def min(self, *, skip_nulls: BoolScalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Any data type that supports comparisons
@@ -526,7 +526,7 @@ class Column(Protocol):
         """
         ...
 
-    def max(self, *, skip_nulls: bool = True) -> Scalar:
+    def max(self, *, skip_nulls: BoolScalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Any data type that supports comparisons
@@ -534,7 +534,7 @@ class Column(Protocol):
         """
         ...
 
-    def sum(self, *, skip_nulls: bool = True) -> Scalar:
+    def sum(self, *, skip_nulls: BoolScalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -543,7 +543,7 @@ class Column(Protocol):
         """
         ...
 
-    def prod(self, *, skip_nulls: bool = True) -> Scalar:
+    def prod(self, *, skip_nulls: BoolScalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical data types.
@@ -551,7 +551,7 @@ class Column(Protocol):
         """
         ...
 
-    def median(self, *, skip_nulls: bool = True) -> Scalar:
+    def median(self, *, skip_nulls: BoolScalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -561,7 +561,7 @@ class Column(Protocol):
         """
         ...
 
-    def mean(self, *, skip_nulls: bool = True) -> Scalar:
+    def mean(self, *, skip_nulls: BoolScalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -575,7 +575,7 @@ class Column(Protocol):
         self,
         *,
         correction: int | float = 1,
-        skip_nulls: bool = True,
+        skip_nulls: BoolScalar = True,
     ) -> Scalar:
         """Reduction returns a scalar.
 
@@ -608,7 +608,7 @@ class Column(Protocol):
         self,
         *,
         correction: int | float = 1,
-        skip_nulls: bool = True,
+        skip_nulls: BoolScalar = True,
     ) -> Scalar:
         """Reduction returns a scalar.
 
@@ -718,7 +718,7 @@ class Column(Protocol):
         """
         ...
 
-    def unique_indices(self, *, skip_nulls: AnyScalar = True) -> Self:
+    def unique_indices(self, *, skip_nulls: BoolScalar = True) -> Self:
         """Return indices corresponding to unique values in Column.
 
         Returns
@@ -819,7 +819,7 @@ class Column(Protocol):
 
         - `.shift(1)` will return `[null, 1, 4]`,
         - `.shift(-1)` will return `[4, 2, null]`,
-    
+
         Parameters
         ----------
         offset : int

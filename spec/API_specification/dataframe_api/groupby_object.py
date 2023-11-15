@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
     from .dataframe_object import DataFrame
+    from .typing import BoolScalar
 
 
 __all__ = [
@@ -22,34 +23,44 @@ class GroupBy(Protocol):
 
     """
 
-    def any(self, *, skip_nulls: bool = True) -> DataFrame:
+    def any(self, *, skip_nulls: BoolScalar = True) -> DataFrame:
         ...
 
-    def all(self, *, skip_nulls: bool = True) -> DataFrame:
+    def all(self, *, skip_nulls: BoolScalar = True) -> DataFrame:
         ...
 
-    def min(self, *, skip_nulls: bool = True) -> DataFrame:
+    def min(self, *, skip_nulls: BoolScalar = True) -> DataFrame:
         ...
 
-    def max(self, *, skip_nulls: bool = True) -> DataFrame:
+    def max(self, *, skip_nulls: BoolScalar = True) -> DataFrame:
         ...
 
-    def sum(self, *, skip_nulls: bool = True) -> DataFrame:
+    def sum(self, *, skip_nulls: BoolScalar = True) -> DataFrame:
         ...
 
-    def prod(self, *, skip_nulls: bool = True) -> DataFrame:
+    def prod(self, *, skip_nulls: BoolScalar = True) -> DataFrame:
         ...
 
-    def median(self, *, skip_nulls: bool = True) -> DataFrame:
+    def median(self, *, skip_nulls: BoolScalar = True) -> DataFrame:
         ...
 
-    def mean(self, *, skip_nulls: bool = True) -> DataFrame:
+    def mean(self, *, skip_nulls: BoolScalar = True) -> DataFrame:
         ...
 
-    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DataFrame:
+    def std(
+        self,
+        *,
+        correction: int | float = 1,
+        skip_nulls: BoolScalar = True,
+    ) -> DataFrame:
         ...
 
-    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> DataFrame:
+    def var(
+        self,
+        *,
+        correction: int | float = 1,
+        skip_nulls: BoolScalar = True,
+    ) -> DataFrame:
         ...
 
     def size(self) -> DataFrame:
@@ -82,35 +93,35 @@ class Aggregation(Protocol):
         ...
 
     @classmethod
-    def any(cls, column: str, *, skip_nulls: bool = True) -> Aggregation:
+    def any(cls, column: str, *, skip_nulls: BoolScalar = True) -> Aggregation:
         ...
 
     @classmethod
-    def all(cls, column: str, *, skip_nulls: bool = True) -> Aggregation:
+    def all(cls, column: str, *, skip_nulls: BoolScalar = True) -> Aggregation:
         ...
 
     @classmethod
-    def min(cls, column: str, *, skip_nulls: bool = True) -> Aggregation:
+    def min(cls, column: str, *, skip_nulls: BoolScalar = True) -> Aggregation:
         ...
 
     @classmethod
-    def max(cls, column: str, *, skip_nulls: bool = True) -> Aggregation:
+    def max(cls, column: str, *, skip_nulls: BoolScalar = True) -> Aggregation:
         ...
 
     @classmethod
-    def sum(cls, column: str, *, skip_nulls: bool = True) -> Aggregation:
+    def sum(cls, column: str, *, skip_nulls: BoolScalar = True) -> Aggregation:
         ...
 
     @classmethod
-    def prod(cls, column: str, *, skip_nulls: bool = True) -> Aggregation:
+    def prod(cls, column: str, *, skip_nulls: BoolScalar = True) -> Aggregation:
         ...
 
     @classmethod
-    def median(cls, column: str, *, skip_nulls: bool = True) -> Aggregation:
+    def median(cls, column: str, *, skip_nulls: BoolScalar = True) -> Aggregation:
         ...
 
     @classmethod
-    def mean(cls, column: str, *, skip_nulls: bool = True) -> Aggregation:
+    def mean(cls, column: str, *, skip_nulls: BoolScalar = True) -> Aggregation:
         ...
 
     @classmethod
@@ -119,7 +130,7 @@ class Aggregation(Protocol):
         column: str,
         *,
         correction: int | float = 1,
-        skip_nulls: bool = True,
+        skip_nulls: BoolScalar = True,
     ) -> Aggregation:
         ...
 
@@ -129,7 +140,7 @@ class Aggregation(Protocol):
         column: str,
         *,
         correction: int | float = 1,
-        skip_nulls: bool = True,
+        skip_nulls: BoolScalar = True,
     ) -> Aggregation:
         ...
 

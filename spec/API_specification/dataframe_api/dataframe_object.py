@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
     from .column_object import Column
     from .groupby_object import GroupBy
-    from .typing import AnyScalar, DType, Namespace, SupportsDataFrameAPI
+    from .typing import AnyScalar, BoolScalar, DType, Namespace, SupportsDataFrameAPI
 
 
 __all__ = ["DataFrame"]
@@ -641,7 +641,7 @@ class DataFrame(Protocol):
         """
         raise NotImplementedError("'__iter__' is intentionally not implemented.")
 
-    def any(self, *, skip_nulls: bool = True) -> Self:
+    def any(self, *, skip_nulls: BoolScalar = True) -> Self:
         """Reduction returns a 1-row DataFrame.
 
         Raises
@@ -651,7 +651,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def all(self, *, skip_nulls: bool = True) -> Self:
+    def all(self, *, skip_nulls: BoolScalar = True) -> Self:
         """Reduction returns a 1-row DataFrame.
 
         Raises
@@ -661,7 +661,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def any_rowwise(self, *, skip_nulls: bool = True) -> Column:
+    def any_rowwise(self, *, skip_nulls: BoolScalar = True) -> Column:
         """Reduction returns a Column.
 
         Differs from ``DataFrame.any`` and that the reduction happens
@@ -674,7 +674,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def all_rowwise(self, *, skip_nulls: bool = True) -> Column:
+    def all_rowwise(self, *, skip_nulls: BoolScalar = True) -> Column:
         """Reduction returns a Column.
 
         Differs from ``DataFrame.all`` and that the reduction happens
@@ -687,31 +687,31 @@ class DataFrame(Protocol):
         """
         ...
 
-    def min(self, *, skip_nulls: bool = True) -> Self:
+    def min(self, *, skip_nulls: BoolScalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def max(self, *, skip_nulls: bool = True) -> Self:
+    def max(self, *, skip_nulls: BoolScalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def sum(self, *, skip_nulls: bool = True) -> Self:
+    def sum(self, *, skip_nulls: BoolScalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def prod(self, *, skip_nulls: bool = True) -> Self:
+    def prod(self, *, skip_nulls: BoolScalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def median(self, *, skip_nulls: bool = True) -> Self:
+    def median(self, *, skip_nulls: BoolScalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def mean(self, *, skip_nulls: bool = True) -> Self:
+    def mean(self, *, skip_nulls: BoolScalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
 
-    def std(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Self:
+    def std(self, *, correction: int | float = 1, skip_nulls: BoolScalar = True) -> Self:
         """Reduction returns a 1-row DataFrame.
 
         Parameters
@@ -725,7 +725,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def var(self, *, correction: int | float = 1, skip_nulls: bool = True) -> Self:
+    def var(self, *, correction: int | float = 1, skip_nulls: BoolScalar = True) -> Self:
         """Reduction returns a 1-row DataFrame.
 
         Parameters
@@ -777,7 +777,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def unique_indices(self, *keys: str, skip_nulls: bool = True) -> Column:
+    def unique_indices(self, *keys: str, skip_nulls: BoolScalar = True) -> Column:
         """Return indices corresponding to unique values across selected columns.
 
         Parameters

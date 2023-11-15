@@ -90,7 +90,7 @@ class Scalar(Protocol):
         Depending on the implementation, this may raise or trigger computation.
         """
         ...
-    
+
     @property
     def dtype(self) -> DType:
         """Return data type of column."""
