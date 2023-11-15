@@ -87,6 +87,7 @@ nitpick_ignore = [
     ('py:class', 'FloatScalar'),
     ('py:class', 'NullType'),
     ('py:class', 'StringScalar'),
+    ('py:class', 'IntScalar'),
     ('py:class', 'Bool'),
     ('py:class', 'optional'),
     ('py:class', 'Aggregation'),

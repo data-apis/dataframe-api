@@ -188,6 +188,7 @@ __all__ = [
     "IntScalar",
     "BoolScalar",
     "StringScalar",
+    "IntScalar",
     "NullType",
     "SupportsColumnAPI",
     "SupportsDataFrameAPI",

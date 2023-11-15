@@ -11,6 +11,7 @@ if TYPE_CHECKING:
         BoolScalar,
         DType,
         FloatScalar,
+        IntScalar,
         Namespace,
         NullType,
         StringScalar,
@@ -820,7 +821,7 @@ class Column(Protocol):
         """
         ...
 
-    def shift(self, offset: AnyScalar) -> Self:
+    def shift(self, offset: IntScalar) -> Self:
         """Shift values by `offset` positions, filling missing values with `null`.
 
         For example, if the original column contains values `[1, 4, 2]`, then:
