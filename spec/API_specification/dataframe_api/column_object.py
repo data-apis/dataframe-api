@@ -6,7 +6,15 @@ if TYPE_CHECKING:
     from typing_extensions import Self
 
     from .scalar_object import Scalar
-    from .typing import AnyScalar, BoolScalar, DType, FloatScalar, Namespace, NullType
+    from .typing import (
+        AnyScalar,
+        BoolScalar,
+        DType,
+        FloatScalar,
+        Namespace,
+        NullType,
+        StringScalar,
+    )
 
 
 __all__ = ["Column"]
@@ -797,7 +805,7 @@ class Column(Protocol):
         """
         ...
 
-    def rename(self, name: AnyScalar) -> Self:
+    def rename(self, name: StringScalar) -> Self:
         """Rename column.
 
         Parameters

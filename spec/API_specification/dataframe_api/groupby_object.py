@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
     from .dataframe_object import DataFrame
-    from .typing import BoolScalar
+    from .typing import BoolScalar, StringScalar
 
 
 __all__ = [
@@ -85,7 +85,7 @@ class GroupBy(Protocol):
 
 
 class Aggregation(Protocol):
-    def rename(self, name: str) -> Aggregation:
+    def rename(self, name: StringScalar) -> Aggregation:
         """Assign given name to output of aggregation.
 
         If not called, the column's name will be used as the output name.
