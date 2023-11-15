@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
     from .column_object import Column
     from .groupby_object import GroupBy
-    from .typing import DType, Namespace, Scalar, SupportsDataFrameAPI
+    from .typing import AnyScalar, DType, Namespace, SupportsDataFrameAPI
 
 
 __all__ = ["DataFrame"]
@@ -335,7 +335,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __eq__(self, other: Scalar) -> Self:  # type: ignore[override]
+    def __eq__(self, other: AnyScalar) -> Self:  # type: ignore[override]
         """Compare for equality.
 
         Nulls should follow Kleene Logic.
@@ -352,7 +352,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __ne__(self, other: Scalar) -> Self:  # type: ignore[override]
+    def __ne__(self, other: AnyScalar) -> Self:  # type: ignore[override]
         """Compare for non-equality.
 
         Nulls should follow Kleene Logic.
@@ -369,7 +369,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __ge__(self, other: Scalar) -> Self:
+    def __ge__(self, other: AnyScalar) -> Self:
         """Compare for "greater than or equal to" `other`.
 
         Parameters
@@ -384,7 +384,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __gt__(self, other: Scalar) -> Self:
+    def __gt__(self, other: AnyScalar) -> Self:
         """Compare for "greater than" `other`.
 
         Parameters
@@ -399,7 +399,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __le__(self, other: Scalar) -> Self:
+    def __le__(self, other: AnyScalar) -> Self:
         """Compare for "less than or equal to" `other`.
 
         Parameters
@@ -414,7 +414,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __lt__(self, other: Scalar) -> Self:
+    def __lt__(self, other: AnyScalar) -> Self:
         """Compare for "less than" `other`.
 
         Parameters
@@ -469,7 +469,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __add__(self, other: Scalar) -> Self:
+    def __add__(self, other: AnyScalar) -> Self:
         """Add `other` scalar to this dataframe.
 
         Parameters
@@ -484,7 +484,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __sub__(self, other: Scalar) -> Self:
+    def __sub__(self, other: AnyScalar) -> Self:
         """Subtract `other` scalar from this dataframe.
 
         Parameters
@@ -499,7 +499,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __mul__(self, other: Scalar) -> Self:
+    def __mul__(self, other: AnyScalar) -> Self:
         """Multiply  `other` scalar with this dataframe.
 
         Parameters
@@ -514,7 +514,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __truediv__(self, other: Scalar) -> Self:
+    def __truediv__(self, other: AnyScalar) -> Self:
         """Divide  this dataframe by `other` scalar. True division, returns floats.
 
         Parameters
@@ -529,7 +529,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __floordiv__(self, other: Scalar) -> Self:
+    def __floordiv__(self, other: AnyScalar) -> Self:
         """Floor-divide (returns integers) this dataframe by `other` scalar.
 
         Parameters
@@ -544,7 +544,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __pow__(self, other: Scalar) -> Self:
+    def __pow__(self, other: AnyScalar) -> Self:
         """Raise this dataframe to the power of `other`.
 
         Integer dtype to the power of non-negative integer dtype is integer dtype.
@@ -563,7 +563,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __mod__(self, other: Scalar) -> Self:
+    def __mod__(self, other: AnyScalar) -> Self:
         """Return modulus of this dataframe by `other` (`%` operator).
 
         Parameters
@@ -578,7 +578,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __divmod__(self, other: Scalar) -> tuple[DataFrame, DataFrame]:
+    def __divmod__(self, other: AnyScalar) -> tuple[DataFrame, DataFrame]:
         """Return quotient and remainder of integer division. See `divmod` builtin.
 
         Parameters
@@ -593,31 +593,31 @@ class DataFrame(Protocol):
         """
         ...
 
-    def __radd__(self, other: Scalar) -> Self:
+    def __radd__(self, other: AnyScalar) -> Self:
         ...
 
-    def __rsub__(self, other: Scalar) -> Self:
+    def __rsub__(self, other: AnyScalar) -> Self:
         ...
 
-    def __rmul__(self, other: Scalar) -> Self:
+    def __rmul__(self, other: AnyScalar) -> Self:
         ...
 
-    def __rtruediv__(self, other: Scalar) -> Self:
+    def __rtruediv__(self, other: AnyScalar) -> Self:
         ...
 
-    def __rand__(self, other: Scalar) -> Self:
+    def __rand__(self, other: AnyScalar) -> Self:
         ...
 
-    def __ror__(self, other: Scalar) -> Self:
+    def __ror__(self, other: AnyScalar) -> Self:
         ...
 
-    def __rfloordiv__(self, other: Scalar) -> Self:
+    def __rfloordiv__(self, other: AnyScalar) -> Self:
         ...
 
-    def __rpow__(self, other: Scalar) -> Self:
+    def __rpow__(self, other: AnyScalar) -> Self:
         ...
 
-    def __rmod__(self, other: Scalar) -> Self:
+    def __rmod__(self, other: AnyScalar) -> Self:
         ...
 
     def __invert__(self) -> Self:
@@ -803,7 +803,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def fill_nan(self, value: Scalar, /) -> Self:
+    def fill_nan(self, value: AnyScalar, /) -> Self:
         """Fill ``nan`` values with the given fill value.
 
         The fill operation will apply to all columns with a floating-point
@@ -821,7 +821,7 @@ class DataFrame(Protocol):
 
     def fill_null(
         self,
-        value: Scalar,
+        value: AnyScalar,
         /,
         *,
         column_names: list[str] | None = None,

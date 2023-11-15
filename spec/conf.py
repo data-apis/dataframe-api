@@ -82,6 +82,7 @@ nitpick_ignore = [
     ('py:class', 'enum.Enum'),
     ('py:class', 'ellipsis'),
     ('py:class', 'Scalar'),
+    ('py:class', 'AnyScalar'),
     ('py:class', 'Bool'),
     ('py:class', 'optional'),
     ('py:class', 'Aggregation'),

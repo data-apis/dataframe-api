@@ -9,11 +9,11 @@ if TYPE_CHECKING:
 def main(df_raw: SupportsDataFrameAPI) -> SupportsDataFrameAPI:
     df = df_raw.__dataframe_consortium_standard__(api_version="2023-11.beta")
 
-    # We can fill nulls using a Scalar object.
+    # `DataFrame.fill_null` accepts `AnyScalar` objections.
+    # This means we can fill nulls using a Standard Scalar object...
     df = df.fill_null(df.col("a").mean())
 
-    # Python Scalars also implement the Scalar Protocol (indeed, the Scalar
-    # Protocol is designed to be a subset of the Python Scalar types), so we
-    # can pass Python scalars too.
+    # ... but also Python scalars:
     df = df.fill_null(3)
+    df = df.fill_null("3")
     return df.dataframe

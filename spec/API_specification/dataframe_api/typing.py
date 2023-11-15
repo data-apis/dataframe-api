@@ -164,6 +164,10 @@ class SupportsColumnAPI(Protocol):
         ...
 
 
+PythonScalar = Union[str, int, float]
+AnyScalar = Union[PythonScalar, Scalar]
+
+
 __all__ = [
     "Column",
     "DataFrame",
@@ -171,6 +175,8 @@ __all__ = [
     "GroupBy",
     "Namespace",
     "Scalar",
+    "PythonScalar",
+    "AnyScalar",
     "SupportsColumnAPI",
     "SupportsDataFrameAPI",
 ]

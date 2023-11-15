@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from typing_extensions import Self
 
     from .scalar_object import Scalar
-    from .typing import DType, Namespace
+    from .typing import AnyScalar, DType, Namespace
 
 
 __all__ = ["Column"]
@@ -187,7 +187,7 @@ class Column(Protocol):
         """
         ...
 
-    def __eq__(self, other: Self | Scalar) -> Self:  # type: ignore[override]
+    def __eq__(self, other: Self | AnyScalar) -> Self:  # type: ignore[override]
         """Compare for equality.
 
         Nulls should follow Kleene Logic.
@@ -205,7 +205,7 @@ class Column(Protocol):
         """
         ...
 
-    def __ne__(self, other: Self | Scalar) -> Self:  # type: ignore[override]
+    def __ne__(self, other: Self | AnyScalar) -> Self:  # type: ignore[override]
         """Compare for non-equality.
 
         Nulls should follow Kleene Logic.
@@ -223,7 +223,7 @@ class Column(Protocol):
         """
         ...
 
-    def __ge__(self, other: Self | Scalar) -> Self:
+    def __ge__(self, other: Self | AnyScalar) -> Self:
         """Compare for "greater than or equal to" `other`.
 
         Parameters
@@ -239,7 +239,7 @@ class Column(Protocol):
         """
         ...
 
-    def __gt__(self, other: Self | Scalar) -> Self:
+    def __gt__(self, other: Self | AnyScalar) -> Self:
         """Compare for "greater than" `other`.
 
         Parameters
@@ -255,7 +255,7 @@ class Column(Protocol):
         """
         ...
 
-    def __le__(self, other: Self | Scalar) -> Self:
+    def __le__(self, other: Self | AnyScalar) -> Self:
         """Compare for "less than or equal to" `other`.
 
         Parameters
@@ -271,7 +271,7 @@ class Column(Protocol):
         """
         ...
 
-    def __lt__(self, other: Self | Scalar) -> Self:
+    def __lt__(self, other: Self | AnyScalar) -> Self:
         """Compare for "less than" `other`.
 
         Parameters
@@ -287,7 +287,7 @@ class Column(Protocol):
         """
         ...
 
-    def __and__(self, other: Self | bool) -> Self:
+    def __and__(self, other: Self | AnyScalar) -> Self:
         """Apply logical 'and' to `other` Column (or scalar) and this Column.
 
         Nulls should follow Kleene Logic.
@@ -308,7 +308,7 @@ class Column(Protocol):
         """
         ...
 
-    def __or__(self, other: Self | bool) -> Self:
+    def __or__(self, other: Self | AnyScalar) -> Self:
         """Apply logical 'or' to `other` Column (or scalar) and this column.
 
         Nulls should follow Kleene Logic.
@@ -329,7 +329,7 @@ class Column(Protocol):
         """
         ...
 
-    def __add__(self, other: Self | Scalar) -> Self:
+    def __add__(self, other: Self | AnyScalar) -> Self:
         """Add `other` column or scalar to this column.
 
         Parameters
@@ -345,7 +345,7 @@ class Column(Protocol):
         """
         ...
 
-    def __sub__(self, other: Self | Scalar) -> Self:
+    def __sub__(self, other: Self | AnyScalar) -> Self:
         """Subtract `other` column or scalar from this column.
 
         Parameters
@@ -361,7 +361,7 @@ class Column(Protocol):
         """
         ...
 
-    def __mul__(self, other: Self | Scalar) -> Self:
+    def __mul__(self, other: Self | AnyScalar) -> Self:
         """Multiply `other` column or scalar with this column.
 
         Parameters
@@ -377,7 +377,7 @@ class Column(Protocol):
         """
         ...
 
-    def __truediv__(self, other: Self | Scalar) -> Self:
+    def __truediv__(self, other: Self | AnyScalar) -> Self:
         """Divide this column by `other` column or scalar. True division, returns floats.
 
         Parameters
@@ -393,7 +393,7 @@ class Column(Protocol):
         """
         ...
 
-    def __floordiv__(self, other: Self | Scalar) -> Self:
+    def __floordiv__(self, other: Self | AnyScalar) -> Self:
         """Floor-divide `other` column or scalar to this column.
 
         Parameters
@@ -409,7 +409,7 @@ class Column(Protocol):
         """
         ...
 
-    def __pow__(self, other: Self | Scalar) -> Self:
+    def __pow__(self, other: Self | AnyScalar) -> Self:
         """Raise this column to the power of `other`.
 
         Integer dtype to the power of non-negative integer dtype is integer dtype.
@@ -429,7 +429,7 @@ class Column(Protocol):
         """
         ...
 
-    def __mod__(self, other: Self | Scalar) -> Self:
+    def __mod__(self, other: Self | AnyScalar) -> Self:
         """Return modulus of this column by `other` (`%` operator).
 
         Parameters
@@ -445,7 +445,7 @@ class Column(Protocol):
         """
         ...
 
-    def __divmod__(self, other: Self | Scalar) -> tuple[Column, Column]:
+    def __divmod__(self, other: Self | AnyScalar) -> tuple[Column, Column]:
         """Return quotient and remainder of integer division. See `divmod` builtin.
 
         Parameters
@@ -461,16 +461,16 @@ class Column(Protocol):
         """
         ...
 
-    def __radd__(self, other: Self | Scalar) -> Self:
+    def __radd__(self, other: Self | AnyScalar) -> Self:
         ...
 
-    def __rsub__(self, other: Self | Scalar) -> Self:
+    def __rsub__(self, other: Self | AnyScalar) -> Self:
         ...
 
-    def __rmul__(self, other: Self | Scalar) -> Self:
+    def __rmul__(self, other: Self | AnyScalar) -> Self:
         ...
 
-    def __rtruediv__(self, other: Self | Scalar) -> Self:
+    def __rtruediv__(self, other: Self | AnyScalar) -> Self:
         ...
 
     def __rand__(self, other: Self | bool) -> Self:
@@ -479,13 +479,13 @@ class Column(Protocol):
     def __ror__(self, other: Self | bool) -> Self:
         ...
 
-    def __rfloordiv__(self, other: Self | Scalar) -> Self:
+    def __rfloordiv__(self, other: Self | AnyScalar) -> Self:
         ...
 
-    def __rpow__(self, other: Self | Scalar) -> Self:
+    def __rpow__(self, other: Self | AnyScalar) -> Self:
         ...
 
-    def __rmod__(self, other: Self | Scalar) -> Self:
+    def __rmod__(self, other: Self | AnyScalar) -> Self:
         ...
 
     def __invert__(self) -> Self:
@@ -718,7 +718,7 @@ class Column(Protocol):
         """
         ...
 
-    def unique_indices(self, *, skip_nulls: bool = True) -> Self:
+    def unique_indices(self, *, skip_nulls: AnyScalar = True) -> Self:
         """Return indices corresponding to unique values in Column.
 
         Returns
@@ -738,7 +738,7 @@ class Column(Protocol):
         """
         ...
 
-    def fill_nan(self, value: Scalar, /) -> Self:
+    def fill_nan(self, value: AnyScalar, /) -> Self:
         """Fill floating point ``nan`` values with the given fill value.
 
         Parameters
@@ -751,7 +751,7 @@ class Column(Protocol):
         """
         ...
 
-    def fill_null(self, value: Scalar, /) -> Self:
+    def fill_null(self, value: AnyScalar, /) -> Self:
         """Fill null values with the given fill value.
 
         Parameters
@@ -797,7 +797,7 @@ class Column(Protocol):
         """
         ...
 
-    def rename(self, name: str) -> Self:
+    def rename(self, name: AnyScalar) -> Self:
         """Rename column.
 
         Parameters
@@ -886,7 +886,7 @@ class Column(Protocol):
         """
         ...
 
-    def unix_timestamp(self, *, time_unit: Literal["s", "ms", "us"] = "s") -> Self:
+    def unix_timestamp(self, *, time_unit: AnyScalar = "s") -> Self:
         """Return number of seconds / milliseconds / microseconds since the Unix epoch.
 
         The Unix epoch is 00:00:00 UTC on 1 January 1970.
