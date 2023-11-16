@@ -136,6 +136,11 @@ class DataFrame(Protocol):
         Returns
         -------
         DataFrame
+
+        Notes
+        -----
+        `indices`'s parent DataFrame must be `self` - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -172,8 +177,8 @@ class DataFrame(Protocol):
 
         Notes
         -----
-        Some participants preferred a weaker type Arraylike[bool] for mask,
-        where 'Arraylike' denotes an object adhering to the Array API standard.
+        `mask`'s parent DataFrame must be `self` - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
@@ -201,6 +206,11 @@ class DataFrame(Protocol):
         Returns
         -------
         DataFrame
+
+        Notes
+        -----
+        All of `columns`'s parent DataFrame must be `self` - else,
+        the operation is unsupported and may vary across implementations.
         """
         ...
 
