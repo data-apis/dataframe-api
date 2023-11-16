@@ -982,7 +982,8 @@ class DataFrame(Protocol):
                 result = df.std() > 0
                 result = result.persist()
                 for column_name in df.column_names:
-                    if result.col(column_name).get_value(0) > 0:
+                    include_column = result.col(column_name).get_value(0).persist()
+                    if include_column:
                         features.append(column_name)
 
             instead of this:
