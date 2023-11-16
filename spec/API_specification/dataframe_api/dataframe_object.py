@@ -994,7 +994,7 @@ class DataFrame(Protocol):
                 features = []
                 for column_name in df.column_names:
                     # Do NOT call `persist` on a `DataFrame` within a for-loop!
-                    # This may re-triggers the same computation multiple times
+                    # This may re-trigger the same computation multiple times
                     if df.persist().col(column_name).std() > 0:
                         features.append(column_name)
         """
