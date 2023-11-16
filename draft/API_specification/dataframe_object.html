@@ -1174,6 +1174,9 @@ they must all have different names.</p>
 <dd class="field-even"><p><strong>DataFrame</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>All of <code class="code docutils literal notranslate"><span class="pre">columns</span></code>’s parent DataFrame must be <code class="code docutils literal notranslate"><span class="pre">self</span></code> - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.col">
@@ -1292,8 +1295,8 @@ scalar value. If <code class="docutils literal notranslate"><span class="pre">No
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>Some participants preferred a weaker type Arraylike[bool] for mask,
-where ‘Arraylike’ denotes an object adhering to the Array API standard.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">mask</span></code>’s parent DataFrame must be <code class="code docutils literal notranslate"><span class="pre">self</span></code> - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.get_rows">
@@ -1307,6 +1310,9 @@ where ‘Arraylike’ denotes an object adhering to the Array API standard.</p>
 <dd class="field-even"><p><strong>DataFrame</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">indices</span></code>’s parent DataFrame must be <code class="code docutils literal notranslate"><span class="pre">self</span></code> - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.group_by">

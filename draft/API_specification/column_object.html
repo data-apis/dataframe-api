@@ -538,6 +538,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.name" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.name</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.parent_dataframe" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.parent_dataframe</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.prod" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.prod()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.rename" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.rename()</span></code></a>
@@ -741,6 +743,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.name" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.name</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.parent_dataframe" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.parent_dataframe</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.prod" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.prod()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.rename" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.rename()</span></code></a>
@@ -793,7 +797,22 @@ behavior.</p>
 <dd><p>Column object.</p>
 <p>Note that this column object is not meant to be instantiated directly by
 users of the library implementing the dataframe API standard. Rather, use
-constructor functions or an already-created dataframe object retrieved via</p>
+constructor functions or an already-created dataframe object retrieved via
+<a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame.col" title="dataframe_api.DataFrame.col"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DataFrame.col()</span></code></a>.</p>
+<p>The parent dataframe (which can be retrieved via the <a class="reference internal" href="#dataframe_api.Column.parent_dataframe" title="dataframe_api.Column.parent_dataframe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">parent_dataframe()</span></code></a>
+property) plays a key role here:</p>
+<ul class="simple">
+<li><p>If two columns were retrieved from the same dataframe,
+then they can be combined and compared at will.</p></li>
+<li><p>If two columns were retrieved from different dataframes,
+then there is no guarantee about how or whether they can be combined and
+compared, this may vary across implementations.</p></li>
+<li><p>If two columns are both “free-standing” (i.e. not retrieved from a dataframe
+but constructed directly from a 1D array or sequence), then they can be
+combined and compared with each other. Note, however, that there’s no guarantee
+about whether they can be compared or combined with columns retrieved from a
+different dataframe, this may vary across implementations.</p></li>
+</ul>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="dataframe_api.Column.__abstractmethods__">
 <span class="sig-name descname"><span class="pre">__abstractmethods__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">frozenset({})</span></em><a class="headerlink" href="#dataframe_api.Column.__abstractmethods__" title="Permalink to this definition">¶</a></dt>
@@ -808,8 +827,13 @@ constructor functions or an already-created dataframe object retrieved via</p>
 “Scalar” here is defined implicitly by what scalar types are allowed
 for the operation by the underling dtypes.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>Column</strong></p>
+</dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Column</strong></p>
 </dd>
 </dl>
 </dd></dl>
@@ -825,6 +849,11 @@ for the operation by the underling dtypes.</p>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
+</dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – If <code class="code docutils literal notranslate"><span class="pre">self</span></code> or <code class="code docutils literal notranslate"><span class="pre">other</span></code> is not boolean.</p>
 </dd>
@@ -858,6 +887,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__eq__">
@@ -874,6 +906,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__floordiv__">
@@ -889,6 +924,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__ge__">
@@ -904,6 +942,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__gt__">
@@ -919,6 +960,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__init__">
@@ -959,6 +1003,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__len__">
@@ -979,6 +1026,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__mod__">
@@ -994,6 +1044,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__mul__">
@@ -1009,6 +1062,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__ne__">
@@ -1025,6 +1081,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__or__">
@@ -1038,6 +1097,11 @@ for the operation by the underling dtypes.</p>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
+</dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ValueError</strong> – If <code class="code docutils literal notranslate"><span class="pre">self</span></code> or <code class="code docutils literal notranslate"><span class="pre">other</span></code> is not boolean.</p>
 </dd>
@@ -1064,6 +1128,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__radd__">
@@ -1116,6 +1183,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.__subclasshook__">
@@ -1140,6 +1210,9 @@ for the operation by the underling dtypes.</p>
 <dd class="field-even"><p><strong>Column</strong></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">other</span></code>’s parent DataFrame must be the same as <code class="code docutils literal notranslate"><span class="pre">self</span></code>’s - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.all">
@@ -1397,6 +1470,22 @@ must be supported. The returned value has the same dtype as the column.</p>
 <dt class="sig sig-object py" id="dataframe_api.Column.name">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dataframe_api.Column.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return name of column.</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dataframe_api.Column.parent_dataframe">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parent_dataframe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="dataframe_object.html#dataframe_api.DataFrame" title="dataframe_api.DataFrame"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#dataframe_api.Column.parent_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return parent DataFrame, if present.</p>
+<p>For example, if we have the following</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">:</span> <span class="n">DataFrame</span>
+<span class="n">column</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s1">'a'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>then <code class="code docutils literal notranslate"><span class="pre">column.parent_dataframe</span></code> should return <code class="code docutils literal notranslate"><span class="pre">df</span></code>.</p>
+<p>On the other hand, if we had:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">column</span> <span class="o">=</span> <span class="n">column_from_1d_array</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>then <code class="code docutils literal notranslate"><span class="pre">column.parent_dataframe</span></code> should return <code class="code docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.prod">
