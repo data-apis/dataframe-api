@@ -903,26 +903,26 @@ class DataFrame(Protocol):
         """
         ...
 
-    def to_array(self, dtype: DType) -> Any:
+    def to_array(self) -> Any:
         """Convert to array-API-compliant object.
 
-        Parameters
-        ----------
-        dtype : DType
-            The dtype of the array-API-compliant object to return.
-            Must be one of:
+        The resulting array will have the corresponding dtype from the
+        Array API:
 
-            - Bool()
-            - Int8()
-            - Int16()
-            - Int32()
-            - Int64()
-            - UInt8()
-            - UInt16()
-            - UInt32()
-            - UInt64()
-            - Float32()
-            - Float64()
+        - Bool() -> 'bool'
+        - Int8() -> 'int8'
+        - Int16() -> 'int16'
+        - Int32() -> 'int32'
+        - Int64() -> 'int64'
+        - UInt8() -> 'uint8'
+        - UInt16() -> 'uint16'
+        - UInt32() -> 'uint32'
+        - UInt64() -> 'uint64'
+        - Float32() -> 'float32'
+        - Float64() -> 'float64'
+
+        and multiple columns' dtypes are combined according to the Array API's
+        type promotion rules.
 
         Returns
         -------

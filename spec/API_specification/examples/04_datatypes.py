@@ -18,7 +18,7 @@ def main(df_raw: SupportsDataFrameAPI) -> SupportsDataFrameAPI:
             if isinstance(df.col(col_name).dtype, namespace.Int64)
         ],
     )
-    arr = df.to_array(namespace.Int64())
+    arr = df.to_array()
     arr = some_array_function(arr)
     df = namespace.dataframe_from_2d_array(
         arr,
