@@ -921,8 +921,8 @@ class DataFrame(Protocol):
         - Float32() -> 'float32'
         - Float64() -> 'float64'
 
-        and multiple columns' dtypes are combined according to the Array API's
-        type promotion rules.
+        and multiple columns' dtypes are combined according to the
+        `Array API's type promotion rules <https://data-apis.org/array-api/latest/API_specification/type_promotion.html>`_.
 
         Returns
         -------
