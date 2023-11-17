@@ -1044,3 +1044,16 @@ class Column(Protocol):
             discarded.
         """
         ...
+
+    def persist(self) -> Self:
+        """Hint that computation prior to this point should not be repeated.
+
+        This is intended as a hint, rather than as a directive. Implementations
+        which do not separate lazy vs eager execution may ignore this method and
+        treat it as a no-op.
+
+        .. note::
+            This method may trigger execution. If necessary, it should be called
+            at most once per dataframe, and as late as possible in the pipeline.
+        """
+        ...

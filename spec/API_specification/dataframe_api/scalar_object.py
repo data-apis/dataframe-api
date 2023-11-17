@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Protocol
+from typing import TYPE_CHECKING, Protocol, Any
 
 if TYPE_CHECKING:
     from dataframe_api.typing import AnyScalar, DType
@@ -104,7 +104,7 @@ class Scalar(Protocol):
         """Return data type of scalar."""
         ...
 
-    def persist(self) -> object:
+    def persist(self) -> Self:
         """Hint that computation prior to this point should not be repeated.
 
         This is intended as a hint, rather than as a directive. Implementations
