@@ -14,13 +14,12 @@ from dataframe_api.dataframe_object import DataFrame
 from dataframe_api.groupby_object import Aggregation as AggregationT
 from dataframe_api.groupby_object import GroupBy
 
+from .scalar_object import Scalar
+
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
 
-# Type alias: Mypy needs Any, but for readability we need to make clear this
-# is a Python scalar (i.e., an instance of `bool`, `int`, `float`, `str`, etc.)
-Scalar = Any
 # null is a special object which represents a missing value.
 # It is not valid as a type.
 
@@ -131,7 +130,6 @@ class Namespace(Protocol):
         ...
 
 
-NullType = Namespace.NullType
 DType = Union[
     Namespace.Bool,
     Namespace.Float64,
@@ -169,15 +167,20 @@ class SupportsColumnAPI(Protocol):
         ...
 
 
+PythonScalar = Union[str, int, float, bool]
+AnyScalar = Union[PythonScalar, Scalar]
+NullType = Namespace.NullType
+
+
 __all__ = [
     "Column",
     "DataFrame",
     "DType",
     "GroupBy",
     "Namespace",
-    "NullType",
+    "AnyScalar",
     "Scalar",
+    "NullType",
     "SupportsColumnAPI",
     "SupportsDataFrameAPI",
-    "Scalar",
 ]

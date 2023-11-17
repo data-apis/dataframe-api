@@ -5,9 +5,14 @@ from typing import TYPE_CHECKING, Any, Literal, NoReturn, Protocol
 if TYPE_CHECKING:
     from typing_extensions import Self
 
-    from dataframe_api.dataframe_object import DataFrame
-
-    from .typing import DType, Namespace, NullType, Scalar
+    from .typing import (
+        AnyScalar,
+        DataFrame,
+        DType,
+        Namespace,
+        NullType,
+        Scalar,
+    )
 
 
 __all__ = ["Column"]
@@ -224,7 +229,7 @@ class Column(Protocol):
         """
         ...
 
-    def __eq__(self, other: Self | Scalar) -> Self:  # type: ignore[override]
+    def __eq__(self, other: Self | AnyScalar) -> Self:  # type: ignore[override]
         """Compare for equality.
 
         Nulls should follow Kleene Logic.
@@ -247,7 +252,7 @@ class Column(Protocol):
         """
         ...
 
-    def __ne__(self, other: Self | Scalar) -> Self:  # type: ignore[override]
+    def __ne__(self, other: Self | AnyScalar) -> Self:  # type: ignore[override]
         """Compare for non-equality.
 
         Nulls should follow Kleene Logic.
@@ -270,7 +275,7 @@ class Column(Protocol):
         """
         ...
 
-    def __ge__(self, other: Self | Scalar) -> Self:
+    def __ge__(self, other: Self | AnyScalar) -> Self:
         """Compare for "greater than or equal to" `other`.
 
         Parameters
@@ -291,7 +296,7 @@ class Column(Protocol):
         """
         ...
 
-    def __gt__(self, other: Self | Scalar) -> Self:
+    def __gt__(self, other: Self | AnyScalar) -> Self:
         """Compare for "greater than" `other`.
 
         Parameters
@@ -312,7 +317,7 @@ class Column(Protocol):
         """
         ...
 
-    def __le__(self, other: Self | Scalar) -> Self:
+    def __le__(self, other: Self | AnyScalar) -> Self:
         """Compare for "less than or equal to" `other`.
 
         Parameters
@@ -333,7 +338,7 @@ class Column(Protocol):
         """
         ...
 
-    def __lt__(self, other: Self | Scalar) -> Self:
+    def __lt__(self, other: Self | AnyScalar) -> Self:
         """Compare for "less than" `other`.
 
         Parameters
@@ -354,7 +359,7 @@ class Column(Protocol):
         """
         ...
 
-    def __and__(self, other: Self | bool) -> Self:
+    def __and__(self, other: Self | bool | Scalar) -> Self:
         """Apply logical 'and' to `other` Column (or scalar) and this Column.
 
         Nulls should follow Kleene Logic.
@@ -380,7 +385,7 @@ class Column(Protocol):
         """
         ...
 
-    def __or__(self, other: Self | bool) -> Self:
+    def __or__(self, other: Self | bool | Scalar) -> Self:
         """Apply logical 'or' to `other` Column (or scalar) and this column.
 
         Nulls should follow Kleene Logic.
@@ -406,7 +411,7 @@ class Column(Protocol):
         """
         ...
 
-    def __add__(self, other: Self | Scalar) -> Self:
+    def __add__(self, other: Self | AnyScalar) -> Self:
         """Add `other` column or scalar to this column.
 
         Parameters
@@ -427,7 +432,7 @@ class Column(Protocol):
         """
         ...
 
-    def __sub__(self, other: Self | Scalar) -> Self:
+    def __sub__(self, other: Self | AnyScalar) -> Self:
         """Subtract `other` column or scalar from this column.
 
         Parameters
@@ -448,7 +453,7 @@ class Column(Protocol):
         """
         ...
 
-    def __mul__(self, other: Self | Scalar) -> Self:
+    def __mul__(self, other: Self | AnyScalar) -> Self:
         """Multiply `other` column or scalar with this column.
 
         Parameters
@@ -469,7 +474,7 @@ class Column(Protocol):
         """
         ...
 
-    def __truediv__(self, other: Self | Scalar) -> Self:
+    def __truediv__(self, other: Self | AnyScalar) -> Self:
         """Divide this column by `other` column or scalar. True division, returns floats.
 
         Parameters
@@ -490,7 +495,7 @@ class Column(Protocol):
         """
         ...
 
-    def __floordiv__(self, other: Self | Scalar) -> Self:
+    def __floordiv__(self, other: Self | AnyScalar) -> Self:
         """Floor-divide `other` column or scalar to this column.
 
         Parameters
@@ -511,7 +516,7 @@ class Column(Protocol):
         """
         ...
 
-    def __pow__(self, other: Self | Scalar) -> Self:
+    def __pow__(self, other: Self | AnyScalar) -> Self:
         """Raise this column to the power of `other`.
 
         Integer dtype to the power of non-negative integer dtype is integer dtype.
@@ -536,7 +541,7 @@ class Column(Protocol):
         """
         ...
 
-    def __mod__(self, other: Self | Scalar) -> Self:
+    def __mod__(self, other: Self | AnyScalar) -> Self:
         """Return modulus of this column by `other` (`%` operator).
 
         Parameters
@@ -557,7 +562,7 @@ class Column(Protocol):
         """
         ...
 
-    def __divmod__(self, other: Self | Scalar) -> tuple[Column, Column]:
+    def __divmod__(self, other: Self | AnyScalar) -> tuple[Column, Column]:
         """Return quotient and remainder of integer division. See `divmod` builtin.
 
         Parameters
@@ -578,16 +583,16 @@ class Column(Protocol):
         """
         ...
 
-    def __radd__(self, other: Self | Scalar) -> Self:
+    def __radd__(self, other: Self | AnyScalar) -> Self:
         ...
 
-    def __rsub__(self, other: Self | Scalar) -> Self:
+    def __rsub__(self, other: Self | AnyScalar) -> Self:
         ...
 
-    def __rmul__(self, other: Self | Scalar) -> Self:
+    def __rmul__(self, other: Self | AnyScalar) -> Self:
         ...
 
-    def __rtruediv__(self, other: Self | Scalar) -> Self:
+    def __rtruediv__(self, other: Self | AnyScalar) -> Self:
         ...
 
     def __rand__(self, other: Self | bool) -> Self:
@@ -596,13 +601,13 @@ class Column(Protocol):
     def __ror__(self, other: Self | bool) -> Self:
         ...
 
-    def __rfloordiv__(self, other: Self | Scalar) -> Self:
+    def __rfloordiv__(self, other: Self | AnyScalar) -> Self:
         ...
 
-    def __rpow__(self, other: Self | Scalar) -> Self:
+    def __rpow__(self, other: Self | AnyScalar) -> Self:
         ...
 
-    def __rmod__(self, other: Self | Scalar) -> Self:
+    def __rmod__(self, other: Self | AnyScalar) -> Self:
         ...
 
     def __invert__(self) -> Self:
@@ -615,7 +620,7 @@ class Column(Protocol):
         """
         ...
 
-    def any(self, *, skip_nulls: bool = True) -> bool | NullType:
+    def any(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a bool.
 
         Raises
@@ -625,7 +630,7 @@ class Column(Protocol):
         """
         ...
 
-    def all(self, *, skip_nulls: bool = True) -> bool | NullType:
+    def all(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a bool.
 
         Raises
@@ -635,7 +640,7 @@ class Column(Protocol):
         """
         ...
 
-    def min(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def min(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Any data type that supports comparisons
@@ -643,7 +648,7 @@ class Column(Protocol):
         """
         ...
 
-    def max(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def max(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Any data type that supports comparisons
@@ -651,7 +656,7 @@ class Column(Protocol):
         """
         ...
 
-    def sum(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def sum(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -660,7 +665,7 @@ class Column(Protocol):
         """
         ...
 
-    def prod(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def prod(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical data types.
@@ -668,7 +673,7 @@ class Column(Protocol):
         """
         ...
 
-    def median(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def median(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -678,7 +683,7 @@ class Column(Protocol):
         """
         ...
 
-    def mean(self, *, skip_nulls: bool = True) -> Scalar | NullType:
+    def mean(self, *, skip_nulls: bool | Scalar = True) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -691,9 +696,9 @@ class Column(Protocol):
     def std(
         self,
         *,
-        correction: int | float = 1,
-        skip_nulls: bool = True,
-    ) -> Scalar | NullType:
+        correction: float = 1,
+        skip_nulls: bool | Scalar = True,
+    ) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -724,9 +729,9 @@ class Column(Protocol):
     def var(
         self,
         *,
-        correction: int | float = 1,
-        skip_nulls: bool = True,
-    ) -> Scalar | NullType:
+        correction: float | Scalar = 1,
+        skip_nulls: bool | Scalar = True,
+    ) -> Scalar:
         """Reduction returns a scalar.
 
         Must be supported for numerical and
@@ -835,7 +840,7 @@ class Column(Protocol):
         """
         ...
 
-    def unique_indices(self, *, skip_nulls: bool = True) -> Self:
+    def unique_indices(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Return indices corresponding to unique values in Column.
 
         Returns
@@ -855,7 +860,7 @@ class Column(Protocol):
         """
         ...
 
-    def fill_nan(self, value: float | NullType, /) -> Self:
+    def fill_nan(self, value: float | NullType | Scalar, /) -> Self:
         """Fill floating point ``nan`` values with the given fill value.
 
         Parameters
@@ -868,7 +873,7 @@ class Column(Protocol):
         """
         ...
 
-    def fill_null(self, value: Scalar, /) -> Self:
+    def fill_null(self, value: AnyScalar, /) -> Self:
         """Fill null values with the given fill value.
 
         Parameters
@@ -914,7 +919,7 @@ class Column(Protocol):
         """
         ...
 
-    def rename(self, name: str) -> Self:
+    def rename(self, name: str | Scalar) -> Self:
         """Rename column.
 
         Parameters
@@ -929,17 +934,17 @@ class Column(Protocol):
         """
         ...
 
-    def shift(self, offset: int) -> Self:
+    def shift(self, offset: int | Scalar) -> Self:
         """Shift values by `offset` positions, filling missing values with `null`.
 
         For example, if the original column contains values `[1, 4, 2]`, then:
 
         - `.shift(1)` will return `[null, 1, 4]`,
         - `.shift(-1)` will return `[4, 2, null]`,
-    
+
         Parameters
         ----------
-        offset
+        offset : int
             How many positions to shift by.
         """
         ...
@@ -1020,7 +1025,7 @@ class Column(Protocol):
         """
         ...
 
-    def unix_timestamp(self, *, time_unit: Literal["s", "ms", "us"] = "s") -> Self:
+    def unix_timestamp(self, *, time_unit: str | Scalar = "s") -> Self:
         """Return number of seconds / milliseconds / microseconds since the Unix epoch.
 
         The Unix epoch is 00:00:00 UTC on 1 January 1970.
@@ -1037,5 +1042,18 @@ class Column(Protocol):
             and the time_unit is ``'s'``, then the result should be 86400, and not
             86400.123456. Information smaller than the given time unit should be
             discarded.
+        """
+        ...
+
+    def persist(self) -> Self:
+        """Hint that computation prior to this point should not be repeated.
+
+        This is intended as a hint, rather than as a directive. Implementations
+        which do not separate lazy vs eager execution may ignore this method and
+        treat it as a no-op.
+
+        .. note::
+            This method may trigger execution. If necessary, it should be called
+            at most once per dataframe, and as late as possible in the pipeline.
         """
         ...
