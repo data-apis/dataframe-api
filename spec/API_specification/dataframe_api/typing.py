@@ -129,6 +129,12 @@ class Namespace(Protocol):
     def date(self, year: int, month: int, day: int) -> Scalar:
         ...
 
+    def any_horizontal(self, *columns: Column, skip_nulls: bool | Scalar = True) -> Column:
+        ...
+
+    def all_horizontal(self, *columns: Column, skip_nulls: bool | Scalar = True) -> Column:
+        ...
+
 
 DType = Union[
     Namespace.Bool,

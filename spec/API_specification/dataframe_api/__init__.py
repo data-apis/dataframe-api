@@ -290,3 +290,55 @@ def date(year: int, month: int, day: int) -> Scalar:
     ... )
     >>> df.filter(mask)
     """
+
+
+def any_horizontal(*columns: Column, skip_nulls: bool | Scalar = True) -> Column:
+    """Reduction returns a Column.
+
+    Differs from :meth:`DataFrame.any` in that the reduction happens
+    for each row, rather than for each column.
+
+    All the `columns` must have the same parent DataFrame.
+    The return value has the same parent DataFrame as the input columns.
+
+    Raises
+    ------
+    ValueError
+        If any of the columns is not boolean.
+
+    Examples
+    --------
+    >>> df: DataFrame
+    >>> ns = df.__dataframe_namespace__()
+    >>> mask = ns.any_horizontal(
+    ...     *[df.col(col_name) > 0 for col_name in df.column_names()]
+    ... )
+    >>> df = df.filter(mask)
+    """
+    ...
+
+
+def all_horizontal(*columns: Column, skip_nulls: bool | Scalar = True) -> Column:
+    """Reduction returns a Column.
+
+    Differs from :meth:`DataFrame.all` in that the reduction happens
+    for each row, rather than for each column.
+
+    All the `columns` must have the same parent DataFrame.
+    The return value has the same parent DataFrame as the input columns.
+
+    Raises
+    ------
+    ValueError
+        If any of the columns is not boolean.
+
+    Examples
+    --------
+    >>> df: DataFrame
+    >>> ns = df.__dataframe_namespace__()
+    >>> mask = ns.all_horizontal(
+    ...     *[df.col(col_name) > 0 for col_name in df.column_names()]
+    ... )
+    >>> df = df.filter(mask)
+    """
+    ...

@@ -678,32 +678,6 @@ class DataFrame(Protocol):
         """
         ...
 
-    def any_rowwise(self, *, skip_nulls: bool | Scalar = True) -> Column:
-        """Reduction returns a Column.
-
-        Differs from ``DataFrame.any`` and that the reduction happens
-        for each row, rather than for each column.
-
-        Raises
-        ------
-        ValueError
-            If any of the DataFrame's columns is not boolean.
-        """
-        ...
-
-    def all_rowwise(self, *, skip_nulls: bool | Scalar = True) -> Column:
-        """Reduction returns a Column.
-
-        Differs from ``DataFrame.all`` and that the reduction happens
-        for each row, rather than for each column.
-
-        Raises
-        ------
-        ValueError
-            If any of the DataFrame's columns is not boolean.
-        """
-        ...
-
     def min(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
