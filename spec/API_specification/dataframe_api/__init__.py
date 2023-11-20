@@ -283,10 +283,10 @@ def date(year: int, month: int, day: int) -> Scalar:
     Examples
     --------
     >>> df: DataFrame
-    >>> namespace = df.__dataframe_namespace__()
+    >>> ns = df.__dataframe_namespace__()
     >>> mask = (
-    ...     (df.get_column_by_name('date') >= namespace.date(2020, 1, 1))
-    ...     & (df.get_column_by_name('date') < namespace.date(2021, 1, 1))
+    ...     (df.get_column_by_name('date') >= ns.date(2020, 1, 1))
+    ...     & (df.get_column_by_name('date') < ns.date(2021, 1, 1))
     ... )
     >>> df.filter(mask)
     """

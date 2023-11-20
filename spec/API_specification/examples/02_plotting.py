@@ -19,9 +19,9 @@ def group_by_and_plot(
     y = y_any.__column_consortium_standard__(api_version="2023-10.beta")
     color = color_any.__column_consortium_standard__(api_version="2023-10.beta")
 
-    namespace = x.__column_namespace__()
+    ns = x.__column_namespace__()
 
-    df = namespace.dataframe_from_columns(
+    df = ns.dataframe_from_columns(
         x.rename("x"),
         y.rename("y"),
         color.rename("color"),
