@@ -489,15 +489,27 @@
 <span class="sig-name descname"><span class="pre">dataframe_from_2d_array</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;function</span> <span class="pre">dataframe_from_2d_array&gt;</span></em><a class="headerlink" href="#dataframe_api.dataframe_from_2d_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct DataFrame from 2D array.</p>
 <p>See <code class="code docutils literal notranslate"><span class="pre">column_from_1d_array</span></code> for related 1D function.</p>
-<p>Only Array-API-compliant 2D arrays are supported.
-Cross-kind casting is undefined and may vary across implementations.
-Downcasting is disallowed.</p>
+<p>Only Array-API-compliant 2D arrays are supported.</p>
+<p>The resulting columns will have the dtype corresponding to the
+Array API one:</p>
+<ul class="simple">
+<li><p>‘bool’ -&gt; Bool()</p></li>
+<li><p>‘int8’ -&gt; Int8()</p></li>
+<li><p>‘int16’ -&gt; Int16()</p></li>
+<li><p>‘int32’ -&gt; Int32()</p></li>
+<li><p>‘int64’ -&gt; Int64()</p></li>
+<li><p>‘uint8’ -&gt; UInt8()</p></li>
+<li><p>‘uint16’ -&gt; UInt16()</p></li>
+<li><p>‘uint32’ -&gt; UInt32()</p></li>
+<li><p>‘uint64’ -&gt; UInt64()</p></li>
+<li><p>‘float32’ -&gt; Float32()</p></li>
+<li><p>‘float64’ -&gt; Float64()</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>array</strong> (<em>array</em>) – array-API compliant 2D array</p></li>
-<li><p><strong>dtypes</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>DType</em><em>]</em>) – Dtype of each column. Must be the same length as <code class="docutils literal notranslate"><span class="pre">array.shape[1]</span></code>.
-Keys determine column names.</p></li>
+<li><p><strong>names</strong> (<em>Sequence</em><em>[</em><em>str</em><em>]</em>) – Names to give columns.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
