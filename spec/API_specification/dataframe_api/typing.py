@@ -116,7 +116,7 @@ class Namespace(Protocol):
         self,
         array: Any,
         *,
-        schema: dict[str, DType],
+        names: Sequence[str],
     ) -> DataFrame:
         ...
 
