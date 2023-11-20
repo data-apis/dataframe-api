@@ -995,10 +995,11 @@ class DataFrame(Protocol):
             .. code-block:: python
 
                 df: DataFrame
-                df = df.persist()
                 features = []
+                result = df.std() > 0
+                result = result.persist()
                 for column_name in df.column_names:
-                    if df.col(column_name).std() > 0:
+                    if result.col(column_name).get_value(0):
                         features.append(column_name)
 
             instead of this:
@@ -1008,7 +1009,8 @@ class DataFrame(Protocol):
                 df: DataFrame
                 features = []
                 for column_name in df.column_names:
-                    # Do NOT do this!
+                    # Do NOT call `persist` on a `DataFrame` within a for-loop!
+                    # This may re-trigger the same computation multiple times
                     if df.persist().col(column_name).std() > 0:
                         features.append(column_name)
         """
