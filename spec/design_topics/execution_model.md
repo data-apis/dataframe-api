@@ -11,17 +11,13 @@ not be supported in some cases.
 For example, let's consider the following:
 ```python
 df: DataFrame
-features = []
-for column_name in df.column_names:
-    if df.col(column_name).std() > 0:
-        features.append(column_name)
-return features
+features = [col.name for col in df.columns_iter() if col.std() > 0]
 ```
-If `df` is a lazy dataframe, then the call `df.col(column_name).std() > 0` returns
+If `df` is a lazy dataframe, then the call `col.std() > 0` returns
 a (ducktyped) Python boolean scalar. No issues so far. Problem is,
-what happens when `if df.col(column_name).std() > 0` is called?
+what happens when `if col.std() > 0` is called?
 
-Under the hood, Python will call `(df.col(column_name).std() > 0).__bool__()` in
+Under the hood, Python will call `(col.std() > 0).__bool__()` in
 order to extract a Python boolean. This is a problem for "lazy" implementations,
 as the laziness needs breaking in order to evaluate the above.
 

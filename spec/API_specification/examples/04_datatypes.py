@@ -13,9 +13,9 @@ def main(df_raw: SupportsDataFrameAPI) -> SupportsDataFrameAPI:
     namespace = df.__dataframe_namespace__()
     df = df.select(
         *[
-            col_name
-            for col_name in df.column_names
-            if isinstance(df.col(col_name).dtype, namespace.Int64)
+            col.name
+            for col in df.columns_iter()
+            if isinstance(col.dtype, namespace.Int64)
         ],
     )
     arr = df.to_array(namespace.Int64())
