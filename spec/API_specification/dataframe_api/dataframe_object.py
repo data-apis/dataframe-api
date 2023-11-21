@@ -284,7 +284,7 @@ class DataFrame(Protocol):
         """Sort dataframe according to given columns.
 
         If you only need the indices which would sort the dataframe, use
-        :meth:`sorted_indices`.
+        `sorted_indices`.
 
         Parameters
         ----------
