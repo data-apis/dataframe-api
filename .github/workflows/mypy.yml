@@ -30,5 +30,7 @@ jobs:
         run: python -m pip install --upgrade mypy typing-extensions ruff
       - name: run mypy
         run: cd spec/API_specification && mypy dataframe_api && mypy examples
-      - name: run ruff
-        run: cd spec/API_specification && ruff format dataframe_api examples && ruff dataframe_api examples
+      - name: run ruff format
+        run: cd spec/API_specification && ruff format dataframe_api examples --diff
+      - name: run ruff check
+        run: cd spec/API_specification && ruff check dataframe_api examples --no-fix
