@@ -314,44 +314,6 @@ class DataFrame(Protocol):
         """
         ...
 
-    def sorted_indices(
-        self,
-        *keys: str,
-        ascending: Sequence[bool] | bool = True,
-        nulls_position: Literal["first", "last"] = "last",
-    ) -> Column:
-        """Return row numbers which would sort according to given columns.
-
-        If you need to sort the DataFrame, use :meth:`sort`.
-
-        Parameters
-        ----------
-        *keys : str
-            Names of columns to sort by.
-            If not specified, sort by all columns.
-        ascending : Sequence[bool] or bool
-            If `True`, sort by all keys in ascending order.
-            If `False`, sort by all keys in descending order.
-            If a sequence, it must be the same length as `keys`,
-            and determines the direction with which to use each
-            key to sort by.
-        nulls_position : ``{'first', 'last'}``
-            Whether null values should be placed at the beginning
-            or at the end of the result.
-            Note that the position of NaNs is unspecified and may
-            vary based on the implementation.
-
-        Returns
-        -------
-        Column
-
-        Raises
-        ------
-        ValueError
-            If `keys` and `ascending` are sequences of different lengths.
-        """
-        ...
-
     def __eq__(self, other: AnyScalar) -> Self:  # type: ignore[override]
         """Compare for equality.
 
@@ -775,32 +737,6 @@ class DataFrame(Protocol):
         This only checks for 'NaN'.
         Does *not* include 'missing' or 'null' entries.
         In particular, does not check for `np.timedelta64('NaT')`.
-        """
-        ...
-
-    def unique_indices(self, *keys: str, skip_nulls: bool | Scalar = True) -> Column:
-        """Return indices corresponding to unique values across selected columns.
-
-        Parameters
-        ----------
-        *keys : str
-            Column names to consider when finding unique values.
-            If not specified, all columns are considered.
-
-        Returns
-        -------
-        Column
-            Indices corresponding to unique values.
-
-        Notes
-        -----
-        There are no ordering guarantees. In particular, if there are multiple
-        indices corresponding to the same unique value(s), there is no guarantee
-        about which one will appear in the result.
-        If the original column(s) contain multiple `'NaN'` values, then
-        only a single index corresponding to those values will be returned.
-        Likewise for null values (if ``skip_nulls=False``).
-        To get the unique values, you can do ``df.get_rows(df.unique_indices(keys))``.
         """
         ...
 
