@@ -69,7 +69,7 @@ class Namespace(Protocol):
     null: NullType
 
     class Datetime:
-        time_unit: Literal['ms', 'us']
+        time_unit: Literal["ms", "us"]
         time_zone: str | None
 
         def __init__(  # noqa: ANN204
@@ -80,7 +80,7 @@ class Namespace(Protocol):
             ...
 
     class Duration:
-        time_unit: Literal['ms', 'us']
+        time_unit: Literal["ms", "us"]
 
         def __init__(  # noqa: ANN204
             self,
