@@ -152,7 +152,9 @@ class Namespace(Protocol):
         ...
 
     def unique_indices(
-        self, *columns: Column, skip_nulls: bool | Scalar = True,
+        self,
+        *columns: Column,
+        skip_nulls: bool | Scalar = True,
     ) -> Column:
         ...
 
