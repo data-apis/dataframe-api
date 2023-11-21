@@ -143,6 +143,19 @@ class Namespace(Protocol):
     ) -> Column:
         ...
 
+    def sorted_indices(
+        self,
+        *columns: Column,
+        ascending: Sequence[bool] | bool = True,
+        nulls_position: Literal["first", "last"] = "last",
+    ) -> Column:
+        ...
+
+    def unique_indices(
+        self, *columns: Column, skip_nulls: bool | Scalar = True,
+    ) -> Column:
+        ...
+
 
 DType = Union[
     Namespace.Bool,
