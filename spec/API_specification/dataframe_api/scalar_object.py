@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Protocol
 if TYPE_CHECKING:
     from typing_extensions import Self
 
-    from dataframe_api.typing import AnyScalar, DType
+    from dataframe_api.typing import AnyScalar, DataFrame, DType
 
 __all__ = ["Scalar"]
 
@@ -24,7 +24,32 @@ class Scalar(Protocol):
     For example, if `column` is `Column` of dtype `Int64`, then
     `column.get_value(0)` will return a `Scalar` of dtype `Int64`
     (even if it is backed by a null value).
+
+    In binary operations, the comparand's parent DataFrame must be the same as
+    `self`'s - else, the operation is unsupported and may vary across implementations.
     """
+
+    @property
+    def parent_dataframe(self) -> DataFrame | None:
+        """Return parent DataFrame, if present.
+
+        For example, if we have the following
+
+        .. code-block:: python
+
+            df: DataFrame
+            scalar = df.col('a').mean()
+
+        then `scalar.parent_dataframe` should return `df`.
+
+        On the other hand, if we had:
+
+        .. code-block:: python
+
+            scalar = column_from_1d_array(...).mean()
+
+        then `scalar.parent_dataframe` should return `None`.
+        """
 
     def __lt__(self, other: AnyScalar) -> Scalar:
         ...
