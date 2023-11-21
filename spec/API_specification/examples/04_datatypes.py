@@ -20,8 +20,5 @@ def main(df_raw: SupportsDataFrameAPI) -> SupportsDataFrameAPI:
     )
     arr = df.to_array(ns.Int64())
     arr = some_array_function(arr)
-    df = ns.dataframe_from_2d_array(
-        arr,
-        schema={"a": df.col("a").dtype, "b": ns.Float64()},
-    )
+    df = ns.dataframe_from_2d_array(arr, names=["a", "b"])
     return df.dataframe

@@ -138,10 +138,8 @@ def column_from_1d_array(array: Any, *, name: str = "") -> Column:
     See `dataframe_from_2d_array` for related 2D function.
 
     Only Array-API-compliant 1D arrays are supported.
-    Cross-kind casting is undefined and may vary across implementations.
-    Downcasting is disallowed.
 
-    The resulting column will have the dtype to the
+    The resulting column will have the dtype corresponding to the
     Array API one:
 
     -  'bool' -> Bool()
@@ -170,22 +168,34 @@ def column_from_1d_array(array: Any, *, name: str = "") -> Column:
     ...
 
 
-def dataframe_from_2d_array(array: Any, *, schema: dict[str, DType]) -> DataFrame:
+def dataframe_from_2d_array(array: Any, *, names: Sequence[str]) -> DataFrame:
     """Construct DataFrame from 2D array.
 
     See `column_from_1d_array` for related 1D function.
 
     Only Array-API-compliant 2D arrays are supported.
-    Cross-kind casting is undefined and may vary across implementations.
-    Downcasting is disallowed.
+
+    The resulting columns will have the dtype corresponding to the
+    Array API one:
+
+    -  'bool' -> Bool()
+    -  'int8' -> Int8()
+    -  'int16' -> Int16()
+    -  'int32' -> Int32()
+    -  'int64' -> Int64()
+    -  'uint8' -> UInt8()
+    -  'uint16' -> UInt16()
+    -  'uint32' -> UInt32()
+    -  'uint64' -> UInt64()
+    -  'float32' -> Float32()
+    -  'float64' -> Float64()
 
     Parameters
     ----------
     array : array
         array-API compliant 2D array
-    dtypes : Mapping[str, DType]
-        Dtype of each column. Must be the same length as ``array.shape[1]``.
-        Keys determine column names.
+    names : Sequence[str]
+        Names to give columns.
 
     Returns
     -------
