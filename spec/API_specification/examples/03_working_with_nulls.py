@@ -9,6 +9,6 @@ if TYPE_CHECKING:
 
 def main(df_raw: SupportsDataFrameAPI) -> SupportsDataFrameAPI:
     df = df_raw.__dataframe_consortium_standard__(api_version="2023-11.beta")
-    ns = df.__dataframe_namespace__()
-    df = df.fill_nan(ns.null)
+    pdx = df.__dataframe_namespace__()
+    df = df.fill_nan(pdx.null)
     return df.dataframe

@@ -39,7 +39,7 @@ def query(
     nation = nation_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
     region = region_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
 
-    ns = customer.__dataframe_namespace__()
+    pdx = customer.__dataframe_namespace__()
 
     result = (
         region.join(nation, how="inner", left_on="r_regionkey", right_on="n_regionkey")
@@ -56,8 +56,8 @@ def query(
     mask = (
         (result.col("c_nationkey") == result.col("s_nationkey"))
         & (result.col("r_name") == "ASIA")
-        & (result.col("o_orderdate") >= ns.date(1994, 1, 1))
-        & (result.col("o_orderdate") < ns.date(1995, 1, 1))
+        & (result.col("o_orderdate") >= pdx.date(1994, 1, 1))
+        & (result.col("o_orderdate") < pdx.date(1995, 1, 1))
     )
     result = result.filter(mask)
 
@@ -65,6 +65,6 @@ def query(
         "revenue",
     )
     result = result.assign(new_column)
-    result = result.group_by("n_name").aggregate(ns.Aggregation.sum("revenue"))
+    result = result.group_by("n_name").aggregate(pdx.Aggregation.sum("revenue"))
 
     return result.dataframe
