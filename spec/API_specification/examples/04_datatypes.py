@@ -14,7 +14,7 @@ def main(df_raw: SupportsDataFrameAPI) -> SupportsDataFrameAPI:
     df = df.select(
         *[
             col.name
-            for col in df.columns_iter()
+            for col in df.iter_columns()
             if isinstance(col.dtype, namespace.Int64)
         ],
     )

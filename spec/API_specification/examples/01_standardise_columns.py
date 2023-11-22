@@ -11,7 +11,7 @@ def my_dataframe_agnostic_function(df_non_standard: SupportsDataFrameAPI) -> Any
 
     new_columns = [
         ((col - col.mean()) / col.std()).rename(f"{col.name}_scaled")
-        for col in df.columns_iter()
+        for col in df.iter_columns()
     ]
     df = df.assign(*new_columns)
 

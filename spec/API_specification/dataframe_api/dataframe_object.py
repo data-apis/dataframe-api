@@ -275,7 +275,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def columns_iter(self) -> Iterator[Column]:
+    def iter_columns(self) -> Iterator[Column]:
         """Return iterator over columns."""
         ...
 
@@ -1001,7 +1001,7 @@ class DataFrame(Protocol):
                 df: DataFrame
                 result = df.std() > 0
                 result = result.persist()
-                features = [col.name for col in df.columns_iter() if col.get_value(0)]
+                features = [col.name for col in df.iter_columns() if col.get_value(0)]
 
             instead of this:
 
@@ -1012,7 +1012,7 @@ class DataFrame(Protocol):
                 features = [
                     # Do NOT do this! This will trigger execution of the entire
                     # pipeline for element in the for-loop!
-                    col.name for col in df.columns_iter() if col.get_value(0).persist()
+                    col.name for col in df.iter_columns() if col.get_value(0).persist()
                 ]
         """
         ...

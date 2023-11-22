@@ -11,7 +11,7 @@ not be supported in some cases.
 For example, let's consider the following:
 ```python
 df: DataFrame
-features = [col.name for col in df.columns_iter() if col.std() > 0]
+features = [col.name for col in df.iter_columns() if col.std() > 0]
 ```
 If `df` is a lazy dataframe, then the call `col.std() > 0` returns
 a (ducktyped) Python boolean scalar. No issues so far. Problem is,
