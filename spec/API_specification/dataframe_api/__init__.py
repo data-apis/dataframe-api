@@ -292,7 +292,7 @@ def date(year: int, month: int, day: int) -> Scalar:
     """
 
 
-def any_horizontal(*columns: Column, skip_nulls: bool | Scalar = True) -> Column:
+def any_horizontal(*columns: Column, skip_nulls: bool = True) -> Column:
     """Reduction returns a Column.
 
     Differs from :meth:`DataFrame.any` in that the reduction happens
@@ -318,7 +318,7 @@ def any_horizontal(*columns: Column, skip_nulls: bool | Scalar = True) -> Column
     ...
 
 
-def all_horizontal(*columns: Column, skip_nulls: bool | Scalar = True) -> Column:
+def all_horizontal(*columns: Column, skip_nulls: bool = True) -> Column:
     """Reduction returns a Column.
 
     Differs from :meth:`DataFrame.all` in that the reduction happens
@@ -382,7 +382,7 @@ def sorted_indices(
     ...
 
 
-def unique_indices(*columns: Column, skip_nulls: bool | Scalar = True) -> Column:
+def unique_indices(*columns: Column, skip_nulls: bool = True) -> Column:
     """Return indices corresponding to unique values across selected columns.
 
     Parameters
