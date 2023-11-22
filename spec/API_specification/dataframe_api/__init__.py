@@ -319,8 +319,8 @@ def any_horizontal(*columns: Column, skip_nulls: bool = True) -> Column:
     Examples
     --------
     >>> df: DataFrame
-    >>> ns = df.__dataframe_namespace__()
-    >>> mask = ns.any_horizontal(
+    >>> pdx = df.__dataframe_namespace__()
+    >>> mask = pdx.any_horizontal(
     ...     *[df.col(col_name) > 0 for col_name in df.column_names()]
     ... )
     >>> df = df.filter(mask)
@@ -345,8 +345,8 @@ def all_horizontal(*columns: Column, skip_nulls: bool = True) -> Column:
     Examples
     --------
     >>> df: DataFrame
-    >>> ns = df.__dataframe_namespace__()
-    >>> mask = ns.all_horizontal(
+    >>> pdx = df.__dataframe_namespace__()
+    >>> mask = pdx.all_horizontal(
     ...     *[df.col(col_name) > 0 for col_name in df.column_names()]
     ... )
     >>> df = df.filter(mask)
