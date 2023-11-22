@@ -293,10 +293,10 @@ def date(year: int, month: int, day: int) -> Scalar:
     Examples
     --------
     >>> df: DataFrame
-    >>> namespace = df.__dataframe_namespace__()
+    >>> pdx = df.__dataframe_namespace__()
     >>> mask = (
-    ...     (df.get_column_by_name('date') >= namespace.date(2020, 1, 1))
-    ...     & (df.get_column_by_name('date') < namespace.date(2021, 1, 1))
+    ...     (df.get_column_by_name('date') >= pdx.date(2020, 1, 1))
+    ...     & (df.get_column_by_name('date') < pdx.date(2021, 1, 1))
     ... )
     >>> df.filter(mask)
     """
@@ -319,8 +319,8 @@ def any_horizontal(*columns: Column, skip_nulls: bool = True) -> Column:
     Examples
     --------
     >>> df: DataFrame
-    >>> ns = df.__dataframe_namespace__()
-    >>> mask = ns.any_horizontal(
+    >>> pdx = df.__dataframe_namespace__()
+    >>> mask = pdx.any_horizontal(
     ...     *[df.col(col_name) > 0 for col_name in df.column_names()]
     ... )
     >>> df = df.filter(mask)
@@ -345,8 +345,8 @@ def all_horizontal(*columns: Column, skip_nulls: bool = True) -> Column:
     Examples
     --------
     >>> df: DataFrame
-    >>> ns = df.__dataframe_namespace__()
-    >>> mask = ns.all_horizontal(
+    >>> pdx = df.__dataframe_namespace__()
+    >>> mask = pdx.all_horizontal(
     ...     *[df.col(col_name) > 0 for col_name in df.column_names()]
     ... )
     >>> df = df.filter(mask)

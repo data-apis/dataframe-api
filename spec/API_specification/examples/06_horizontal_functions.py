@@ -21,8 +21,8 @@ if TYPE_CHECKING:
 
 def main(df_raw: SupportsDataFrameAPI) -> SupportsDataFrameAPI:
     df = df_raw.__dataframe_consortium_standard__(api_version="2023-11.beta")
-    ns = df.__dataframe_namespace__()
+    pdx = df.__dataframe_namespace__()
     df = df.filter(
-        ns.any_horizontal(*[df.col(col_name) > 0 for col_name in df.column_names]),
+        pdx.any_horizontal(*[df.col(col_name) > 0 for col_name in df.column_names]),
     )
     return df.dataframe
