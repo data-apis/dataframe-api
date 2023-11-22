@@ -125,8 +125,9 @@ See the [use cases](use_cases.md) section for details on the exact use cases con
 Implementation details of the dataframes and execution of operations. This includes:
 
 - How data is represented and stored (whether the data is in memory, disk, distributed)
-- Expectations on when the execution is happening (in an eager or lazy way)
+- Expectations on when the execution is happening (in an eager or lazy way) (see `execution model` for some caveats)
 - Other execution details
+
 
 **Rationale:** The API defined in this document needs to be used by libraries as diverse as Ibis,
 Dask, Vaex or cuDF. The data can live in databases, distributed systems, disk or GPU memory.
@@ -260,20 +261,19 @@ For example, pandas has ``pandas.DataFrame.__dataframe_consortium_standard__`` a
 The signatures should be (note: docstring is optional):
 ```python
 def __dataframe_consortium_standard__(
-    self, *, api_version: str | None = None
+    self, *, api_version: str
 ) -> Any:
 
 def __column_consortium_standard__(
-    self, *, api_version: str | None = None
+    self, *, api_version: str
 ) -> Any:
 ```
 `api_version` is
 a string representing the version of the dataframe API specification
 to be returned, in ``'YYYY.MM'`` form, for example, ``'2023.04'``.
-If it is ``None``, it should return the namespace corresponding to
-latest version of the dataframe API specification.  If the given
-version is invalid or not implemented for the given module, an
-error should be raised. Default: ``None``.
+If the given version is invalid or not implemented for the given module,
+an error should be raised. It is suggested to use the earliest API
+version required for maximum compatibility.
 
 For some examples, please check https://github.com/data-apis/dataframe-api/tree/main/spec/examples.
 

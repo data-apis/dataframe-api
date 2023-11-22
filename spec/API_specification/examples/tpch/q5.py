@@ -1,4 +1,5 @@
-"""
+"""Q5, rewritten to use the DataFrame API.
+
 Original query:
 
 SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
@@ -31,14 +32,14 @@ def query(
     nation_raw: SupportsDataFrameAPI,
     region_raw: SupportsDataFrameAPI,
 ) -> SupportsDataFrameAPI:
-    customer = customer_raw.__dataframe_consortium_standard__()
-    orders = orders_raw.__dataframe_consortium_standard__()
-    lineitem = lineitem_raw.__dataframe_consortium_standard__()
-    supplier = supplier_raw.__dataframe_consortium_standard__()
-    nation = nation_raw.__dataframe_consortium_standard__()
-    region = region_raw.__dataframe_consortium_standard__()
+    customer = customer_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
+    orders = orders_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
+    lineitem = lineitem_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
+    supplier = supplier_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
+    nation = nation_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
+    region = region_raw.__dataframe_consortium_standard__(api_version="2023-10.beta")
 
-    namespace = customer.__dataframe_namespace__()
+    pdx = customer.__dataframe_namespace__()
 
     result = (
         region.join(nation, how="inner", left_on="r_regionkey", right_on="n_regionkey")
@@ -53,22 +54,17 @@ def query(
         )
     )
     mask = (
-        (
-            result.get_column_by_name("c_nationkey")
-            == result.get_column_by_name("s_nationkey")
-        )
-        & (result.get_column_by_name("r_name") == "ASIA")
-        & (result.get_column_by_name("o_orderdate") >= namespace.date(1994, 1, 1))  # type: ignore
-        & (result.get_column_by_name("o_orderdate") < namespace.date(1995, 1, 1))  # type: ignore
+        (result.col("c_nationkey") == result.col("s_nationkey"))
+        & (result.col("r_name") == "ASIA")
+        & (result.col("o_orderdate") >= pdx.date(1994, 1, 1))
+        & (result.col("o_orderdate") < pdx.date(1995, 1, 1))
     )
     result = result.filter(mask)
 
-    new_column = (
-        result.get_column_by_name("l_extendedprice")
-        * (1 - result.get_column_by_name("l_discount"))
-    ).rename("revenue")
+    new_column = (result.col("l_extendedprice") * (1 - result.col("l_discount"))).rename(
+        "revenue",
+    )
     result = result.assign(new_column)
-    result = result.select(["revenue", "n_name"])
-    result = result.group_by("n_name").sum()
+    result = result.group_by("n_name").aggregate(pdx.Aggregation.sum("revenue"))
 
     return result.dataframe

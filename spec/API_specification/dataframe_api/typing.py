@@ -1,165 +1,209 @@
-"""
-Types for type annotations used in the dataframe API standard.
-"""
+"""Types for type annotations used in the dataframe API standard."""
 from __future__ import annotations
 
 from typing import (
     TYPE_CHECKING,
     Any,
     Literal,
-    Mapping,
     Protocol,
-    Sequence,
     Union,
 )
 
 from dataframe_api.column_object import Column
 from dataframe_api.dataframe_object import DataFrame
+from dataframe_api.groupby_object import Aggregation as AggregationT
 from dataframe_api.groupby_object import GroupBy
 
+from .scalar_object import Scalar
+
 if TYPE_CHECKING:
-    from .dtypes import (
-        Bool,
-        Float64,
-        Float32,
-        Int64,
-        Int32,
-        Int16,
-        Int8,
-        UInt64,
-        UInt32,
-        UInt16,
-        UInt8,
-        Date,
-        Datetime,
-        String,
-    )
+    from collections.abc import Sequence
 
-    DType = Union[Bool, Float64, Float32, Int64, Int32, Int16, Int8, UInt64, UInt32, UInt16, UInt8]
 
-# Type alias: Mypy needs Any, but for readability we need to make clear this
-# is a Python scalar (i.e., an instance of `bool`, `int`, `float`, `str`, etc.)
-Scalar = Any
 # null is a special object which represents a missing value.
 # It is not valid as a type.
-NullType = Any
 
 
 class Namespace(Protocol):
     __dataframe_api_version__: str
 
-    @staticmethod
-    def Int64() -> Int64:
+    class Int64:
         ...
 
-    @staticmethod
-    def Int32() -> Int32:
+    class Int32:
         ...
 
-    @staticmethod
-    def Int16() -> Int16:
+    class Int16:
         ...
 
-    @staticmethod
-    def Int8() -> Int8:
+    class Int8:
         ...
 
-    @staticmethod
-    def UInt64() -> UInt64:
+    class UInt64:
         ...
 
-    @staticmethod
-    def UInt32() -> UInt32:
+    class UInt32:
         ...
 
-    @staticmethod
-    def UInt16() -> UInt16:
+    class UInt16:
         ...
 
-    @staticmethod
-    def UInt8() -> UInt8:
+    class UInt8:
         ...
 
-    @staticmethod
-    def Float64() -> Float64:
+    class Float64:
         ...
 
-    @staticmethod
-    def Float32() -> Float32:
+    class Float32:
         ...
 
-    @staticmethod
-    def Bool() -> Bool:
+    class Bool:
         ...
 
-    @staticmethod
-    def Date() -> Date:
+    class Date:
         ...
 
-    @staticmethod
-    def Datetime(time_unit: Literal['ms', 'us'], time_zone: str | None) -> Datetime:
+    class NullType:
         ...
 
-    @staticmethod
-    def String() -> String:
+    null: NullType
+
+    class Datetime:
+        time_unit: Literal["ms", "us"]
+        time_zone: str | None
+
+        def __init__(  # noqa: ANN204
+            self,
+            time_unit: Literal["ms", "us"],
+            time_zone: str | None = None,
+        ):
+            ...
+
+    class Duration:
+        time_unit: Literal["ms", "us"]
+
+        def __init__(  # noqa: ANN204
+            self,
+            time_unit: Literal["ms", "us"],
+        ):
+            ...
+
+    class String:
         ...
 
-    @staticmethod
-    def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
+    Aggregation: AggregationT
+
+    def concat(self, dataframes: Sequence[DataFrame]) -> DataFrame:
         ...
 
-    @staticmethod
     def column_from_sequence(
+        self,
         sequence: Sequence[Any],
         *,
-        dtype: Any,
+        dtype: DType,
         name: str = "",
-        api_version: str | None = None,
     ) -> Column:
         ...
 
-    @staticmethod
-    def dataframe_from_dict(
-        data: Mapping[str, Column], *, api_version: str | None = None
-    ) -> DataFrame:
+    def dataframe_from_columns(self, *columns: Column) -> DataFrame:
         ...
 
-    @staticmethod
     def column_from_1d_array(
-        array: Any, *, dtype: Any, name: str = "", api_version: str | None = None
+        self,
+        array: Any,
+        *,
+        dtype: DType,
+        name: str = "",
     ) -> Column:
         ...
 
-    @staticmethod
     def dataframe_from_2d_array(
+        self,
         array: Any,
         *,
         names: Sequence[str],
-        dtypes: Mapping[str, Any],
-        api_version: str | None = None,
     ) -> DataFrame:
         ...
 
-    @staticmethod
-    def is_null(value: object, /) -> bool:
+    def is_null(self, value: object, /) -> bool:
         ...
 
-    @staticmethod
-    def is_dtype(dtype: Any, kind: str | tuple[str, ...]) -> bool:
+    def is_dtype(self, dtype: DType, kind: str | tuple[str, ...]) -> bool:
         ...
+
+    def date(self, year: int, month: int, day: int) -> Scalar:
+        ...
+
+    def any_horizontal(
+        self,
+        *columns: Column,
+        skip_nulls: bool = True,
+    ) -> Column:
+        ...
+
+    def all_horizontal(
+        self,
+        *columns: Column,
+        skip_nulls: bool = True,
+    ) -> Column:
+        ...
+
+    def sorted_indices(
+        self,
+        *columns: Column,
+        ascending: Sequence[bool] | bool = True,
+        nulls_position: Literal["first", "last"] = "last",
+    ) -> Column:
+        ...
+
+    def unique_indices(
+        self,
+        *columns: Column,
+        skip_nulls: bool = True,
+    ) -> Column:
+        ...
+
+
+DType = Union[
+    Namespace.Bool,
+    Namespace.Float64,
+    Namespace.Float32,
+    Namespace.Int64,
+    Namespace.Int32,
+    Namespace.Int16,
+    Namespace.Int8,
+    Namespace.UInt64,
+    Namespace.UInt32,
+    Namespace.UInt16,
+    Namespace.UInt8,
+    Namespace.String,
+    Namespace.Date,
+    Namespace.Datetime,
+    Namespace.Duration,
+]
 
 
 class SupportsDataFrameAPI(Protocol):
     def __dataframe_consortium_standard__(
-        self, *, api_version: str | None = None
+        self,
+        *,
+        api_version: str,
     ) -> DataFrame:
         ...
 
+
 class SupportsColumnAPI(Protocol):
     def __column_consortium_standard__(
-        self, *, api_version: str | None = None
+        self,
+        *,
+        api_version: str,
     ) -> Column:
         ...
+
+
+PythonScalar = Union[str, int, float, bool]
+AnyScalar = Union[PythonScalar, Scalar]
+NullType = Namespace.NullType
 
 
 __all__ = [
@@ -168,9 +212,9 @@ __all__ = [
     "DType",
     "GroupBy",
     "Namespace",
-    "NullType",
+    "AnyScalar",
     "Scalar",
+    "NullType",
     "SupportsColumnAPI",
     "SupportsDataFrameAPI",
-    "Scalar",
 ]

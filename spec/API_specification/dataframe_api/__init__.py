@@ -1,45 +1,65 @@
-"""
-Function stubs and API documentation for the DataFrame API standard.
-"""
+# mypy: disable-error-code="empty-body"
+"""Function stubs and API documentation for the DataFrame API standard."""
 from __future__ import annotations
 
-from typing import Mapping, Sequence, Any, Literal, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Literal
 
-from .column_object import *
+from .column_object import Column
 from .dataframe_object import DataFrame
-from .groupby_object import *
-from .dtypes import *
+from .dtypes import (
+    Bool,
+    Date,
+    Datetime,
+    Duration,
+    Float32,
+    Float64,
+    Int8,
+    Int16,
+    Int32,
+    Int64,
+    String,
+    UInt8,
+    UInt16,
+    UInt32,
+    UInt64,
+)
+from .groupby_object import Aggregation, GroupBy
 
 if TYPE_CHECKING:
-    from .typing import DType
+    from collections.abc import Sequence
+
+    from .typing import DType, Scalar
 
 __all__ = [
-    "__dataframe_api_version__",
-    "DataFrame",
-    "Column",
-    "column_from_sequence",
-    "column_from_1d_array",
-    "concat",
-    "dataframe_from_dict",
-    "dataframe_from_2d_array",
-    "is_null",
-    "null",
-    "Int64",
-    "Int32",
-    "Int16",
-    "Int8",
-    "UInt64",
-    "UInt32",
-    "UInt16",
-    "UInt8",
-    "Float64",
-    "Float32",
+    "GroupBy",
+    "Aggregation",
     "Bool",
     "Date",
     "Datetime",
     "Duration",
+    "Float32",
+    "Float64",
+    "Int16",
+    "Int32",
+    "Int64",
+    "Int8",
     "String",
+    "UInt16",
+    "UInt32",
+    "UInt64",
+    "UInt8",
+    "Column",
+    "DataFrame",
+    "__dataframe_api_version__",
+    "column_from_1d_array",
+    "column_from_sequence",
+    "concat",
+    "dataframe_from_2d_array",
+    "dataframe_from_columns",
+    "date",
     "is_dtype",
+    "is_null",
+    "null",
 ]
 
 
@@ -50,11 +70,9 @@ the conforming implementation adheres. Set to a concrete value for a stable
 implementation of the dataframe API standard.
 """
 
-def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
-    """
-    Concatenate DataFrames vertically.
 
-    To concatenate horizontally, please use ``insert``.
+def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
+    """Concatenate DataFrames vertically.
 
     Parameters
     ----------
@@ -70,9 +88,14 @@ def concat(dataframes: Sequence[DataFrame]) -> DataFrame:
     """
     ...
 
-def column_from_sequence(sequence: Sequence[Any], *, dtype: DType, name: str = '') -> Column:
-    """
-    Construct Column from sequence of elements.
+
+def column_from_sequence(
+    sequence: Sequence[Any],
+    *,
+    dtype: DType,
+    name: str = "",
+) -> Column:
+    """Construct Column from sequence of elements.
 
     Parameters
     ----------
@@ -91,40 +114,45 @@ def column_from_sequence(sequence: Sequence[Any], *, dtype: DType, name: str = '
     """
     ...
 
-def dataframe_from_dict(data: Mapping[str, Column]) -> DataFrame:
-    """
-    Construct DataFrame from map of column names to Columns.
+
+def dataframe_from_columns(*columns: Column) -> DataFrame:
+    """Construct DataFrame from sequence of Columns.
 
     Parameters
     ----------
-    data : Mapping[str, Column]
-        Column must be of the corresponding type of the DataFrame.
+    columns : Column
+        Column(s) must be of the corresponding type of the DataFrame.
         For example, it is only supported to build a ``LibraryXDataFrame`` using
         ``LibraryXColumn`` instances.
 
     Returns
     -------
     DataFrame
-    
-    Raises
-    ------
-    ValueError
-        If any of the columns already has a name, and the corresponding key
-        in `data` doesn't match.
-
     """
     ...
 
 
-def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> Column:
-    """
-    Construct Column from 1D array.
+def column_from_1d_array(array: Any, *, name: str = "") -> Column:
+    """Construct Column from 1D array.
 
     See `dataframe_from_2d_array` for related 2D function.
 
     Only Array-API-compliant 1D arrays are supported.
-    Cross-kind casting is undefined and may vary across implementations.
-    Downcasting is disallowed.
+
+    The resulting column will have the dtype corresponding to the
+    Array API one:
+
+    -  'bool' -> Bool()
+    -  'int8' -> Int8()
+    -  'int16' -> Int16()
+    -  'int32' -> Int32()
+    -  'int64' -> Int64()
+    -  'uint8' -> UInt8()
+    -  'uint16' -> UInt16()
+    -  'uint32' -> UInt32()
+    -  'uint64' -> UInt64()
+    -  'float32' -> Float32()
+    -  'float64' -> Float64()
 
     Parameters
     ----------
@@ -132,8 +160,6 @@ def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> Column:
         array-API compliant 1D array
     name : str, optional
         Name to give columns.
-    dtype : DType
-        Dtype of column.
 
     Returns
     -------
@@ -141,24 +167,35 @@ def column_from_1d_array(array: Any, *, dtype: DType, name: str = '') -> Column:
     """
     ...
 
-def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping[str, Any]) -> DataFrame:
-    """
-    Construct DataFrame from 2D array.
+
+def dataframe_from_2d_array(array: Any, *, names: Sequence[str]) -> DataFrame:
+    """Construct DataFrame from 2D array.
 
     See `column_from_1d_array` for related 1D function.
 
     Only Array-API-compliant 2D arrays are supported.
-    Cross-kind casting is undefined and may vary across implementations.
-    Downcasting is disallowed.
+
+    The resulting columns will have the dtype corresponding to the
+    Array API one:
+
+    -  'bool' -> Bool()
+    -  'int8' -> Int8()
+    -  'int16' -> Int16()
+    -  'int32' -> Int32()
+    -  'int64' -> Int64()
+    -  'uint8' -> UInt8()
+    -  'uint16' -> UInt16()
+    -  'uint32' -> UInt32()
+    -  'uint64' -> UInt64()
+    -  'float32' -> Float32()
+    -  'float64' -> Float64()
 
     Parameters
     ----------
     array : array
         array-API compliant 2D array
     names : Sequence[str]
-        Names to give columns. Must be the same length as ``array.shape[1]``.
-    dtypes : Mapping[str, DType]
-        Dtype of each column. Must be the same length as ``array.shape[1]``.
+        Names to give columns.
 
     Returns
     -------
@@ -166,12 +203,14 @@ def dataframe_from_2d_array(array: Any, *, names: Sequence[str], dtypes: Mapping
     """
     ...
 
-class null:
-    """
-    A `null` object to represent missing data.
+
+class null:  # noqa: N801
+    """A `null` object to represent missing data.
+
+    Not meant to be instantiated, use ``null`` directly.
 
     ``null`` is a scalar, and may be used when constructing a `Column` from a
-    Python sequence with `column_from_sequence`. It does not support ``is``,
+    Python sequence with :func:`column_from_sequence`. It does not support ``is``,
     ``==`` or ``bool``.
 
     Raises
@@ -192,11 +231,10 @@ class null:
     used to check if an object *is* the ``null`` object.
 
     """
-    ...
+
 
 def is_null(value: object, /) -> bool:
-    """
-    Check if an object is a `null` scalar.
+    """Check if an object is a `null` scalar.
 
     Parameters
     ----------
@@ -208,12 +246,12 @@ def is_null(value: object, /) -> bool:
     bool
         True if the input is a `null` object from the same library which
         implements the dataframe API standard, False otherwise.
-
     """
+    ...
+
 
 def is_dtype(dtype: DType, kind: str | tuple[str, ...]) -> bool:
-    """
-    Returns a boolean indicating whether a provided dtype is of a specified data type “kind”.
+    """Indicate whether a provided dtype is of a specified data type "kind".
 
     Parameters
     ----------
@@ -227,9 +265,11 @@ def is_dtype(dtype: DType, kind: str | tuple[str, ...]) -> bool:
 
             - 'bool': boolean data type (Bool).
             - 'signed integer': signed integer data types (Int8, Int16, Int32, Int64).
-            - 'unsigned integer': unsigned integer data types (UInt8, UInt16, UInt32, UInt64).
+            - 'unsigned integer': unsigned integer data types
+              (UInt8, UInt16, UInt32, UInt64).
             - 'floating': floating-point data types (Float32, Float64).
-            - 'integral': integer data types. Shorthand for ('signed integer', 'unsigned integer').
+            - 'integral': integer data types. Shorthand for
+              ('signed integer', 'unsigned integer').
             - 'numeric': numeric data types. Shorthand for ('integral', 'floating').
 
             If kind is a tuple, the tuple specifies a union of dtypes and/or kinds,
@@ -241,3 +281,138 @@ def is_dtype(dtype: DType, kind: str | tuple[str, ...]) -> bool:
     -------
     bool
     """
+    ...
+
+
+def date(year: int, month: int, day: int) -> Scalar:
+    """Create date object which can be used for filtering.
+
+    The full 32-bit signed integer range of days since epoch should be supported
+    (between -5877641-06-23 and 5881580-07-11 inclusive).
+
+    Examples
+    --------
+    >>> df: DataFrame
+    >>> pdx = df.__dataframe_namespace__()
+    >>> mask = (
+    ...     (df.get_column_by_name('date') >= pdx.date(2020, 1, 1))
+    ...     & (df.get_column_by_name('date') < pdx.date(2021, 1, 1))
+    ... )
+    >>> df.filter(mask)
+    """
+
+
+def any_horizontal(*columns: Column, skip_nulls: bool = True) -> Column:
+    """Reduction returns a Column.
+
+    Differs from :meth:`DataFrame.any` in that the reduction happens
+    for each row, rather than for each column.
+
+    All the `columns` must have the same parent DataFrame.
+    The return value has the same parent DataFrame as the input columns.
+
+    Raises
+    ------
+    ValueError
+        If any of the columns is not boolean.
+
+    Examples
+    --------
+    >>> df: DataFrame
+    >>> pdx = df.__dataframe_namespace__()
+    >>> mask = pdx.any_horizontal(
+    ...     *[df.col(col_name) > 0 for col_name in df.column_names()]
+    ... )
+    >>> df = df.filter(mask)
+    """
+    ...
+
+
+def all_horizontal(*columns: Column, skip_nulls: bool = True) -> Column:
+    """Reduction returns a Column.
+
+    Differs from :meth:`DataFrame.all` in that the reduction happens
+    for each row, rather than for each column.
+
+    All the `columns` must have the same parent DataFrame.
+    The return value has the same parent DataFrame as the input columns.
+
+    Raises
+    ------
+    ValueError
+        If any of the columns is not boolean.
+
+    Examples
+    --------
+    >>> df: DataFrame
+    >>> pdx = df.__dataframe_namespace__()
+    >>> mask = pdx.all_horizontal(
+    ...     *[df.col(col_name) > 0 for col_name in df.column_names()]
+    ... )
+    >>> df = df.filter(mask)
+    """
+    ...
+
+
+def sorted_indices(
+    *columns: Column,
+    ascending: Sequence[bool] | bool = True,
+    nulls_position: Literal["first", "last"] = "last",
+) -> Column:
+    """Return row numbers which would sort according to given columns.
+
+    If you need to sort the DataFrame, use :meth:`sort`.
+
+    Parameters
+    ----------
+    *columns : Column
+        Columns to sort by.
+    ascending : Sequence[bool] or bool
+        If `True`, sort by all keys in ascending order.
+        If `False`, sort by all keys in descending order.
+        If a sequence, it must be the same length as `keys`,
+        and determines the direction with which to use each
+        key to sort by.
+    nulls_position : ``{'first', 'last'}``
+        Whether null values should be placed at the beginning
+        or at the end of the result.
+        Note that the position of NaNs is unspecified and may
+        vary based on the implementation.
+
+    Returns
+    -------
+    Column
+        The return value has the same parent DataFrame as the input columns.
+
+    Raises
+    ------
+    ValueError
+        If `keys` and `ascending` are sequences of different lengths.
+    """
+    ...
+
+
+def unique_indices(*columns: Column, skip_nulls: bool = True) -> Column:
+    """Return indices corresponding to unique values across selected columns.
+
+    Parameters
+    ----------
+    *columns : Column
+        Column names to consider when finding unique values.
+
+    Returns
+    -------
+    Column
+        Indices corresponding to unique values.
+
+    Notes
+    -----
+    There are no ordering guarantees. In particular, if there are multiple
+    indices corresponding to the same unique value(s), there is no guarantee
+    about which one will appear in the result.
+    If the original column(s) contain multiple `'NaN'` values, then
+    only a single index corresponding to those values will be returned.
+    Likewise for null values (if ``skip_nulls=False``).
+    To get the unique values, you can do ``df.get_rows(df.unique_indices(keys))``.
+    """
+    ...
