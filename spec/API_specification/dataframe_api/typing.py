@@ -132,14 +132,14 @@ class Namespace(Protocol):
     def any_horizontal(
         self,
         *columns: Column,
-        skip_nulls: bool | Scalar = True,
+        skip_nulls: bool = True,
     ) -> Column:
         ...
 
     def all_horizontal(
         self,
         *columns: Column,
-        skip_nulls: bool | Scalar = True,
+        skip_nulls: bool = True,
     ) -> Column:
         ...
 
@@ -154,7 +154,7 @@ class Namespace(Protocol):
     def unique_indices(
         self,
         *columns: Column,
-        skip_nulls: bool | Scalar = True,
+        skip_nulls: bool = True,
     ) -> Column:
         ...
 
