@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Protocol
 if TYPE_CHECKING:
     from typing_extensions import Self
 
-    from dataframe_api.typing import AnyScalar, DType
+    from dataframe_api.typing import AnyScalar, DType, Namespace
 
 __all__ = ["Scalar"]
 
@@ -25,6 +25,20 @@ class Scalar(Protocol):
     `column.get_value(0)` will return a `Scalar` of dtype `Int64`
     (even if it is backed by a null value).
     """
+
+    def __scalar_namespace__(self) -> Namespace:
+        """Return an object that has all the Dataframe Standard API functions on it.
+
+        Returns
+        -------
+        namespace
+            An object representing the dataframe API namespace. It should have
+            every top-level function defined in the specification as an
+            attribute. It may contain other public names as well, but it is
+            recommended to only include those names that are part of the
+            specification.
+        """
+        ...
 
     def __lt__(self, other: AnyScalar) -> Scalar:
         ...

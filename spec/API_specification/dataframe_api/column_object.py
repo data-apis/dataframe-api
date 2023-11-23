@@ -183,7 +183,7 @@ class Column(Protocol):
         """Sort column.
 
         If you need the indices which would sort the column,
-        use :meth:`sorted_indices`.
+        use `sorted_indices`.
 
         Parameters
         ----------
