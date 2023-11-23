@@ -18,7 +18,7 @@ def main(df_raw: SupportsDataFrameAPI) -> SupportsDataFrameAPI:
             if isinstance(df.col(col_name).dtype, pdx.Int64)
         ],
     )
-    arr = df.to_array(pdx.Int64())
+    arr = df.to_array()
     arr = some_array_function(arr)
     df = pdx.dataframe_from_2d_array(arr, names=["a", "b"])
     return df.dataframe
