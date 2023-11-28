@@ -69,6 +69,9 @@ class Namespace(Protocol):
     null: NullType
 
     class Datetime:
+        time_unit: Literal["ms", "us"]
+        time_zone: str | None
+
         def __init__(  # noqa: ANN204
             self,
             time_unit: Literal["ms", "us"],
@@ -77,6 +80,8 @@ class Namespace(Protocol):
             ...
 
     class Duration:
+        time_unit: Literal["ms", "us"]
+
         def __init__(  # noqa: ANN204
             self,
             time_unit: Literal["ms", "us"],
@@ -116,7 +121,7 @@ class Namespace(Protocol):
         self,
         array: Any,
         *,
-        schema: dict[str, DType],
+        names: Sequence[str],
     ) -> DataFrame:
         ...
 
@@ -127,6 +132,35 @@ class Namespace(Protocol):
         ...
 
     def date(self, year: int, month: int, day: int) -> Scalar:
+        ...
+
+    def any_horizontal(
+        self,
+        *columns: Column,
+        skip_nulls: bool = True,
+    ) -> Column:
+        ...
+
+    def all_horizontal(
+        self,
+        *columns: Column,
+        skip_nulls: bool = True,
+    ) -> Column:
+        ...
+
+    def sorted_indices(
+        self,
+        *columns: Column,
+        ascending: Sequence[bool] | bool = True,
+        nulls_position: Literal["first", "last"] = "last",
+    ) -> Column:
+        ...
+
+    def unique_indices(
+        self,
+        *columns: Column,
+        skip_nulls: bool = True,
+    ) -> Column:
         ...
 
 
