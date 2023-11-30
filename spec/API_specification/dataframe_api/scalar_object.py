@@ -40,6 +40,11 @@ class Scalar(Protocol):
         """
         ...
 
+    @property
+    def scalar(self) -> Any:
+        """Return underlying (not-necessarily-Standard-compliant) scalar object."""
+        ...
+
     def __lt__(self, other: AnyScalar) -> Scalar:
         ...
 
