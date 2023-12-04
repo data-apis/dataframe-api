@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Protocol
+from typing import TYPE_CHECKING, Any, Protocol
 
 if TYPE_CHECKING:
     from typing_extensions import Self
@@ -38,6 +38,11 @@ class Scalar(Protocol):
             recommended to only include those names that are part of the
             specification.
         """
+        ...
+
+    @property
+    def scalar(self) -> Any:
+        """Return underlying (not-necessarily-Standard-compliant) scalar object."""
         ...
 
     def __lt__(self, other: AnyScalar) -> Scalar:
