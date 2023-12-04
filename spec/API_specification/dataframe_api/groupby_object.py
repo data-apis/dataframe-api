@@ -72,13 +72,13 @@ class GroupBy(Protocol):
         Examples
         --------
         >>> df: DataFrame
-        >>> namespace = df.__dataframe_namespace__()
+        >>> pdx = df.__dataframe_namespace__()
         >>> df.group_by('year').aggregate(
-        ...     namespace.Aggregation.sum('l_quantity').rename('sum_qty'),
-        ...     namespace.Aggregation.mean('l_quantity').rename('avg_qty'),
-        ...     namespace.Aggregation.mean('l_extended_price').rename('avg_price'),
-        ...     namespace.Aggregation.mean('l_discount').rename('avg_disc'),
-        ...     namespace.Aggregation.size().rename('count_order'),
+        ...     pdx.Aggregation.sum('l_quantity').rename('sum_qty'),
+        ...     pdx.Aggregation.mean('l_quantity').rename('avg_qty'),
+        ...     pdx.Aggregation.mean('l_extended_price').rename('avg_price'),
+        ...     pdx.Aggregation.mean('l_discount').rename('avg_disc'),
+        ...     pdx.Aggregation.size().rename('count_order'),
         ... )
         """
         ...
