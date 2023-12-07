@@ -10,15 +10,15 @@ some_array_function: Callable[[Any], Any]
 
 def main(df_raw: SupportsDataFrameAPI) -> SupportsDataFrameAPI:
     df = df_raw.__dataframe_consortium_standard__(api_version="2023-11.beta").persist()
-    namespace = df.__dataframe_namespace__()
+    pdx = df.__dataframe_namespace__()
     df = df.select(
         *[
             col_name
             for col_name in df.column_names
-            if isinstance(df.col(col_name).dtype, namespace.Int64)
+            if isinstance(df.col(col_name).dtype, pdx.Int64)
         ],
     )
-    arr = df.to_array(namespace.Int64())
+    arr = df.to_array()
     arr = some_array_function(arr)
-    df = namespace.dataframe_from_2d_array(arr, names=["a", "b"])
+    df = pdx.dataframe_from_2d_array(arr, names=["a", "b"])
     return df.dataframe

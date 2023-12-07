@@ -179,7 +179,7 @@ class Column(Protocol):
         """Sort column.
 
         If you need the indices which would sort the column,
-        use :meth:`sorted_indices`.
+        use `sorted_indices`.
 
         Parameters
         ----------
@@ -748,6 +748,17 @@ class Column(Protocol):
 
     def len(self) -> Scalar:
         """Return the number of rows."""
+        ...
+
+    def n_unique(self, *, skip_nulls: bool = True) -> Scalar:
+        """Return number of unique values.
+
+        Notes
+        -----
+        If the original column(s) contain multiple `'NaN'` values, then
+        they only count as one distinct value.
+        Likewise for null values (if ``skip_nulls=False``).
+        """
         ...
 
     def cumulative_max(self) -> Self:
