@@ -505,6 +505,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.is_null" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.is_null()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.iter_columns" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.iter_columns()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.join" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.join()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.max()</span></code></a>
@@ -694,6 +696,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.is_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.is_nan()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.is_null" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.is_null()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.iter_columns" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.iter_columns()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.join" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.join()</span></code></a>
         </li>
@@ -1331,6 +1335,11 @@ May optionally include ‘NaT’ values (if present in an implementation),
 but note that the Standard makes no guarantees about them.</p>
 </dd></dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.iter_columns">
+<span class="sig-name descname"><span class="pre">iter_columns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.iter_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return iterator over columns.</p>
+</dd></dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.join">
 <span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">how</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'inner'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'outer'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_on</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_on</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.join" title="Permalink to this definition">¶</a></dt>
 <dd><p>Join with other dataframe.</p>
@@ -1393,22 +1402,19 @@ treat it as a no-op.</p>
 at most once per dataframe, and as late as possible in the pipeline.</p>
 <p>For example, do this</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">:</span> <span class="n">DataFrame</span>
-<span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">persist</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">column_names</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="mi">0</span><span class="p">):</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
+<span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iter_columns</span><span class="p">()</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="mi">0</span><span class="p">)]</span>
 </pre></div>
 </div>
 <p>instead of this:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">:</span> <span class="n">DataFrame</span>
-<span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">column_name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">column_names</span><span class="p">:</span>
-    <span class="c1"># Do NOT call `persist` on a `DataFrame` within a for-loop!</span>
-    <span class="c1"># This may re-trigger the same computation multiple times</span>
-    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">persist</span><span class="p">()</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">column_name</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="n">features</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Do NOT do this! This will trigger execution of the entire</span>
+    <span class="c1"># pipeline for element in the for-loop!</span>
+    <span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iter_columns</span><span class="p">()</span> <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">persist</span><span class="p">()</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
