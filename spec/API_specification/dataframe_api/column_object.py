@@ -90,10 +90,6 @@ class Column(Protocol):
         """Return name of column."""
         ...
 
-    def __len__(self) -> int:
-        """Return the number of rows."""
-        ...
-
     def __iter__(self) -> NoReturn:
         """Iterate over elements.
 
@@ -748,6 +744,10 @@ class Column(Protocol):
         skip_nulls
             Whether to skip null values.
         """
+        ...
+
+    def len(self) -> Scalar:
+        """Return the number of rows."""
         ...
 
     def n_unique(self, *, skip_nulls: bool = True) -> Scalar:
