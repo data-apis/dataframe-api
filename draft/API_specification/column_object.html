@@ -536,6 +536,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.month" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.month()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.n_unique" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.n_unique()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.name" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.name</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.parent_dataframe" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.parent_dataframe</span></code></a>
@@ -742,6 +744,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.minute" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.minute()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.month" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.month()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.n_unique" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.n_unique()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.name" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.name</span></code></a>
         </li>
@@ -1469,6 +1473,15 @@ must be supported. The returned value has the same dtype as the column.</p>
 <dd><p>Return ‘month’ component of each element of <code class="code docutils literal notranslate"><span class="pre">Date</span></code> and <code class="code docutils literal notranslate"><span class="pre">Datetime</span></code> columns.</p>
 <p>For example, return 1 for 1981-01-02T12:34:56.123456.</p>
 <p>Return column should be of integer dtype (signed or unsigned).</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.n_unique">
+<span class="sig-name descname"><span class="pre">n_unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span></span></span><a class="headerlink" href="#dataframe_api.Column.n_unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of unique values.</p>
+<p class="rubric">Notes</p>
+<p>If the original column(s) contain multiple <code class="code docutils literal notranslate"><span class="pre">'NaN'</span></code> values, then
+they only count as one distinct value.
+Likewise for null values (if <code class="docutils literal notranslate"><span class="pre">skip_nulls=False</span></code>).</p>
 </dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="dataframe_api.Column.name">
