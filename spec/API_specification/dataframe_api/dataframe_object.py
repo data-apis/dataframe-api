@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Literal, NoReturn, Protocol
 
 if TYPE_CHECKING:
-    from collections.abc import Mapping, Sequence
+    from collections.abc import Iterator, Mapping, Sequence
 
     from typing_extensions import Self
 
@@ -273,6 +273,10 @@ class DataFrame(Protocol):
         dict[str, Any]
             Mapping from column name to data type.
         """
+        ...
+
+    def iter_columns(self) -> Iterator[Column]:
+        """Return iterator over columns."""
         ...
 
     def sort(
@@ -905,23 +909,20 @@ class DataFrame(Protocol):
             .. code-block:: python
 
                 df: DataFrame
-                features = []
                 result = df.std() > 0
                 result = result.persist()
-                for column_name in df.column_names:
-                    if result.col(column_name).get_value(0):
-                        features.append(column_name)
+                features = [col.name for col in df.iter_columns() if col.get_value(0)]
 
             instead of this:
 
             .. code-block:: python
 
                 df: DataFrame
-                features = []
-                for column_name in df.column_names:
-                    # Do NOT call `persist` on a `DataFrame` within a for-loop!
-                    # This may re-trigger the same computation multiple times
-                    if df.persist().col(column_name).std() > 0:
-                        features.append(column_name)
+                result = df.std() > 0
+                features = [
+                    # Do NOT do this! This will trigger execution of the entire
+                    # pipeline for element in the for-loop!
+                    col.name for col in df.iter_columns() if col.get_value(0).persist()
+                ]
         """
         ...
