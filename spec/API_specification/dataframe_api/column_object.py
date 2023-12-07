@@ -1057,3 +1057,11 @@ class Column(Protocol):
             at most once per dataframe, and as late as possible in the pipeline.
         """
         ...
+
+    def cast(self, dtype: DType) -> Self:
+        """Cast specified columns to specified dtypes.
+
+        Cross-kind casting (e.g. integer to string) is not supported and may
+        vary across implementations.
+        """
+        ...

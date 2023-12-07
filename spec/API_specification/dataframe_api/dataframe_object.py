@@ -925,3 +925,11 @@ class DataFrame(Protocol):
                         features.append(column_name)
         """
         ...
+
+    def cast(self, dtypes: Mapping[str, DType]) -> Self:
+        """Convert specified columns to specified dtypes.
+
+        Cross-kind casting (e.g. integer to string) is not supported and may
+        vary across implementations.
+        """
+        ...
