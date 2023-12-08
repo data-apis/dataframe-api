@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Literal, NoReturn, Protocol
 
 if TYPE_CHECKING:
-    from collections.abc import Mapping, Sequence
+    from collections.abc import Iterator, Mapping, Sequence
 
     from typing_extensions import Self
 
@@ -275,6 +275,10 @@ class DataFrame(Protocol):
         """
         ...
 
+    def iter_columns(self) -> Iterator[Column]:
+        """Return iterator over columns."""
+        ...
+
     def sort(
         self,
         *keys: str,
@@ -284,7 +288,7 @@ class DataFrame(Protocol):
         """Sort dataframe according to given columns.
 
         If you only need the indices which would sort the dataframe, use
-        :meth:`sorted_indices`.
+        `sorted_indices`.
 
         Parameters
         ----------
@@ -306,44 +310,6 @@ class DataFrame(Protocol):
         Returns
         -------
         DataFrame
-
-        Raises
-        ------
-        ValueError
-            If `keys` and `ascending` are sequences of different lengths.
-        """
-        ...
-
-    def sorted_indices(
-        self,
-        *keys: str,
-        ascending: Sequence[bool] | bool = True,
-        nulls_position: Literal["first", "last"] = "last",
-    ) -> Column:
-        """Return row numbers which would sort according to given columns.
-
-        If you need to sort the DataFrame, use :meth:`sort`.
-
-        Parameters
-        ----------
-        *keys : str
-            Names of columns to sort by.
-            If not specified, sort by all columns.
-        ascending : Sequence[bool] or bool
-            If `True`, sort by all keys in ascending order.
-            If `False`, sort by all keys in descending order.
-            If a sequence, it must be the same length as `keys`,
-            and determines the direction with which to use each
-            key to sort by.
-        nulls_position : ``{'first', 'last'}``
-            Whether null values should be placed at the beginning
-            or at the end of the result.
-            Note that the position of NaNs is unspecified and may
-            vary based on the implementation.
-
-        Returns
-        -------
-        Column
 
         Raises
         ------
@@ -678,32 +644,6 @@ class DataFrame(Protocol):
         """
         ...
 
-    def any_rowwise(self, *, skip_nulls: bool | Scalar = True) -> Column:
-        """Reduction returns a Column.
-
-        Differs from ``DataFrame.any`` and that the reduction happens
-        for each row, rather than for each column.
-
-        Raises
-        ------
-        ValueError
-            If any of the DataFrame's columns is not boolean.
-        """
-        ...
-
-    def all_rowwise(self, *, skip_nulls: bool | Scalar = True) -> Column:
-        """Reduction returns a Column.
-
-        Differs from ``DataFrame.all`` and that the reduction happens
-        for each row, rather than for each column.
-
-        Raises
-        ------
-        ValueError
-            If any of the DataFrame's columns is not boolean.
-        """
-        ...
-
     def min(self, *, skip_nulls: bool | Scalar = True) -> Self:
         """Reduction returns a 1-row DataFrame."""
         ...
@@ -804,32 +744,6 @@ class DataFrame(Protocol):
         """
         ...
 
-    def unique_indices(self, *keys: str, skip_nulls: bool | Scalar = True) -> Column:
-        """Return indices corresponding to unique values across selected columns.
-
-        Parameters
-        ----------
-        *keys : str
-            Column names to consider when finding unique values.
-            If not specified, all columns are considered.
-
-        Returns
-        -------
-        Column
-            Indices corresponding to unique values.
-
-        Notes
-        -----
-        There are no ordering guarantees. In particular, if there are multiple
-        indices corresponding to the same unique value(s), there is no guarantee
-        about which one will appear in the result.
-        If the original column(s) contain multiple `'NaN'` values, then
-        only a single index corresponding to those values will be returned.
-        Likewise for null values (if ``skip_nulls=False``).
-        To get the unique values, you can do ``df.get_rows(df.unique_indices(keys))``.
-        """
-        ...
-
     def fill_nan(self, value: float | NullType | Scalar, /) -> Self:
         """Fill ``nan`` values with the given fill value.
 
@@ -903,26 +817,26 @@ class DataFrame(Protocol):
         """
         ...
 
-    def to_array(self, dtype: DType) -> Any:
+    def to_array(self) -> Any:
         """Convert to array-API-compliant object.
 
-        Parameters
-        ----------
-        dtype : DType
-            The dtype of the array-API-compliant object to return.
-            Must be one of:
+        The resulting array will have the corresponding dtype from the
+        Array API:
 
-            - Bool()
-            - Int8()
-            - Int16()
-            - Int32()
-            - Int64()
-            - UInt8()
-            - UInt16()
-            - UInt32()
-            - UInt64()
-            - Float32()
-            - Float64()
+        - Bool() -> 'bool'
+        - Int8() -> 'int8'
+        - Int16() -> 'int16'
+        - Int32() -> 'int32'
+        - Int64() -> 'int64'
+        - UInt8() -> 'uint8'
+        - UInt16() -> 'uint16'
+        - UInt32() -> 'uint32'
+        - UInt64() -> 'uint64'
+        - Float32() -> 'float32'
+        - Float64() -> 'float64'
+
+        and multiple columns' dtypes are combined according to the
+        `Array API's type promotion rules <https://data-apis.org/array-api/latest/API_specification/type_promotion.html>`_.
 
         Returns
         -------
@@ -995,23 +909,20 @@ class DataFrame(Protocol):
             .. code-block:: python
 
                 df: DataFrame
-                features = []
                 result = df.std() > 0
                 result = result.persist()
-                for column_name in df.column_names:
-                    if result.col(column_name).get_value(0):
-                        features.append(column_name)
+                features = [col.name for col in df.iter_columns() if col.get_value(0)]
 
             instead of this:
 
             .. code-block:: python
 
                 df: DataFrame
-                features = []
-                for column_name in df.column_names:
-                    # Do NOT call `persist` on a `DataFrame` within a for-loop!
-                    # This may re-trigger the same computation multiple times
-                    if df.persist().col(column_name).std() > 0:
-                        features.append(column_name)
+                result = df.std() > 0
+                features = [
+                    # Do NOT do this! This will trigger execution of the entire
+                    # pipeline for element in the for-loop!
+                    col.name for col in df.iter_columns() if col.get_value(0).persist()
+                ]
         """
         ...

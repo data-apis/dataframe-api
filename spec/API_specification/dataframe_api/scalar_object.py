@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Protocol
+from typing import TYPE_CHECKING, Any, Protocol
 
 if TYPE_CHECKING:
     from typing_extensions import Self
 
-    from dataframe_api.typing import AnyScalar, DataFrame, DType
+    from dataframe_api.typing import AnyScalar, DataFrame, DType, Namespace
 
 __all__ = ["Scalar"]
 
@@ -50,6 +50,25 @@ class Scalar(Protocol):
 
         then `scalar.parent_dataframe` should return `None`.
         """
+
+    def __scalar_namespace__(self) -> Namespace:
+        """Return an object that has all the Dataframe Standard API functions on it.
+
+        Returns
+        -------
+        namespace
+            An object representing the dataframe API namespace. It should have
+            every top-level function defined in the specification as an
+            attribute. It may contain other public names as well, but it is
+            recommended to only include those names that are part of the
+            specification.
+        """
+        ...
+
+    @property
+    def scalar(self) -> Any:
+        """Return underlying (not-necessarily-Standard-compliant) scalar object."""
+        ...
 
     def __lt__(self, other: AnyScalar) -> Scalar:
         ...
