@@ -926,3 +926,13 @@ class DataFrame(Protocol):
                 ]
         """
         ...
+
+    def cast(self, dtypes: Mapping[str, DType]) -> Self:
+        """Convert specified columns to specified dtypes.
+
+        The following is not specified and may vary across implementations:
+
+        - Cross-kind casting (e.g. integer to string, or to float)
+        - Behaviour in the case of overflows
+        """
+        ...
