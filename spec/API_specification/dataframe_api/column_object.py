@@ -1061,7 +1061,9 @@ class Column(Protocol):
     def cast(self, dtype: DType) -> Self:
         """Cast specified columns to specified dtypes.
 
-        Cross-kind casting (e.g. integer to string) is not supported and may
-        vary across implementations.
+        The following is not specified and may vary across implementations:
+
+        - Cross-kind casting (e.g. integer to string, or to float)
+        - Behaviour in the case of overflows
         """
         ...
