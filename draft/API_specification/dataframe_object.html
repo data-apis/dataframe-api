@@ -497,8 +497,6 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.filter" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.filter()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_rows()</span></code></a>
-        </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.group_by" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.group_by()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.is_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.is_nan()</span></code></a>
@@ -536,6 +534,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.std()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.sum()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.take" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.take()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.to_array" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.to_array()</span></code></a>
         </li>
@@ -689,8 +689,6 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.filter" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.filter()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.get_rows()</span></code></a>
-        </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.group_by" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.group_by()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.is_nan" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.is_nan()</span></code></a>
@@ -728,6 +726,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.std()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.sum()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.DataFrame.take" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.take()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.DataFrame.to_array" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DataFrame.to_array()</span></code></a>
         </li>
@@ -1263,22 +1263,6 @@ scalar value. If <code class="docutils literal notranslate"><span class="pre">No
 the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.DataFrame.get_rows">
-<span class="sig-name descname"><span class="pre">get_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.get_rows" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select a subset of rows, similar to <code class="code docutils literal notranslate"><span class="pre">ndarray.take</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>indices</strong> (<a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a>) – Positions of rows to select.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>DataFrame</strong></p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p><code class="code docutils literal notranslate"><span class="pre">indices</span></code>’s parent DataFrame must be <code class="code docutils literal notranslate"><span class="pre">self</span></code> - else,
-the operation is unsupported and may vary across implementations.</p>
-</dd></dl>
-<dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.group_by">
 <span class="sig-name descname"><span class="pre">group_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="groupby_object.html#dataframe_api.GroupBy" title="dataframe_api.GroupBy"><span class="pre">GroupBy</span></a></span></span><a class="headerlink" href="#dataframe_api.DataFrame.group_by" title="Permalink to this definition">¶</a></dt>
 <dd><p>Group the DataFrame by the given columns.</p>
@@ -1534,6 +1518,22 @@ See <code class="code docutils literal notranslate"><span class="pre">Column.std
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.sum">
 <span class="sig-name descname"><span class="pre">sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_nulls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scalar</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reduction returns a 1-row DataFrame.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.DataFrame.take">
+<span class="sig-name descname"><span class="pre">take</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><span class="pre">Column</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.DataFrame.take" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a subset of rows, similar to <code class="code docutils literal notranslate"><span class="pre">ndarray.take</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>indices</strong> (<a class="reference internal" href="column_object.html#dataframe_api.Column" title="dataframe_api.Column"><em>Column</em></a>) – Positions of rows to select.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataFrame</strong></p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p><code class="code docutils literal notranslate"><span class="pre">indices</span></code>’s parent DataFrame must be <code class="code docutils literal notranslate"><span class="pre">self</span></code> - else,
+the operation is unsupported and may vary across implementations.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.DataFrame.to_array">

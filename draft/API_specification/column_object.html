@@ -506,8 +506,6 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.filter" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.filter()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows()</span></code></a>
-        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.get_value" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_value()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.hour" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.hour()</span></code></a>
@@ -561,6 +559,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.std()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sum()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.take" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.take()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.to_array" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.to_array()</span></code></a>
         </li>
@@ -715,8 +715,6 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.filter" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.filter()</span></code></a>
         </li>
-        <li class="md-nav__item"><a href="#dataframe_api.Column.get_rows" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_rows()</span></code></a>
-        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.get_value" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.get_value()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.hour" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.hour()</span></code></a>
@@ -770,6 +768,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.std" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.std()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.sum" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.sum()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.take" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.take()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.to_array" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.to_array()</span></code></a>
         </li>
@@ -1325,16 +1325,6 @@ Must be of the Python scalar type matching the dtype of the column.</p>
 where ‘Arraylike’ denotes an object adhering to the Array API standard.</p>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="dataframe_api.Column.get_rows">
-<span class="sig-name descname"><span class="pre">get_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.get_rows" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select a subset of rows, similar to <code class="code docutils literal notranslate"><span class="pre">ndarray.take</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>indices</strong> – Positions of rows to select.</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.get_value">
 <span class="sig-name descname"><span class="pre">get_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Scalar</span></span></span><a class="headerlink" href="#dataframe_api.Column.get_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select the value at a row number, similar to <code class="code docutils literal notranslate"><span class="pre">ndarray.__getitem__(&lt;int&gt;)</span></code>.</p>
@@ -1657,6 +1647,16 @@ datetime data types. The returned value has the same dtype as the
 column.</p>
 </dd></dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.take">
+<span class="sig-name descname"><span class="pre">take</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.take" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select a subset of rows, similar to <code class="code docutils literal notranslate"><span class="pre">ndarray.take</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>indices</strong> – Positions of rows to select.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.to_array">
 <span class="sig-name descname"><span class="pre">to_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#dataframe_api.Column.to_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert to array-API-compliant object.</p>
@@ -1703,7 +1703,7 @@ about which one will appear in the result.
 If the original Column contains multiple <code class="code docutils literal notranslate"><span class="pre">'NaN'</span></code> values, then
 only a single index corresponding to those values will be returned.
 Likewise for null values (if <code class="docutils literal notranslate"><span class="pre">skip_nulls=False</span></code>).
-To get the unique values, you can do <code class="docutils literal notranslate"><span class="pre">col.get_rows(col.unique_indices())</span></code>.</p>
+To get the unique values, you can do <code class="docutils literal notranslate"><span class="pre">col.take(col.unique_indices())</span></code>.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="dataframe_api.Column.unix_timestamp">
