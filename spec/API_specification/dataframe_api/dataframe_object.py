@@ -132,7 +132,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def gather(self, indices: Column) -> Self:
+    def take(self, indices: Column) -> Self:
         """Select a subset of rows, similar to `ndarray.take`.
 
         Parameters
