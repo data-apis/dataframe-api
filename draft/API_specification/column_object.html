@@ -486,6 +486,8 @@
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.any" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.any()</span></code></a>
         </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.cast" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.cast()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.column" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.column</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.cumulative_max" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.cumulative_max()</span></code></a>
@@ -694,6 +696,8 @@
         <li class="md-nav__item"><a href="#dataframe_api.Column.all" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.all()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.any" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.any()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#dataframe_api.Column.cast" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.cast()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#dataframe_api.Column.column" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Column.column</span></code></a>
         </li>
@@ -1236,6 +1240,16 @@ the operation is unsupported and may vary across implementations.</p>
 <dd class="field-odd"><p><strong>ValueError</strong> – If column is not boolean.</p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dataframe_api.Column.cast">
+<span class="sig-name descname"><span class="pre">cast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DType</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#dataframe_api.Column.cast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cast specified columns to specified dtypes.</p>
+<p>The following is not specified and may vary across implementations:</p>
+<ul class="simple">
+<li><p>Cross-kind casting (e.g. integer to string, or to float)</p></li>
+<li><p>Behaviour in the case of overflows</p></li>
+</ul>
 </dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="dataframe_api.Column.column">
