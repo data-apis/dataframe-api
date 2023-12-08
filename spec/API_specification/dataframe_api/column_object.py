@@ -106,7 +106,7 @@ class Column(Protocol):
         """Return data type of column."""
         ...
 
-    def get_rows(self, indices: Self) -> Self:
+    def take(self, indices: Self) -> Self:
         """Select a subset of rows, similar to `ndarray.take`.
 
         Parameters
@@ -867,7 +867,7 @@ class Column(Protocol):
         If the original Column contains multiple `'NaN'` values, then
         only a single index corresponding to those values will be returned.
         Likewise for null values (if ``skip_nulls=False``).
-        To get the unique values, you can do ``col.get_rows(col.unique_indices())``.
+        To get the unique values, you can do ``col.take(col.unique_indices())``.
         """
         ...
 

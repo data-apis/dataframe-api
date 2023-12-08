@@ -413,6 +413,6 @@ def unique_indices(*columns: Column, skip_nulls: bool = True) -> Column:
     If the original column(s) contain multiple `'NaN'` values, then
     only a single index corresponding to those values will be returned.
     Likewise for null values (if ``skip_nulls=False``).
-    To get the unique values, you can do ``df.get_rows(df.unique_indices(keys))``.
+    To get the unique values, you can do ``df.take(df.unique_indices(keys))``.
     """
     ...
