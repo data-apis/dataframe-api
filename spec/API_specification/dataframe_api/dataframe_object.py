@@ -221,7 +221,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def drop_columns(self, *labels: str) -> Self:
+    def drop(self, *labels: str) -> Self:
         """Drop the specified column(s).
 
         Parameters
@@ -240,7 +240,7 @@ class DataFrame(Protocol):
         """
         ...
 
-    def rename_columns(self, mapping: Mapping[str, str]) -> Self:
+    def rename(self, mapping: Mapping[str, str]) -> Self:
         """Rename columns.
 
         Parameters
@@ -863,7 +863,7 @@ class DataFrame(Protocol):
 
         Other than the joining column name(s), no column name is allowed to appear in
         both `self` and `other`. Rename columns before calling `join` if necessary
-        using :meth:`rename_columns`.
+        using :meth:`rename`.
 
         Parameters
         ----------
