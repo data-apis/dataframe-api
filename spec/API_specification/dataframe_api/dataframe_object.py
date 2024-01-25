@@ -132,25 +132,6 @@ class DataFrame(Protocol):
         """
         ...
 
-    def take(self, indices: Column) -> Self:
-        """Select a subset of rows, similar to `ndarray.take`.
-
-        Parameters
-        ----------
-        indices : Column
-            Positions of rows to select.
-
-        Returns
-        -------
-        DataFrame
-
-        Notes
-        -----
-        `indices`'s parent DataFrame must be `self` - else,
-        the operation is unsupported and may vary across implementations.
-        """
-        ...
-
     def slice_rows(
         self,
         start: int | None,
