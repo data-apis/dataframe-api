@@ -482,7 +482,7 @@ class DataFrame(ABC):
     def slice_rows(
         self,
         offset: int,
-        length: int | None,
+        size: int | None,
     ) -> DataFrame:
         """
         Select a subset of rows corresponding to a slice.
@@ -491,8 +491,8 @@ class DataFrame(ABC):
         ----------
         offset : int
             Row offset to start slice at.
-        length : int or None
-            Length of slice. If None, slice to end of DataFrame.
+        size : int or None
+            Number of rows of the resulting slice. If None, slice to end of DataFrame.
 
         Returns
         -------
