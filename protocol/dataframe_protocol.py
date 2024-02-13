@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from abc import (
     ABC,
     abstractmethod,
@@ -473,6 +475,31 @@ class DataFrame(ABC):
     def select_columns_by_name(self, names: Sequence[str]) -> "DataFrame":
         """
         Create a new DataFrame by selecting a subset of columns by name.
+        """
+        pass
+
+    @abstractmethod
+    def slice_rows(
+        self,
+        start: int | None = None,
+        stop: int | None = None,
+        step: int | None = None,
+    ) -> DataFrame:
+        """
+        Select a subset of rows corresponding to a slice.
+
+        Parameters
+        ----------
+        start : int or None
+            If None, starts at 0.
+        stop : int or None
+            If None, stops at the end.
+        step : int or None
+            If None, uses the default step of 1.
+
+        Returns
+        -------
+        DataFrame
         """
         pass
 
