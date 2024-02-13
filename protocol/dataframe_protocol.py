@@ -481,21 +481,18 @@ class DataFrame(ABC):
     @abstractmethod
     def slice_rows(
         self,
-        start: int | None = None,
-        stop: int | None = None,
-        step: int | None = None,
+        offset: int,
+        length: int | None,
     ) -> DataFrame:
         """
         Select a subset of rows corresponding to a slice.
 
         Parameters
         ----------
-        start : int or None
-            If None, starts at 0.
-        stop : int or None
-            If None, stops at the end.
-        step : int or None
-            If None, uses the default step of 1.
+        offset : int
+            Row offset to start slice at.
+        length : int or None
+            Length of slice. If None, slice to end of DataFrame.
 
         Returns
         -------
