@@ -22,15 +22,16 @@ line-length = 90
 fix = true
 target-version = "py39"
 
-select = [
+lint.select = [
   "ALL",
 ]
-ignore = [
+lint.ignore = [
     "A003",  # builtin-attribute-shadowing
     "ARG001",  # unused-function-argument
     "ANN101",  # missing-type-function-argument
     "ANN102",  # missing-type-cls
     "ANN401",  # any-type
+    "COM812",  # missing-trailing-comma
     "D100",  # undocumented-public-module
     "D101",  # undocumented-public-class
     "D102",  # undocumented-public-method
@@ -41,10 +42,13 @@ ignore = [
     "D107",  # undocumented-public-init
     "D203",  # one-blank-line-before-class
     "D213",  # multi-line-summary-second-line
+    "D413",  # no-blank-line-after-section
     "D417",  # undocumented-param
     "EM101",  # raw-string-in-exception
     "F821", # undefined-name
+    "ISC001", # single-line-implicit-string-concatenation
     "N999", # invalid-module-name
     "PD901", # pandas-df-variable-name
+    "PIE790", # unnecessary-placeholder
     "PLR0913",   # too-many-arguments
 ]
