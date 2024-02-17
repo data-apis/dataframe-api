@@ -350,6 +350,41 @@ class Column(ABC):
         """
         pass
 
+    def __arrow_c_schema__(self) -> object:
+        """
+        Export the data type of the Column to a Arrow C schema PyCapsule.
+
+        Returns
+        -------
+        PyCapsule
+        """
+        pass
+
+    def __arrow_c_array__(
+        self, requested_schema: Optional[object] = None
+    ) -> Tuple[object, object]:
+        """
+        Export the Column as an Arrow C array and schema PyCapsule.
+
+        If the Column consists of multiple chunks, this method should raise
+        an error.
+
+        Parameters
+        ----------
+        requested_schema : PyCapsule, default None
+            The schema to which the dataframe should be casted, passed as a
+            PyCapsule containing a C ArrowSchema representation of the
+            requested schema.
+            If None, the array will be returned as-is, with a type matching the
+            one returned by ``__arrow_c_schema__()``.
+
+        Returns
+        -------
+        Tuple[PyCapsule, PyCapsule]
+            A pair of PyCapsules containing a C ArrowSchema and ArrowArray,
+            respectively.
+        """
+        pass
 
 #    def get_children(self) -> Iterable[Column]:
 #        """
@@ -488,5 +523,34 @@ class DataFrame(ABC):
 
         Note that the producer must ensure that all columns are chunked the
         same way.
+        """
+        pass
+
+    def __arrow_c_schema__(self) -> object:
+        """
+        Export the schema of the DataFrae to a Arrow C schema PyCapsule.
+
+        Returns
+        -------
+        PyCapsule
+        """
+        pass
+
+    def __arrow_c_stream__(self, requested_schema: Optional[object] = None) -> object:
+        """
+        Export the DataFrame as an Arrow C stream PyCapsule.
+
+        Parameters
+        ----------
+        requested_schema : PyCapsule, default None
+            The schema to which the dataframe should be casted, passed as a
+            PyCapsule containing a C ArrowSchema representation of the
+            requested schema.
+            If None, the array will be returned as-is, with a type matching the
+            one returned by ``__arrow_c_schema__()``.
+
+        Returns
+        -------
+        PyCapsule
         """
         pass
