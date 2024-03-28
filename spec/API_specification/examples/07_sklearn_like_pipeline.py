@@ -10,6 +10,7 @@ into the ONNX graph/model. That transfer happens when calling
 `transform`. The logic within the `transform` methods is "traced"
 lazily and the resulting lazy object is then exported to ONNX.
 """
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
