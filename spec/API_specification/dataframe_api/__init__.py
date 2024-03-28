@@ -1,5 +1,6 @@
 # mypy: disable-error-code="empty-body"
 """Function stubs and API documentation for the DataFrame API standard."""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Literal
