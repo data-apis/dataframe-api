@@ -1,4 +1,5 @@
 """Fill a column's NaN values with the implemenation's null value."""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING

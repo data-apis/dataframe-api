@@ -16,6 +16,7 @@ SELECT n_name, SUM(l_extendedprice * (1 - l_discount)) AS revenue
 GROUP BY n_name
 ORDER BY revenue DESC
 """
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING

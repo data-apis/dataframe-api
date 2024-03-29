@@ -11,6 +11,7 @@ These can be accessed by first using ``__dataframe_namespace__`` to get the
 namespace object, and then calling the function on the namespace object and passing
 an iterable of ``Column``s as input.
 """
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
