@@ -331,6 +331,12 @@ class Column(ABC):
         """
         Return a dictionary containing the underlying buffers.
 
+        Each buffer has its own dtype which can be distinct from the
+        column's dtype. For example, a column with the ``STRING`` dtype
+        could be represented by two buffers: a "data" buffer with
+        dtype ``INT`` and bit width 8, and an "offsets" buffer with
+        dtype ``INT`` and bit width 32.
+
         The returned dictionary has the following contents:
 
             - "data": a two-element tuple whose first element is a buffer
